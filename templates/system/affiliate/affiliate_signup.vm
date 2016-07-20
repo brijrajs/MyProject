@@ -1,0 +1,408 @@
+##
+## UltraCart - Mr Teas Template
+## http://www.ultracart.com/
+##
+## Copyright (c) 2015 BPS Info Solutions Inc.
+## License located here:
+## http://www.ultracart.com/storefront/license/
+##
+## Designed by Level 2 Design, LLC http://www.level2d.com/
+##
+
+#* @vtlvariable name="formatHelper" type="com.bpsinfo.ultracart.catalog.tobjects.FormatHelper" *#
+#* @vtlvariable name="i18n" type="com.bpsinfo.storefront.tobjects.I18nWriter" *#
+#* @vtlvariable name="form" type="com.bpsinfo.ultracart.affiliate.ui.AffiliateSignupForm" *#
+
+## TODO Captcha
+
+#set( $pageGroup = 'affiliate' )
+#set( $bodyClass = 'affiliate sign-up' )
+#set( $pageTitle = $i18n.write("affiliate.signup.title","Affiliate Signup") )
+#parse('/snippets/top.vm')
+
+#set( $title = $pageTitle )
+#parse('/snippets/title.vm')
+
+<script type="text/javascript">
+	var RecaptchaOptions = {
+		theme: 'clean'
+	};
+</script>
+
+<form name="ucAffiliateSignup" action="/affiliate/affiliateSignupSave.do" method="post">
+	<input type="hidden" name="merchantId" value="$i18n.escape($form.merchantId)"/>
+	<input type="hidden" name="requirePayPal" value="$i18n.escape($form.requirePayPal)"/>
+	<input type="hidden" name="referralSource" value="$i18n.escape($form.referralSource)"/>
+	<input type="hidden" name="continueUrl" value="$i18n.escape($form.continueUrl)"/>
+	<input type="hidden" name="requireCaptcha" value="$i18n.escape($form.requireCaptcha)"/>
+    #parse('/snippets/common/storefront_template_spec_version.vm')
+	#parse('/snippets/errors.vm')
+	#parse('/snippets/info_messages.vm')
+
+	<!-- account information -->
+	<div class="row">
+		<div class="columns small-16">
+			<h2>$i18n.write("affiliate.signup.accountInformationHeader","ACCOUNT INFORMATION")</h2>
+		</div>
+
+		<div class="columns small-half">
+			<label class="label-move">
+				<span>$i18n.write("affiliate.signup.companyField","Company")</span>
+				<input type="text" name="companyName" placeholder="" value="$i18n.escape($form.companyName)" />
+			</label>
+
+			<div class="row no-padding-left no-padding-right">
+				<div class="columns small-16 medium-8">
+					<label class="label-move">
+						<span>$i18n.write("affiliate.signup.firstNameField","First Name")*</span>
+						<input type="text" name="firstName" required placeholder="John" value="$i18n.escape($form.firstName)" maxlength="50"  />
+					</label>
+				</div>
+
+				<div class="columns small-16 medium-8">
+					<label class="label-move">
+						<span>$i18n.write("affiliate.signup.lastNameField","Last Name")*</span>
+						<input type="text" name="lastName" required placeholder="Smith" value="$i18n.escape($form.lastName)" maxlength="50"  />
+					</label>
+				</div>
+			</div>
+
+			<div class="row no-padding-left no-padding-right">
+				<div class="columns small-full medium-third">
+					<label class="label-move">
+						<span>$i18n.write("affiliate.signup.dateOfBirthField","Date of birth")*</span>
+						<select name="dobMonth">
+							<option value="">Month</option>
+
+							#foreach($month in $form.dobMonths)
+								<option value="$month.value" #if($form.dobMonth && $month.value == $form.dobMonth)selected#{end}>$month.description</option>
+							#end
+						</select>
+					</label>
+				</div>
+
+				<div class="columns small-full medium-third">
+					<label class="label-move">
+						<span>&nbsp;</span><br class="hide-for-small">
+						<select name="dobDay">
+							<option value=''>Day</option>
+
+							#foreach($day in $form.dobDays)
+								<option value="$day.value" #if($form.dobDay && $day.value == $form.dobDay)selected#{end}>$day.description</option>
+							#end
+						</select>
+					</label>
+				</div>
+
+				<div class="columns small-full medium-third">
+					<label class="label-move">
+						<span>&nbsp;</span><br class="hide-for-small">
+						<select name="dobYear">
+							<option value=''>Year</option>
+
+							#foreach($year in $form.dobYears)
+								<option value="$year.value" #if($form.dobYear && $year.value == $form.dobYear)selected#{end}>$year.description</option>
+							#end
+						</select>
+					</label>
+				</div>
+			</div>
+
+			<label class="label-move">
+				<span>$i18n.write("affiliate.signup.phoneField","Phone")*</span>
+				<input type="text" required
+					name="phone"
+					placeholder="(212) 555 1212"
+					value="$i18n.escape($!form.phone)"/>
+			</label>
+
+			<div class="row no-padding-left no-padding-right">
+				<div class="columns small-16 medium-8">
+					<label class="label-move">
+						<span>$i18n.write("affiliate.signup.emailField","Email")*</span>
+						<input type="email"
+							placeholder="example@domain.com"
+							name="email"
+							value="$i18n.escape($!form.email)"
+							maxlength="32" />
+					</label>
+				</div>
+
+				<div class="columns small-16 medium-8">
+					<label class="label-move">
+						<span>$i18n.write("affiliate.signup.confirmEmailField","Confirm Email")*</span>
+						<input type="email"
+							name="confirmEmail"
+							placeholder="example@email.com"
+							value="$i18n.escape($!form.confirmEmail)"
+							maxlength="32" />
+					</label>
+				</div>
+			</div>
+
+			<div class="row no-padding-left no-padding-right">
+				<div class="columns small-16 medium-8">
+					<label class="label-move">
+						<span>$i18n.write("affiliate.signup.passwordField","Password")*</span>
+						<input type="password"
+							name="password"
+							value="$i18n.escape($!form.password)"
+							class="inspectletIgnore"
+							maxlength="32" />
+					</label>
+				</div>
+
+				<div class="columns small-16 medium-8">
+					<label class="label-move">
+						<span>$i18n.write("affiliate.signup.confirmPasswordField","Confirm Password")*</span>
+						<input type="password"
+							name="confirmPassword"
+							value="$i18n.escape($!form.confirmPassword)"
+							class="inspectletIgnore"
+							maxlength="32" />
+					</label>
+				</div>
+			</div>
+		</div>
+
+		<div class="columns small-half">
+			<label class="label-move">
+				<span>$i18n.write("affiliate.signup.address1Field","Address 1")*</span>
+				<input type="text" required
+					name="address1"
+					placeholder="123 Main St."
+					maxlength="100"
+					value="$i18n.escape($!form.address1)" />
+			</label>
+
+			<label class="label-move">
+				<span>$i18n.write("affiliate.signup.address2Field","Address 2")</span>
+				<input type="text"
+					name="address2"
+					placeholder="Suite A"
+					value="$i18n.escape($!form.address2)"
+					maxlength="100" />
+			</label>
+
+			<label class="label-move">
+				<span>$i18n.write("affiliate.signup.cityField","City")*</span>
+				<input type="text" required
+					name="city"
+					placeholder="Chattanooga"
+					value="$i18n.escape($!form.city)"/>
+			</label>
+
+			<div class="row no-padding-left no-padding-right">
+				<div class="columns small-16 medium-8">
+					<label class="label-move">
+						<span>$i18n.write("affiliate.signup.stateProvinceRegionField","State/Province/Region")*</span>
+						<input type="text"
+							placeholder="TN"
+							name="state"
+							value="$i18n.escape($!form.state)"
+							maxlength="32" />
+					</label>
+				</div>
+
+				<div class="columns small-16 medium-8">
+					<label class="label-move">
+						<span>$i18n.write("affiliate.signup.zipPostalCodeField","Zip/Postal Code")*</span>
+						<input type="text"
+							name="zip"
+							placeholder="37343"
+							value="$i18n.escape($!form.zip)"
+							maxlength="32" />
+					</label>
+				</div>
+			</div>
+
+			<label class="label-move">
+				<span>$i18n.write("affiliate.signup.countryField","Country")*</span>
+				<select name="country" required>
+					#foreach($country in $form.countries)
+						<option #if($form.country && $country == $form.country)selected#{end}>$i18n.escape($country)</option>
+					#end
+				</select>
+			</label>
+		</div>
+	</div>
+	<!-- /account information -->
+
+	#parse('/snippets/hr.vm')
+
+	<!-- payment information -->
+	<div class="row">
+		<div class="columns small-16">
+			<h2>$i18n.write("affiliate.signup.paymentInformationHeader","PAYMENT INFORMATION")</h2>
+		</div>
+
+		<div class="columns small-16 medium-8">
+			<label class="label-move">
+				<span>$i18n.write("affiliate.signup.ssnTaxIdField","SSN or Tax ID (For US Affiliate Only)")*</span>
+				<input type="text" name="taxId" value="$i18n.escape($form.taxId)" maxlength="10" class="ucFormField ssnField" />
+			</label>
+		</div>
+
+		<div class="columns small-16 medium-8">
+			#if($form.requirePayPal)
+				<label class="label-move">
+					<span>$i18n.write("affiliate.signup.payPalEmailField","PayPal Email")*</span>
+					<input type="text" name="paypalEmail" value="$i18n.escape($form.paypalEmail)" />
+					($i18n.write("affiliate.signup.payPalNote","We will send your commission payments to this PayPal account."))
+				</label>
+			#else ## requirePayPal == false
+				<label class="label-move">
+					<span>$i18n.write("affiliate.signup.checksPayableToField","Checks Payable To")*</span>
+					<input type="text" name="checksPayableTo" value="$i18n.escape($form.checksPayableTo)" />
+				</label>
+
+				#if($form.showPayViaPaypal)
+					<label class="label-group no-margin">
+						<input type="checkbox" name="payViaPaypal" value="$i18n.escape($form.payViaPaypal)" />
+						<span>$i18n.write("affiliate.signup.payViaPayPalField","Pay me via PayPal instead of check.")</span>
+					</label>
+				#end ##if-showPayViaPayPal
+			#end ##if-requirePayPal
+
+		</div>
+	</div>
+	<!-- /payment information -->
+
+	#parse('/snippets/hr.vm')
+
+	<!-- site information -->
+	<div class="row">
+		<div class="columns small-16">
+			<h2>$i18n.write("affiliate.signup.siteInformationHeader","SITE INFORMATION")</h2>
+		</div>
+
+		<div class="columns small-16 medium-8">
+			<label class="label-move">
+				<span>$i18n.write("affiliate.signup.webSiteNameField","Web Site name")</span>
+				<input type="text" name="websiteName" value="$i18n.escape($form.websiteName)" placeholder="Your Website"/>
+			</label>
+		</div>
+
+		<div class="columns small-16 medium-8">
+			<label class="label-move">
+				<span>$i18n.write("affiliate.signup.webSiteUrlField","Web site URL")</span>
+				<input type="text" name="websiteUrl" value="$i18n.escape($form.websiteUrl)" placeholder="http://www.yourwebsite.com"/>
+			</label>
+		</div>
+
+		<div class="columns small-16 medium-8">
+			<label class="label-move">
+				<span>$i18n.write("affiliate.signup.marketingStrategyField","Describe your web site or marketing strategy")</span>
+				<textarea name="marketingStrategy" class="ucFormField marketingStrategyField" >$i18n.escape($!form.marketingStrategy)</textarea>
+			</label>
+		</div>
+
+		<div class="columns small-16 medium-8">
+			<label class="label-group no-margin">
+				<span>$i18n.write("affiliate.signup.howDoYouPlanToMarketHeader","How do you plan to market our products?")</span>
+			</label>
+
+			<div class="clearfix"></div>
+
+			<ul class="option-group product-marketing">
+				<li>
+					<label>
+						<input type="checkbox" name="usingPpc" #if($form.usingPpc)checked#{end} id="ucUsingPpcId"/>
+						<span>$i18n.write("affiliate.signup.payPerClickField","Pay per click")</span>
+					</label>
+				</li>
+
+				<li>
+					<label>
+						<input type="checkbox" name="usingPerAcquisition" #if($form.usingPerAcquisition)checked#{end} id="ucUsingPerAcquisitionId"/>
+						<span>$i18n.write("affiliate.signup.payPerAcquisitionField","Pay per acquisition")</span>
+					</label>
+				</li>
+
+				<li>
+					<label>
+						<input type="checkbox" name="usingWebsite" #if($form.usingWebsite)checked#{end} id="ucUsingWebsiteId"/>
+						<span>$i18n.write("affiliate.signup.webSiteField","Web site")</span>
+					</label>
+				</li>
+
+				<li>
+					<label>
+						<input type="checkbox" name="usingSeo" #if($form.usingSeo)checked#{end} id="ucUsingSeoId"/>
+						<span>$i18n.write("affiliate.signup.seoField","Search engine optimization")</span>
+					</label>
+				</li>
+
+				<li>
+					<label>
+						<input type="checkbox" name="usingAdNetwork" #if($form.usingAdNetwork)checked#{end} id="ucUsingAdNetworkId"/>
+						<span>$i18n.write("affiliate.signup.adNetworkBannerNetworkField","Ad network / Banner network")</span>
+					</label>
+				</li>
+
+				<li>
+					<label>
+						<input type="checkbox" name="usingAdware" #if($form.usingAdware)checked#{end} id="ucUsingAdwareId"/>
+						<span>$i18n.write("affiliate.signup.adwareBrowserPluginField","Adware / Browser Plug-in")</span>
+					</label>
+				</li>
+
+				<li>
+					<label>
+						<input type="checkbox" name="usingBlog" #if($form.usingBlog)checked#{end} id="ucUsingBlogId"/>
+						<span>$i18n.write("affiliate.signup.blogField","Blog")</span>
+					</label>
+				</li>
+
+				<li>
+					<label>
+						<span>$i18n.write("affiliate.signup.otherField","Other")</span>
+						<input type="text" name="usingOther" value="$i18n.escape($!form.usingOther)" />
+					</label>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<!-- /site information -->
+
+	#parse('/snippets/hr.vm')
+
+	<!-- affiliate-program-agreement -->
+	<div class="row">
+		<div class="columns small-16">
+			<h2>$i18n.write("affiliate.signup.affiliateProgramAgreementHeader","AFFILIATE PROGRAM AGREEMENT")</h2>
+		</div>
+
+		<div class="columns small-16">
+			<pre class="scrollbox">$i18n.escape($!form.agreement)</pre>
+
+			<label>
+				<span>$i18n.write("affiliate.signup.iAgreeToTandCField","I agree to be bound by the above Terms & Conditions")</span>
+				<input type="checkbox" name="acceptAgreement" #if($form.acceptAgreement)checked=#{end} />
+			</label>
+		</div>
+	</div>
+	<!-- /affiliate-program-agreement -->
+
+	#if($form.requireCaptcha)
+		#parse('/snippets/hr.vm')
+		<div class="row">
+			<div class="columns small-16">
+				<h2>$i18n.write("affiliate.signup.captchaHeader","SECURITY CHECK")</h2>
+			</div>
+
+			<div class="columns small-16">
+				<p>
+					$i18n.write("affiliate.signup.captchaInstructions","To prevent automated signups, please answer the captcha security question below.")
+				</p>
+				$!form.recaptchaHtml
+			</div>
+		</div>
+	#end ##if requireCaptcha
+
+	#parse('/snippets/affiliate/button.vm')
+
+	#parse('/snippets/common/cs_token.vm')
+</form>
+
+#parse('/snippets/bottom.vm')

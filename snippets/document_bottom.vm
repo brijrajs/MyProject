@@ -1,0 +1,87 @@
+##
+## UltraCart - Mr Teas Template
+## http://www.ultracart.com/
+##
+## Copyright (c) 2015 BPS Info Solutions Inc.
+## License located here:
+## http://www.ultracart.com/storefront/license/
+##
+## Designed by Level 2 Design, LLC http://www.level2d.com/
+##
+
+## uc:site-attribute-boolean="storefrontSEOSchemaOrg"
+
+<!-- UC Template _documentBottom -->
+#if($site.attr('storefrontSEOSchemaOrg') || $group.getAttribute('storefrontSEOSchemaOrg'))
+	#parse('microdata.vm')
+#end
+#parse('system://3.0/snippets/comodo.vm')
+## load tracking.vm on every page except for the receipt and receipt_in_progress page.
+## On those pages, we load conversion.vm
+#if($bodyClass && $bodyClass == 'receipt')
+	#parse('system://3.0/snippets/conversion.vm')
+#else
+	#parse('system://3.0/snippets/tracking.vm')
+#end
+
+#if( $placesApi )
+	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places"></script>
+#end
+
+## version is declared in snippets/_setup
+<script src="$baseThemeUrl/assets/js/foundation.${_VERSION}.js"></script>
+<script src="$baseThemeUrl/assets/js/libraries.${_VERSION}.js"></script>
+<script src="$baseThemeUrl/assets/js/theme.${_VERSION}.js"></script>
+
+## $!checkoutTokenizationScripts
+
+<script type="text/javascript" src="/catalog_4.1.js"></script>
+
+#if( ($pageGroup && $pageGroup == 'multi-page-checkout') || ($pageGroup && $pageGroup == 'single-page-checkout') )
+	<script type='text/javascript' src="/js/NumberFormat.js"></script>
+#end
+
+
+## current pagegroups: affiliate, single-page-checkout, multi-page-checkout
+#if($pageGroup)
+	<script src="$baseThemeUrl/assets/js/${pageGroup}.js"></script>
+#end
+
+#if($item && $item.hasVariations() && "$cart" != "")
+
+		<script type='text/javascript'>
+		//this is dependant on jquery and catalog_4.1.js
+		console.log('initializing catalog variations');
+		#set($currencyCode = $cart.getCurrency().getSymbol())
+		// this can be named anything or assigned anywhere.  Or not even assigned to a variable.
+		// I just chose window.itemVariations so it would be easy to debug
+		window.itemVariations = new ultracart.ItemVariations("$item.getMerchantItemID()",
+		                                               	${item.getVariationMatrix().getJavascriptItemVariationMatrix2()},
+		                                               	"$currencyCode", {inventory: 'hide-out-of-stock'});
+
+
+		</script>
+
+#end
+
+## olark chat script
+#parse("olark.vm")
+
+<!-- Google Code for Remarketing Tag -->
+<!--------------------------------------------------
+Remarketing tags may not be associated with personally identifiable information or placed on pages related to sensitive categories. See more information and instructions on how to setup the tag on: http://google.com/ads/remarketingsetup
+--------------------------------------------------->
+<script type="text/javascript">
+/ <![CDATA[ /
+var google_conversion_id = 994262981;
+var google_custom_params = window.google_tag_params;
+var google_remarketing_only = true;
+/ ]]> /
+</script>
+<script type="text/javascript" src="//www.googleadservices.com/pagead/conversion.js">
+</script>
+<noscript>
+<div style="display:inline;">
+<img height="1" width="1" style="border-style:none;" alt="" src="//googleads.g.doubleclick.net/pagead/viewthroughconversion/994262981/?value=0&amp;guid=ON&amp;script=0"/>
+</div>
+</noscript>

@@ -1,0 +1,35 @@
+#* @vtlvariable name="formatHelper" type="com.bpsinfo.ultracart.catalog.tobjects.FormatHelper" *#
+#* @vtlvariable name="form" type="com.bpsinfo.ultracart.checkout.ui.InProgressForm" *#
+#* @vtlvariable name="i18n" type="com.bpsinfo.storefront.tobjects.I18nWriter" *#
+
+#set( $bodyClass = 'in-progress' )
+#parse('/snippets/top.vm')
+#parse('/snippets/breadcrumbs.vm')
+
+<script type="text/javascript">
+	setTimeout(function () {
+		location.reload(true);
+	}, 10000); // Fall back after 10 seconds.
+</script>
+
+#set( $title = $i18n.write("checkout.inProgress.weAreProcessing", "We are processing your order.  Please Wait.") )
+#parse('/snippets/title.vm')
+
+<div class="row">
+	<div class="columns small-16">
+		<div class="processing">
+			<div class="loading"></div>
+
+			<p>
+				$i18n.write("checkout.inProgress.refreshNotice", "This page will automatically refresh every 3 seconds.")<br>
+				$i18n.write("checkout.inProgress.noRefreshInstructions", "If for any reason your browser does not automatically refresh you may click ")
+				<a href="$!form.refreshUrl">$i18n.write("checkout.inProgress.here","here").</a><br/>
+				<date class="date">$i18n.write("checkout.inProgress.lastRefresh", "Last refresh")  $!form.lastRefresh</date>
+			</p>
+		</div>
+	</div>
+</div>
+
+
+
+#parse('/snippets/bottom.vm')

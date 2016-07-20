@@ -1,0 +1,27 @@
+@charset "utf-8";
+/* All fonts */
+
+@font-face {
+	font-family: 'Proxima Nova Regular';
+	src: url('fonts/Mark Simonson - Proxima Nova Regular.eot');
+	src: local('☺'), url('fonts/Mark Simonson - Proxima Nova Regular.woff') format('woff'), url('fonts/Mark Simonson - Proxima Nova Regular.ttf') format('truetype'), url('fonts/Mark Simonson - Proxima Nova Regular.svg') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'Proxima Nova Bold';
+	src: url('fonts/Mark Simonson - Proxima Nova Bold.eot');
+	src: local('☺'), url('fonts/Mark Simonson - Proxima Nova Bold.woff') format('woff'), url('fonts/Mark Simonson - Proxima Nova Bold.ttf') format('truetype'), url('fonts/Mark Simonson - Proxima Nova Bold.svg') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'BebasNeue';
+	src: url('fonts/BebasNeue_1.eot');
+	src: local('☺'), url('fonts/BebasNeue_1.woff') format('woff'), url('fonts/BebasNeue_1.ttf') format('truetype'), url('fonts/BebasNeue_1.svg') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+

@@ -1,0 +1,20 @@
+##
+## UltraCart - Mr Teas Template
+## http://www.ultracart.com/
+##
+## Copyright (c) 2015 BPS Info Solutions Inc.
+## License located here:
+## http://www.ultracart.com/storefront/license/
+##
+## Designed by Level 2 Design, LLC http://www.level2d.com/
+##
+
+## uc:theme-attribute-string="Checkout Only Theme Logo URL"
+## uc:theme-attribute-boolean="Checkout Only Theme"
+
+## If we're check checkout only and they try to load the storefront home page or a product page, redirect them
+#if($theme.attr("Checkout Only Theme", "false") == "true")
+	#if($theme.attr("Checkout Only Theme Logo URL", "") != "")
+		#set($redirectUrl = $theme.attr("Checkout Only Theme Logo URL"))
+	#end
+#end

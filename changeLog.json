@@ -1,0 +1,959 @@
+{
+  "versions": [
+    {
+      "version": 0.32,
+      "changes": [
+        {
+          "category": "changed",
+          "description": "Improved wording of the \"Estimated Shipping Costs\" section on the view cart page of the multi-page checkout for customers that have used the \"actual costs\" tool.",
+          "id": 947
+        },
+        {
+          "category": "changed",
+          "description": "The affiliate reports page now has an improved datatables system.",
+          "id": 948
+        },
+        {
+          "category": "developer",
+          "description": "Added Internationalization to estimated shipping on view_cart.vm",
+          "id": 1014
+        },
+        {
+          "category": "developer",
+          "description": "Removed legacy/unnecessary directives in several templates",
+          "id": 949
+        },
+        {
+          "category": "fixed",
+          "description": "Fixed a bug with conversion tracking with analytics on the receipt_in_progress.vm",
+          "id": 950
+        },
+        {
+          "category": "fixed",
+          "description": "Fixed date picker for the affiliate system",
+          "id": 951
+        },
+        {
+          "category": "fixed",
+          "description": "Fixed payment management in my account auto order",
+          "id": 1013
+        },
+        {
+          "category": "fixed",
+          "description": "Fixed settings.json orphaned attributes and removed Show Options attribute from the blog template",
+          "id": 991
+        },
+        {
+          "category": "fixed",
+          "description": "Fixed the single page checkout grid width for the express checkout if the merchant has Paypal, Paypal BML and Amazon pay enabled",
+          "id": 952
+        }
+      ]
+    },
+    {
+      "version": 0.31,
+      "changes": [
+        {
+          "category": "changed",
+          "description": "Improved the linkability of the search results",
+          "id": 884
+        },
+        {
+          "category": "developer",
+          "description": "Optimized .png thumbnail creation for search results and cart pages.",
+          "id": 886
+        },
+        {
+          "category": "new",
+          "description": "Added a \u0027one click\u0027 view of the draft for blog posts",
+          "id": 890
+        },
+        {
+          "category": "new",
+          "description": "Added content guide directives to the theme.css",
+          "id": 921
+        },
+        {
+          "category": "new",
+          "description": "Added Pagination to the bottom of the catalog page list",
+          "id": 881
+        },
+        {
+          "category": "new",
+          "description": "Reorganized the theme.css to clean up the presentation and make editing the theme settings quicker and easier. ",
+          "id": 861
+        }
+      ]
+    },
+    {
+      "version": 0.3,
+      "changes": [
+        {
+          "category": "changed",
+          "description": "Updated blog template styles",
+          "id": 771
+        },
+        {
+          "category": "developer",
+          "description": "Added debug method to homepage to alert merchants if an item assigned to the homepage slider doesn\u0027t have associated multimedia",
+          "id": 775
+        },
+        {
+          "category": "developer",
+          "description": "Blog flag added to settings.json",
+          "id": 777
+        },
+        {
+          "category": "developer",
+          "description": "General SCSS organization",
+          "id": 772
+        },
+        {
+          "category": "developer",
+          "description": "switched cart_items.vm thumbnails to use the newly exposed full item objects\u0027s multimedia thumbnails",
+          "id": 774
+        },
+        {
+          "category": "fixed",
+          "description": "Fixed display of quantity and remove update button if quantity is locked",
+          "id": 806
+        },
+        {
+          "category": "new",
+          "description": "Added blog post templates",
+          "id": 776
+        },
+        {
+          "category": "new",
+          "description": "Added dynamic company name in the footer",
+          "id": 811
+        },
+        {
+          "category": "new",
+          "description": "Slider attribute type used by the home page",
+          "id": 791
+        },
+        {
+          "category": "new",
+          "description": "Updated breadcrumb logic to include the new blogposts",
+          "id": 773
+        }
+      ]
+    },
+    {
+      "version": 0.29,
+      "changes": [
+        {
+          "category": "changed",
+          "description": "Adjusted the default size of the no image available image.",
+          "id": 739
+        },
+        {
+          "category": "developer",
+          "description": "Improved hosted fields snippet to be smarted about initialization.",
+          "id": 734
+        },
+        {
+          "category": "developer",
+          "description": "Improved multimedia conditionals ",
+          "id": 736
+        },
+        {
+          "category": "developer",
+          "description": "Updated multimedia urls to use the base url instead of the base theme url.",
+          "id": 738
+        },
+        {
+          "category": "new",
+          "description": "Added better support for facebook open graph and twitter cards.",
+          "id": 735
+        },
+        {
+          "category": "new",
+          "description": "Added support for Inspectlet under the conversion and tracking tab in Storefronts.  If configured, it will give useful information about user interaction with your site.",
+          "id": 733
+        },
+        {
+          "category": "new",
+          "description": "Store Locator - Store Locator allows the addition of physical store locations. These locations are displayed using google maps and are searchable by the user.",
+          "id": 732
+        }
+      ]
+    },
+    {
+      "version": 0.28,
+      "changes": [
+        {
+          "category": "developer",
+          "description": "Added ajaxSetup cache \u003d false",
+          "id": 672
+        },
+        {
+          "category": "developer",
+          "description": "Added option to use png thumbnails instead of jpg thumbnails",
+          "id": 674
+        },
+        {
+          "category": "developer",
+          "description": "Added quotes around some javascript object literal property declarations.",
+          "id": 686
+        },
+        {
+          "category": "developer",
+          "description": "Strengthened some conditional statements.",
+          "id": 685
+        },
+        {
+          "category": "fixed",
+          "description": "Added a new No Image Available image to the assets/imgs directory that has a 1:1 ratio",
+          "id": 644
+        },
+        {
+          "category": "fixed",
+          "description": "Fixed error display message for shipping estimate updates on the single page checkout.",
+          "id": 665
+        },
+        {
+          "category": "fixed",
+          "description": "Fixed issue with the business/residential address checkbox not always updating the shipping estimates on change, as intended.",
+          "id": 664
+        },
+        {
+          "category": "fixed",
+          "description": "Improved Affiliate signup page",
+          "id": 666
+        },
+        {
+          "category": "new",
+          "description": "Added new shipment object to eng.default.json",
+          "id": 680
+        }
+      ]
+    },
+    {
+      "version": 0.27,
+      "changes": [
+        {
+          "category": "important",
+          "description": "Overhauled the entire search system.  New enhanced configuration in the storefronts backend, and new display templates on the front end",
+          "id": 601
+        },
+        {
+          "category": "changed",
+          "description": "Added a check on to see if any subgroups have images on the catalog page, and if none of them do, don\u0027t display the images.",
+          "id": 602
+        },
+        {
+          "category": "changed",
+          "description": "Added styles to the theme.css for the search filters",
+          "id": 626
+        },
+        {
+          "category": "developer",
+          "description": "Added check for using stored credit card before loading hosted fields",
+          "id": 605
+        },
+        {
+          "category": "developer",
+          "description": "Added Foundation accordion for search filters",
+          "id": 642
+        },
+        {
+          "category": "developer",
+          "description": "updated the comment about the customer service email on template_contact.vm to be more clear as to how the system actually handles it.",
+          "id": 603
+        },
+        {
+          "category": "fixed",
+          "description": "Fixed footer menu output if some menus are empty",
+          "id": 604
+        },
+        {
+          "category": "fixed",
+          "description": "Fixed the Theme attribute for the secondary header promotional content",
+          "id": 521
+        },
+        {
+          "category": "new",
+          "description": "Added faceted search to catalog page template as a sidebar",
+          "id": 606
+        }
+      ]
+    },
+    {
+      "version": 0.26,
+      "changes": [
+        {
+          "category": "browser",
+          "description": "Fixed IE11 search field focus issue",
+          "id": 487
+        },
+        {
+          "category": "changed",
+          "description": "Improved date picker\u0027s color scheme",
+          "id": 490
+        },
+        {
+          "category": "changed",
+          "description": "The \"yes\" button on the special offers template should now display first, on the left of \"no\"",
+          "id": 496
+        },
+        {
+          "category": "changed",
+          "description": "The featured items section banner should not display if no featured items are assigned to the homepage",
+          "id": 499
+        },
+        {
+          "category": "developer",
+          "description": "Added a console error if fields we\u0027re trying to bind on the shipping section of the single page checkout don\u0027t exist, or are missing the the class we\u0027re expecting",
+          "id": 497
+        },
+        {
+          "category": "developer",
+          "description": "Added missing directives",
+          "id": 495
+        },
+        {
+          "category": "developer",
+          "description": "Improved thumbnail conditionals",
+          "id": 498
+        },
+        {
+          "category": "developer",
+          "description": "upgraded to handlebars version 3.03",
+          "id": 476
+        },
+        {
+          "category": "fixed",
+          "description": "Fixed format string on  _now to be ${_now.format(\"MM/dd/yyyy\")}) in shipping.vm",
+          "id": 478
+        },
+        {
+          "category": "fixed",
+          "description": "Fixed typo on mpc_related.vm",
+          "id": 485
+        },
+        {
+          "category": "fixed",
+          "description": "Removed a random space from the suggested items in the cart",
+          "id": 486
+        },
+        {
+          "category": "fixed",
+          "description": "You should now be able to use the search input field while in the checkout process.",
+          "id": 483
+        },
+        {
+          "category": "new",
+          "description": "Added support for the require ship on date feature",
+          "id": 494
+        }
+      ]
+    },
+    {
+      "version": 0.25,
+      "changes": [
+        {
+          "category": "changed",
+          "description": "Improved auto-select payment preferences ",
+          "id": 414
+        },
+        {
+          "category": "developer",
+          "description": "Improved home slider",
+          "id": 420
+        },
+        {
+          "category": "developer",
+          "description": "Updated tabs display logic",
+          "id": 418
+        },
+        {
+          "category": "developer",
+          "description": "Updated the Conditional statement for the Item Image gallery",
+          "id": 412
+        },
+        {
+          "category": "fixed",
+          "description": "Fixed access account forgot password link",
+          "id": 419
+        },
+        {
+          "category": "fixed",
+          "description": "Fixed Item level SEO related issues",
+          "id": 451
+        },
+        {
+          "category": "fixed",
+          "description": "Fixed rel canonical",
+          "id": 416
+        },
+        {
+          "category": "fixed",
+          "description": "Removed the slider for the image gallery if there is only one product image",
+          "id": 413
+        },
+        {
+          "category": "new",
+          "description": "Added MAP Localized Pricing",
+          "id": 417
+        },
+        {
+          "category": "new",
+          "description": "Theme Gallery Information added ",
+          "id": 411
+        }
+      ]
+    },
+    {
+      "version": 0.24,
+      "changes": [
+        {
+          "category": "changed",
+          "description": "Changed $item.descriptionWithBreaks to $item.description on the cart page to make it more consistent. It will no longer apply the user\u0027s hard returns in the item title. if the user wants to insert breaks they should use html",
+          "id": 369
+        },
+        {
+          "category": "changed",
+          "description": "If a footer menu doesn\u0027t have any links, the menu title will not be displayed.",
+          "id": 365
+        },
+        {
+          "category": "developer",
+          "description": "removed homepopup video from document_bottom and added to template_home",
+          "id": 366
+        },
+        {
+          "category": "fixed",
+          "description": "Fixed the theme.css to overwrite the correct value when the user sets the Item View Link Button Background Color value within the theme settings",
+          "id": 371
+        },
+        {
+          "category": "fixed",
+          "description": "It should now be easier to close the mobile menu by tapping the menu icon on devices with tiny screens",
+          "id": 362
+        },
+        {
+          "category": "fixed",
+          "description": "Removed the link back to the item page if \"checkout only theme\" is checked in the theme settings. applied to both multipage and singe page checkouts",
+          "id": 370
+        },
+        {
+          "category": "fixed",
+          "description": "The contact form content and reply-to address fields is fixed",
+          "id": 381
+        },
+        {
+          "category": "fixed",
+          "description": "The home slider links no longer collapse when a title and subtitle are missing.",
+          "id": 382
+        },
+        {
+          "category": "fixed",
+          "description": "update the google fonts script to encode the pipe character",
+          "id": 367
+        },
+        {
+          "category": "new",
+          "description": "added new home slider page attributes to toggle autoplay and control its speed",
+          "id": 364
+        },
+        {
+          "category": "new",
+          "description": "update to the settings and theme to include hover states for the yes/no button for the special offers page.",
+          "id": 368
+        }
+      ]
+    },
+    {
+      "version": 0.23,
+      "changes": [
+        {
+          "category": "changed",
+          "description": "Removed ontouchstart events from elements on checkout to help prevent accidental selection of options on mobile devices",
+          "id": 323
+        },
+        {
+          "category": "changed",
+          "description": "Slightly improved formatting of addressbook panels and header positioning",
+          "id": 320
+        },
+        {
+          "category": "changed",
+          "description": "The cart, myaccount and search links should now be hidden while on affiliate pages",
+          "id": 325
+        },
+        {
+          "category": "changed",
+          "description": "Updated bitcoin, check, and Instagram icons \u0026 Changed Bitcoin to Coinable for the paymentMethodManager in the footer",
+          "id": 332
+        },
+        {
+          "category": "developer",
+          "description": "Added $pageGroup variables to affiliate vms",
+          "id": 326
+        },
+        {
+          "category": "developer",
+          "description": "Added a check for null reference to $pageGroup in header.vm",
+          "id": 333
+        },
+        {
+          "category": "developer",
+          "description": "Fixed duplicate styles in foundation",
+          "id": 330
+        },
+        {
+          "category": "developer",
+          "description": "Fixed some footer conditionals to show the proper falsy states for address components",
+          "id": 329
+        },
+        {
+          "category": "developer",
+          "description": "Replaced .getViewUrl with the improved .getPath method on several templates",
+          "id": 328
+        },
+        {
+          "category": "fixed",
+          "description": "Added missing directive: ## uc:display-items\u003d\"true\" to google_base_offer_id.vm",
+          "id": 314
+        },
+        {
+          "category": "fixed",
+          "description": "Fixed an issue in myaccount-\u003epayment that was preventing manual entry of credit cards",
+          "id": 316
+        },
+        {
+          "category": "fixed",
+          "description": "Fixed an issue that was causing the text on some labels to not wrap to new lines properly",
+          "id": 317
+        },
+        {
+          "category": "fixed",
+          "description": "Fixed My Account recent orders so that it should display properly on My Account index page.",
+          "id": 327
+        },
+        {
+          "category": "fixed",
+          "description": "Fixed some bugs on affiliate edit link template",
+          "id": 331
+        },
+        {
+          "category": "fixed",
+          "description": "Lift gate checkbox should now display and function properly",
+          "id": 312
+        },
+        {
+          "category": "fixed",
+          "description": "Updated auto-select credit card type to work with hosted fields",
+          "id": 324
+        },
+        {
+          "category": "new",
+          "description": "Added hosted fields to myaccount payment",
+          "id": 322
+        },
+        {
+          "category": "new",
+          "description": "Added sample snippet to lightbox in a Vimeo video on the home page.",
+          "id": 313
+        },
+        {
+          "category": "new",
+          "description": "Added specific page titles to receipt.vm and review.vm",
+          "id": 321
+        },
+        {
+          "category": "new",
+          "description": "Added support for French",
+          "id": 318
+        },
+        {
+          "category": "new",
+          "description": "Added support for instagram",
+          "id": 311
+        }
+      ]
+    },
+    {
+      "version": 0.22,
+      "changes": [
+        {
+          "category": "important",
+          "description": "Implemented UltraCart Hosted Credit Card Fields.",
+          "id": 293
+        },
+        {
+          "category": "fixed",
+          "description": "Information only themes hide buy buttons on search results.",
+          "id": 292
+        },
+        {
+          "category": "fixed",
+          "description": "Social share buttons use title instead of extended description.",
+          "id": 291
+        }
+      ]
+    },
+    {
+      "version": 0.21,
+      "changes": [
+        {
+          "category": "important",
+          "description": "Reviews now only show up if the item has been marked as Reviewable.",
+          "id": 274
+        },
+        {
+          "category": "browser",
+          "description": "Fixed issue with Safari and address books not equalizing height properly.",
+          "id": 260
+        },
+        {
+          "category": "browser",
+          "description": "Search input font issue in FireFox.",
+          "id": 272
+        },
+        {
+          "category": "changed",
+          "description": "Background color issue if multi-currency turned off.",
+          "id": 234
+        },
+        {
+          "category": "changed",
+          "description": "Build canonical link with item.getCanonicalPath",
+          "id": 231
+        },
+        {
+          "category": "developer",
+          "description": "Variations are now implemented with the new 4.1 script to support sale cost.",
+          "id": 255
+        },
+        {
+          "category": "fixed",
+          "description": "Checkout only theme now removes mobile left menu",
+          "id": 232
+        },
+        {
+          "category": "fixed",
+          "description": "Digital download links now the same host as the StoreFront.",
+          "id": 273
+        },
+        {
+          "category": "fixed",
+          "description": "Hide row if there are no express checkout buttons.",
+          "id": 252
+        },
+        {
+          "category": "fixed",
+          "description": "Home page slider will not use overlay if there is no text associated with the image.",
+          "id": 261
+        },
+        {
+          "category": "fixed",
+          "description": "JavaScript NPE fix in MyAccount",
+          "id": 251
+        },
+        {
+          "category": "fixed",
+          "description": "JSHint fixes on single and multipage checkout .js files.",
+          "id": 253
+        },
+        {
+          "category": "fixed",
+          "description": "MyAccount Order button alignment issue fixed.",
+          "id": 263
+        },
+        {
+          "category": "fixed",
+          "description": "MyAccount wishlist JavaScript error.",
+          "id": 254
+        },
+        {
+          "category": "fixed",
+          "description": "Single page checkout default shipping method selection problem.",
+          "id": 256
+        },
+        {
+          "category": "fixed",
+          "description": "Single page checkout multi-currency double format issue cause incorrect value.",
+          "id": 259
+        },
+        {
+          "category": "fixed",
+          "description": "Social share buttons use description and default image better.",
+          "id": 258
+        },
+        {
+          "category": "fixed",
+          "description": "Styling of the search result pagination.",
+          "id": 271
+        },
+        {
+          "category": "fixed",
+          "description": "Velocity error if item did not have an image.",
+          "id": 233
+        },
+        {
+          "category": "new",
+          "description": "Addition uco_ classes added to allow targeting of company fields for hiding with CSS.",
+          "id": 262
+        },
+        {
+          "category": "new",
+          "description": "buySAFE support",
+          "id": 235
+        },
+        {
+          "category": "new",
+          "description": "Schema.org support for item information.",
+          "id": 236
+        },
+        {
+          "category": "new",
+          "description": "Single page checkout for billing only item will make AJAX call to calculate tax.",
+          "id": 257
+        }
+      ]
+    },
+    {
+      "version": 0.2,
+      "changes": [
+        {
+          "category": "developer",
+          "description": "Support for custom URL parts on items.",
+          "id": 217
+        },
+        {
+          "category": "fixed",
+          "description": "Left navigation scroll if menu taller than screen.",
+          "id": 216
+        },
+        {
+          "category": "fixed",
+          "description": "MyAccount -\u003e Order -\u003e Item URLs",
+          "id": 215
+        },
+        {
+          "category": "fixed",
+          "description": "Single page checkout credit card required for $0 order.",
+          "id": 214
+        },
+        {
+          "category": "new",
+          "description": "MyAccount Wishlist",
+          "id": 211
+        },
+        {
+          "category": "new",
+          "description": "Transferring to PayPal user notice.",
+          "id": 212
+        }
+      ]
+    },
+    {
+      "version": 0.19,
+      "changes": [
+        {
+          "category": "browser",
+          "description": "IE8 Mobile menu should function properly now",
+          "id": 199
+        },
+        {
+          "category": "browser",
+          "description": "Separated css files for LTE IE9 to fix tripping the max selector rule.",
+          "id": 200
+        },
+        {
+          "category": "changed",
+          "description": "Added foundation reveal modal for digital download click wrap agreement",
+          "id": 172
+        },
+        {
+          "category": "changed",
+          "description": "Cleaned up old versions of the stylesheet that referenced sprites.",
+          "id": 170
+        },
+        {
+          "category": "changed",
+          "description": "Removed checkout breadcrumbs from checkout only themes",
+          "id": 171
+        },
+        {
+          "category": "changed",
+          "description": "Removed legacy code related to a discarded select dropdown library (chosen.js)",
+          "id": 168
+        },
+        {
+          "category": "changed",
+          "description": "Replaced Logo with Store title if no logo is uploaded",
+          "id": 169
+        },
+        {
+          "category": "changed",
+          "description": "Switched from .getViewUrl() method to .getViewSsl() for the large, lightboxed image on the template_item.vm",
+          "id": 173
+        },
+        {
+          "category": "changed",
+          "description": "Updated document bottom to load comodo.vm, tracking.vm and conversion.vm on every relevant page",
+          "id": 174
+        },
+        {
+          "category": "changed",
+          "description": "Updated title text in document_top.vm to conditionally show the group title when it is relevant",
+          "id": 175
+        },
+        {
+          "category": "developer",
+          "description": "Two packages have been added in the package.json and Gruntfile.js",
+          "id": 190
+        },
+        {
+          "category": "developer",
+          "description": "Updated menu generation code to use the $menu.getHtml()  for all menus\"",
+          "id": 191
+        },
+        {
+          "category": "developer",
+          "description": "Upgraded to handlebars 2.0 on the myaccount section",
+          "id": 192
+        },
+        {
+          "category": "fixed",
+          "description": "Cleaned up and resolved many of the TODOs still hanging around in the code.",
+          "id": 176
+        },
+        {
+          "category": "fixed",
+          "description": "Error handling with the stripe gateway",
+          "id": 186
+        },
+        {
+          "category": "fixed",
+          "description": "Fixed an issue regarding the fieldnames on the contact form, that would cause it to fail",
+          "id": 180
+        },
+        {
+          "category": "fixed",
+          "description": "Fixed issue at checkout regarding Tax County selection",
+          "id": 177
+        },
+        {
+          "category": "fixed",
+          "description": "If the home slider item $item.getViewUrl() is null (false) then remove the anchor so it’s not clickable",
+          "id": 178
+        },
+        {
+          "category": "fixed",
+          "description": "Issue on template_item.vm that caused store-wide option selections not passing to selected value to the cart",
+          "id": 182
+        },
+        {
+          "category": "fixed",
+          "description": "Issue on the item page that prevented the sale cost from displaying, even if a sale was active for the item",
+          "id": 184
+        },
+        {
+          "category": "fixed",
+          "description": "Issue with getting the correct value for googleBaseOfferId",
+          "id": 185
+        },
+        {
+          "category": "fixed",
+          "description": "Issue with out of stock variations",
+          "id": 183
+        },
+        {
+          "category": "fixed",
+          "description": "Item price on the template_item.vm should now reflect the current variation\u0027s cost",
+          "id": 189
+        },
+        {
+          "category": "fixed",
+          "description": "Removed hard-coded, legacy merchant id from contact form, and replaced it with $merchantID Fixed an issue regarding the fieldnames on the contact form, that would cause it to fail",
+          "id": 181
+        },
+        {
+          "category": "fixed",
+          "description": "Removed legacy, hard coded logo alt attribute text, and replaced it with $site.attr(\u0027title\u0027) ",
+          "id": 179
+        },
+        {
+          "category": "fixed",
+          "description": "Removed review stars when no reviews have been made on an item",
+          "id": 187
+        },
+        {
+          "category": "fixed",
+          "description": "Single page checkout issue with paypal triggering the form validation, and preventing paypal checkouts",
+          "id": 188
+        },
+        {
+          "category": "important",
+          "description": "Migrated Home Slider items from a theme level attribute to a Page level attribute for the template_home.vm.",
+          "id": 193
+        },
+        {
+          "category": "new",
+          "description": "Checkout only and information only theme settings",
+          "id": 162
+        },
+        {
+          "category": "new",
+          "description": "Copyright snippet to the top of the template pages",
+          "id": 161
+        },
+        {
+          "category": "new",
+          "description": "I18n multi-language support for Evening Phone, Choose Shipping Methods and Email Confirmation on the checkout",
+          "id": 167
+        },
+        {
+          "category": "new",
+          "description": "Redirects for checkout only themes",
+          "id": 166
+        },
+        {
+          "category": "new",
+          "description": "SEO option to prevent indexing to toggle meta tags that prevent/allow search bots from indexing your site.",
+          "id": 163
+        },
+        {
+          "category": "new",
+          "description": "Support select from list then enter value advertising source option on single page checkout",
+          "id": 164
+        },
+        {
+          "category": "new",
+          "description": "Theme option to hide sale banner and out of stock banner.",
+          "id": 165
+        },
+        {
+          "category": "responsive",
+          "description": "Added foundation columns to items on the multipage checkout review page",
+          "id": 196
+        },
+        {
+          "category": "responsive",
+          "description": "Fixed display issues with the quote review items page on different resonsive states",
+          "id": 195
+        },
+        {
+          "category": "responsive",
+          "description": "Fixed logo text stacking issue in the footer",
+          "id": 198
+        },
+        {
+          "category": "responsive",
+          "description": "Fixed stacking issue with footer menus with foundation data-equalizer",
+          "id": 194
+        },
+        {
+          "category": "responsive",
+          "description": "Fixed wrapping issue on advertising source radio box labels",
+          "id": 197
+        }
+      ]
+    }
+  ]
+}

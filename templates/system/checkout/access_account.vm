@@ -1,0 +1,101 @@
+#* @vtlvariable name="formatHelper" type="com.bpsinfo.ultracart.catalog.tobjects.FormatHelper" *#
+#* @vtlvariable name="i18n" type="com.bpsinfo.storefront.tobjects.I18nWriter" *#
+#* @vtlvariable name="form" type="com.bpsinfo.ultracart.checkout.ui.AccessAccountForm" *#
+
+#set( $pageGroup = 'multi-page-checkout' )
+#set( $bodyClass = 'multi-page-checkout access-account' )
+#set( $pageTitle = $i18n.write("checkout.accessAccount.pageTitle", "Access Account") )
+#set( $action = "/checkout/accessAccountSave.do?merchantId=$formatHelper.urlEncode($form.merchantId)" )
+#parse('/snippets/top.vm')
+
+#parse('/snippets/breadcrumbs.vm')
+
+#if($form.allowNonmembers)
+	<div class="row">
+		<div class="columns small-16">
+			<h1>$i18n.write("checkout.accessAccount.expressCheckoutHeader", "EXPRESS CHECKOUT")</h1>
+			<p>
+				$i18n.write("checkout.accessAccount.expressCheckoutInstructions","Click <b>CONTINUE CHECKOUT</b> below if you would like to checkout without setting up an account.")
+			</p>
+
+			<br>
+
+			<form class="validate" action="$action" method="post">
+				<div class="footer-buttons">
+					<button type="submit" title="Continue Checkout" name="continueCheckout" alt="Continue Checkout" value="true">Continue Checkout</button>
+				</div>
+			</form>
+		</div>
+	</div>
+#end ## if-allowNonmembers
+
+<div class="row">
+	<div class="columns small-16">
+		<h1>Your Account</h1>
+	</div>
+</div>
+
+#parse('/snippets/errors.vm')
+#parse('/snippets/info_messages.vm')
+
+<div class="row">
+	<div class="columns small-16 medium-8 login small-half-margin-bottom">
+		<h2>$i18n.write("checkout.accessAccount.existingCustomerProfileHeader", "EXISTING CUSTOMER PROFILE")</h2>
+		<p>$i18n.write("checkout.accessAccount.profileLoginText","Login to your account to access helpful features to expedite your checkout experience.")</p>
+		<form class="half-margin-top validate" action="$action" method="post">
+			#parse('/snippets/common/storefront_template_spec_version.vm')
+			<input type="hidden" name="showForgotPassword" value="$form.showForgotPassword"/>
+			<label class="label-move">
+				<span for="input-existing-login">$i18n.write("checkout.accessAccount.emailField", "Email")</span>
+				<input type="email" id="input-existing-login" name="memberEmail" required placeholder="example@domain.com"  value="$i18n.escape($!form.memberEmail)" maxlength="50" />
+			</label>
+
+			<label class="label-move">
+				<span for="input-existing-password">
+					$i18n.write("checkout.accessAccount.passwordField","Password")
+				</span>
+				<input type="password" id="input-existing-password" name="memberPassword" required placeholder="Password"  value="$i18n.escape($!form.memberPassword)" maxlength="30" />
+				#if($form.showForgotPassword)
+					<a href="/checkout/forgotPasswordLoad.do" class="forgot-password-link no-margin-bottom" tabindex="-1" >$i18n.write("checkout.accessAccount.forgotPasswordText","I forgot my password")</a>
+				#end
+			</label>
+
+			<div class="footer-buttons text-right">
+				<button type="submit" class="button no-margin" name="memberSubmit" title="Login">Login</button>
+			</div>
+		</form>
+	</div>
+
+	<div class="columns small-16 medium-8 create">
+		<h2>$i18n.write("checkout.accessAccount.createCustomerProfileHeader", "CREATE A CUSTOMER PROFILE")</h2>
+		<p>$i18n.write("checkout.accessAccount.profileBenefitText","Setting up an account will give you access to checkout features such as our convenient Address Book.")</p>
+
+		<form class="half-margin-top validate" action="$action" method="post">
+			#parse('/snippets/common/storefront_template_spec_version.vm')
+			<label class="label-move">
+				<span for="input-customer-email">$i18n.write("checkout.accessAccount.emailField","Email")</span>
+				<input type="email" id="input-customer-email" name="newMemberEmail" required placeholder="example@domain.com" value="$i18n.escape($!form.newMemberEmail)" maxlength="50"  />
+			</label>
+
+			<label class="label-move">
+				<span for="input-customer-password">$i18n.write("checkout.accessAccount.passwordField","Password")</span>
+				<input type="password" id="input-customer-password" name="newMemberPassword" required placeholder="Password" value="$i18n.escape($!form.newMemberPassword)" maxlength="30" />
+			</label>
+
+			<label class="label-move">
+				<span for="input-customer-confirm">$i18n.write("checkout.accessAccount.confirmPasswordField","Confirm Password")</span>
+				<input type="password" id="input-customer-confirm" name="newMemberConfirmPassword" required placeholder="Confirm Password" data-rule-equalto="#input-customer-password" value="$i18n.escape($!form.newMemberConfirmPassword)" maxlength="30" />
+			</label>
+
+			<div class="footer-buttons text-right">
+				<button type="submit" name="newMemberSubmit" class="button no-margin" title="Create Account">Create Account</button>
+			</div>
+		</form>
+	</div>
+</div>
+
+
+#parse('system://3.0/snippets/cart_exit_pop.vm')
+
+
+#parse('/snippets/bottom.vm')

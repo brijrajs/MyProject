@@ -1,0 +1,47 @@
+##
+## UltraCart - Mr Teas Template
+## http://www.ultracart.com/
+##
+## Copyright (c) 2015 BPS Info Solutions Inc.
+## License located here:
+## http://www.ultracart.com/storefront/license/
+##
+## Designed by Level 2 Design, LLC http://www.level2d.com/
+##
+
+#* @vtlvariable name="formatHelper" type="com.bpsinfo.ultracart.catalog.tobjects.FormatHelper" *#
+#* @vtlvariable name="i18n" type="com.bpsinfo.storefront.tobjects.I18nWriter" *#
+#* @vtlvariable name="form" type="com.bpsinfo.ultracart.affiliate.ui.partner.UpdatedTermsForm" *#
+
+#set( $pageGroup = 'affiliate' )
+#set( $bodyClass = 'affiliate updated-terms' )
+#set( $pageTitle = 'Updated Terms' )
+#parse('/snippets/top.vm')
+
+#set( $title = $pageTitle )
+#parse('/snippets/title.vm')
+
+<form action="/affiliate/partner/updatedTermsSave.do" method='post'>
+    #parse('/snippets/common/storefront_template_spec_version.vm')
+	#parse('/snippets/errors.vm')
+	#parse('/snippets/info_messages.vm')
+
+	<div class="row">
+
+		<div class="columns small-16">
+			<pre class="scrollbox">$i18n.escape($!form.terms)</pre>
+
+			<label>
+				<span>I have read and accept the terms and conditions.</span>
+				<input type="checkbox" name="acceptTerms" class="normalText" value="true" #if($form.acceptTerms)checked='checked'#{end}/>
+			</label>
+		</div>
+	</div>
+
+	#parse('/snippets/button.continue.vm')
+
+	#parse('/snippets/common/cs_token.vm')
+
+</form>
+
+#parse('/snippets/bottom.vm')

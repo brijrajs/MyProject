@@ -1,0 +1,13 @@
+##
+## UltraCart - Mr Teas Template
+## http://www.ultracart.com/
+##
+## Copyright (c) 2015 BPS Info Solutions Inc.
+## License located here:
+## http://www.ultracart.com/storefront/license/
+##
+## Designed by Level 2 Design, LLC http://www.level2d.com/
+##
+
+## This is so we can add functionality in the future without breaking existing templates that might not support it
+<input type='hidden' name='storefrontTemplateSpecVersion' value='3.0'>

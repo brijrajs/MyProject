@@ -1,0 +1,64 @@
+## email_this_cart
+## Subject: The subject line for this email is contained in the Languages sections under the key email.email_this_cart.subject for multi-lingual support.
+
+## Testing: Previewing an email template will use the latest order id in your store.  You may specify an order id by adding it to the following line:
+## Note: THIS IS NOT USED FOR 'email this cart'.  See the next directive...
+## uc:test-order-id="DEMO-12345"
+
+## Testing: Previewing an 'email this cart' template will use the test item ids to fabricate a shopping cart.  You may specify item ids as a csv list by adding it to the following line:
+## uc:test-item-ids="BONE,PDF,TSHIRT"
+
+## variables:
+##
+## $items: an array of items in the current cart.  to protect sensitive information, the entire cart is not available, only the items.
+## #for($item in $cartItems)  #end
+## 		$item.getMerchantItemID()
+## 		$item.getCost()
+## 		$item.getDescription()
+## 		$item.getExtendedDescription()
+## 		$item.getImageURL()
+## 		$item.getManufacturerName()
+## 		$item.getManufacturerSKU()
+## 		$item.getThumbnail()
+## 		$item.getViewURL()
+## #end
+
+## $company
+## $customerServiceEmail
+## $toEmail
+## $fromEmail
+## $fromName
+
+## $storeFront
+##      $storeFront.getFileUrl("/images/image1.gif")    <== this will return the full url to the file
+##      $storeFront.getStyle("/css/email.css")  <== this will load the css file and embed it within <style> tags in your email.
+## $i18n
+##      $i18n.write("key.path", "Default Value")
+##      $i18n.write("key.path", "Default Value", true) <== 3rd variable is to perform html escape. set to true to perform escaping
+
+
+
+<html>
+  <body>
+    <pre>
+#foreach($item in $items)
+<a href='$item.getViewURL()'>$item.getMerchantItemID()</a>
+<a href='$item.getViewURL()'><img src='$item.getImageURL()'/></a>
+
+MerchantItemID:      $item.getMerchantItemID()
+Cost:                $item.getCost()
+## Description:         $item.getDescription()
+Title:				 $item.getTitle()
+ExtendedDescription: $item.getExtendedDescription()
+ImageURL:            $item.getImageURL()
+ManufacturerName:    $item.getManufacturerName()
+ManufacturerSKU:     $item.getManufacturerSKU()
+Thumbnail:           $item.getThumbnail()
+ViewURL:             $item.getViewURL()
+
+<hr>
+#end
+
+	</pre>
+  </body>
+</html>

@@ -1,0 +1,736 @@
+##
+## UltraCart - Mr Teas Template
+## http://www.ultracart.com/
+##
+## Copyright (c) 2015 BPS Info Solutions Inc.
+## License located here:
+## http://www.ultracart.com/storefront/license/
+##
+## Designed by Level 2 Design, LLC http://www.level2d.com/
+##
+
+#* @vtlvariable name="order" type="com.bpsinfo.storefront.tobjects.Order" *#
+#* @vtlvariable name="conversion" type="com.bpsinfo.storefront.tobjects.ConversionAndTracking" *#
+#* @vtlvariable name="formatHelper" type="com.bpsinfo.ultracart.catalog.tobjects.FormatHelper" *#
+#* @vtlvariable name="i18n" type="com.bpsinfo.storefront.tobjects.I18nWriter" *#
+
+
+#if("$!conversion" != "")
+
+  #set($order = $conversion.order)
+
+
+## <!-- ======================================================================= -->
+## <!-- ======================================================================= -->
+#if($conversion.isConfigured("officeAutoPilot"))
+
+  #set($config = $conversion.getCompany('officeAutoPilot'))
+
+  #set($oapUrl = "https://${config.value('pixelHost')}/p?order_id=${formatHelper.urlEncode(${order.orderId})}&E-Mail=${formatHelper.urlEncode(${order.recipientEmail})}&First_Name=${formatHelper.urlEncode(${order.billingFirstName})}&Last_Name=${formatHelper.urlEncode(${order.billingLastName})}")
+
+  #set($oapIndex = 0)
+  #foreach($item in $order.items)
+    #if($!item.getAttributeValue("oapProductId") != "")
+      #set($oapProductId = $item.getAttributeValue("oapProductId"))
+      #set($oapIndex = $oapIndex + 1)
+      #set($oapItemUrl = "&item_id_${oapIndex}=${formatHelper.urlEncode(${oapProductId})}&item_external_id_${oapIndex}=${formatHelper.urlEncode(${item.itemId})}&item_price_${oapIndex}=${formatHelper.urlEncode($formatHelper.formatMoney($item.unitCostWithDiscount))}&item_qty_${oapIndex}=${formatHelper.roundUpToInt(${item.getQuantity()})}" )
+      #set($oapUrl = $oapUrl + $oapItemUrl)
+
+    #end ##if-item is configured with OAP product id
+  #end  ##foreach-item in order
+
+<!-- OAP Conversion Pixel -->
+<img src="$oapUrl" alt=''/>
+
+#end ##if-officeAutoPilot
+
+
+
+
+
+## <!-- ======================================================================= -->
+## <!-- ======================================================================= -->
+#if($conversion.isConfigured("googleTrustedStore"))
+
+  #set($config = $conversion.getCompany('googleTrustedStore'))
+
+<!-- BEGIN: Google Trusted Store -->
+<script type="text/javascript">
+  var gts = gts || [];
+
+  gts.push(["id", "${config.value('storeId')}"]);
+  gts.push(["google_base_offer_id", "$item.itemId"]);
+  gts.push(["google_base_subaccount_id", "${config.value('shoppingAccountId')}"]);
+  
+  
+  (function () {
+    var scheme = ("https:" == document.location.protocol) ? "https://" : "http://";
+    var gts = document.createElement("script");
+    gts.type = "text/javascript";
+    gts.async = true;
+    gts.src = scheme + "www.googlecommerce.com/trustedstores/gtmp_compiled.js";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(gts, s);
+  })();
+</script>
+
+<div id="gts-order" style="display:none;">
+
+  <!-- start order and merchant information -->
+  <span id="gts-o-id">${order.orderId}</span>
+  <span id="gts-o-domain">$config.value('domain')</span>
+  <span id="gts-o-email">${order.email}</span>
+  <span id="gts-o-country">${order.billToCountryCode}</span>
+  <span id="gts-o-currency">${order.currencyCode}</span>
+  <span id="gts-o-total">${formatHelper.formatBigDecimal($order.total)}</span>
+  <span id="gts-o-discounts">${formatHelper.formatBigDecimal($order.discount)}</span>
+  <span id="gts-o-shipping-total">${formatHelper.formatBigDecimal($order.shippingHandlingTotal)}</span>
+  <span id="gts-o-tax-total">${formatHelper.formatBigDecimal($order.tax)}</span>
+  <span id="gts-o-est-ship-date">$config.value("estimatedShipDate")</span>
+
+  #set($preorderFlag = "N")
+  #if($order.isContainsPreorder())#set($preorderFlag = "Y")#{end}
+  #set($digitalDeliveryFlag = "N")
+  #if($order.isContainsDigitalDelivery())#set($digitalDeliveryFlag = "Y")#{end}
+
+  <span id="gts-o-has-preorder">${preorderFlag}</span>
+  <span id="gts-o-has-digital">${digitalDeliveryFlag}</span>
+  <!-- end order and merchant information -->
+  <!-- start repeated item specific information -->
+  #set($gpsItems = $config.valueList("googleProductSearchItems"))
+  #foreach($item in $order.items)
+
+    <span class="gts-item">
+     <span class="gts-i-name">$item.itemId</span>
+     <span class="gts-i-price">$formatHelper.formatBigDecimal($item.totalCost.subtract($item.discount))</span>
+     <span class="gts-i-quantity">$formatHelper.roundUpToInt($item.quantity)</span>
+
+    ## Is this item listed on Google Product Search?
+      #if($gpsItems.contains($item.itemId) && $!config.value('shoppingAccountId') != "")
+        <span class="gts-i-prodsearch-id">$item.itemId</span>
+       <span class="gts-i-prodsearch-store-id">${config.value('storeId')}</span>
+       <span class="gts-i-prodsearch-country">US</span>
+       <span class="gts-i-prodsearch-language">EN</span>
+      #end
+   </span>
+
+  #end ##foreach item
+  <!-- end repeated item specific information -->
+</div>
+<!-- END Trusted Stores -->
+
+
+#end ##if-googleTrustedStore
+
+
+
+
+## <!-- ======================================================================= -->
+## <!-- ======================================================================= -->
+#if($conversion.isConfigured("kissmetrics"))
+
+  #set($config = $conversion.getCompany('kissmetrics'))
+  #set($apiKey = $config.value('apiKey'))
+
+<script type="text/javascript">
+  var _kmq = _kmq || [];
+  function _kms(u) {
+    setTimeout(function () {
+      var s = document.createElement('script');
+      var f = document.getElementsByTagName('script')[0];
+      s.type = 'text/javascript';
+      s.async = true;
+      s.src = u;
+      f.parentNode.insertBefore(s, f);
+    }, 1);
+  }
+  _kms('//i.kissmetrics.com/i.js');
+  _kms('//doug1izaerwt3.cloudfront.net/${apiKey}.1.js');
+</script>
+
+<script type="text/javascript">
+  _kmq.push(['record', 'Completed Purchase', {'Purchase Amount': '$formatHelper.escapeJavascript($formatHelper.formatMoney($order.subtotal))' }]);
+</script>
+
+#end ## end KISSmetrics
+
+
+
+
+## <!-- ======================================================================= -->
+## <!-- ======================================================================= -->
+#if($conversion.isConfigured("AffiliateNetworkPixel"))
+
+  #set($config = $conversion.getCompany('AffiliateNetworkPixel'))
+  #set($anpConversionPixel = $config.value("conversionPixel"))
+  #if("$!anpConversionPixel" != "")
+    $anpConversionPixel
+  #end
+
+#end ##end Affiliate Network Pixel
+
+
+
+
+## <!-- ======================================================================= -->
+## <!-- ======================================================================= -->
+#if($conversion.isConfigured("iBehavior"))
+
+  #set($config = $conversion.getCompany('iBehavior'))
+
+<!-- START: ib-ibi.com tag -->
+<script type="text/javascript">
+  var _ibOrderId = "${order.orderId}";
+  var _ibHost = ("https:" == document.location.protocol) ? "https://" : "http://";
+  document.write(unescape("%3Cscript src='" + _ibHost + "ev.ib-ibi.com/conversion.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<noscript>
+  <iframe id="iframelanding" src="https://ev.ib-ibi.com/conversion.html?orderid=${order.orderId}" width="0" height="0"
+          frameborder="0" scrolling="no" marginheight="0" marginwidth="0" topmargin="0" leftmargin="0"></iframe>
+</noscript>
+<!-- END: ib-ibi.com tag -->
+
+
+
+#end ## end iBehavior
+
+
+
+
+## <!-- ======================================================================= -->
+## <!-- ======================================================================= -->
+#if($conversion.isConfigured("ARPU"))
+
+  #set($config = $conversion.getCompany('ARPU'))
+
+
+<script type="text/javascript" src="/arpu/givaclick_prototype.js"></script>
+<script type="text/javascript" src="/arpu/givaclick_mootools.js"></script>
+<script type="text/javascript"src="/arpu/givaclick-config.jsp?merchantId=${order.merchantId}&themeCode=${config.value('themeCode')}"></script>
+<script type="text/javascript" src="/arpu/givaclick.js"></script>
+
+<script type="text/javascript">
+  // Define a JavaScript function that sets the necessary user information.
+  function setValues() {
+    GACOrder.initialize();
+    var key = GACOrder.generateEncryptionKey();
+    GACOrder.setFirstName('TBD');
+    GACOrder.setLastName('TBD');
+    GACOrder.setEmail('$formatHelper.escapeJavascript($order.email)');
+    GACOrder.setBillingAddressStreet1('TBD');
+    GACOrder.setBillingAddressStreet2('TBD');
+    GACOrder.setBillingCity('$formatHelper.escapeJavascript($order.billToCity)');
+    GACOrder.setBillingState('$formatHelper.escapeJavascript($order.billToState)');
+    GACOrder.setBillingCountry('$formatHelper.escapeJavascript($order.billToCountryCode)');
+    GACOrder.setBillingZip('$formatHelper.escapeJavascript($order.billToPostalCode)');
+    GACOrder.setPhone('209-555-1234');
+    GACOrder.setCardName('$formatHelper.escapeJavascript("$order.billToFirstName $order.billToLastName")');
+    GACOrder.setCardNumber('4111111111111111');
+    GACOrder.setCardMonth('10');
+    GACOrder.setCardYear('2015');
+    GACOrder.set('orderId', '$config.value('encryptedOrderId')');
+
+  ## Set specific flags based upon this order
+  ## if (!order.getPaymentMethod().equalsIgnoreCase(PlacedOrderVO.PAYMENT_METHOD_CREDIT_CARD)) {
+  ##          GIVACLICK_AD_FIELDS.hasCreditCard = false;
+  ##}
+    #if("$!{order.shippingMethod}" == "")
+      GIVACLICK_AD_FIELDS.hasShippingAddress = false;
+    #end
+    #if("$!{order.email}" == "")
+      GIVACLICK_AD_FIELDS.hasEmail = false;
+    #end
+    #if("$!{order.shipToDayPhone}" == "" && "$!{order.billToDayPhone}" == "")
+      GIVACLICK_AD_FIELDS.hasPhone = false;
+    #end
+
+  }
+
+  // Define a JavaScript function to load the ad after the page is loaded. A
+  // slight delay is necessary to ensure that the Flash object has been
+  // initialized.
+  function loadAd() {
+    // Call function to set the values on the order.
+    setTimeout('setValues()', 500);
+
+    // Get the ad.
+    setTimeout('GACOrder.getAd()', 1000);
+  }
+
+  window.addEvent('domready', loadAd);
+
+  // Define a JavaScript function to handle the order response and register
+  // the function as the order response handler.
+  function handleOrderResponse(message) {
+    // The value of message will be either 'SUCCESS' or 'ERROR'.
+    // alert(message);
+  }
+
+  GACOrder.setResponseHandler(handleOrderResponse);
+</script>
+
+
+#end ## end ARPU
+
+
+
+## <!-- ======================================================================= -->
+## <!-- ======================================================================= -->
+#if($conversion.isConfigured("buysafe"))
+  #set($config = $conversion.getCompany('buysafe'))
+<span id="BuySafeSealSpan"></span>
+<script src="${config.value('scriptUrl')}"></script>
+<script type="text/javascript">WriteBuySafeSeal('BuySafeSealSpan', '${config.value("sealSize")}', 'HASH=${config.value("sealHash")}'#if($config.value('triangleSeal') == 'true'), 1#{end});</script>
+#end ## end buysafe
+
+
+
+
+
+## <!-- ======================================================================= -->
+## <!-- ======================================================================= -->
+#if($conversion.isConfigured("yahoo"))
+
+  #set($config = $conversion.getCompany('yahoo'))
+  #set($ysmAccountId = $config.value('ysmAccountId'))
+  #set($themeAccountId = $config.value('themeAccountId'))
+  #set($accountIdList = $config.valueList('yahooAccountIds'))
+
+
+  #if("$!ysmAccountId" != "")
+  <script type="text/javascript">
+    window.ysm_customData = {};
+    window.ysm_customData.conversion = "transId=${order.orderId},currency=${config.value('baseCurrencyCode')},amount=$config.value('commission')";
+    var ysm_accountid = "${ysmAccountId}";
+    document.write("<scr" + "ipt type='text/javascript' "
+        + "src=//" + "srv3.wa.marketingsolutions.yahoo.com" + "/script/ScriptServlet" + "?aid=" + ysm_accountid
+        + "></scr" + "ipt>");
+  </script>
+
+
+  #else ## old style yahoo
+
+    #foreach($yahooAccountId in $accountIdList)
+      #if($yahooAccountId.length() > 15)
+      <script type="text/javascript">
+        window.ysm_customData = {};
+        window.ysm_customData.conversion = "transId=${order.orderId},currency=${config.value('baseCurrencyCode')},amount=${formatHelper.formatMoney($order.subtotal)}";
+        var ysm_accountid = "${yahooAccountId}";
+        document.write("<scr" + "ipt type='text/javascript' "
+            + "src=//" + "srv3.wa.marketingsolutions.yahoo.com" + "/script/ScriptServlet" + "?aid=" + ysm_accountid
+            + "></scr" + "ipt>");
+      </script>
+
+
+      #else
+
+      <script type="text/javascript">
+        var cc_tagVersion = "1.0";
+        var cc_accountID = "${yahooAccountId}";
+        var cc_marketID = "0";
+        var cc_protocol = "http";
+        var cc_subdomain = "convctr";
+        if (location.protocol == "https:") {
+          cc_protocol = "https";
+          cc_subdomain = "convctrs";
+        }
+
+        var cc_queryStr = "?" + "ver=" + cc_tagVersion + "&aID=" + cc_accountID + "&mkt=" + cc_marketID + "&ref=" + escape(document.referrer);
+        var cc_imageUrl = cc_protocol + "://" + cc_subdomain + ".overture.com/images/cc/cc.gif" + cc_queryStr;
+        var cc_imageObject = new Image();
+        cc_imageObject.src = cc_imageUrl;
+      </script>
+
+      #end ##if-yahoo account id > 15
+    #end ##foreach-yahoo account id
+
+
+  #end ## if this is the new style of yahoo (accountId != ""))
+
+#end ##end Yahoo
+
+
+
+
+## <!-- ======================================================================= -->
+## <!-- ======================================================================= -->
+#if($conversion.isConfigured("commissionJunction"))
+
+  #set($config = $conversion.getCompany('commissionJunction'))
+  #set($conversionPixel = $config.value('conversionPixel'))
+  $!conversionPixel
+
+#end ## end of commissionJunction
+
+
+
+
+
+
+## <!-- ======================================================================= -->
+## <!-- ======================================================================= -->
+#if($conversion.isConfigured("googleAdwords"))
+
+  #set($config = $conversion.getCompany('googleAdwords'))
+  #set($adwordsConversionId = $config.value('adwordsConversionId'))
+  #set($affiliateConversionId = $config.value('affiliateConversionId'))
+
+  #set($commission = $config.value('commission'))
+  #set($conversionField = $config.value('conversionField')) ## total or subtotal
+  #set($googleAdwordsLabel = $config.value('googleAdwordsLabel'))
+  #set($urlEncodedGoogleAdwordsLabel = $config.value('urlEncodedGoogleAdwordsLabel'))
+
+
+  #if("$!affiliateConversionId" != "") ## affiliate style
+
+  <!-- Google Code for Purchase Conversion Page -->
+  <script type="text/javascript">
+    var google_conversion_id = ${affiliateConversionId};
+    var google_conversion_language = "en_US";
+    var google_conversion_format = "2";
+    var google_conversion_color = "666666";
+    if (1.0) {
+      var google_conversion_value = ${commission};
+    }
+    var google_conversion_label = "Purchase";
+  </script>
+  <script type="text/javascript" src="https://www.googleadservices.com/pagead/conversion.js"></script>
+  <noscript>
+    <img height=1 width=1 border=0
+         src="https://www.googleadservices.com/pagead/conversion/${affiliateConversionId}/?value=${commission}&label=Purchase&script=0" />
+  </noscript>
+
+
+
+  #else ## adwords style
+
+    #set($googleAdwordConversionIds = $config.valueList('adwordsConversionIds'))
+    #foreach($conversionId in $googleAdwordConversionIds)
+
+    <!-- Google Code for Purchase Conversion Page -->
+    <script type="text/javascript">
+      var google_conversion_id = ${conversionId};
+      var google_conversion_language = "en_US";
+      var google_conversion_format = "2";
+      var google_conversion_color = "666666";
+      if (1.0) {
+        var google_conversion_value = 0;
+        #if($conversionField == "total")
+          google_conversion_value = $formatHelper.formatMoney($order.total);
+        #else
+          google_conversion_value = $formatHelper.formatMoney($order.subtotal);
+        #end
+      }
+      var google_conversion_label = "${googleAdwordsLabel}";
+    </script>
+    <script type="text/javascript" src="https://www.googleadservices.com/pagead/conversion.js"></script>
+    <noscript>
+      <img height=1 width=1 border=0 src="https://www.googleadservices.com/pagead/conversion/${conversionId}/?value=${formatHelper.formatMoney($order.subtotal)}&label=${urlEncodedGoogleAdwordsLabel}&script=0" />
+    </noscript>
+
+    #end ## foreach conversion id
+
+  #end ## choose adwords style
+#end  ## end googleAdwords
+
+
+
+
+## <!-- ======================================================================= -->
+## <!-- ======================================================================= -->
+#if($conversion.isConfigured("googleAffiliateNetwork"))
+
+  #set($config = $conversion.getCompany('googleAffiliateNetwork'))
+
+  #set($advertiserId = $config.value('advertiserId'))
+  #set($productSku = $config.value('productSku'))
+  #set($productQuantity = $config.value('productQuantity'))
+  #set($productCost = $config.value('productCost'))
+
+<img
+    src="https://gan.doubleclick.net/gan_conversion?advid=${formatHelper.urlEncode($advertiserId)}&event_type=transaction&oid=${order.orderId}&amt=${formatHelper.formatMoney($order.subtotal)}&prdsku=${productSku}&prdqn=${productQuantity}&prdpr=${productCost}"
+    width="1" height="1"/>
+
+#end ## if google affiliate network
+
+
+
+
+
+## <!-- ======================================================================= -->
+## <!-- ======================================================================= -->
+#if($conversion.isConfigured("googleAnalytics"))
+
+  #set($config = $conversion.getCompany('googleAnalytics'))
+  #set($trackingType = $config.value('trackingType'))
+  #set($accountNumber = $config.value('accountNumber'))
+  #set($domain = $config.value('domain'))
+  #set($merchantId = $config.value('merchantId'))
+  #set($affiliateEmail = $config.value('affiliateEmail'))
+
+
+## trackingType was never meant to be an externally visible variable.  Hence the loose naming conventions
+  #if($trackingType == "Display Network" || $trackingType == "Asynchronous")
+
+  <script type="text/javascript">
+
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', '${accountNumber}']);
+    _gaq.push(['_setDomainName', '${domain}']);
+    _gaq.push(['_setAllowLinker', true]);
+    _gaq.push(['_trackPageview']);
+    _gaq.push(['_addTrans',
+      '${order.orderId}',
+      '${merchantId}',
+      '${formatHelper.formatMoney($order.total)}',
+      '${formatHelper.formatMoney($order.tax)}',
+      '${formatHelper.formatMoney($order.shippingHandlingTotal)}',
+      '${order.billToCity}',
+      '${order.billToState}',
+      '${order.get3LetterCodeFromCountry($order.billToCountry)}'
+    ]);
+
+    ## Note: The blank parameter (5th parameter) )below is for category or variation
+      #foreach($item in $order.items)
+      _gaq.push(['_addItem',
+        '${order.orderId}',
+        '${item.itemId}',
+        '#if($item.description.contains("\n"))${formatHelper.escapeJavascript($item.metaData.description)}#{else}${formatHelper.escapeJavascript($item.description)}#{end}',
+        '', // category or variation
+        '${formatHelper.formatMoney($item.unitCostWithSubtotalDiscount)}',
+        '${formatHelper.formatBigDecimal($item.quantity)}'
+      ]);
+      #end ##foreach item
+
+    _gaq.push(['_trackTrans']);
+
+    (function () {
+      var ga = document.createElement('script');
+      ga.type = 'text/javascript';
+      ga.async = true;
+      #if($trackingType == "Display Network")
+        ga.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';
+      #else
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      #end
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(ga, s);
+    })();
+
+  </script>
+
+
+  #elseif($trackingType == "E-commerce")
+
+    <!-- Google Analytics -->
+    <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('require', 'ecommerce');
+    ga('create', '${accountNumber}', {'cookieDomain': '${domain}', 'allowLinker': true});
+    ga('send', 'pageview');
+
+    ga('ecommerce:addTransaction', {
+       'id': '${order.orderId}',                                                // Transaction ID. Required.
+       'affiliation': '${merchantId}',                                          // Affiliation or store name.
+       'revenue': '${formatHelper.formatMoney($order.total)}',                  // Grand Total.
+       'shipping': '${formatHelper.formatMoney($order.shippingHandlingTotal)}', // Shipping.
+       'tax': '${formatHelper.formatMoney($order.tax)}'                         // Tax.
+    });
+
+    #foreach($item in $order.items)
+      ga('ecommerce:addItem', {
+        'id': '${order.orderId}',                                                   // Transaction ID. Required.
+        'name': '#if($item.description.contains("\n"))${formatHelper.escapeJavascript($item.metaData.description)}#{else}${formatHelper.escapeJavascript($item.description)}#{end}',    // Product name. Required.
+        'sku': '${item.itemId}',                                                    // SKU/code.
+        'category': '',                                                             // Category or variation.
+        'price': '${formatHelper.formatMoney($item.unitCostWithSubtotalDiscount)}', // Unit price.
+        'quantity': '${formatHelper.formatBigDecimal($item.quantity)}'              // Quantity.
+      });
+    #end ##foreach item
+
+    ga('ecommerce:send');
+
+    </script>
+    <!-- End Google Analytics -->
+
+  #elseif($trackingType == "New GA Style")
+
+  <script type="text/javascript">
+    var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+    document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+  </script>
+  <script type="text/javascript">
+    var pageTracker = _gat._getTracker("${accountNumber}");
+    pageTracker._setDomainName("${domain}");
+    pageTracker._setAllowLinker(true);
+    pageTracker._initData();
+    pageTracker._trackPageview();
+    pageTracker._addTrans(
+        "${order.orderId}", // Order ID
+        "${merchantId}", // Affiliation
+        "${formatHelper.formatMoney($order.total)}", // Total
+        "${formatHelper.formatMoney($order.tax)}", // Tax
+        "${formatHelper.formatMoney($order.shippingHandlingTotal)}", // Shipping
+        "${order.billToCity}", // City
+        "${order.billToState}", // State
+        "${order.get3LetterCodeFromCountry($order.billToCountry)}" // Country
+    );
+
+      #foreach($item in $order.items)
+      pageTracker._addItem(
+          "${order.orderId}", // Order ID
+          "${item.itemId}", // SKU
+          "#if($item.description.contains("\n"))${formatHelper.escapeJavascript($item.metaData.description)}#{else}${formatHelper.escapeJavascript($item.description)}#{end}", // Product Name
+          "", // Category
+          "${formatHelper.formatMoney($item.unitCostWithSubtotalDiscount)}", // Price
+          "${formatHelper.formatBigDecimal($item.quantity)}" // Quantity
+      );
+      #end ##foreach item
+
+    pageTracker._trackTrans();
+  </script>
+
+
+  #else  ##urchin
+
+
+  <script src="https://ssl.google-analytics.com/urchin.js" type="text/javascript"></script>
+  <script type='text/javascript'>
+    _uacct = "${accountNumber}";
+    _udn = "$domain";
+      #if("$!domain" == "none")
+      _ulink = 1;
+      #end
+    urchinTracker();
+  </script>
+
+  ## one item per line item
+  <form style="display:none;" name="utmform"><textarea id="utmtrans">
+UTM:T|${order.orderId}|${affiliateEmail}|${formatHelper.formatMoney($order.total)}|${formatHelper.formatMoney($order.tax)}|${formatHelper.formatMoney($order.shippingHandlingTotal)}|${order.shipToCity}|${order.shipToState}|${order.shipToCountry}
+    #foreach($item in $order.items)
+UTM:I|${order.orderId}|${item.itemId}|${formatHelper.replaceNewlinesAndPipes($item.description)}||${formatHelper.formatMoney($item.unitCostWithSubtotalDiscount)}|$item.quantity
+    #{end}
+
+  </textarea></form>
+  <script type="text/javascript">__utmSetTrans();</script>
+
+
+  #end ## what type of GA is this?
+
+#end ##if google analytics
+
+
+
+
+
+## <!-- ======================================================================= -->
+## <!-- ======================================================================= -->
+#if($conversion.isConfigured("ultraRoi"))
+
+  #set($config = $conversion.getCompany('ultraRoi'))
+
+  #set($clientId = $config.value('clientId'))
+  #set($hostLink = $config.value('hostLink'))
+  #set($affiliateId = $config.value('affiliateId'))
+  #set($commission = $config.value('commission'))
+
+<script type="text/javascript" src="https://www.ultraroi.com/ultraroi.js?cid=${clientId}&cascade=true"></script>
+<script type="text/javascript" src="https://www.ultraroi.com/ultraroiconv.jsp?cid=${clientId}&cascade=true&orderid=${order.orderId}&affiliateid=${affiliateId}&affiliatecommission=${commission}&amount=${formatHelper.formatMoney($order.subtotal)}&skus=${order.getItemIds()}&quantities=${order.getItemQuantities()}&costs=${order.getItemCosts()}"></script>
+
+
+#end  ##end UltraROI
+
+
+
+
+## <!-- ======================================================================= -->
+## <!-- ======================================================================= -->
+#if($conversion.isConfigured("Shopzilla"))
+
+  #set($config = $conversion.getCompany('Shopzilla'))
+  #set($shopzillaMerchantId = $config.value('shopzillaMerchantId'))
+
+<script type="text/javascript">
+  var mid = '${shopzillaMerchantId}';
+  var cust_type = '';
+  var order_value = '${formatHelper.formatMoney($order.subtotal)}';
+  var order_id = '${order.orderId}';
+  var units_ordered = '${formatHelper.formatBigDecimal($order.getItemCount())}';
+</script>
+<script type="text/javascript" src="https://www.shopzilla.com/css/roi_tracker.js"></script>
+
+#end ## end Shopzilla
+
+
+## <!-- ======================================================================= -->
+## <!-- ======================================================================= -->
+#if($conversion.isConfigured("ShareASale"))
+
+  #set($config = $conversion.getCompany('ShareASale'))
+  #set($shareASaleMerchantId = $config.value('shareASaleMerchantId'))
+<img src="https://shareasale.com/sale.cfm?amount=${formatHelper.formatMoney($order.subtotal)}&tracking=${order.orderId}&transtype=sale&merchantID=${shareASaleMerchantId}" width="1" height="1"/>
+
+#end ## end Share-A-Sale
+
+
+
+## <!-- ======================================================================= -->
+## <!-- ======================================================================= -->
+#if($conversion.isConfigured("smartSell"))
+
+  #set($config = $conversion.getCompany('smartSell'))
+
+  #set($smartSellPartnerCode = $config.value('smartSellPartnerCode'))
+  #set($cdt = $config.value('cdt'))
+  #set($returnUrl = $config.value('returnUrl'))
+  #set($bgColor = $config.value('bgColor'))
+
+<iframe
+    frameborder='no'
+    id='SmartSellBanner'
+    src='https://secure.majorsavings.com/SmartSellOnline/mediaads/GetBanner.aspx?p=${smartSellPartnerCode}&CDT=${cdt}&rp=${returnUrl}&bgcolor=${bgColor}'
+    style='width:760px;height:150px'></iframe>
+
+  #end ## SmartSell
+
+
+
+
+## <!-- ======================================================================= -->
+## <!-- ======================================================================= -->
+#if($conversion.isConfigured("custom"))
+
+    #set($config = $conversion.getCompany('custom'))
+    #set($conversionHtml = $config.value('conversionHtml'))
+    #if("$!conversionHtml" != "")
+      #evaluate($conversionHtml)
+    #end
+
+  #end ## custom conversion html
+
+
+## <!-- ======================================================================= -->
+## <!-- ======================================================================= -->
+#if($conversion.isConfigured("silverPop"))
+
+  #set($config = $conversion.getCompany('silverPop'))
+
+  #set($mailingId = $config.value('mailingId'))
+  #set($userId = $config.value('userId'))
+  #set($jobId = $config.value('jobId'))
+  #set($reportId = $config.value('reportId'))
+  #set($apiServer = $config.value('apiServer'))
+  #set($cstServer = $config.value('cstServer'))
+  #set($pageUrl = $config.value('pageUrl'))
+  #set($title = $config.value('title'))
+
+  <img class="cotImg" src="https://${cstServer}/cot?name=${formatHelper.urlEncode($title)}&m=${formatHelper.urlEncode($mailingId)}&r=${formatHelper.urlEncode($userId)}&j=${formatHelper.urlEncode($jobId)}&rj=${formatHelper.urlEncode($reportId)}&s=${formatHelper.urlEncode($pageUrl)}&a=SALE&d=&amt=${formatHelper.formatMoney($order.total)}" width="1" height="1" />
+
+#end ## Silver Pop
+
+
+#{end} ## do we have a conversion object

@@ -1,0 +1,83 @@
+##
+## UltraCart - Mr Teas Template
+## http://www.ultracart.com/
+##
+## Copyright (c) 2015 BPS Info Solutions Inc.
+## License located here:
+## http://www.ultracart.com/storefront/license/
+##
+## Designed by Level 2 Design, LLC http://www.level2d.com/
+##
+
+## uc:contains-velocity="true"
+## uc:page-type="group"
+## uc:display-blog-posts="true"
+## uc:pagination="true"
+## uc:display-subgroups="true"
+## uc:child-page-multimedia-default-used="true"
+
+## uc:page-attribute-string="subtitle"
+
+## uc:menu-used="header"
+## uc:menu-used="footer"
+## uc:menu-used="help"
+## uc:menu-used="account"
+
+#parse("/snippets/checkout_only_redirect.vm")
+#parse("/snippets/google_base_offer_id.vm")
+
+#parse("/snippets/top.vm")
+
+	<div class="row no-margin">
+    <div class="columns small-16">
+      #parse("/snippets/breadcrumbs.vm")
+    </div>
+  </div>
+  <div class="row">
+    <div class="columns small-16">
+      <h1 class="catalog-title">
+        #if($group.getAttribute("subtitle") && $group.getAttribute("subtitle") != '')
+          $group.getAttribute("subtitle")
+        #else
+          $group.Title
+        #end
+      </h1>
+    </div>
+  </div>
+  <div class="row">
+
+    <section class="columns small-16 blog-list-container">
+
+      #if($group.getBlogPostSummariesCount() > 0)
+
+			<!-- <div class="blog-list-info">
+      	There are $group.getBlogPostSummariesCount() posts on this blog.  Summaries size $group.getBlogPostSummaries().size()
+			</div> -->
+
+        <ul class="blog-post-list">
+      	#foreach($blogPostSummary in $group.getBlogPostSummaries())
+          <li class="blog-post">
+            <h2 class="blog-post-title"><a href="${group.getPath()}${blogPostSummary.getUrlPart()}.html">$blogPostSummary.getTitle()</a></h2>
+            <sub class="blog-post-info">
+							<span class="date">${blogPostSummary.getPublicationDate()}</span>
+							#if (!$blogPostSummary.getAuthor() && $blogPostSummary.getAuthor().length() > 0)
+					      | ${blogPostSummary.getAuthor()}
+					    #end
+							| <span class="url">${blogPostSummary.getUrlPart()}</span>
+						</sub>
+            <div class="blog-post-excerpt">${blogPostSummary.getExcerpt()}</div>
+            <a class="blog-post-readmore" href="${group.getPath()}${blogPostSummary.getUrlPart()}.html">Read More...</a>
+          </li>
+        #end
+        </ul>
+
+      #else
+        <div class="row">
+          <p>No blog posts are available on this blog.</p>
+        </div>
+      #end
+
+    </section>
+  </div>
+
+#parse("/snippets/bottom.vm")

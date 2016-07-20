@@ -1,0 +1,169 @@
+##
+## UltraCart - Mr Teas Template
+## http://www.ultracart.com/
+##
+## Copyright (c) 2015 BPS Info Solutions Inc.
+## License located here:
+## http://www.ultracart.com/storefront/license/
+##
+## Designed by Level 2 Design, LLC http://www.level2d.com/
+##
+
+#* @vtlvariable name="merchantId" type="java.lang.String" *#
+#* @vtlvariable name="header" type="java.lang.String" *#
+#* @vtlvariable name="footer" type="java.lang.String" *#
+#* @vtlvariable name="i18n" type="com.bpsinfo.storefront.tobjects.I18nWriter" *#
+
+#set( $bodyClass = "myaccount-settings" )
+#set( $pageTitle = "My Account Settings" )
+#set( $handlebarsForm = "true" )
+
+#parse("/snippets/top.vm")
+
+<script type="text/javascript">
+  var merchantId = '$!merchantId';
+</script>
+<!--[if lt IE 9]>
+<script type='text/javascript' src="/myaccount/js/html5shiv-printshiv.js" media="all"></script>
+<![endif]-->
+
+<script type="text/javascript" src="/myaccount/js/moment.js"></script>
+<script type="text/javascript" src="/myaccount/js/handlebars-v3.0.3.js"></script>
+<script type="text/javascript" src="/myaccount/js/underscore_1.4.4.js"></script>
+<script type="text/javascript" src="/myaccount/js/myaccount_rest_1.3.js"></script>
+<script type="text/javascript" src="/myaccount/js/myaccount.js"></script>
+<script type="text/javascript" src="/myaccount/settings.js"></script>
+
+
+<script type="text/template" id="settings-template">
+  <!-- the backbone view will wrap this content in an <article class="settings"></article> tag -->
+
+  <div class='settings-edit-table'>
+
+    <form id='form-account-settings' action="#" method="post" class="validate">
+      #parse('/snippets/common/cs_token.vm')
+      <div class="columns small-16 medium-8">
+        <label for="email" class='label-move'>
+          <span>$i18n.write('myaccount.settings.emailLabel','Email')*</span>
+          <input type="email" name="email" id="email" class="no-margin-bottom" required value="{{email}}" maxlength="100"/>
+          <p style='font-size:1em; margin-bottom:20px;' class="no-margin">$i18n.write('myaccount.settings.emailDescription','Your email is your username when logging in.  Be sure it is correct.')</p>
+          <p style='font-size:1em; margin-bottom:20px;' class="no-margin-top">$i18n.write('myaccount.settings.passwordLink1','You may change your password') <a href="/myaccount/password.do?merchantId=$!{merchantId}">$i18n.write('myaccount.settings.passwordLink2','here')</a>.</p>
+        </label>
+
+        <label for="firstName" class='label-move'>
+          <span>$i18n.write('myaccount.settings.firstNameLabel','First Name')*</span>
+          <input type="text" name="firstName" id="firstName" required value="{{firstName}}" maxlength="30"/>
+          <input type="hidden" id="merchantId" value="{{merchantId}}"/>
+          <input type="hidden" id="customerProfileOid" value="{{customerProfileOid}}"/>
+        </label>
+
+        <label for="lastName" class='label-move'>
+          <span>$i18n.write('myaccount.settings.lastNameLabel','Last Name')*</span>
+          <input type="text" name="lastName" id="lastName" required value="{{lastName}}" maxlength="30"/>
+        </label>
+
+        <label for="title" class='label-move'>
+          <span>$i18n.write('myaccount.settings.titleLabel','Title')</span>
+          <input type="text" name="title" id="title" value="{{title}}" maxlength="50"/>
+        </label>
+
+        <label for="company" class='label-move'>
+          <span>$i18n.write('myaccount.settings.companyLabel','Company')</span>
+          <input type="text" name="company" id="company" value="{{company}}" maxlength="50"/>
+        </label>
+
+        <label for="address1" class='label-move'>
+          <span>$i18n.write('myaccount.settings.address1Label','Address 1')*</span>
+          <input type="text" name="address1" id="address1" class="no-margin-bottom" required value="{{address1}}" maxlength="50"/>
+          <p style='font-size:1em; margin-bottom:20px;' class="no-margin-top">$i18n.write('myaccount.settings.address1Description','Street address, P.O. box, company name, c/o')</p>
+        </label>
+
+        <label for="address2" class='label-move'>
+          <span>$i18n.write('myaccount.settings.address2Label','Address 2')</span>
+          <input type="text" name="address2" id="address2" class="no-margin-bottom" value="{{address2}}" maxlength="50"/>
+          <p style='font-size:1em; margin-bottom:20px;' class="no-margin-top">$i18n.write('myaccount.settings.address2Description','Apartment, suite, unit, building, floor, etc.')</p>
+        </label>
+
+      </div>
+      <div class="columns small-16 medium-8">
+        <label for="city" class='label-move'>
+          <span>$i18n.write('myaccount.settings.cityLabel','City')*</span>
+          <input type="text" name="city" id="city" required value="{{city}}" maxlength="32"/>
+        </label>
+        <label for="state" class='label-move'>
+          <span>$i18n.write('myaccount.settings.stateLabel','State')*</span>
+          <input type="text" name="state" id="state" required value="{{state}}" maxlength="32"/>
+        </label>
+
+        <label for="postalCode" class='label-move'>
+          <span>$i18n.write('myaccount.settings.zipCodeLabel','Zip Code')*</span>
+          <input type="text" name="postalCode" id="postalCode" required value="{{postalCode}}" maxlength="20"/>
+        </label>
+
+        <label for="country" class='label-move'>
+          <span>$i18n.write('myaccount.settings.countryLabel','Country')*</span>
+          <input type="text" name="country" id="country" required value="{{country}}" maxlength="32"/>
+        </label>
+
+        <label for="dayPhone" class='label-move'>
+          <span>$i18n.write('myaccount.settings.dayPhoneLabel','Day Phone')</span>
+          <input type="text" name="dayPhone" id="dayPhone" value="{{dayPhone}}" maxlength="25"/>
+        </label>
+
+        <label for="eveningPhone" class='label-move'>
+          <span>$i18n.write('myaccount.settings.eveningPhoneLabel','Evening Phone')</span>
+          <input type="text" name="eveningPhone" id="eveningPhone" value="{{eveningPhone}}" maxlength="25"/>
+        </label>
+
+        <label for="fax" class='label-move'>
+          <span>$i18n.write('myaccount.settings.faxLabel','Fax')</span>
+          <input type="text" name="fax" id="fax" value="{{fax}}" maxlength="32"/>
+        </label>
+
+
+        <label for="taxId" class='label-move'>
+          <span>$i18n.write('myaccount.settings.taxIdLabel','Tax Id')</span>
+          <input type="text" name="taxId" id="taxId" value="{{taxId}}" maxlength="15"/>
+        </label>
+      </div>
+
+      <div class="columns small-16 text-right">
+        ##// <button type="submit" id="saveButton" class="button inactive" disabled>$i18n.write('myaccount.settings.saveButton','Save Changes')</button>
+        <button type="submit" id="saveButton" class="button inactive" disabled >$i18n.write('myaccount.settings.saveButton','Save Changes')</button>
+        <button id="cancelButton" class="button secondary">$i18n.write('myaccount.settings.cancelButton','Cancel')</button>
+      </div>
+    </form>
+  </div>
+
+
+  <div style='clear:both'></div>
+
+
+</script>
+
+<div class="row half-margin-top">
+  <div class="columns small-16 medium-13">
+
+    <a href="/myaccount/index.do">$i18n.write('myaccount.breadcrumb.myAccount','My Account')</a> &gt; <span class='disabled-looking'>$i18n.write('myaccount.breadcrumb.settings','Settings')</span>
+
+  </div>
+</div>
+
+<div class="row">
+  <div class="columns small-16">
+    <h1>$i18n.write('myaccount.settingsHeader','Account Settings')</h1>
+    <p>$i18n.write('myaccount.settingsMessage','Use the form below to edit information on your account.')</p>
+    <div class="myaccount-notifications">
+      <div class="alert info text-left no-margin-top no-margin-bottom"></div>
+      <div class="alert success text-left no-margin-top no-margin-bottom"></div>
+      <div class="alert warning text-left no-margin-top no-margin-bottom"></div>
+      <div class="alert error text-left no-margin-top no-margin-bottom"></div>
+    </div>
+  </div>
+</div>
+
+
+<main role='main' id='settings' class="row">
+</main>
+
+#parse("/snippets/bottom.vm")

@@ -1,0 +1,198 @@
+##
+## UltraCart - Mr Teas Template
+## http://www.ultracart.com/
+##
+## Copyright (c) 2015 BPS Info Solutions Inc.
+## License located here:
+## http://www.ultracart.com/storefront/license/
+##
+## Designed by Level 2 Design, LLC http://www.level2d.com/
+##
+
+#* @vtlvariable name="ucDatePickerTextStyle" type="java.lang.String" *#
+#* @vtlvariable name="ucDatePickerSelectStyle" type="java.lang.String" *#
+
+<script type="text/javascript">
+
+  function padLeft(v, ch, len) {
+    // Convert to a string
+    v = "" + v;
+    while (v.length < len) {
+      v = ch + v;
+    }
+    
+    return v;
+  }
+  
+  function setStartDate(month, day, year) {
+    jQuery("#timeperiod\\.begin").val(padLeft(month, '0', 2) + "/" + padLeft(day, '0', 2) + "/" + year);
+    updateHiddenFields();
+  }
+
+  function setEndDate(month, day, year) {
+    jQuery("#timeperiod\\.end").val(padLeft(month, '0', 2) + "/" + padLeft(day, '0', 2) + "/" + year);
+    updateHiddenFields();
+  }
+
+  function setCurrentDate() {
+    var today = moment();
+    var day = today.date();
+    var month = today.month() + 1;
+    var year = today.year();
+
+    setStartDate(month,day,year);
+    setEndDate(month,day,year);
+  }
+
+  function updateComplexTimePeriod(selVal) {
+    if (selVal == "today") {
+      setCurrentDate();
+    } else if (selVal == "yesterday") {
+      setYesterday();
+    } else if (selVal == "last7days") {
+      setLast7Days();
+    } else if (selVal == "lastweek") {
+      setLastWeek();
+    } else if (selVal == "lastbusinessweek") {
+      setLastBusinessWeek();
+    } else if (selVal == "thismonth") {
+      setThisMonth();
+    } else if (selVal == "lastmonth") {
+      setLastMonth();
+    } else if (selVal == "alltime") {
+      setAllTime();
+    }
+  }
+
+  function setYesterday() {
+    var date = moment();
+    date.add('days', -1);
+
+    var day = date.date();
+    var month = date.month() + 1;
+    var year = date.year();
+
+    setStartDate(month, day, year);
+    setEndDate(month, day, year);
+  }
+
+  function setLast7Days() {
+    var today = moment();
+    var sevenDaysAgo = moment().add('days', -7);
+
+    setStartDate(sevenDaysAgo.month() + 1, sevenDaysAgo.date(), sevenDaysAgo.year());
+    setEndDate(today.month() + 1, today.date(), today.year());
+
+  }
+
+  function setLastWeek() {
+    var start = moment().add('days',-7).day(0);
+    var end = start.clone().day(6);
+    setStartDate(start.month() + 1, start.date(), start.year());
+    setEndDate(end.month() + 1, end.date(), end.year());
+  }
+
+  function setLastBusinessWeek() {
+    var start = moment().add('days',-7).day(1);
+    var end = start.clone().day(5);
+    setStartDate(start.month() + 1, start.date(), start.year());
+    setEndDate(end.month() + 1, end.date(), end.year());
+  }
+
+  function setThisMonth() {
+    var start = moment().date(1);
+    var end = moment().add('months', 1).date(1).add('days',-1);
+    setStartDate(start.month() + 1, start.date(), start.year());
+    setEndDate(end.month() + 1, end.date(), end.year());
+  }
+
+  function setLastMonth() {
+    var start = moment().date(1).add('days',-1).date(1);
+    var end = moment().date(1).add('days',-1);
+    setStartDate(start.month() + 1, start.date(), start.year());
+    setEndDate(end.month() + 1, end.date(), end.year());
+  }
+
+  function setAllTime() {
+    setStartDate('1','1','2001');
+    var today = moment();
+    setEndDate(today.month() + 1, today.date(), today.year());
+  }
+
+  function updateHiddenFields() {
+    jQuery("#ucStartDate").val(jQuery("#timeperiod\\.begin").val());
+    jQuery("#ucEndDate").val(jQuery("#timeperiod\\.end").val());
+  }
+  
+  jQuery(document).ready(function(){
+    jQuery("#timeperiod\\.begin, #timeperiod\\.end").on("change", function(){      
+      updateHiddenFields();
+    });
+  });
+
+</script>
+
+
+<input type="hidden" name="ucStartDate" id="ucStartDate" class="js-hidden-start-date" value="$!form.ucStartDate" />
+<input type="hidden" name="ucEndDate" id="ucEndDate" class="js-hidden-end-date" value="$!form.ucEndDate" />
+
+<div class="row">
+	<div class="columns small-16">
+		<div class="label-group">
+			<span>Date Range</span>
+		</div>
+
+		<div class="clearfix"></div>
+
+		<ul class="option-group date-picker">
+			<li class="quick-pick js-quick-pick">
+				<div class="row">
+					<div class="columns small-1">
+						<input type="radio" name="timeperiod" id="timeperiod.simpleradio" class="js-simple-radio" value="simple" />
+					</div>
+
+					<div class="columns small-15">
+						<label class="label-group">
+							<select name="timeperiod.simpletimeperiod" id="timeperiod.simpletimeperiod" class="js-simple-time-period" onchange="updateComplexTimePeriod(this.value);" class="$!ucDatePickerSelectStyle">
+								<option value="">[Quick Pick]</option>
+								<option value="today">Today</option>
+								<option value="yesterday">Yesterday</option>
+								<option value="last7days">Last 7 Days</option>
+								<option value="lastweek">Last Week (Sun-Sat)</option>
+								<option value="lastbusinessweek">Last Business Week (Mon-Fri)</option>
+								<option value="thismonth">This Month</option>
+								<option value="lastmonth">Last Month</option>
+								<option value="alltime">All Time</option>
+							</select>
+						</label>
+					</div>
+				</div>
+			</li>
+
+			<li class="date-range js-date-range">
+				<div class="row">
+					<div class="columns small-1">
+						<input type="radio" name="timeperiod" id="timeperiod.complexradio" class="js-complex-radio" value="complex" checked />
+					</div>
+					<div class="columns small-15">
+						<div class="row">
+							<div class="columns small-half">
+								<label class="calendar-picker">
+									<strong>Start Date</strong>
+									<input type="date" disabled name="timeperiod.begin" id="timeperiod.begin" class="no-margin-left js-start-date" placeholder="Select Start Date" value="$!form.ucStartDate"/>
+								</label>
+							</div>
+
+							<div class="columns small-half">
+								<label class="calendar-picker">
+									<strong>End Date</strong>
+									<input type="date" disabled name="timeperiod.end" id="timeperiod.end" class="no-margin-left js-end-date" placeholder="Select End Date" value="$!form.ucEndDate"/>
+								</label>
+							</div>
+						</div>
+					</div>
+				</div>
+			</li>
+		</ul>
+	</div>
+</div>

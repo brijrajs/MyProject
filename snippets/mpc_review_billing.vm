@@ -1,0 +1,215 @@
+##
+## UltraCart - Mr Teas Template
+## http://www.ultracart.com/
+##
+## Copyright (c) 2015 BPS Info Solutions Inc.
+## License located here:
+## http://www.ultracart.com/storefront/license/
+##
+## Designed by Level 2 Design, LLC http://www.level2d.com/
+##
+
+#* @vtlvariable name="i18n" type="com.bpsinfo.storefront.tobjects.I18nWriter" *#
+
+## uc:theme-attribute-boolean="Google Autocomplete"
+
+<div id="address-fields" class="row">
+	<div class="columns small-16">
+		<h2>$i18n.write("checkout.review.billingAddressHeader","BILLING ADDRESS")</h2>
+	</div>
+
+	<!-- left -->
+	<div class="columns small-16 medium-8">
+
+		<label class="label-move uco_group_billing_company">
+			<span>$i18n.write("checkout.review.companyField","Company")#if($form.requireCompany)*#{end}</span>
+			<input type="text" placeholder="ABC Company" name="company" value="$i18n.escape($!form.company)" maxlength="50" #if($form.requireCompany)required #{end}/>
+		</label>
+
+		<div class="row no-padding-left no-padding-right">
+			#set( $nameClass = 'medium-8')
+
+			#if($form.showTitle)
+				#set( $nameClass = 'medium-6')
+
+				<div class="columns small-8 medium-4">
+					<label class="label-move">
+						<span>$i18n.write("checkout.review.titleField","Title"):#if($form.requireTitle)* #{end}</span>
+						<input type="text" placeholder="Mr." name="title" value="$i18n.escape($form.title)" #if($form.requireTitle)required #{end}/>
+					</label>
+				</div>
+			#end ## if-showTitle == true
+
+			<div class="columns small-8 $nameClass">
+				<label class="label-move">
+					<span>$i18n.write("checkout.review.firstNameField","First Name")*</span>
+					<input type="text"
+						name="firstName"
+						id="firstName"
+						placeholder="John"
+						value="$i18n.escape($!form.firstName)"
+						maxlength="30" required/>
+				</label>
+			</div>
+
+			<div class="columns small-8 $nameClass">
+				<label class="label-move">
+					<span>$i18n.write("checkout.review.lastNameField","Last Name")*</span>
+					<input type="text"
+						name="lastName"
+						id="lastName"
+						placeholder="Smith"
+						value="$i18n.escape($!form.lastName)"
+						maxlength="30" required/>
+				</label>
+			</div>
+		</div>
+
+		#set ($jsGoogleAutocompleteField = "")
+		#if ($theme.attr("Google Autocomplete") && $theme.attr("Google Autocomplete") == "true")
+		  #set ($jsGoogleAutocompleteField = "js-google-autocomplete-field")
+		#end
+
+		<label class="label-move">
+			<span>$i18n.write("checkout.review.address1Field","Address 1")*</span>
+			<input type="text"
+				id="address1"
+				class="$jsGoogleAutocompleteField"
+				placeholder="123 Main St."
+				value="$i18n.escape($!form.address1)"
+				autocomplete="off"
+				name="address1" required/>
+		</label>
+
+		<label class="label-move">
+			<span>$i18n.write("checkout.review.address2Field","Address 2")</span>
+			<input type="text"
+				id="address2"
+				placeholder="Suite A"
+				name="address2"
+				value="$i18n.escape($!form.address2)"
+				maxlength="32" />
+		</label>
+
+		<label class="label-move">
+			<span>$i18n.write("checkout.review.cityField","City")*</span>
+			<input type="text"
+				id="city"
+				placeholder="New York"
+				name="city"
+				value="$i18n.escape($!form.city)"
+				maxlength="32" required/>
+		</label>
+	</div>
+	<!-- /left -->
+
+	<!-- right -->
+	<div class="columns small-16 medium-8">
+		<div class="row no-padding-left no-padding-right">
+			<div class="columns small-8 medium-8">
+				<label class="label-move">
+					<span>$i18n.write("checkout.review.stateProvinceRegionField","State/Province/Region")*</span>
+					<input type="text"
+						id="state"
+						name="state"
+						placeholder="NY"
+						value="$i18n.escape($!form.state)"
+						maxlength="32" required/>
+					</span>
+				</label>
+			</div>
+
+			<div class="columns small-8 medium-8">
+				<label class="label-move">
+					<span>$i18n.write("checkout.review.zipPostalCodeField","Zip/Postal Code")*</span>
+					<input type="text"
+						id="zip"
+						name="zip"
+						placeholder="10001"
+						value="$i18n.escape($!form.zip)"
+						maxlength="20" required/>
+				</label>
+			</div>
+		</div>
+
+		<label class="label-move">
+			<span>$i18n.write("checkout.review.countryField","Country")*</span>
+			<select name="country" id="country" onchange="updateStateRequirementFlags();" required>
+				#foreach($country in $form.countries)
+					<option #if("$country" == "$form.country")selected#{end}>$country</option>
+				#end
+			</select>
+		</label>
+
+		<div class="row no-padding-left no-padding-right">
+			<div class="columns small-8 medium-8">
+				<label class="label-move">
+					<span>$i18n.write("checkout.review.daytimePhoneField","Daytime Phone")#if($form.requireDayPhone)* #{end}</span>
+					<input type="text"
+						placeholder="(212) 555 1212"
+						name="dayPhone"
+						value="$i18n.escape($!form.dayPhone)"
+						maxlength="25" #if($form.requireDayPhone)required #{end}/>
+				</label>
+			</div>
+
+			<input type="hidden" name="showEveningPhone" value="$i18n.escape($!form.showEveningPhone)"/>
+			#if($form.showEveningPhone)
+				<div class="columns small-8 medium-8">
+					<label class="label-move">
+						<span>$i18n.write("checkout.review.eveningPhoneField","Evening Phone")#if($form.requireEveningPhone)* #{end}</span>
+						<input type="text"
+							placeholder="(212) 555 1213"
+							name="eveningPhone"
+							value="$i18n.escape($!form.eveningPhone)"
+							maxlength="25" #if($form.requireEveningPhone)required #{end}/>
+					</label>
+				</div>
+			#end ## if-showEveningPhone
+		</div>
+
+		#if($form.showEmail || $form.showCcEmail)
+			#if($form.showEmail)
+				<label class="label-move">
+					<span>
+						$i18n.write("checkout.review.emailAddressField","Email Address")#if($form.requireEmail)* #{end}
+					</span>
+					<input type="text"
+						name="email"
+						placeholder="example@domain.com"
+						class="no-margin-bottom"
+						value="$i18n.escape($!form.email)"
+						maxlength="50" #if($form.requireEmail)required #{end}/>
+				</label>
+			#end ##if-showEmail
+
+			#if($form.showCcEmail)
+				<label class="label-move">
+					<span>
+						$i18n.write("checkout.review.ccEmailAddressField","CC Email Address")
+					</span>
+					<input type="text"
+						name="ccEmail"
+						placeholder="example@domain.com"
+						value="$i18n.escape($!form.ccEmail)"
+						maxlength="50"
+						class="ucFormField"
+						style="width: 315px;"
+						size="30"/>
+				</label>
+			#end ##if-showCcEmail
+		#end ##if-showEmail/showCcEmail
+	</div>
+	<!-- /right -->
+
+	<!-- bottom -->
+	#if($form.showMailingList)
+		<div class="columns small-16 medium-16">
+			<label class="label-group">
+				<input type="checkbox" name="mailingList" #if($form.mailingList)checked#{end}/>
+				$i18n.write("checkout.review.emailUpdatesText","Please send me email updates of news and special offers")
+			</label>
+		</div>
+	#end ##if-showMailingList
+	<!-- /bottom -->
+</div>

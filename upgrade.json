@@ -1,0 +1,383 @@
+{
+  "instructions": "This is where instructions will go about this file.",
+  "moved": [
+    {
+      "from": "/template_home.vm",
+      "to": "/templates/template_home.vm"
+    },
+    {
+      "from": "/template_catalog.vm",
+      "to": "/templates/template_catalog.vm"
+    },
+    {
+      "from": "/template_catalog_simple.vm",
+      "to": "/templates/template_catalog_simple.vm"
+    },
+    {
+      "from": "/template_contact.vm",
+      "to": "/templates/template_contact.vm"
+    },
+    {
+      "from": "/template_item.vm",
+      "to": "/templates/template_item.vm"
+    },
+    {
+      "from": "/template_page.vm",
+      "to": "/templates/template_page.vm"
+    },
+    {
+      "from": "/myaccount_address.vm",
+      "to": "/templates/system/myaccount/myaccount_address.vm"
+    },
+    {
+      "from": "/myaccount_billing.vm",
+      "to": "/templates/system/myaccount/myaccount_billing.vm"
+    },
+    {
+      "from": "/myaccount_index.vm",
+      "to": "/templates/system/myaccount/myaccount_index.vm"
+    },
+    {
+      "from": "/myaccount_order_detail.vm",
+      "to": "/templates/system/myaccount/myaccount_order_detail.vm"
+    },
+    {
+      "from": "/myaccount_orders.vm",
+      "to": "/templates/system/myaccount/myaccount_orders.vm"
+    },
+    {
+      "from": "/myaccount_password.vm",
+      "to": "/templates/system/myaccount/myaccount_password.vm"
+    },
+    {
+      "from": "/myaccount_payment.vm",
+      "to": "/templates/system/myaccount/myaccount_payment.vm"
+    },
+    {
+      "from": "/myaccount_payments.vm",
+      "to": "/templates/system/myaccount/myaccount_payments.vm"
+    },
+    {
+      "from": "/myaccount_reviews.vm",
+      "to": "/templates/system/myaccount/myaccount_reviews.vm"
+    },
+    {
+      "from": "/myaccount_settings.vm",
+      "to": "/templates/system/myaccount/myaccount_settings.vm"
+    },
+    {
+      "from": "/myaccount_shipping.vm",
+      "to": "/templates/system/myaccount/myaccount_shipping.vm"
+    },
+    {
+      "from": "/access_account.vm",
+      "to": "/templates/system/checkout/access_account.vm"
+    },
+    {
+      "from": "/account_change_password.vm",
+      "to": "/templates/system/checkout/account_change_password.vm"
+    },
+    {
+      "from": "/account_change_password_confirm.vm",
+      "to": "/templates/system/checkout/account_change_password_confirm.vm"
+    },
+    {
+      "from": "/account_login.vm",
+      "to": "/templates/system/checkout/account_login.vm"
+    },
+    {
+      "from": "/apofpo.vm",
+      "to": "/templates/system/checkout/apofpo.vm"
+    },
+    {
+      "from": "/auto_order.vm",
+      "to": "/templates/system/checkout/auto_order.vm"
+    },
+    {
+      "from": "/auto_order_cancel.vm",
+      "to": "/templates/system/checkout/auto_order_cancel.vm"
+    },
+    {
+      "from": "/auto_order_cancel_success.vm",
+      "to": "/templates/system/checkout/auto_order_cancel_success.vm"
+    },
+    {
+      "from": "/auto_order_update_billing.vm",
+      "to": "/templates/system/checkout/auto_order_update_billing.vm"
+    },
+    {
+      "from": "/auto_order_update_billing_error.vm",
+      "to": "/templates/system/checkout/auto_order_update_billing_error.vm"
+    },
+    {
+      "from": "/auto_order_update_billing_success.vm",
+      "to": "/templates/system/checkout/auto_order_update_billing_success.vm"
+    },
+    {
+      "from": "/billing.vm",
+      "to": "/templates/system/checkout/billing.vm"
+    },
+    {
+      "from": "/cardinal_commerce_handoff.vm",
+      "to": "/templates/system/checkout/cardinal_commerce_handoff.vm"
+    },
+    {
+      "from": "/digital_download.vm",
+      "to": "/templates/system/checkout/digital_download.vm"
+    },
+    {
+      "from": "/digital_download_expired.vm",
+      "to": "/templates/system/checkout/digital_download_expired.vm"
+    },
+    {
+      "from": "/forgot_password.vm",
+      "to": "/templates/system/checkout/forgot_password.vm"
+    },
+    {
+      "from": "/in_progress.vm",
+      "to": "/templates/system/checkout/in_progress.vm"
+    },
+    {
+      "from": "/options.vm",
+      "to": "/templates/system/checkout/options.vm"
+    },
+    {
+      "from": "/quote_review.vm",
+      "to": "/templates/system/checkout/quote_review.vm"
+    },
+    {
+      "from": "/receipt.vm",
+      "to": "/templates/system/checkout/receipt.vm"
+    },
+    {
+      "from": "/receipt_in_progress.vm",
+      "to": "/templates/system/checkout/receipt_in_progress.vm"
+    },
+    {
+      "from": "/review.vm",
+      "to": "/templates/system/checkout/review.vm"
+    },
+    {
+      "from": "/review_helpful.vm",
+      "to": "/templates/system/checkout/review_helpful.vm"
+    },
+    {
+      "from": "/review_item.vm",
+      "to": "/templates/system/checkout/review_item.vm"
+    },
+    {
+      "from": "/review_item_confirmation.vm",
+      "to": "/templates/system/checkout/review_item_confirmation.vm"
+    },
+    {
+      "from": "/reviewer_login.vm",
+      "to": "/templates/system/checkout/reviewer_login.vm"
+    },
+    {
+      "from": "/search.vm",
+      "to": "/templates/system/checkout/search.vm"
+    },
+    {
+      "from": "/search_results.vm",
+      "to": "/templates/system/checkout/search_results.vm"
+    },
+    {
+      "from": "/session_timeout.vm",
+      "to": "/templates/system/checkout/session_timeout.vm"
+    },
+    {
+      "from": "/shipping.vm",
+      "to": "/templates/system/checkout/shipping.vm"
+    },
+    {
+      "from": "/shipping_estimate.vm",
+      "to": "/templates/system/checkout/shipping_estimate.vm"
+    },
+    {
+      "from": "/single.vm",
+      "to": "/templates/system/checkout/single.vm"
+    },
+    {
+      "from": "/single_calculate_shipping.vm",
+      "to": "/templates/system/checkout/single_calculate_shipping.vm"
+    },
+    {
+      "from": "/special_offers.vm",
+      "to": "/templates/system/checkout/special_offers.vm"
+    },
+    {
+      "from": "/special_offers_confirmation.vm",
+      "to": "/templates/system/checkout/special_offers_confirmation.vm"
+    },
+    {
+      "from": "/user_error.vm",
+      "to": "/templates/system/checkout/user_error.vm"
+    },
+    {
+      "from": "/view_cart.vm",
+      "to": "/templates/system/checkout/view_cart.vm"
+    },
+    {
+      "from": "/wholesale_signup_application.vm",
+      "to": "/templates/system/checkout/wholesale_signup_application.vm"
+    },
+    {
+      "from": "/wholesale_signup_confirmation.vm",
+      "to": "/templates/system/checkout/wholesale_signup_confirmation.vm"
+    },
+    {
+      "from": "/wishlist_login.vm",
+      "to": "/templates/system/checkout/wishlist_login.vm"
+    },
+    {
+      "from": "/site_404.vm",
+      "to": "/templates/site_404.vm"
+    },
+    {
+      "from": "/affiliate_login.vm",
+      "to": "/templates/system/affiliate/affiliate_login.vm"
+    },
+    {
+      "from": "/affiliate_partner_additional_terms.vm",
+      "to": "/templates/system/affiliate/affiliate_partner_additional_terms.vm"
+    },
+    {
+      "from": "/affiliate_partner_edit_link.vm",
+      "to": "/templates/system/affiliate/affiliate_partner_edit_link.vm"
+    },
+    {
+      "from": "/affiliate_partner_edit_managed_link.vm",
+      "to": "/templates/system/affiliate/affiliate_partner_edit_managed_link.vm"
+    },
+    {
+      "from": "/affiliate_partner_email_templates.vm",
+      "to": "/templates/system/affiliate/affiliate_partner_email_templates.vm"
+    },
+    {
+      "from": "/affiliate_partner_index.vm",
+      "to": "/templates/system/affiliate/affiliate_partner_index.vm"
+    },
+    {
+      "from": "/affiliate_partner_index_pending.vm",
+      "to": "/templates/system/affiliate/affiliate_partner_index_pending.vm"
+    },
+    {
+      "from": "/affiliate_partner_index_rejected.vm",
+      "to": "/templates/system/affiliate/affiliate_partner_index_rejected.vm"
+    },
+    {
+      "from": "/affiliate_partner_ledger.vm",
+      "to": "/templates/system/affiliate/affiliate_partner_ledger.vm"
+    },
+    {
+      "from": "/affiliate_partner_login.vm",
+      "to": "/templates/system/affiliate/affiliate_partner_login.vm"
+    },
+    {
+      "from": "/affiliate_partner_logout.vm",
+      "to": "/templates/system/affiliate/affiliate_partner_logout.vm"
+    },
+    {
+      "from": "/affiliate_partner_lost_password.vm",
+      "to": "/templates/system/affiliate/affiliate_partner_lost_password.vm"
+    },
+    {
+      "from": "/affiliate_partner_manage_links.vm",
+      "to": "/templates/system/affiliate/affiliate_partner_manage_links.vm"
+    },
+    {
+      "from": "/affiliate_partner_payment.vm",
+      "to": "/templates/system/affiliate/affiliate_partner_payment.vm"
+    },
+    {
+      "from": "/affiliate_partner_recruiting_link.vm",
+      "to": "/templates/system/affiliate/affiliate_partner_recruiting_link.vm"
+    },
+    {
+      "from": "/affiliate_partner_reports.vm",
+      "to": "/templates/system/affiliate/affiliate_partner_reports.vm"
+    },
+    {
+      "from": "/affiliate_partner_select_managed_link.vm",
+      "to": "/templates/system/affiliate/affiliate_partner_select_managed_link.vm"
+    },
+    {
+      "from": "/affiliate_partner_update_information.vm",
+      "to": "/templates/system/affiliate/affiliate_partner_update_information.vm"
+    },
+    {
+      "from": "/affiliate_partner_updated_terms.vm",
+      "to": "/templates/system/affiliate/affiliate_partner_updated_terms.vm"
+    },
+    {
+      "from": "/affiliate_partner_view_link.vm",
+      "to": "/templates/system/affiliate/affiliate_partner_view_link.vm"
+    },
+    {
+      "from": "/affiliate_signup.vm",
+      "to": "/templates/system/affiliate/affiliate_signup.vm"
+    },
+    {
+      "from": "/affiliate_signup_success.vm",
+      "to": "/templates/system/affiliate/affiliate_signup_success.vm"
+    }
+  ],
+  "deleted": [
+    "/404.vm"
+  ],
+  "pendingDeleted": [
+    "/emails/uc_receipt_html.vm",
+    "/adminpanelfonts/ultracarticons.eot",
+    "/adminpanelfonts/ultracarticons.svg",
+    "/adminpanelfonts/ultracarticons.ttf",
+    "/adminpanelfonts/ultracarticons.woff",
+    "/adminpanel.clientlog.handlebars",
+    "/adminpanel.clientlog.handlebars.js",
+    "/adminpanel.contentguide.handlebars",
+    "/adminpanel.contentguide.handlebars.js",
+    "/adminpanel.css",
+    "/adminpanel.handlebars",
+    "/adminpanel.handlebars.js",
+    "/adminpanel.js",
+    "/adminpanel.metadata.handlebars",
+    "/adminpanel.metadata.handlebars.js",
+    "/adminpanel.serverlog.handlebars",
+    "/adminpanel.serverlog.handlebars.js",
+    "/Level2D.merged.handlebars.js",
+    "/merged.handlebars.js",
+    "/sample_sites/default.zip",
+    "/sample_sites/default.zip",
+    "/adminpanel.css",
+    "/adminpanelfonts/ultracarticons.eot",
+    "/adminpanelfonts/ultracarticons.svg",
+    "/adminpanelfonts/ultracarticons.ttf",
+    "/adminpanelfonts/ultracarticons.woff",
+    "/_src/js/lib/chosen.jquery.js",
+    "/_src/scss/lib/_chosen.scss",
+    "/sample_sites/default.zip",
+    "/myaccount/js/handlebars_1.0.js",
+    "/assets/css/main.0.1.0.css",
+    "/assets/css/main.0.1.2.css",
+    "/assets/css/main.0.1.1.css",
+    "/adminpanel.css",
+    "/sample_sites/default.zip",
+    "/sample_sites/testSample1.zip",
+    "/sample_sites/default.zip",
+    "/sample_sites/default.zip",
+    "/assets/css/ie/main.0.1.3.css",
+    "/assets/css/ie/main.0.1.3-blessed1.css",
+    "/_src/js/catalog_4.1.js",
+    "/assets/js/catalog_4.1.js",
+    "/sample_sites/default.zip",
+    "/sample_sites/new-theme.zip",
+    "/sample_sites/default.zip",
+    "/assets/css/override.3.css",
+    "/sample_sites/default.zip",
+    "/.remote-sync.json",
+    "/assets/css/theme_directives.css",
+    "/snippets/document_top_rev.vm",
+    "/snippets/document_bottom_rev.vm",
+    "/snippets/affiliate/date_picker_rev.vm",
+    "/assets/js/affiliate_rev.js"
+  ]
+}

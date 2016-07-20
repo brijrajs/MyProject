@@ -1,0 +1,68 @@
+#* @vtlvariable name="merchantId" type="java.lang.String" *#
+#* @vtlvariable name="form" type="com.bpsinfo.ultracart.checkout.ui.ShippingEstimateForm" *#
+#* @vtlvariable name="i18n" type="com.bpsinfo.storefront.tobjects.I18nWriter" *#
+
+#set( $pageGroup = 'multi-page-checkout' )
+#set( $bodyClass = 'multi-page-checkout shipping-estimate' )
+#set( $pageTitle = $i18n.write("checkout.actualShipping.pageTitle", "Actual Shipping Estimate") )
+#parse('/snippets/top.vm')
+
+#parse('/snippets/breadcrumbs.vm')
+
+#set( $title = $i18n.write("checkout.actualShipping.shippingDestinationHeader", "Shipping Destination") )
+#parse('/snippets/title.vm')
+
+<form action="/cgi-bin/UCEditor" method="post" #if($form.framesetCheckout)target="_top"#{end}>
+	#parse('/snippets/common/storefront_template_spec_version.vm')
+	<div class="row">
+		<input type="hidden" name="merchantId" value="$merchantId"/>
+		<input type="hidden" name="SUBMITACTUALSHIPPINGESTIMATE" value="SUBMITACTUALSHIPPINGESTIMATE"/>
+
+		#parse('/snippets/errors.vm')
+
+		<div class="columns small-16 medium-4">
+			<label class="label-move">
+				<span for="input-state-province">$i18n.write("checkout.actualShipping.stateProvinceField", "State/Province")</span>
+				<input type="text" id="input-state-province" name="shipToState" placeholder="TN" value="$i18n.escape($!form.shipToState)" />
+			</label>
+		</div>
+
+		<div class="columns small-16 medium-4 end">
+			<label class="label-move">
+				<span for="input-zip-code">$i18n.write("checkout.actualShipping.zipPostalCodeField", "Zip/Postal Code")</span>
+				<input type="text" id="input-zip-code" name="shipToZip" placeholder="37343" value="$i18n.escape($!form.shipToZip)" />
+			</label>
+		</div>
+
+
+		<div class="clearfix"></div>
+
+		<div class="columns small-16 medium-8">
+			<label class="label-move">
+				<span>$i18n.write("checkout.actualShipping.countryField", "Country")</span>
+				<select name="shipToCountry">
+					#foreach($country in $form.countries)
+						<option #if($country == $form.shipToCountry) selected='selected'#{end}>$country</option>
+					#end
+				</select>
+			</label>
+
+			## APO/FPO Shipping instructions
+			#if($form.hasApoFpoShippingMethod)
+				<a href="/checkout/apofpo.do" class="js-apo-fpo" target="_blank">$i18n.write("checkout.actualShipping.apoFpoShippingLink", "APO/FPO Shipping")</a>
+			#end
+
+			## Don't display the residential box if they are forcing shipping
+			#if(!$form.forceToResidential)
+				<label class="label-group no-margin-top">
+					<input name="shipToResidential" type="checkbox" value="YES" #if($form.shipToResidential)checked#{end} />
+					<span>$i18n.write("checkout.actualShipping.residentialAddressField", "Residential Address")</span>
+				</label>
+			#end
+		</div>
+	</div>
+#set( $showBackButton = true )
+#set( $backToUrl = $checkoutUrlHttps )
+#parse('/snippets/button.continue.vm')
+</form>
+#parse('/snippets/bottom.vm')

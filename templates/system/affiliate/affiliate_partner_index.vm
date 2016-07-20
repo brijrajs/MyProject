@@ -1,0 +1,260 @@
+##
+## UltraCart - Mr Teas Template
+## http://www.ultracart.com/
+##
+## Copyright (c) 2015 BPS Info Solutions Inc.
+## License located here:
+## http://www.ultracart.com/storefront/license/
+##
+## Designed by Level 2 Design, LLC http://www.level2d.com/
+##
+
+#* @vtlvariable name="merchantId" type="java.lang.String" *#
+#* @vtlvariable name="formatHelper" type="com.bpsinfo.ultracart.catalog.tobjects.FormatHelper" *#
+#* @vtlvariable name="i18n" type="com.bpsinfo.storefront.tobjects.I18nWriter" *#
+#* @vtlvariable name="form" type="com.bpsinfo.ultracart.affiliate.ui.partner.AffiliatePartnerIndexForm" *#
+
+#set( $pageGroup = 'affiliate' )
+#set( $bodyClass = 'affiliate index' )
+#set( $pageTitle = 'Affiliate Partner' )
+#parse('/snippets/top.vm')
+
+#set( $title = $pageTitle )
+#parse('/snippets/title.vm')
+
+<div class="row">
+	<div class="columns small-16 medium-12">
+		<h2>Reports At A Glance</h2>
+		<form name="ucAffiliateDashboard" method="get" action="/affiliate/partner/index.do">
+			<input type="hidden" name="merchantId" value="$i18n.escape($merchantId)"/>
+		    #parse('/snippets/common/storefront_template_spec_version.vm')
+
+			#parse('/snippets/affiliate/date_picker.vm')
+
+			<button type="submit" value="Change" class="button">Change</button>
+		</form>
+
+		<table class="tablesaw">
+			<tr>
+				<td>Total Earnings</td>
+				<td class="text-right">$!form.totalRevenueFormatted</td>
+			</tr>
+			<tr>
+				<td>Earnings Paid</td>
+				<td class="text-right">$!form.earningsPaidFormatted</td>
+			</tr>
+			<tr>
+				<td>Earnings Balance</td>
+				<td class="text-right">$!form.earningsBalanceFormatted</td>
+			</tr>
+		</table>
+		<table class="tablesaw">
+			<tr>
+				<td>Number of Transactions</td>
+				<td class="text-right">$!form.numberOfTransactions</td>
+			</tr>
+			<tr>
+				<td>Conversion Rate</td>
+				<td class="text-right">$!form.conversionRate</td>
+			</tr>
+			<tr>
+				<td>Earnings Per Click</td>
+				<td class="text-right">$!form.earningsPerClick</td>
+			</tr>
+			<tr>
+				<td>Qualifying Items Sold</td>
+				<td class="text-right">$!form.itemsSoldFormatted</td>
+			</tr>
+			<tr>
+				<td>Returned Items</td>
+				<td class="text-right">$!form.itemsReturnedFormatted</td>
+			</tr>
+			<tr>
+				<td>Clicks</td>
+				<td class="text-right">$!form.clickCountFormatted</td>
+			</tr>
+			<tr>
+				<td>Unique Visitors</td>
+				<td class="text-right">$!form.uniqueVisitorsFormatted</td>
+			</tr>
+			<tr>
+				<td>Last Commission Payment</td>
+				<td class="text-right">$!form.lastPayment</td>
+			</tr>
+		</table>
+	</div>
+
+	<!-- affiliate tools -->
+	<div class="columns small-16 medium-4">
+		#set($programName = "Tier 2 Affiliate Program")
+		#if("$!form.program.multipleTierProgramName" != "")
+			#set($programName = $form.program.multipleTierProgramName)
+		#end
+
+		<h2>Affiliate Tools</h2>
+		<ul>
+			<li>
+				<a href="/affiliate/partner/manageLinksLoad.do?merchantId=$!merchantId" title="Manage Links">Manage Links</a>
+			</li>
+
+			#if($form.hasEmailTemplates)
+				<li>
+					<a href="/affiliate/partner/emailTemplatesLoad.do?merchantId=$!merchantId" title="Email Templates">Email Templates</a>
+				</li>
+			#end ##if-hasEmailTemplates
+
+			#if(($form.program.tierCount > 0 && !$form.program.recruitDownlineAffiliatesApprovalOnly) || ($form.program.recruitDownlineAffiliatesApprovalOnly && $form.affiliate.allowDownlineRecruiting))
+				#if (!$form.affiliateGroup.hideRecruitingLink)
+					<li>
+						<a href="/affiliate/partner/recruitingLinkLoad.do?merchantId=$!merchantId" title="${programName}">${programName}</a>
+					</li>
+				#end
+			#end ##if-block for program link
+
+			<li>
+				<a href="/affiliate/partner/updateInformationLoad.do?merchantId=$!merchantId" title="Update Your Information">Update Your Information</a>
+			</li>
+
+			<li>
+				<a href="/affiliate/partner/reportsLoad.do?merchantId=$!merchantId" title="View Reports">View Reports</a>
+			</li>
+
+			<li>
+				<a href="/affiliate/partner/logoutLoad.do?merchantId=$!merchantId" title="Log Out">Log Out</a>
+			</li>
+		</ul>
+
+		#if(!$form.program.noSimpleLink)
+			<h3>Simple Link</h3>
+			<p>
+				Simply copy and paste this link onto your website to receive credit for affiliate sales. Additional
+				links can be created under manage links.
+			</p>
+
+			#if($form.simpleLinks && $form.simpleLinks.size() == 1)
+
+				#foreach($simpleLink in $form.simpleLinks) ## yes, we're looping even though there's only one link.  cleanest, safest way.
+					<input type="text" value="$i18n.escape($simpleLink.url)">
+				#end ##foreach simple link
+
+			#elseif($form.simpleLinks.size() > 1)
+
+			#foreach($simpleLink in $form.simpleLinks)
+				<label class="label-group">
+
+					#if("$!simpleLink.name" != "")
+						<span>>$i18n.escape($simpleLink.name)</span>
+					#end ##if-the link has a name, print it.
+
+					<input type="text" value="$i18n.escape($simpleLink.url)">
+				</label>
+			#end ##foreach simple link
+
+			#end ##if-there are any simple links
+		#end ## if-program allows simple links
+	</div>
+	<!-- /affiliate tools -->
+</div>
+
+
+#parse('/snippets/hr.vm')
+
+<div class="row">
+	<!-- commissions-->
+	<div class="columns small-16">
+		<h2>Commissions</h2>
+
+		#if("$!form.program.commissionHtml" != "")
+			$!form.program.commissionHtml
+		#else
+			<table class="tablesaw">
+				#if($form.itemCommissions.size() > 0)
+					<thead>
+						<th>Product Name</th>
+						<th>Price</th>
+						<th>Per Sale Commission</th>
+						<th>Current Earnings</th>
+					</thead>
+				#end ##if-item commissions are present
+
+				<tbody>
+					#foreach($itemCommission in $form.itemCommissions)
+						<tr>
+							<td>
+								#if("$!itemCommission.viewUrl" != "")
+									<a target="_blank" href="${itemCommission.viewUrl}">$i18n.escape($!itemCommission.description)</a>;
+								#else
+									$i18n.escape($!itemCommission.description)
+								#end ##if-itemCommission has viewUrl
+							</td>
+
+							<td class="text-right">$!itemCommission.priceFormatted</td>
+
+							#if("$!itemCommission.repeatCustomerCommission" != "")
+								<td class="text-right">
+									${itemCommission.commissionFormatted}
+									/${itemCommission.repeatCustomerCommission}
+								</td>
+							#else ## just show the single price
+								<td class="text-right">${itemCommission.commissionFormatted}</td>
+							#end ## if itemCommission has repeat customer commission
+
+							<td class="text-right">$itemCommission.currentEarningsFormatted</td>
+						</tr>
+					#end ##foreach-item commission
+				</tbody>
+
+				## adjust the terminology depending on whether individual item commissions are present.
+				#set($allOrAllOther = "All")
+				#if($form.itemCommissions.size() > 0)
+					#set($allOrAllOther = "All other")
+				#end
+
+				## check for either individual or global commissions to avoid printing empty information
+				#if($form.hasGlobalCommissions)
+					<tr>
+						<td colspan="5">
+							$allOrAllOther products earn $!form.globalCommissionEarningsFormatted referral fees!
+						</td>
+					</tr>
+
+					#if("$!form.globalCommissionRepeatEarningsFormatted" != "")
+						<tr>
+							<td class='ucColorSubHeader' colspan='5'>
+								All other products from repeat customers earn $!form.globalCommissionRepeatEarningsFormatted referral
+								fees!
+							</td>
+						</tr>
+					#end ##if-globalCommissionsRepeatEarnings
+				#end
+
+			</table>
+		#end ## if form.program.commissionHtml not empty
+	</div>
+	<!-- /commissions -->
+</div>
+
+#parse('/snippets/hr.vm')
+
+<div class="row">
+	<!-- news-->
+	#if("$!form.program.dashboardNews" != "")
+		<div class="columns small-16 end">
+			<h2>News</h2>
+			$!form.program.dashboardNews
+		</div>
+	#end
+	<!-- /news -->
+</div>
+#if($form.allowPassiveBranding)
+	<div class="row">
+		<div class="columns small-16 text-center">
+			<p>
+				<a target="_blank" href="http://secure.ultracart.com/cgi-bin/UCAdTracker?BpsAdvertisingSourceId=pb+ultracart">
+					<img src="/checkout/uc-powered.png" alt="Powered by ultracart.com"/>
+				</a>
+			</p>
+		</div>
+	</div>
+#end
+#parse('/snippets/bottom.vm')

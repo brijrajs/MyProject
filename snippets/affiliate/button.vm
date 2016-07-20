@@ -1,0 +1,30 @@
+##
+## UltraCart - Mr Teas Template
+## http://www.ultracart.com/
+##
+## Copyright (c) 2015 BPS Info Solutions Inc.
+## License located here:
+## http://www.ultracart.com/storefront/license/
+##
+## Designed by Level 2 Design, LLC http://www.level2d.com/
+##
+
+#parse('../hr.vm')
+#if(!$button)
+	#set( $button = 'Continue' )
+#end
+<div class="row footer-buttons">
+	<div class="columns small-16 text-right">
+		#if($showBackButton)
+			<a href="/affiliate/partner/index.do?merchantId=$!merchantId" class="button grey-dark #if($hideButton and !$showManageLinksButton)no-margin-right#{end}">Return to main menu</a>
+		#end
+
+		#if($showManageLinksButton)
+			<a href="/affiliate/partner/manageLinksLoad.do?merchantId=$!merchantId" class="button grey-dark #if($hideButton)no-margin-right#{end}">Return to manage links</a>
+		#end
+
+		#if(!$hideButton)
+			<button type="submit" name="submit" class="no-margin-right no-margin-bottom">$button</button>
+		#end
+	</div>
+</div>

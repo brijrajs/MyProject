@@ -1,0 +1,25 @@
+##
+## UltraCart - Mr Teas Template
+## http://www.ultracart.com/
+##
+## Copyright (c) 2015 BPS Info Solutions Inc.
+## License located here:
+## http://www.ultracart.com/storefront/license/
+##
+## Designed by Level 2 Design, LLC http://www.level2d.com/
+##
+
+## uc:site-attribute-boolean="Use PNG Thumbnails"
+
+## global variables set for all the VM files
+
+#if($site.attr('Use PNG Thumbnails') && $site.attr('Use PNG Thumbnails') == 'true')
+	#set( $PNGThumbnails = true )
+#else
+	#set( $PNGThumbnails = false )
+#end
+
+## sets the version for css and js files found in document_top and document_bottom
+#set( $_VERSION = '0.1.3' )
+
+#set( $_now = $dateManager.currentTime() )

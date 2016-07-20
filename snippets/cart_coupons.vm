@@ -1,0 +1,44 @@
+##
+## UltraCart - Mr Teas Template
+## http://www.ultracart.com/
+##
+## Copyright (c) 2015 BPS Info Solutions Inc.
+## License located here:
+## http://www.ultracart.com/storefront/license/
+##
+## Designed by Level 2 Design, LLC http://www.level2d.com/
+##
+
+#* @vtlvariable name="couponsPart" type="com.bpsinfo.storefront.tobjects.CouponsPart" *#
+#* @vtlvariable name="i18n" type="com.bpsinfo.storefront.tobjects.I18nWriter" *#
+
+<div style="border:none;" class="coupon-code columns small-16 large-5" data-equalizer-watch>
+	#if($couponsPart.showCouponEntry)
+		<div class="row">
+			
+
+			<div class="columns small-8 large-16">
+				<input style="margin-bottom: 6px;" id="input-coupon-code" type="text" value="$!couponsPart.couponCode" name="couponCode" placeholder="Enter coupon code" />
+			</div>
+
+			<div class="columns small-8 large-16">
+				<button style="    margin-top: 0px;" data-depends="#input-coupon-code" name="applyCouponCode" id="APPLY_COUPON" class="inactive js-disable-state-requirement postfix" disabled>Apply Coupon</button>
+			</div>
+
+			#if($couponsPart.coupons.size() > 0)
+				<div class="columns small-16">
+					<strong>$i18n.write('checkout.single.applied','Applied') $couponsPart.couponPluralStr:</strong>
+					<div class="applied-codes">
+						#foreach($coupon in $couponsPart.coupons)
+							<div class="coupon-text">
+								$coupon.couponCode&nbsp;
+								<input type="hidden" name="coupons[$foreach.index].shoppingCartCouponOid" value="$!coupon.shoppingCartCouponOid"/>
+								<button  type="submit" name="coupons[$foreach.index].remove" class="small no-padding coupon-remove" alt="Remove">x</button>
+							</div>
+						#end
+					</div>
+				</div>
+			#end ## couponsPart size
+		</div>
+	#end ##if-showCouponEntry
+</div>

@@ -1,0 +1,38 @@
+##
+## UltraCart - Mr Teas Template
+## http://www.ultracart.com/
+##
+## Copyright (c) 2015 BPS Info Solutions Inc.
+## License located here:
+## http://www.ultracart.com/storefront/license/
+##
+## Designed by Level 2 Design, LLC http://www.level2d.com/
+##
+
+#* @vtlvariable name="merchantId" type="java.lang.String" *#
+#* @vtlvariable name="formatHelper" type="com.bpsinfo.ultracart.catalog.tobjects.FormatHelper" *#
+#* @vtlvariable name="i18n" type="com.bpsinfo.storefront.tobjects.I18nWriter" *#
+#* @vtlvariable name="form" type="com.bpsinfo.ultracart.affiliate.ui.partner.RecruitingLinkForm" *#
+
+#set( $pageGroup = 'affiliate' )
+#set( $bodyClass = 'affiliate recruiting-link' )
+#set( $pageTitle = 'Recruiting Link for $!form.programName - Affiliate Partner' )
+#parse('/snippets/top.vm')
+
+#set( $title = "Recruiting Link for $!form.programName" )
+#if("$!form.programName" == '')
+	#set( $title = "Recruiting Link" )
+#end
+#parse('/snippets/title.vm')
+
+<div class="row">
+	<div class="columns small-16">
+		<textarea name="recruitingLink" readonly>$i18n.escape($!form.recruitingLink)</textarea>
+	</div>
+</div>
+
+#set( $showBackButton = true )
+#set( $hideButton = true )
+#parse('/snippets/affiliate/button.vm')
+
+#parse('/snippets/bottom.vm')

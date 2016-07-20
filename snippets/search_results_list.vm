@@ -1,0 +1,149 @@
+##
+## UltraCart - Mr Teas Template
+## http://www.ultracart.com/
+##
+## Copyright (c) 2015 BPS Info Solutions Inc.
+## License located here:
+## http://www.ultracart.com/storefront/license/
+##
+## Designed by Level 2 Design, LLC http://www.level2d.com/
+##
+
+## uc:item-multimedia-default-used="true"
+
+#if ($results.size() > 0)
+	<div class="row">
+		<div class="columns small-14 large-16 small-centered large-uncentered">
+			<style type="text/css">
+				.searchResultHighlight {
+					font-weight: bold;
+				}
+			</style>
+			<div class="row">
+				<div class="columns small-8">
+					#parse("/snippets/search_results_sort.vm")
+				</div>
+				<div class="columns small-8 text-right">
+					#parse("/snippets/search_results_pagination.vm")
+				</div>
+			</div>
+			<div class="full-divider"></div>
+			#foreach ($result in $results)
+				<div class="row half-margin-bottom half-margin-top">
+					#if($result.docType == "page")
+						<div class="columns small-16">
+							<div class="row">
+								<div class="columns small-16">
+								##title
+									<h2><a href="$result.page.uri">$formatHelper.escapeHtml($result.page.title)</a></h2>
+								</div>
+							</div>
+							<div class="row">
+								<div class="columns small-16">
+								##url
+									<a href="$result.page.uri">$formatHelper.escapeHtml($result.page.location)</a>
+								</div>
+							</div>
+							<div class="row">
+								<div class="columns small-16">
+								##text
+									$!result.page.highlightedEscapedExcerpt
+								</div>
+							</div>
+						</div>
+					#end
+					#if($result.docType == "item")
+						#set($item = $result.item)
+						<div class="columns small-16 medium-4 text-center">
+						##image
+							#if($showImages)
+								#set($img = $item.getDefaultMultimedia("Image"))
+								## #if($item.Thumbnail)
+								#if($img && $img.getThumbnail(200,200, false, $PNGThumbnails))
+									#if($item.ViewURL)
+										<a href="${item.ViewURL}">
+											<img src="${baseThumbnailUrl}${img.getThumbnail(200,200, false, $PNGThumbnails)}" >
+										</a>
+									#else
+										<img src="${baseThumbnailUrl}${img.getThumbnail(200,200, false, $PNGThumbnails)}" >
+									#end
+								#else
+									#if($item.ViewURL)
+										<a href="${item.ViewURL}">
+											<img src="/checkout/images/no-image-found.gif" >
+										</a>
+									#else
+										<img src="/checkout/images/no-image-found.gif" >
+									#end
+								#end
+							#end
+						</div>
+						<div class="columns small-16 medium-12 small-text-center medium-text-left">
+							<div class="row">
+								<div class="columns small-16 search-result-title">
+									<h2><a href="${item.ViewURL}">$item.getTitle()</a></h2>
+									<em>${item.merchantItemID}</em>
+								##title
+								</div>
+							</div>
+							<div class="row">
+								<div class="columns small-16 medium-8">
+								##price
+									#if($item.getMAPLocalized(false))
+					                  <span class="price">$item.getMAPLocalized(false)</span>
+					                #elseif($item.getSaleCost())
+					                  <span class="price"><strike>$item.getRegularCostLocalized()</strike></span>
+					                  <span class="price sale">$item.getSaleCostLocalized()</span>
+					                #else
+					                  <span class="price">$item.getCostLocalized()</span>
+					                #end
+								</div>
+								<div class="columns small-16 medium-8 medium-text-right">
+								##rating
+									#if($item.isReviewable())
+										#if (!$item.hasApprovedReview())
+										<div class="review-stars">
+											No Reviews
+										</div>
+
+										#else
+										<div class="review-stars">
+											$item.getReviewOverallAsHtml([
+											"<span class='icon-star-0-4'></span>",
+											"<span class='icon-star-1-4'></span>",
+											"<span class='icon-star-2-4'></span>",
+											"<span class='icon-star-3-4'></span>",
+											"<span class='icon-star-4-4'></span>"
+											]) ($item.getReviewCount())
+										</div>
+										#end
+									#end
+								</div>
+							</div>
+							<div class="row">
+								<div class="columns small-16">
+								##description
+								$formatHelper.excerpt($formatHelper.removeHtml(${item.getExtendedDescriptionNoEscape()}), 200)...
+								</div>
+							</div>
+						</div>
+					#end
+				</div>
+				<div class="full-divider"></div>
+				#set($item = false)
+			#end
+
+			<div class="row">
+				<div class="columns small-16 text-right">
+					#parse("/snippets/search_results_pagination.vm")
+				</div>
+			</div>
+		</div>
+	</div>
+#else
+	<div class="row">
+		<div class="columns small-16">
+			<p>We're sorry, but no search results were found. Please try a different search.</p>
+		</div>
+	</div>
+#end

@@ -1,0 +1,65 @@
+##
+## UltraCart - Mr Teas Template
+## http://www.ultracart.com/
+##
+## Copyright (c) 2015 BPS Info Solutions Inc.
+## License located here:
+## http://www.ultracart.com/storefront/license/
+##
+## Designed by Level 2 Design, LLC http://www.level2d.com/
+##
+
+## uc:item-multimedia-default-used="true"
+## uc:site-attribute-string="storefrontSEODescription"
+## uc:site-attribute-string="title"
+
+## Organization block for Schema.org
+<div itemscope itemtype="https://schema.org/Organization">
+  <meta itemprop="name" content= "$site.attr('title')"/>
+  <meta itemprop="url" content= "$baseUrl"/>
+  #if ($site.attr('storefrontSEODescription') && $site.attr('storefrontSEODescription').length() > 0)
+    <meta itemprop="description" content= "${formatHelper.escapeHtml($site.attr('storefrontSEODescription'))}"/>
+  #end
+</div>
+
+## Item block for Schema.org
+#if ($item)
+<div itemscope itemtype="http://schema.org/Product">
+  <meta itemprop="name" content="$formatHelper.escapeHtml($formatHelper.removeHtml(${item.getDescription()}))" />
+
+  #if ($item.getExtendedDescription() && $item.getExtendedDescription().length() > 0)
+    <meta itemprop="description" content="${formatHelper.escapeHtml($formatHelper.removeNewLines($formatHelper.removeHtml($item.getExtendedDescription())))}" />
+  #end
+
+  #if ($item.getImageURL() && $item.getImageURL().length() > 0)
+    <meta itemprop="image" content="$item.getImageURL()" />
+  #end
+
+  #if ($item.getBarcode() && $item.getBarcode().length() == 8)
+    <meta itemprop="gtin8" content="$item.getBarcode()" />
+  #end
+  #if ($item.getBarcode() && $item.getBarcode().length() == 13)
+    <meta itemprop="gtin13" content="$item.getBarcode()" />
+  #end
+  #if ($item.getBarcode() && $item.getBarcode().length() == 14)
+    <meta itemprop="gtin14" content="$item.getBarcode()" />
+  #end
+
+  <meta itemprop="productID" content="${formatHelper.escapeHtml($item.getMerchantItemID())}" />
+
+  <div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+    <meta itemprop="price" content="${formatHelper.formatBigDecimal($item.getCostAsBigDecimal())}" />
+    <meta itemprop="priceCurrency" content="${item.getCurrencyCode()}" />
+
+    #if ($item.isPreorder())
+      <meta itemprop="availability" content="http://schema.org/PreOrder" />
+    #elseif (!$item.isInventoryTracked() || $item.getAvailableQuantity() > 0)
+      <meta itemprop="availability" content="http://schema.org/InStock" />
+    #else
+      <meta itemprop="availability" content="http://schema.org/OutOfStock" />
+    #end
+
+    <meta itemprop="itemCondition" content="http://schema.org/NewCondition" />
+  </div>
+</div>
+#end

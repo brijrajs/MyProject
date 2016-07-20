@@ -1,0 +1,34 @@
+##
+## UltraCart - Mr Teas Template
+## http://www.ultracart.com/
+##
+## Copyright (c) 2015 BPS Info Solutions Inc.
+## License located here:
+## http://www.ultracart.com/storefront/license/
+##
+## Designed by Level 2 Design, LLC http://www.level2d.com/
+##
+
+#* @vtlvariable name="i18n" type="com.bpsinfo.storefront.tobjects.I18nWriter" *#
+#* @vtlvariable name="checkoutTermsPart" type="com.bpsinfo.storefront.tobjects.CheckoutTermsPart" *#
+
+<div class="row">
+	<div class="columns small-16">
+		<section class="terms cart-panel">
+			<h2>$i18n.write("checkout.review.termsAndConditionsOfCheckout","TERMS AND CONDITIONS OF CHECKOUT")</h2>
+
+			#if($form.htmlCheckoutTerms)
+				$!form.checkoutTerms
+			#else
+				<pre class="scrollbox">$!form.checkoutTerms</pre>
+			#end
+
+			<div class="columns small-16 medium-16">
+				<label class="label-group">
+					<input type="checkbox" name="acceptCheckoutTerms" #if($form.acceptCheckoutTerms)checked#{end} required/>
+					$i18n.write("checkout.review.acceptTermsText","I have read and agree with the terms and conditions of checkout.")
+				</label>
+			</div>
+		</section>
+	</div>
+</div>

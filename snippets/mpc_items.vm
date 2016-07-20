@@ -1,0 +1,391 @@
+##
+## UltraCart - Mr Teas Template
+## http://www.ultracart.com/
+##
+## Copyright (c) 2015 BPS Info Solutions Inc.
+## License located here:
+## http://www.ultracart.com/storefront/license/
+##
+## Designed by Level 2 Design, LLC http://www.level2d.com/
+##
+
+## uc:item-multimedia-default-used="true"
+## uc:theme-attribute-boolean="Checkout Only Theme"
+
+<div class="row">
+	<div class="columns small-16">
+		<section class="cart no-margin-bottom">
+			<h2>$i18n.write("checkout.viewcart.itemIdHeader", "Item")</h2>
+
+			## Row if they have nothing in the cart
+			#if($form.items.size() == 0 && $form.auctionItems.size() == 0)
+				<div class="product-panel">
+					<div class="product-info">
+						<header>
+							<h3 class="product-title">$i18n.write("checkout.viewcart.noItemSelectedMessage", "You have not yet selected a product to purchase.")</h3>
+							<span>&nbsp;</span>
+						</header>
+					</div>
+
+					<div class="product-total">
+						<span class="product-qty">
+							#if($form.hideQuantity)
+								&nbsp;
+							#else
+								<label>
+									<span>$i18n.write("checkout.viewcart.quantityHeader", "Qty")</span>
+								</label>
+							#end
+
+							&nbsp;
+						</span>
+
+						<div class="product-pricetag">
+							<span class="product-pricetag-label">$i18n.write("checkout.viewcart.amountHeader", "Amount")</span>
+							<span class="product-pricetag-amount ucItemDiscount">&nbsp;</span>
+						</div>
+					</div>
+				</div>
+			#end ## end items.size
+
+			## Display a row for all regular items
+			#foreach($item in $form.items)
+				#set( $itemIndex = $foreach.index ) ## this is necessary because of the possible inner loop within item options
+
+				<div class="product-panel">
+					<div class="product-image">
+						#if($item.storeFrontItem.getDefaultMultimedia('Image') && $item.storeFrontItem.getDefaultMultimedia('Image').getThumbnail(80, 107, false, $PNGThumbnails))
+							<img src="${baseThumbnailUrl}${item.storeFrontItem.getDefaultMultimedia('Image').getThumbnail(80, 107, false, $PNGThumbnails)}" class="UC-default-item-multimedia" width="80" height="107" border="0"/>
+						#else
+							<div class="product-image-placeholder">
+								<img src="$baseThemeUrl/assets/imgs/no-image.png" border="0"/>
+							</div>
+						#end
+					</div>
+
+					<!-- product-info -->
+					<div class="product-info">
+						<header>
+							<h3 class="product-title ucItemDescription">
+								#if(!$form.hideViewUrls && "$!item.viewUrl" != "" && $theme.attr("Checkout Only Theme", "false") != "true")
+									<a class="ucShoppingCartText" #if($form.viewUrlsToNewWindow) target="_blank" #{end} href="$!item.viewUrl">$item.description</a>
+								#else
+									$item.description
+								#end
+							</h3>
+							<span class="product-id #if($item.highlight)uc-highlight#{end}">
+								$formatHelper.escapeHtml($item.merchantItemId)
+							</span>
+						</header>
+
+						#if($item.getOptions().size() > 0)
+							<!-- product-options -->
+							<div class="product-options">
+									#foreach($option in $item.options)
+										#set( $optionIndex = $foreach.index ) ## alias it to avoid nested foreach collisions
+
+										#if($option.type != $cartConstants.optionTypeHidden)
+											<div class="label-group">
+											<div class="#if($option.highlight)uc-highlight#{end} label-move">
+												${option.label}
+											</div>
+										#end
+
+										<input type="hidden" name="items[${itemIndex}].options[$optionIndex].componentMerchantItemOid" value="$option.componentMerchantItemOid"/>
+										<input type="hidden" name="items[${itemIndex}].options[$optionIndex].qualifierGroupId" value="$option.qualifierGroupId"/>
+
+										#if($option.type == $cartConstants.optionTypeDropdown)
+											<select name="items[${itemIndex}].options[$optionIndex].value" class="ucShoppingCartField #if($option.highlight)uc-highlight#{end}">
+												#foreach($val in $option.values)
+													<option #if($val == $option.value) selected=#{end}>$val</option>
+												#end
+											</select>
+											</div>
+										#end
+
+										#if($option.type == $cartConstants.optionTypeRadio)
+											<ul class="option-group">
+											#foreach($val in $option.values)
+												<li>
+													<input type="radio" name="items[${itemIndex}].options[$optionIndex].value" value="$i18n.escape($formatHelper.coalesce($val, ""))"#if($val == $option.value) checked=#{end}/>
+
+													<label>
+														<span>$val</span>
+													</label>
+												</li>
+											#end
+											</ul>
+											</div>
+										#end
+
+										#if($option.type == $cartConstants.optionTypeFileAttachment)
+										$option.type
+											#if($option.getPofa())  ## pofa = placed order file attachment
+												<div class="file-attachment-option">$option.value</div>
+												<input type="hidden" name="items[${itemIndex}].options[$optionIndex].pofa" value="$!option.pofa"/>
+											#end
+											<input type="file" name="items[${itemIndex}].options[$optionIndex].file" class='ucShoppingCartField' />
+											</div>
+										#end
+
+										#if($option.type == $cartConstants.optionTypeSingle)
+											<input type="text" name="items[${itemIndex}].options[$optionIndex].value" class="ucShoppingCartField" value="$i18n.escape($!option.value)" maxlength="50"/>
+											</div>
+										#end
+
+										#if($option.type == $cartConstants.optionTypeMultiline)
+											<textarea name="items[${itemIndex}].options[$optionIndex].value" class="ucShoppingCartField" rows="7" cols="35" wrap="off">$i18n.escape($!option.value)</textarea>
+											</div>
+										#end
+
+										#if($option.type == $cartConstants.optionTypeHidden)
+											<input type="hidden" name="items[${itemIndex}].options[$optionIndex].value" value="$i18n.escape($!option.value)"/>
+										#end
+
+										#if($option.type == $cartConstants.optionTypeFixed)
+											<input type="hidden" name="items[${itemIndex}].options[$optionIndex].value" value="$i18n.escape($!option.value)"/> $option.value
+											</div>
+										#end
+
+									#end ##foreach-option
+							</div>
+							<!-- /product-options -->
+						#end ##if-showOptions
+
+							## Display the UNSPSC if specified under the description
+							#if("$!item.unspsc" != "")
+								<div class="ucShoppingCartText">UNSPSC: $formatHelper.escapeHtml($item.unspsc)</div>
+							#end
+					</div>
+					<!-- /product-info -->
+
+					<input type="hidden" name="items[${itemIndex}].merchantItemOid" value="$!item.merchantItemOid"/>
+
+					#if("$!item.arbitraryUnitCost" != "")
+						<input type="hidden" name="items[${itemIndex}].arbitraryUnitCost" value="$!item.arbitraryUnitCost"/>
+					#end
+
+					#if("$!item.realtimePricingFetchDts" != "")
+						<input type="hidden" name="items[${itemIndex}].realtimePricingFetchDts" value="$i18n.escape($!item.realtimePricingFetchDts)"/>
+					#end
+
+					<input type="hidden" name="items[${itemIndex}].itemIndex" value="$item.itemIndex"/>
+					<input type="hidden" name="items[${itemIndex}].viewUrl" value="$i18n.escape($item.viewUrl)"/>
+					<input type="hidden" name="items[${itemIndex}].description" value="$i18n.escape($item.description)"/>
+					<input type="hidden" name="items[${itemIndex}].amount" value="$item.amount"/>
+
+					<!-- product-total -->
+					<div class="product-total">
+						<span class="product-qty">
+							#if($form.hideQuantity)
+								&nbsp;<input type="hidden" name="items[${itemIndex}].quantity" value="$!item.quantity"/>
+							#else
+								<label>$i18n.write("checkout.viewcart.quantityHeader", "Qty")</label>
+
+								#if($form.lockQuantity)
+									$item.quantity
+									<input type="hidden" name="items[${itemIndex}].quantity" value="$!item.quantity"/>
+								#else
+									<input type="number" name="items[${itemIndex}].quantity" value="$!item.quantity" min="0" />
+								#end
+							#end
+
+							#if (!$form.lockedItems)
+								<button type="submit" name="items[${itemIndex}].remove" class="product-remove-cart js-disable-state-requirement" title="Remove this from your cart">Remove</button>
+							#end
+						</span>
+
+						<div class="product-pricetag">
+							<span class="product-pricetag-label">Amount</span>
+
+							<span class="product-pricetag-amount ucItemDiscount js-format-number">$formatHelper.escapeHtml($item.formattedAmount)</span>
+
+							#if($item.getDiscount())
+								<span class="product-pricetag-amount ucItemDiscount2 js-format-number">-${formatHelper.escapeHtml($item.formattedDiscount)}</span>
+							#end
+						</div>
+					</div>
+					<!-- /product-total -->
+				</div>
+			#end ## end items loop
+
+			## Display a row for all AUCTION items
+			#foreach($auction in $form.auctionItems)
+				#set($auctionIndex = $foreach.index) ## this is necessary because of the possible inner loop within item options
+
+				<div class="product-panel">
+					<!-- product-info -->
+					<div class="product-info">
+						<header>
+							<h3 class="product-title ucItemDescription">
+								$auction.descriptionWithBreaks
+							</h3>
+							<span class="product-id ucItemItemId">$auction.merchantItemId</span>
+						</header>
+					</div>
+					<!-- /product-info -->
+
+					<input type="hidden" name="auctionItems[${auctionIndex}].merchantItemId" value="$i18n.escape($auction.merchantItemId)"/>
+					<input type="hidden" name="auctionItems[${auctionIndex}].shoppingCartAuctionItemOid" value="$auction.shoppingCartAuctionItemOid"/>
+					<input type="hidden" name="auctionItems[${auctionIndex}].description" value="$i18n.escape($auction.description)"/>
+					<input type="hidden" name="auctionItems[${auctionIndex}].amount" value="$auction.amount"/>
+
+					<div class="product-total">
+						<span class="product-qty">
+							<label>$i18n.write("checkout.viewcart.quantityHeader", "Qty")</label>
+
+							#if($form.lockQuantity)
+								$auction.quantity
+								<input type="hidden" name="auctionItems[${auctionIndex}].quantity" value="$auction.quantity"/>
+							#elseif($form.hideQuantity)
+								<input type="hidden" name="auctionItems[${auctionIndex}].quantity" value="$auction.quantity"/>
+							#else
+								<input type="text" name="auctionItems[${auctionIndex}].quantity" value="$auction.quantity" class="ucShoppingCartField"/>
+							#end
+
+							#if (!$form.lockedItems)
+								<button type="submit" name="auctionItems[${auctionIndex}].remove" class="product-remove-cart" title="Remove this from your cart">Remove</button>
+							#end
+						<span>
+
+						<div class="product-pricetag">
+							<span class="product-pricetag-label">Amount</span>
+							<span class="product-pricetag-amount ucItemDiscount js-format-number">${formatHelper.escapeHtml($auction.formattedAmount)}</span>
+						</div>
+					</div>
+				</div>
+
+			#end ## END OF AUCTION ITEMS
+
+			<div class="row cart-footer no-margin-top">
+				<div class="columns small-16 equalizer-small-suspend equalizer-medium-suspend" data-equalizer>
+					<div class="cart-footer-left small-only-text-center medium-text-right" data-equalizer-watch>
+						<button type="submit" name="continueShopping" class="button secondary js-disable-state-requirement" #if($form.cartInNewWindow)onclick="return closeWindow()"#{end}>&lt;&lt; Continue Shopping</button>
+
+						#if(!$form.lockedItems && ($form.items.size() > 0 || $form.auctionItems.size() > 0))
+							## the RECALCULATE id is used twice (regrettably), so using a variable name for it keeps editors from complaining.
+							<button type="submit" name="recalculate" id="RECALCULATE" class="button green js-update-quantity js-disable-state-requirement">Update</button>
+						#end
+					</div>
+
+					<div class="cart-footer-right" data-equalizer-watch>
+						#if($form.isHasSubtotalDiscount())
+							<div class="cart-breakdown">
+								<div class="subtotal-before-discounts ucItemsSubtotalBeforeDiscounts breakdown-item">
+									<div class="label">$i18n.write("checkout.viewcart.subtotalBeforeDiscountsField", "Subtotal before discounts")</div>
+									<div class="value js-format-number">$formatHelper.escapeHtml($form.formattedSubtotalBeforeDiscount)</div>
+								</div>
+
+								<div class="discount ucShoppingCartDiscountText breakdown-item">
+									<div class="label">$i18n.write("checkout.viewcart.subtotalBeforeDiscounts", "Discounts")</div>
+									<div class="value js-format-number">-$formatHelper.escapeHtml($form.formattedSubtotalDiscount)</div>
+								</div>
+							</div>
+						#end
+
+						<div class="cart-total subtotal ucItemsSubtotal">
+
+							<!-- buysafe -->
+							#if($form.buysafeBondAvailable)
+								#if($form.buysafeBondWanted)
+									#set( $buysafeImg =  "../assets/imgs/buysafe-yes.png" )
+								#else
+									#set( $buysafeImg =  "../assets/imgs/buysafe-no.png" )
+								#end
+								<div class="row">
+									<div class="buysafe-container columns small-16 medium-9 large-16 medium-float-right">
+									  	<div class="row">
+									    	<div class="columns small-16 medium-12 large-12">
+									    		<div class="buysafe">
+											    	<img src="../assets/imgs/buysafe-logo.gif" >
+											    	<img src="$buysafeImg" id="buysafe-yes-no" data-active="$!form.buysafeBondWanted" data-no-src="../assets/imgs/buysafe-no.png" data-yes-src="../assets/imgs/buysafe-yes.png" >
+										    		#if(!$form.buysafeBondWanted && !$form.buysafeBondFree)
+														<a class="buysafe-learn-more" href="$form.buysafeCartDisplayUrl" target="_blank">$form.buysafeCartDisplayText</a>
+													#else
+											    		<p>$i18n.write('checkout.viewcart.buysafe','Your Purchase is Guaranteed with BuySafe')</p>
+													#end
+									    		</div>
+									    	</div>
+									    	<div class="columns small-4 large-4">
+									    		#if($form.buysafeBondWanted && "$!form.buysafeBondCost" != "" && !$form.buysafeBondFree)
+										    		<div class="buysafe-info"><span class="buysafe-cost">${formatHelper.escapeHtml($form.formattedBuysafeBondCost)}</span></div>
+												#elseif ("$!form.buysafeBondCost" != "" && !$form.buysafeBondFree)
+													<div class="buysafe-info"><span class="buysafe-cost">${formatHelper.escapeHtml($form.formattedBuysafeBondCost)}</span></div>
+												#else
+													<div class="buysafe-info">Free!</div>
+												#end
+												## ## Separate subtotal
+												## #if($separateSubtotal)
+												## 	<div class="row">
+												## 		<div class="columns small-16 text-right">
+												## 			<strong>$i18n.write("checkout.viewcart.subtotalField", "Subtotal"):</strong>
+												## 			<strong>${formatHelper.escapeHtml($form.formattedSubtotalFinal)}</strong>
+												## 		</div>
+												## 	</div>
+												## #end
+											</div>
+									  	</div>
+								    </div>
+								</div>
+							#end ##if-buysafeBondAvailable
+							<!-- /buysafe -->
+
+							<div class="row half-margin-top">
+								<div class="columns medium-9 large-16 medium-float-right text-right">
+									<div class="total breakdown-item row">
+										<div class="columns small-12 large-12">
+											<div class="label">$subtotalField</div>
+										</div>
+										<div class="columns small-4 large-4">
+											<div class="value js-format-number">${formatHelper.escapeHtml($form.formattedSubtotal)}</div>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							## Separate subtotal
+							#if($separateSubtotal)
+								<div class="row">
+									<div class="columns medium-9 large-16 medium-float-right text-right">
+										<div class="row">
+											<div class="columns small-12 large-12">
+												<strong>$i18n.write("checkout.viewcart.subtotalField", "Subtotal")</strong>
+											</div>
+											<div class="columns small-4 large-4">
+												<strong>${formatHelper.escapeHtml($form.formattedSubtotalFinal)}</strong>
+											</div>
+										</div>
+									</div>
+								</div>
+							#end
+
+							<div class="row half-margin-top">
+								#if($form.allowCustomerSelectableCurrency)
+									<div class="column medium-9 large-16 medium-float-right">
+										<select class="js-change-currency" name="changeCurrencyCode">
+											<option value="USD" #if ($form.getCurrencyCode() == "USD") selected #end ><span style="color:#999">$</span> US Dollars</option>
+											<option value="EUR" #if ($form.getCurrencyCode() == "EUR") selected #end ><span style="color:#999">&euro;</span> Euro</option>
+											<option value="GBP" #if ($form.getCurrencyCode() == "GBP") selected #end ><span style="color:#999">&pound;</span> Pound Sterling</option>
+											<option value="AUD" #if ($form.getCurrencyCode() == "AUD") selected #end >Australian Dollar</option>
+											<option value="BRL" #if ($form.getCurrencyCode() == "BRL") selected #end >Brazilian Real</option>
+											<option value="CAD" #if ($form.getCurrencyCode() == "CAD") selected #end >Canadian Dollar</option>
+											<option value="CHF" #if ($form.getCurrencyCode() == "CHF") selected #end >Swiss Franc</option>
+											<option value="JPY" #if ($form.getCurrencyCode() == "JPY") selected #end >Japanese Yen</option>
+											<option value="MXN" #if ($form.getCurrencyCode() == "MXN") selected #end >Mexican Peso</option>
+											<option value="NOK" #if ($form.getCurrencyCode() == "NOK") selected #end >Norwegian Krone</option>
+											<option value="NZD" #if ($form.getCurrencyCode() == "NZD") selected #end >New Zealand Dollar </option>
+											<option value="RUB" #if ($form.getCurrencyCode() == "RUB") selected #end >Russian Ruble</option>
+											<option value="SEK" #if ($form.getCurrencyCode() == "SEK") selected #end >Swedish Krona</option>
+											<option value="SGD" #if ($form.getCurrencyCode() == "SGD") selected #end >Singapore Dollar</option>
+											<option value="TRY" #if ($form.getCurrencyCode() == "TRY") selected #end >Turkish New Lira </option>
+										</select>
+									</div>
+								#end ##if-showChangeCurrency
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+	</div>
+</div>

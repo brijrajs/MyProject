@@ -1,0 +1,189 @@
+##
+## UltraCart - Mr Teas Template
+## http://www.ultracart.com/
+##
+## Copyright (c) 2015 BPS Info Solutions Inc.
+## License located here:
+## http://www.ultracart.com/storefront/license/
+##
+## Designed by Level 2 Design, LLC http://www.level2d.com/
+##
+
+#* @vtlvariable name="merchantId" type="java.lang.String" *#
+#* @vtlvariable name="formatHelper" type="com.bpsinfo.ultracart.catalog.tobjects.FormatHelper" *#
+#* @vtlvariable name="i18n" type="com.bpsinfo.storefront.tobjects.I18nWriter" *#
+#* @vtlvariable name="form" type="com.bpsinfo.ultracart.affiliate.ui.partner.EditLinkForm" *#
+
+#set( $pageGroup = 'affiliate' )
+#set( $bodyClass = 'affiliate edit-link' )
+#set( $pageTitle = 'Edit Link - Affiliate Partner' )
+#parse('/snippets/top.vm')
+
+#set( $title = $pageTitle )
+#parse('/snippets/title.vm')
+
+<form action="/affiliate/partner/editLinkSave.do" name="editLinkForm" method='post'>
+    #parse('/snippets/common/storefront_template_spec_version.vm')
+	<input type="hidden" name="affiliateLinkOid" value="$!form.affiliateLinkOid"/>
+
+	#parse('/snippets/errors.vm')
+	#parse('/snippets/info_messages.vm')
+
+	<div class="row">
+		<div class="columns small-16">
+			<p>
+				What would you like to name this link?  Your naming scheme will help you organize your links and edit them later.
+			</p>
+		</div>
+
+		<div class="columns small-8">
+			<label class="label-group">
+				<span>Name</span>
+				<input type="text" name="name" value="$i18n.escape($form.name)" class="ucDefault"/>
+			</label>
+
+			<div class="label-group">
+				<span>Link Type</span>
+			</div>
+
+			<div class="clearfix"></div>
+
+			<ul class="option-group js-link-type">
+				#if($form.getImageCreatives().size() > 0)
+					<li>
+						<input type="radio" name="type" #if($form.type && $form.type == 'image')checked#{end} value="image" />
+						<label>
+							<strong>Image</strong>
+						</label>
+					</li>
+				#end
+
+				#if($form.getTextCreatives().size() > 0)
+					<li>
+						<input type="radio" name="type" #if($form.type && $form.type == 'text')checked#{end} value="text" />
+						<label>
+							<strong>Text</strong>
+						</label>
+					</li>
+				#end
+
+				<li>
+					<input type="radio" name="type" #if($form.type && $form.type == 'invisible')checked#{end} value="invisible" />
+					<label>
+						<strong>Invisible</strong>
+					</label>
+				</li>
+			</ul>
+
+			#if($form.showConversionCodeSection)
+				<p>
+					If you would like PPC conversion code to render on the receipt you can specify your account ID
+					below.  This setting can be applied globally under the
+					<a href="/affiliate/partner/updateInformationLoad.do">Update Information</a> link off the main
+					menu.  If you specify it here it will override your global setting under Update Information.
+				</p>
+
+				#if($form.showGoogle)
+					<label class="label-move">
+						<span>Google Conversion ID</span>
+						<input type="text" name="googleConversionId" value="$i18n.escape($form.googleConversionId)" maxlength="30"/>
+					</label>
+					<small>(Optional - <a href="/affiliate/partner/findGoogle.jsp" class="js-help">help finding this number</a>)</small>
+				#end ##if-showGoogleConversionId
+				#if($form.showYahoo)
+					<label class="label-move">
+						<span>Yahoo Search Marketing Account ID</span>
+						<input type="text" name="ysmAccountId" value="$i18n.escape($form.ysmAccountId)" maxlength="30"/>
+					</label>
+					<small>(Optional - <a href="/affiliate/partner/findYahoo.jsp" class="js-help">help finding this number</a>)</small>
+				#end ##if-showYsmAccountId
+
+			#end ##if-showConversionCodeSection
+
+			#if($form.showCustomHtml)
+				<div class="label-group">
+					<span>
+						This merchant has given you the ability to include a snippet of HTML on their receipt.
+						This is useful for tracking conversions with 3rd party advertising systems like Google Adwords.
+						If you would like to use this feature, enter your html snippet below.
+					</span>
+				</div>
+				<textarea name="customHtml">$i18n.escape($!form.customHtml)</textarea>
+			#end ##if-showCustomHtml
+		</div>
+
+		<div class="columns small-8">
+			<div class="link-container js-link-container js-destination-container">
+				<label class="label-group">
+					<span>Where would you like to take the user when they click the link?</span>
+
+					<select name="destinationUrl">
+						#foreach($destination in $form.destinations)
+							<option value="$destination.affiliateOfferItemOid" #if($form.destinationUrl == $destination.affiliateOfferItemOid)selected#{end}>$i18n.escape($destination.description)</option>
+						#end
+					</select>
+				</label>
+
+				<label class="label-group custom-landing-url js-custom-landing-url">
+					<span>Custom Landing URL</span>
+					<input type="text" name="destinationUrlCustom" value="$i18n.escape($form.destinationUrlCustom)"/>
+				</label>
+			</div>
+
+			<div class="link-container js-link-container js-image-container">
+				<label class="label-group">
+					<span>Select the image you would like to use in your link</span>
+				</label>
+
+				<div class="clearfix"></div>
+
+				<ul class="option-group link-type">
+					#foreach($imageCreative in $form.imageCreatives)
+						<li>
+							<input type="radio" name="selectedImageCreativeOid" value="$imageCreative.creativeOid" #if($form.selectedImageCreativeOid == $imageCreative.creativeOid)checked#{end}/>
+							<label>
+								<img src="/affiliate/displayImage.jsp?oid=$!{imageCreative.creativeOid}" alt="" />
+							</label>
+						</li>
+					#end ## foreach image creative
+				</ul>
+			</div>
+
+			<div class="link-container js-link-container js-text-container">
+				<label class="label-group">
+					<span>Select the text you would like to use in your link</span>
+				</label>
+
+				<div class="clearfix"></div>
+
+				<ul class="option-group link-type">
+					#foreach($textCreative in $form.textCreatives)
+						<li>
+							<input type="radio" name="selectedTextCreativeOid" value="$textCreative.creativeOid" #if($form.selectedTextCreativeOid == $textCreative.creativeOid)checked#{end}/>
+							<label>
+								<strong>$i18n.escape($textCreative.text)</strong>
+							</label>
+						</li>
+					#end ##foreach creatives
+				</ul>
+			</div>
+
+			<div class="link-container js-link-container js-invisible-container">
+				<label class="label-group">
+					<span>What URL will you be referring traffic from?</span>
+				</label>
+
+				<input type="text" name="invisibleUrl" value="$i18n.escape($form.invisibleUrl)" />
+			</div>
+		</div>
+	</div>
+
+
+	#set( $showBackButton = true )
+	#set( $hideButton = false )
+	#parse('/snippets/affiliate/button.vm')
+
+	#parse('/snippets/common/cs_token.vm')
+</form>
+
+#parse('/snippets/bottom.vm')

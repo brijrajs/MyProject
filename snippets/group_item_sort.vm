@@ -1,0 +1,43 @@
+##
+## UltraCart - Mr Teas Template
+## http://www.ultracart.com/
+##
+## Copyright (c) 2015 BPS Info Solutions Inc.
+## License located here:
+## http://www.ultracart.com/storefront/license/
+##
+## Designed by Level 2 Design, LLC http://www.level2d.com/
+##
+
+#if ($parameters["changeItemSortOrder"])
+  $group.setCurrentItemSortOrder($parameters["changeItemSortOrder"])
+#end
+#if ($parameters["changeItemsPerPage"])
+  ## Test being able to remove the parseInt call after the next build.
+  $group.setCurrentItemsPerPage($formatHelper.parseInt($parameters["changeItemsPerPage"]))
+#end
+
+#if($group.getItemCount() > 0)
+  <div class="columns small-8 medium-4">
+    <div class="label-group small">
+      <label for="itemSortOrder">Relevance:</label>
+      <select id="itemSortOrder">
+        #foreach($sortOrder in $group.getAvailableItemSortOrders())
+        <option #if($group.getCurrentItemSortOrder().equals($sortOrder)) selected #end>$sortOrder</option>
+        #end
+      </select>
+    </div>
+  </div>
+  #if($group.getItemCount() > 10)
+    <div class="columns small-8 medium-3">
+      <div class="label-group small">
+        <label for="itemsPerPage">Show:</label>
+        <select id="itemsPerPage">
+          #foreach($availableItemsPerPage in $group.getAvailableItemsPerPage())
+          <option #if($group.getCurrentItemsPerPage() == $availableItemsPerPage) selected #end>$availableItemsPerPage</option>
+          #end
+        </select>
+      </div>
+    </div>
+  #end
+#end

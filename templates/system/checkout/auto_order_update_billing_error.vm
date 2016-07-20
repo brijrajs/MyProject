@@ -1,0 +1,18 @@
+#* @vtlvariable name="formatHelper" type="com.bpsinfo.ultracart.catalog.tobjects.FormatHelper" *#
+#* @vtlvariable name="i18n" type="com.bpsinfo.storefront.tobjects.I18nWriter" *#
+#* @vtlvariable name="form" type="com.bpsinfo.ultracart.autoorder.ui.AutoOrderUpdateBillingForm" *#
+
+#set( $bodyClass = 'auto-order auto-order-update-billing-success' )
+#set( $pageTitle = $i18n.write("autoorder.updateBilling.pageTitle", "Update Billing") )
+#parse('/snippets/top.vm')
+
+#set( $title = $i18n.write("autoOrder.updateBilling.confirmationHeader","UPDATE BILLING") )
+#parse('/snippets/title.vm')
+
+<div class="row">
+	<div class="columns small-16">
+		<p>$i18n.escape($!form.error)</p>
+	</div>
+</div>
+
+#parse('/snippets/bottom.vm')

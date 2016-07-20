@@ -1,0 +1,25 @@
+##
+## UltraCart - Mr Teas Template
+## http://www.ultracart.com/
+##
+## Copyright (c) 2015 BPS Info Solutions Inc.
+## License located here:
+## http://www.ultracart.com/storefront/license/
+##
+## Designed by Level 2 Design, LLC http://www.level2d.com/
+##
+
+#* @vtlvariable name="returnPolicyPart" type="com.bpsinfo.storefront.tobjects.ReturnPolicyPart" *#
+<div class="row">
+	<div class="columns small-16">
+		<h2>$returnPolicyPart.returnPolicyHeader</h2>
+		<pre class="scrollbox">$returnPolicyPart.returnPolicy</pre>
+
+		<div class="clearfix">
+
+		<label>
+			<span>I accept the terms of the $returnPolicyPart.returnPolicyDescription.</span>
+			<input type="checkbox" name="acceptReturnPolicy" #if($returnPolicyPart.acceptReturnPolicy)checked='checked'#{end} />
+		</label>
+	</div>
+</div>

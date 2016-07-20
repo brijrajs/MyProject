@@ -1,0 +1,66 @@
+##
+## UltraCart - Mr Teas Template
+## http://www.ultracart.com/
+##
+## Copyright (c) 2015 BPS Info Solutions Inc.
+## License located here:
+## http://www.ultracart.com/storefront/license/
+##
+## Designed by Level 2 Design, LLC http://www.level2d.com/
+##
+
+#* @vtlvariable name="merchantId" type="java.lang.String" *#
+#* @vtlvariable name="formatHelper" type="com.bpsinfo.ultracart.catalog.tobjects.FormatHelper" *#
+#* @vtlvariable name="shippingPart" type="com.bpsinfo.storefront.tobjects.ShippingPart" *#
+#* @vtlvariable name="i18n" type="com.bpsinfo.storefront.tobjects.I18nWriter" *#
+
+<!-- shipping methods -->
+<div class="columns small-16" style="display:none !important; ">
+	<h2>$i18n.write("checkout.single.shippingPreferenceHeader","Shipping Preferences")</h2>
+</div>
+
+<div class="columns small-16 medium-8" style="display:none !important; ">
+	<p class="js-shipping-preferences-message" data-loading="$i18n.write('checkout.single.calculatingShipping', 'Calculating shipping')...">
+		#if($shippingPart.shippingMethods.size() == 0)
+			$i18n.write("checkout.single.noShippingMethods","No shipping methods could be identified for the address specified.  Please specify a different shipping address.")
+		#end ## if-shippingMethods.size() == 0
+	</p>
+
+	<div class="js-shipping-methods #if($shippingPart.shippingMethods.size() == 0)hide#{end}">
+		<div class="label-move">
+			<span>$i18n.write("checkout.single.shippingMethod", "Choose Shipping Method")</span>
+		</div>
+
+		<ul class="option-group payment-options">
+			#foreach($shippingMethodEntry in $shippingPart.shippingMethods)
+				<li #if($shippingMethodEntry.name == $shippingPart.shippingMethod)class="active"#{end}>
+					<input type="radio" id="shippingMethod${foreach.count}" name="shippingMethod"
+							#if($shippingMethodEntry.name == $shippingPart.shippingMethod) checked#{end}
+							value="$shippingMethodEntry.name"/>
+					<label for="shippingMethod${foreach.count}">
+						<strong>
+							$i18n.escape($shippingMethodEntry.displayName)
+							<em>
+								#if($shippingMethodEntry.comment)(${shippingMethodEntry.comment})&nbsp;#{end}
+
+								#if("$!shippingMethodEntry.estimatedDelivery" != "")
+									 - $i18n.write("checkout.single.delivered","delivered") $i18n.escape($!shippingMethodEntry.estimatedDelivery)
+								#end ## showEstimateDelivery and shipping method has estimate
+							</em>
+						</strong>
+						<span class="option-note price js-format-number js-price" data-cost="$shippingMethodEntry.cost" data-tax="$shippingMethodEntry.tax">$shippingMethodEntry.cost</span>
+					</label>
+				</li>
+			#end ##foreach-shippingMethod
+		</ul>
+	</div>
+
+	#if($shippingPart.showPackingSolution)
+		<div class="row no-padding-left no-padding-right">
+			<p class="columns small-16">
+				Logged in merchant, <a target="_blank" href="/cgi-bin/UCPackingSolution?merchantId=$formatHelper.urlEncode($merchantId)">view packing solution</a>.
+			</p>
+		</div>
+	#end ##if-showPackingSolution
+</div>
+<!-- /shipping methods -->

@@ -1,0 +1,162 @@
+##
+## UltraCart - Mr Teas Template
+## http://www.ultracart.com/
+##
+## Copyright (c) 2015 BPS Info Solutions Inc.
+## License located here:
+## http://www.ultracart.com/storefront/license/
+##
+## Designed by Level 2 Design, LLC http://www.level2d.com/
+##
+
+#* @vtlvariable name="merchantId" type="java.lang.String" *#
+#* @vtlvariable name="header" type="java.lang.String" *#
+#* @vtlvariable name="footer" type="java.lang.String" *#
+#* @vtlvariable name="i18n" type="com.bpsinfo.storefront.tobjects.I18nWriter" *#
+
+
+
+#set( $bodyClass = "myaccount-addresses" )
+#set( $pageTitle = "My Account Address" )
+#set( $handlebarsForm = "true" )
+
+#parse("/snippets/top.vm")
+
+<script type="text/javascript">
+  var merchantId = '$!merchantId';
+</script>
+<!--[if lt IE 9]>
+<script type='text/javascript' src="/myaccount/js/html5shiv-printshiv.js" media="all"></script>
+<![endif]-->
+
+
+<script type="text/javascript" src="/myaccount/js/moment.js"></script>
+<script type="text/javascript" src="/myaccount/js/handlebars-v3.0.3.js"></script>
+<script type="text/javascript" src="/myaccount/js/underscore_1.4.4.js"></script>
+<script type="text/javascript" src="/myaccount/js/myaccount_rest_1.3.js"></script>
+<script type="text/javascript" src="/myaccount/js/myaccount.js"></script>
+<script type="text/javascript" src="/myaccount/address.js"></script>
+
+
+<script type="text/template" id="address-template">
+  <!-- the backbone view will wrap this content in an <article class="address"></article> tag -->
+
+  <div class='address-edit-table'>
+
+    <form id='form-account-addresses' action="#" method="post" class="validate">
+
+      #parse('/snippets/common/cs_token.vm')
+
+      <div class="columns small-16 medium-8">
+        <label class='label-move'>
+          <span>$i18n.write('myaccount.address.firstNameLabel','First Name')*</span>
+          <input type="text" id="firstName" name="firstName" value="{{firstName}}" required maxlength="30"/>
+          <input type="hidden" id="id" value="{{id}}"/>
+        </label>
+
+        <label class='label-move'>
+          <span>$i18n.write('myaccount.address.lastNameLabel','Last Name')*</span>
+          <input type="text" id="lastName" name="lastName" value="{{lastName}}" required maxlength="30"/>
+        </label>
+
+        <label class='label-move'>
+          <span>$i18n.write('myaccount.address.titleLabel','Title')</span>
+          <input type="text" id="title" name="title" value="{{title}}" maxlength="50"/>
+        </label>
+
+        <label class='label-move'>
+          <span>$i18n.write('myaccount.address.companyLabel','Company')</span>
+          <input type="text" id="company" name="company" value="{{company}}" maxlength="50"/>
+        </label>
+
+        <label class='label-move'>
+          <span>$i18n.write('myaccount.address.address1Label','Address 1')*</span>
+          <input type="text" id="address1" name="address1" class="no-margin-bottom" value="{{address1}}" required maxlength="50"/>
+        </label>
+        <p style='font-size:0.7em;margin-bottom:1rem;' class="no-margin-top">$i18n.write('myaccount.address.address1Description','Street address, P.O. box, company name, c/o')</p>
+
+        <label class='label-move'>
+          <span>$i18n.write('myaccount.address.address2Label','Address 2')</span>
+          <input type="text" id="address2" name="address2" class="no-margin-bottom" value="{{address2}}" maxlength="50"/>
+        </label>
+        <p style='font-size:0.7em;margin-bottom:1rem' class="no-margin-top">$i18n.write('myaccount.address.address2Description','Apartment, suite, unit, building, floor, etc.')</p>
+      </div>
+      <div class="columns small-16 medium-8">
+        <label class='label-move'>
+          <span>$i18n.write('myaccount.address.cityLabel','City')*</span>
+          <input type="text" id="city" name="city" value="{{city}}" required maxlength="32"/>
+        </label>
+
+        <label class='label-move'>
+          <span>$i18n.write('myaccount.address.stateLabel','State')*</span>
+          <input type="text" id="state" name="state" value="{{state}}" required maxlength="32"/>
+        </label>
+
+        <label class='label-move'>
+          <span>$i18n.write('myaccount.address.zipCodeLabel','Zip Code')*</span>
+          <input type="text" id="postalCode" name="postalCode" value="{{postalCode}}" required maxlength="20"/>
+        </label>
+
+        <label class='label-move'>
+          <span>$i18n.write('myaccount.address.countryLabel','Country')*</span>
+          <input type="text" id="country" name="country" value="{{country}}" required maxlength="32"/>
+        </label>
+
+        <label class='label-move'>
+          <span>$i18n.write('myaccount.address.dayPhoneLabel','Day Phone')</span>
+          <input type="text" id="dayPhone" name="dayPhone" value="{{dayPhone}}" maxlength="25"/>
+        </label>
+
+      {{\#if isBilling}}
+        <label class='label-move'>
+          <span>$i18n.write('myaccount.address.eveningPhoneLabel','Evening Phone')</span>
+          <input type="text" id="eveningPhone" name="eveningPhone" value="{{eveningPhone}}" required maxlength="25"/>
+        </label>
+      {{/if}}
+      </div>
+
+
+        <div class="columns small-16 text-right">
+          <button type="submit" id="saveButton" class="button inactive" disabled>
+            $i18n.write('myaccount.address.saveButton','Save Changes')
+          </button>
+          <button id="cancelButton" class="button secondary">
+            $i18n.write('myaccount.address.cancelButton','Cancel')
+          </button>
+        </div>
+
+    </form>
+  </div>
+
+
+  <div style='clear:both'></div>
+
+
+</script>
+
+<div class="row half-margin-top">
+  <div class="columns small-16 medium-13">
+    <a href="/myaccount/index.do?merchantId=$!{merchantId}">$i18n.write('myaccount.breadcrumb.myAccount','My Account')</a> &gt; <a href="#" onclick="window.history.back(); return false;">$i18n.write('myaccount.breadcrumb.addresses','Addresses')</a> &gt; <span class='disabled-looking'>$i18n.write('myaccount.breadcrumb.editAddress','Edit Address')</span>
+  </div>
+</div>
+
+<div class="row">
+  <div class="columns small-16">
+    <h1>$i18n.write('myaccount.addressHeader','Edit Address')</h1>
+    <p>$i18n.write('myaccount.addressMessage','Use the form below to edit your address.')</p>
+    <div class="myaccount-notifications">
+      <div class="alert info text-left no-margin-top no-margin-bottom"></div>
+      <div class="alert success text-left no-margin-top no-margin-bottom"></div>
+      <div class="alert warning text-left no-margin-top no-margin-bottom"></div>
+      <div class="alert error text-left no-margin-top no-margin-bottom"></div>
+    </div>
+  </div>
+</div>
+
+<main role='main' class="row">
+  <div id="address" class="columns small-16">
+
+  </div>
+</main>
+
+#parse("/snippets/bottom.vm")

@@ -1,0 +1,211 @@
+##
+## UltraCart - Mr Teas Template
+## http://www.ultracart.com/
+##
+## Copyright (c) 2015 BPS Info Solutions Inc.
+## License located here:
+## http://www.ultracart.com/storefront/license/
+##
+## Designed by Level 2 Design, LLC http://www.level2d.com/
+##
+
+#* @vtlvariable name="formatHelper" type="com.bpsinfo.ultracart.catalog.tobjects.FormatHelper" *#
+#* @vtlvariable name="i18n" type="com.bpsinfo.storefront.tobjects.I18nWriter" *#
+#* @vtlvariable name="form" type="com.bpsinfo.ultracart.checkout.ui.CreateDigitalDeliveryForm" *#
+
+
+#set( $bodyClass = 'multi-page-checkout digital-download' )
+#set( $pageTitle = $i18n.write("digitalDownload.page.header","YOUR DIGITAL ITEMS") )
+#parse('/snippets/top.vm')
+
+
+#set( $title = $pageTitle )
+#parse('/snippets/title.vm')
+
+<div class="row">
+	<div class="columns small-16">
+		<p>$i18n.write("digitalDownload.page.instructions","Below are the digital items you purchased. To download an item, simply click on the file name.")</p>
+	</div>
+</div>
+
+<div class="row">
+	<div class="columns small-16">
+		<table class="tablesaw tablesaw-stack no-margin" data-mode="stack">
+			<thead>
+				<tr>
+					<th>$i18n.write("digitalDownload.page.itemHeader","Item")</th>
+					<th>$i18n.write("digitalDownload.page.fileNameHeader","File Name")</th>
+					<th>$i18n.write("digitalDownload.page.fileSizeHeader","File Size")</th>
+					#if($form.enableEmailItem)
+						<th>$i18n.write("digitalDownload.page.emailItemHeader","E-Mail Item")</th>
+					#end
+				</tr>
+			</thead>
+			<tbody>
+				#foreach($digitalDownload in $form.digitalDownloads)
+					#if($digitalDownload.noDownloadServerFound)
+						<tr>
+							<td colspan="4">No download server found for file $digitalDownload.fileName</td>
+						</tr>
+					#else ## download server found, display links
+						<tr>
+							<td class="ucShoppingCartText">
+								$!digitalDownload.description
+								#if("$!digitalDownload.activationCodes" != "")
+									<br>
+									$!digitalDownload.activationCodes
+								#end
+							</td>
+
+							<td>
+								<a href="https://${digitalDownload.downloadServerHostName}/download/${form.digitalOrderUrlId}/$formatHelper.urlEncode(${digitalDownload.fileName})"
+									 onclick="return checkClickWrapAgreement(this)">$digitalDownload.fileName
+								</a>
+							</td>
+
+							<td class="ucShoppingCartText" align="right" nowrap>
+								$digitalDownload.fileSize
+							</td>
+
+							#if($form.enableEmailItem)
+								#if($digitalDownload.canEmail && $digitalDownload.underSizeLimit)
+									<td>
+										<a href="https://${digitalDownload.downloadServerHostName}/dd-email/$form.digitalOrderUrlId/$formatHelper.urlEncode($digitalDownload.fileName)"
+											 onclick="return checkClickWrapAgreement(this)">
+											$i18n.write("digitalDownload.page.emailTo","E-Mail to") $!form.emailRecipient
+										</a>
+									</td>
+
+								#elseif($digitalDownload.canEmail)
+									<td>
+										$i18n.write("digitalDownload.page.itemTooLargeForEmail","Item too large for e-mail")
+									</td>
+								#end
+							#end ##if-enableEmailItem
+						</tr>
+					#end ##if-noDownloadServerFound
+				#end ##foreach-digitalDownload
+
+				#if($form.canDownloadZip)
+					<tr>
+						<td colspan="4">
+							<a href="https://${form.downloadServerHostName}/download/${form.digitalOrderUrlId}/order.zip"
+								 onclick="return checkClickWrapAgreement(this)">
+								$i18n.write("digitalDownload.page.downloadAllItemsInZipFormat","Download all items in ZIP format")
+							</a>
+						</td>
+					</tr>
+				#end ##if-canDownloadZip
+			</tbody>
+		</table>
+	</div>
+</div>
+
+<div class="row">
+	<div class="columns small-16">
+		<p>
+			$i18n.write("digitalDownload.page.expireOn","This download page will expire on")
+			$form.expirationDate
+			.
+			<br>
+			$i18n.write("digitalDownload.page.pleaseCompleteBefore","Please complete your downloads before this time").
+			<br>
+		</p>
+	</div>
+</div>
+
+<div id="myModal" class="reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
+  <h2 id="modalTitle">DIGITAL DELIVERY DOWNLOAD AGREEMENT</h2>
+  ## <p class="lead"></p>
+  <p>$form.clickWrapAgreement</p>
+  <br>
+  <a href="javascript:agree()" class="button primary tiny">I agee</a>
+  <a href="javascript:disagree()" class="button secondary tiny">disagree</a>
+  <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+</div>
+
+
+## TODO implement click wrap agreement support
+
+
+<script type="text/javascript">
+	var agreementAccepted;
+		#if($form.needClickWrap)
+		agreementAccepted = false;
+		#else
+		agreementAccepted = true;
+		#end
+
+
+	function agree() {
+		agreementAccepted = true;
+		jQuery('#myModal').foundation('reveal', 'close');
+		// Set a cookie saying that we've already seen the popup
+		createCookie("agreementAccepted${form.orderId}", "true", 1);
+
+		if (locationAfterAgreement != null) {
+			window.location = locationAfterAgreement;
+		}
+	}
+
+	function disagree() {
+		jQuery('#myModal').foundation('reveal', 'close');
+	}
+
+	function checkClickWrapAgreement(link) {
+		if (agreementAccepted) return true;
+
+		if (readCookie("agreementAccepted${form.orderId}")) {
+			agreementAccepted = true;
+			return agreementAccepted;
+		}
+
+
+		locationAfterAgreement = link.href;
+
+		jQuery('#myModal').foundation('reveal', 'open');
+
+		// alert('show clickwrap');
+		// MOOdalBox.open(// case matters
+		// 		"/checkout/digitalDeliveryClickWrapAgreement.jsp", // the link URL
+		// 		"You must read the entire agreement and click the I agree button at the bottom", // the caption (link's title) - can be blank
+		// 		"700 500" // width and height of the box - can be left blank
+		// );
+
+		return false;
+	}
+
+	function createCookie(name, value, days) {
+		var expires;
+		if (days) {
+			var date = new Date();
+			date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+			expires = "; expires=" + date.toGMTString();
+		}
+		else {
+			expires = "";
+		}
+
+		document.cookie = name + "=" + value + expires + "; path=/";
+	}
+
+	function readCookie(name) {
+		var nameEQ = name + "=";
+		var ca = document.cookie.split(';');
+		for (var i = 0; i < ca.length; i++) {
+			var c = ca[i];
+			while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+			if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+		}
+
+		return null;
+	}
+
+	function eraseCookie(name) {
+		createCookie(name, "", -1);
+	}
+
+</script>
+
+
+#parse('/snippets/bottom.vm')

@@ -1,0 +1,30 @@
+##
+## UltraCart - Mr Teas Template
+## http://www.ultracart.com/
+##
+## Copyright (c) 2015 BPS Info Solutions Inc.
+## License located here:
+## http://www.ultracart.com/storefront/license/
+##
+## Designed by Level 2 Design, LLC http://www.level2d.com/
+##
+
+#* @vtlvariable name="formatHelper" type="com.bpsinfo.ultracart.catalog.tobjects.FormatHelper" *#
+#* @vtlvariable name="i18n" type="com.bpsinfo.storefront.tobjects.I18nWriter" *#
+#* @vtlvariable name="form" type="com.bpsinfo.ultracart.affiliate.ui.partner.AffiliatePartnerLogoutForm" *#
+
+#set( $pageGroup = 'affiliate' )
+#set( $bodyClass = 'affiliate log-out' )
+#set( $pageTitle = 'Affiliate Logout' )
+#parse('/snippets/top.vm')
+
+#set( $title = $pageTitle )
+#parse('/snippets/title.vm')
+
+<div class="row">
+	<div class="columns small-16">
+		<p>You have successfully logged out of our affiliate system. <a href="$!form.homePageUrl">Click here</a> to return to our home page.</p>
+	</div>
+</div>
+
+#parse('/snippets/bottom.vm')

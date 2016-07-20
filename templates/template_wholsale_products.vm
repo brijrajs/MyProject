@@ -1,0 +1,79 @@
+##
+## UltraCart - Mr Teas Template
+## http://www.ultracart.com/
+##
+## Copyright (c) 2015 BPS Info Solutions Inc.
+## License located here:
+## http://www.ultracart.com/storefront/license/
+##
+## Designed by Level 2 Design, LLC http://www.level2d.com/
+##
+
+## uc:contains-velocity="true"
+## uc:page-type="group"
+## uc:display-items="true"
+## uc:pagination="true"
+## uc:display-subgroups="true"
+## uc:child-page-multimedia-default-used="true"
+
+## uc:page-attribute-string="subtitle"
+
+## uc:menu-used="header"
+## uc:menu-used="footer"
+## uc:menu-used="help"
+## uc:menu-used="account"
+
+#* @vtlvariable name="cartConstants" type="com.bpsinfo.storefront.tobjects.CartConstants" *#
+#* @vtlvariable name="itemsPart" type="com.bpsinfo.storefront.tobjects.ItemsPart" *#
+
+#parse("/snippets/checkout_only_redirect.vm")
+
+#parse("/snippets/top.vm")
+<div class="row no-margin">
+    <div class="columns small-16">
+      ##parse("/snippets/breadcrumbs.vm")
+    </div>
+  </div>
+  <div class="row" style="margin-top:10px;padding-left:5px;">
+    <div class="columns small-16">
+     #if($group.getAttribute("subtitle") && $group.getAttribute("subtitle") != '')
+        <h2>$group.getAttribute("subtitle")</h2>
+      #end
+
+      <div class="page-content">
+         <form name="form1" method="post" action="https://store.healthlabsnutra.com/cgi-bin/UCEditor">
+    <input name="MERCHANTID" type="hidden" id="MERCHANTID" value="${merchantID}">
+    <h1 align="center">Wholesale Products</h1>
+ 
+    <div align="center">
+      <table>
+        <tr>
+          <th>Item</th>
+          <th>Description</th>
+          <th>Cost</th>
+          <th>Quantity</th>
+        </tr>
+#foreach($item in $group.getItems())       
+        <tr>
+          <td>
+         ${item.getMerchantItemID()}
+          </td>
+          <td>${item.getDescription()}</td>
+          <td><div align="right">${item.getCost()}</div></td>
+          <td>
+            <div align="center">
+              <INPUT NAME="ADD_${item.getMerchantItemID()}" VALUE="" SIZE=8>
+            </div>
+          </td>
+        </tr>
+#end       
+      </table>
+      <p><input type="submit" name="Submit" value="Add Items To Cart"></p>
+    </div>
+  </form>
+      </div>
+
+    </div>
+  </div>
+
+#parse("/snippets/bottom.vm")

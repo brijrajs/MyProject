@@ -1,0 +1,67 @@
+#* @vtlvariable name="formatHelper" type="com.bpsinfo.ultracart.catalog.tobjects.FormatHelper" *#
+#* @vtlvariable name="i18n" type="com.bpsinfo.storefront.tobjects.I18nWriter" *#
+#* @vtlvariable name="form" type="com.bpsinfo.ultracart.autoorder.ui.AutoOrderCancelQueryForm" *#
+
+
+#set( $bodyClass = 'auto-order auto-order-cancel' )
+#set( $pageTitle = $i18n.write("autoOrder.cancelQuery.pageTitle", "Auto Order Cancel Inquiry") )
+#parse('/snippets/top.vm')
+
+
+#set( $title = $i18n.write("autoOrder.cancelQuery.inquiryHeader","AUTO ORDER CANCEL INQUIRY") )
+#parse('/snippets/title.vm')
+
+<form name="ucAutoOrderCancelQuery" action="/autoorder/autoOrderCancelQuerySave.do" method="post">
+	#parse('/snippets/common/storefront_template_spec_version.vm')
+	<input type="hidden" name="merchantId" value="$i18n.escape($form.merchantId)" />
+	<input type="hidden" name="continueShoppingUrl" value="$i18n.escape($form.continueShoppingUrl)" />
+
+	#parse('/snippets/errors.vm')
+	#parse('/snippets/info_messages.vm')
+
+	<div class="row">
+		#if($form.showEmail)
+			<div class="columns small-16 medium-7">
+				<label class="label-group">
+					<span>$i18n.write("autoOrder.cancelQuery.emailField","Email")*</span>
+					<input type="text" name="email" value="$i18n.escape($form.email)" maxlength="50" />
+				</label>
+			</div>
+
+			<div class="columns small-16 text-center medium-2">
+				<br>
+				<p>$i18n.write("autoOrder.cancelQuery.orLabel","OR")</p>
+			</div>
+		#end ##if-showEmail
+
+
+		<div class="columns small-16 #if($form.showEmail)medium-7 #else end #end">
+			<div class="row">
+				<div class="columns small-16 medium-8">
+					<label class="label-group">
+						<span>$i18n.write("autoOrder.cancelQuery.firstNameField","First Name")*</span>
+						<input type="text" name="firstName" value="$i18n.escape($form.firstName)" maxlength="50" />
+					</label>
+				</div>
+
+				<div class="columns small-16 medium-8">
+					<label class="label-group">
+						<span>$i18n.write("autoOrder.cancelQuery.lastNameField","Last Name")*</span>
+						<input type="text" name="lastName" value="$i18n.escape($form.lastName)" maxlength="50" />
+					</label>
+				</div>
+			</div>
+
+			<label class="label-group">
+				<span>$i18n.write("autoOrder.cancelQuery.creditCardLastFourDigitsField","Credit Card Last Four Digits")*</span>
+				<input type="text" name="lastFourDigits" value="$i18n.escape($form.lastFourDigits)" maxlength="50" />
+			</label>
+		</div>
+	</div>
+
+	#parse('/snippets/button.continue.vm')
+
+	#parse('/snippets/common/cs_token.vm')
+</form>
+
+#parse('/snippets/bottom.vm')

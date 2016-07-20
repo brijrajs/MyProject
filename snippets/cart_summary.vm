@@ -1,0 +1,84 @@
+##
+## UltraCart - Mr Teas Template
+## http://www.ultracart.com/
+##
+## Copyright (c) 2015 BPS Info Solutions Inc.
+## License located here:
+## http://www.ultracart.com/storefront/license/
+##
+## Designed by Level 2 Design, LLC http://www.level2d.com/
+##
+
+#* @vtlvariable name="cartSummaryPart" type="com.bpsinfo.storefront.tobjects.CartSummaryPart" *#
+#* @vtlvariable name="i18n" type="com.bpsinfo.storefront.tobjects.I18nWriter" *#
+
+## js-* classes are referenced in js file(s)
+
+<!-- summary -->
+<section class="cart-summary row" id="ucSummaryTableId">
+	<h2>$i18n.write("checkout.single.summaryHeader","Summary")</h2>
+	<dl>
+		<dt class="small-12 text-left">$i18n.write("checkout.single.subtotal","Subtotal")</dt>
+		<dd id="summarySubtotal" class="js-summary-subtotal small-4 text-right">0.00</dd>
+
+		## we are taxing shipping, so show it BEFORE taxes
+		#if($cartSummaryPart.taxShipping && $cartSummaryPart.showShipping)
+			#set($summaryShippingDiv = "summaryShipping") ## this avoids a duplicate id warning in intellij
+			<dt class="small-12 text-right">$i18n.write("checkout.single.shipping","Shipping")</dt>
+			<dd id="$summaryShippingDiv" class="js-summary-shipping" data-loading="$i18n.write('checkout.single.calculating', 'Calculating...')">0.00</dd>
+		#end ##if-taxShipping && needShipping
+
+		<dt class="small-12 text-left">$i18n.write("checkout.single.tax","Tax")</dt>
+		<dd id="summaryTax" class="js-summary-tax small-4 text-right" data-loading="$i18n.write('checkout.single.calculating', 'Calculating...')">0.00</dd>
+
+		## we are NOT taxing shipping, so show it AFTER taxes
+		#if(!$cartSummaryPart.taxShipping && $cartSummaryPart.showShipping)
+			<dt class="small-12 text-left">$i18n.write("checkout.single.shipping","Shipping")</dt>
+			<dd id="summaryShipping" class="js-summary-shipping small-4 text-right" data-loading="$i18n.write('checkout.single.calculating', 'Calculating...')">0.00</dd>
+		#end ##if-NOT taxShipping and needShipping
+
+		#if($cartSummaryPart.showBuysafe)
+			<dt class="small-12 text-left">
+				<!-- buysafe -->
+				#if($form.buysafeBondAvailable)
+					#if($form.buysafeBondWanted)
+						#set( $buysafeImg =  "../assets/imgs/buysafe-yes.png" )
+					#else
+						#set( $buysafeImg =  "../assets/imgs/buysafe-no.png" )
+					#end
+					<div class="row">
+						    	<div class="buysafe-container small-16">
+						    		<div class="buysafe">
+								    	<img src="../assets/imgs/buysafe-logo.gif" >
+								    	<img src="$buysafeImg" id="buysafe-yes-no" data-active="$!form.buysafeBondWanted" data-no-src="../assets/imgs/buysafe-no.png" data-yes-src="../assets/imgs/buysafe-yes.png" >
+							    		#if(!$form.buysafeBondWanted && !$form.buysafeBondFree)
+											<a class="buysafe-learn-more" href="$form.buysafeCartDisplayUrl" target="_blank">$form.buysafeCartDisplayText</a>
+										#else
+								    		<p class="text-left">Your Purchase is Guarenteed with BuySafe</p>
+										#end
+						    		</div>
+						    	</div>
+					</div>
+				#end ##if-buysafeBondAvailable
+				<!-- /buysafe -->
+				## $!cartSummaryPart.buysafeHtml
+			</dt>
+			<dd id="summaryBuysafe" class="js-summary-buysafe small-4 text-right">
+				#if($form.buysafeBondWanted && "$!form.buysafeBondCost" != "" && !$form.buysafeBondFree)
+		    		<div class="buysafe-info"><span class="buysafe-cost">${formatHelper.escapeHtml($form.formattedBuysafeBondCost)}</span></div>
+				#elseif ("$!form.buysafeBondCost" != "" && !$form.buysafeBondFree)
+					<div class="buysafe-info"><span class="buysafe-cost">${formatHelper.escapeHtml($form.formattedBuysafeBondCost)}</span></div>
+				#else
+					<div class="buysafe-info">Free!</div>
+				#end
+				## $!cartSummaryPart.buysafeBondCostStr
+			</dd>
+		#end ##if-showBuysafe
+	</dl>
+
+	<div class="total half-margin-top">
+		<span class="label">$i18n.write("checkout.single.total","Total")</span>
+		<span id="summaryTotal" class="amount js-summary-total">0.00</span>
+	</div>
+</section>
+<!-- /summary -->

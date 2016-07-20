@@ -1,0 +1,77 @@
+##
+## UltraCart - Mr Teas Template
+## http://www.ultracart.com/
+##
+## Copyright (c) 2015 BPS Info Solutions Inc.
+## License located here:
+## http://www.ultracart.com/storefront/license/
+##
+## Designed by Level 2 Design, LLC http://www.level2d.com/
+##
+
+<div class="row">
+	<div class="columns small-14 large-16 small-centered large-uncentered">
+		<form action="" method="POST">
+			## <input type="hidden" name="MERCHANTID" value="${merchantId}">
+			## <input type="hidden" name="MERCHANTSEARCHID" value="${merchantSearchId}">
+			<input type="hidden" name="facets_update" value="update">
+
+			<div class="text-center hide-for-large-up">
+				<button type="submit" class="primary">Apply Filters</button>
+			</div>
+
+			<dl class="accordion" data-accordion>
+			#foreach($facet in $facets)
+				<dd class="accordion-navigation">
+					<a href="#accordion-${velocityCount}">${facet.displayName}</a>
+					<div id="accordion-${velocityCount}" class="content #if($expandAccordion || $facet.isOptionSelected()) active #end">
+						#foreach($option in $facet.options)
+							#if ($option.count > 0)
+								<div>
+									#set ($optionName = $option.name)
+									#set ($optionNameGraphical = "")
+									#set ($optionNameGraphicalClass = "")
+									#if ($optionName == "1 & up")
+										#set($optionNameGraphical = "<span class='icon-star-4-4'></span><span class='icon-star-0-4'></span><span class='icon-star-0-4'></span><span class='icon-star-0-4'></span><span class='icon-star-0-4'></span>")
+										#set($optionName = " & up")
+										#set ($optionNameGraphicalClass = "review-stars")
+									#end
+									#if ($optionName == "2 & up")
+										#set($optionNameGraphical = "<span class='icon-star-4-4'></span><span class='icon-star-4-4'></span><span class='icon-star-0-4'></span><span class='icon-star-0-4'></span><span class='icon-star-0-4'></span>")
+										#set($optionName = " & up")
+										#set ($optionNameGraphicalClass = "review-stars")
+									#end
+									#if ($optionName == "3 & up")
+										#set($optionNameGraphical = "<span class='icon-star-4-4'></span><span class='icon-star-4-4'></span><span class='icon-star-4-4'></span><span class='icon-star-0-4'></span><span class='icon-star-0-4'></span>")
+										#set($optionName = " & up")
+										#set ($optionNameGraphicalClass = "review-stars")
+									#end
+									#if ($optionName == "4 & up")
+										#set($optionNameGraphical = "<span class='icon-star-4-4'></span><span class='icon-star-4-4'></span><span class='icon-star-4-4'></span><span class='icon-star-4-4'></span><span class='icon-star-0-4'></span>")
+										#set($optionName = " & up")
+										#set ($optionNameGraphicalClass = "review-stars")
+									#end
+									<label>
+										<input type="checkbox" name="$option.inputValue" value="true" #if($option.selected)checked#end>
+										<span class="$optionNameGraphicalClass">${optionNameGraphical}</span><span>${optionName}</span><span> (${option.count})</span>
+									</label>
+								</div>
+							#end
+						#end
+						#if ($facet.name == "facet_cost")
+							<div>
+								<input type="text" name="facet_cost_low" value="$formatHelper.escapeHtml($!facet.adhocLow)" style="width: 60px; display: inline-block;"/>
+								<span>to </span>
+								<input type="text" name="facet_cost_high" value="$formatHelper.escapeHtml($!facet.adhocHigh)" style="width: 60px; display: inline-block;"/>
+								&nbsp;<button type="submit" class="small primary">Go</button>
+							</div>
+						#end
+					</div>
+				</dd>
+			#end
+			</dl>
+
+			<button type="submit" class="primary hide-for-medium-down half-margin-top apply-filters-full">Apply Filters</button>
+		</form>
+	</div>
+</div>

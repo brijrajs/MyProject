@@ -1,0 +1,22 @@
+##
+## UltraCart - Mr Teas Template
+## http://www.ultracart.com/
+##
+## Copyright (c) 2015 BPS Info Solutions Inc.
+## License located here:
+## http://www.ultracart.com/storefront/license/
+##
+## Designed by Level 2 Design, LLC http://www.level2d.com/
+##
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9"><![endif]-->
+<!--[if gt IE 8]><!--><html class="no-js"><!--<![endif]-->
+<head>
+#parse("document_top.vm")
+</head>
+<body #if($bodyClass)class="$bodyClass"#{end}>
+	<div id="universe">
+		<div id="galaxy">
+			<div id="system">
+			<!-- UC TEMPLATE top End -->

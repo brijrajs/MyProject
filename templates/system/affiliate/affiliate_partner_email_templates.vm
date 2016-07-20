@@ -1,0 +1,47 @@
+##
+## UltraCart - Mr Teas Template
+## http://www.ultracart.com/
+##
+## Copyright (c) 2015 BPS Info Solutions Inc.
+## License located here:
+## http://www.ultracart.com/storefront/license/
+##
+## Designed by Level 2 Design, LLC http://www.level2d.com/
+##
+
+#* @vtlvariable name="merchantId" type="java.lang.String" *#
+#* @vtlvariable name="formatHelper" type="com.bpsinfo.ultracart.catalog.tobjects.FormatHelper" *#
+#* @vtlvariable name="i18n" type="com.bpsinfo.storefront.tobjects.I18nWriter" *#
+#* @vtlvariable name="form" type="com.bpsinfo.ultracart.affiliate.ui.partner.EmailTemplatesForm" *#
+
+#set( $pageGroup = 'affiliate' )
+#set( $bodyClass = 'affiliate email-templates' )
+#set( $pageTitle = 'Email Templates - Affiliate Partner' )
+#parse('/snippets/top.vm')
+
+#set( $title = $pageTitle )
+#parse('/snippets/title.vm')
+
+#foreach($emailTemplate in $form.emailTemplates)
+	<div class="row">
+		<div class="columns small-16">
+			<h2>$i18n.escape($emailTemplate.name)</h2>
+			<table class="tablesaw">
+				<tr>
+					<td>Subject</td>
+					<td><input type="text" name="emailTemplates[$foreach.index].subject" value="$i18n.escape($emailTemplate.subject)" /></td>
+				</tr>
+			<tr>
+				<td valign="top">Body</td>
+				<td><textarea name="emailTemplates[$foreach.index].body" rows="$emailTemplate.lines" >$i18n.escape($emailTemplate.body)</textarea></td>
+			</tr>
+			</table>
+		</div>
+	</div>
+#end ##foreach email template
+
+#set( $showBackButton = true )
+#set( $hideButton = true )
+#parse('/snippets/affiliate/button.vm')
+
+#parse('/snippets/bottom.vm')

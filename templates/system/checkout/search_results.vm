@@ -1,0 +1,84 @@
+##
+## UltraCart - Mr Teas Template
+## http://www.ultracart.com/
+##
+## Copyright (c) 2015 BPS Info Solutions Inc.
+## License located here:
+## http://www.ultracart.com/storefront/license/
+##
+## Designed by Level 2 Design, LLC http://www.level2d.com/
+##
+
+#* @vtlvariable name="paging" type="java.lang.String" *#
+#* @vtlvariable name="resultTableColumnCount" type="int" *#
+#* @vtlvariable name="showBuyButton" type="boolean" *#
+#* @vtlvariable name="formatHelper" type="com.bpsinfo.ultracart.catalog.tobjects.FormatHelper" *#
+#* @vtlvariable name="showManufacturerSkus" type="boolean" *#
+#* @vtlvariable name="showManufacturerNames" type="boolean" *#
+#* @vtlvariable name="showImages" type="boolean" *#
+#* @vtlvariable name="merchantId" type="java.lang.String" *#
+#* @vtlvariable name="continueShoppingURL" type="java.lang.String" *#
+#* @vtlvariable name="items" type="java.util.Collection<com.bpsinfo.ultracart.catalog.tobjects.Item>" *#
+#* @vtlvariable name="header" type="java.lang.String" *#
+#* @vtlvariable name="footer" type="java.lang.String" *#
+#* @vtlvariable name="customTemplate" type="java.lang.String" *#
+
+## uc:theme-attribute-boolean="Information Only Theme"
+
+#set( $bodyClass = 'search-results' )
+#set( $pageTitle = 'Search Results' )
+#parse('/snippets/top.vm')
+
+<div class="row">
+	<div class="columns small-16 text-center large-text-left">
+		<strong>Search results for</strong> <em class="search-query">&quot;${formatHelper.escapeHtml($searchQuery)}&quot;</em>
+		<br>
+		<small class="search-result-count">${pagingManager.getCurrentPage().getResults()} of ${pagingManager.getTotalResults()} results</small>
+		#if($didYouMean)
+			<p>Did you mean: <a href="/cgi-bin/UCSearch?MERCHANTID=${formatHelper.urlEncode($merchantId)}&MERCHANTSEARCHID=${merchantSearchId}&did_you_mean=${formatHelper.urlEncode($didYouMean)}">$formatHelper.escapeHtml($didYouMean)</a></p>
+		#end
+	</div>
+</div>
+
+<div class="hide-for-medium-down">
+	<div class="row">
+		#if($facets.size() > 0)
+			<div class="columns small-16 large-4">
+				#set($expandAccordion = true)
+				#parse("/snippets/search_results_facets.vm")
+			</div>
+
+			<div class="columns small-16 large-12">
+				#parse("/snippets/search_results_list.vm")
+			</div>
+		#else
+			<div class="columns small-16">
+				#parse("/snippets/search_results_list.vm")
+			</div>
+		#end
+	</div>
+</div>
+<div class="hide-for-large-up">
+	<div class="row">
+		<div class="columns small-16">
+			<dl class="tabs no-margin-top" data-tab>
+			  <dd class="active"><a href="#results">Results</a></dd>
+			  #if($facets.size() > 0)
+			  	<dd><a href="#filters">Filters#if($facetSelectedCount > 0) (${facetSelectedCount})#end</a></dd>
+			  #end
+			</dl>
+		</div>
+	</div>
+	<div class="row tabs-content">
+		<div id="filters" class="columns small-16 large-4 content">
+			#set($expandAccordion = false)
+			#parse("/snippets/search_results_facets.vm")
+		</div>
+
+		<div id="results" class="columns small-16 large-12 content active">
+			#parse("/snippets/search_results_list.vm")
+		</div>
+	</div>
+</div>
+
+#parse('/snippets/bottom.vm')

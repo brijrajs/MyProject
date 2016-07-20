@@ -1,0 +1,56 @@
+##
+## UltraCart - Mr Teas Template
+## http://www.ultracart.com/
+##
+## Copyright (c) 2015 BPS Info Solutions Inc.
+## License located here:
+## http://www.ultracart.com/storefront/license/
+##
+## Designed by Level 2 Design, LLC http://www.level2d.com/
+##
+
+<div class="row collapse">
+	#if($form.showCouponEntry)
+		<script type="text/javascript">
+			function ucCheckForCouponSubmit(e){
+				var evt = e || window.event;
+				 // "e" is the standard behavior (FF, Chrome, Safari, Opera),
+				 // while "window.event" (or "event") is IE's behavior
+				 if ( evt.keyCode === 13 ) {
+					 var applyCouponImage = document.getElementById("APPLY_COUPON");
+					 if(applyCouponImage){
+						 applyCouponImage.click();
+						 return false;
+					 }
+				 }
+				return true;
+			}
+		</script>
+		<label for="input-coupon-code" class="label-move">
+			<h2>$i18n.write("checkout.viewcart.enterField", "Enter") $form.couponInputFieldStr:</h2>
+		</label>
+
+		<div class="columns small-10 large-16">
+			<input id="input-coupon-code" type="text" value="$!couponsPart.couponCode" name="couponCode"  onkeydown="return ucCheckForCouponSubmit(event);" />
+		</div>
+
+		<div class="columns small-6 large-16">
+			<button data-depends="#input-coupon-code" name="applyCoupon" id="APPLY_COUPON" class="inactive postfix" disabled>Apply Coupon</button>
+		</div>
+	#end  ##if NOT hide coupon entry
+
+	#if($form.coupons.size() > 0)
+		<div class="columns small-16">
+			<strong>$i18n.write("checkout.viewcart.appliedHeader", "Applied") $form.couponPluralStr:</strong>
+			<div class="applied-codes">
+				#foreach($coupon in $form.coupons)
+					<div class="coupon-text">
+						$coupon.couponCode&nbsp;
+						<input type="hidden" name="coupons[$foreach.index].shoppingCartCouponOid" value="$!coupon.shoppingCartCouponOid"/>
+						<button type="submit" name="coupons[$foreach.index].remove" class="small no-padding coupon-remove" alt="Remove $form.couponSingularStr">x</button>
+					</div>
+				#end
+			</div>
+		</div>
+	#end ## couponsPart size
+</div>

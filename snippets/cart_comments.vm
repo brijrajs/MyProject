@@ -1,0 +1,22 @@
+##
+## UltraCart - Mr Teas Template
+## http://www.ultracart.com/
+##
+## Copyright (c) 2015 BPS Info Solutions Inc.
+## License located here:
+## http://www.ultracart.com/storefront/license/
+##
+## Designed by Level 2 Design, LLC http://www.level2d.com/
+##
+
+#* @vtlvariable name="i18n" type="com.bpsinfo.storefront.tobjects.I18nWriter" *#
+#* @vtlvariable name="commentsPart" type="com.bpsinfo.storefront.tobjects.CommentsPart" *#
+
+<div class="row">
+	<div class="columns small-16">
+		<section class="comments cart-panel">
+			<label class="panel-title" for="comments">$i18n.write("checkout.single.commentsHeader","Comments")</label>
+			<textarea id="comments" name="comments">$i18n.escape($!commentsPart.comments)</textarea>
+		</section>
+	</div>
+</div>

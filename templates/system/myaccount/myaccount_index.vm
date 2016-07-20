@@ -1,0 +1,205 @@
+##
+## UltraCart - Mr Teas Template
+## http://www.ultracart.com/
+##
+## Copyright (c) 2015 BPS Info Solutions Inc.
+## License located here:
+## http://www.ultracart.com/storefront/license/
+##
+## Designed by Level 2 Design, LLC http://www.level2d.com/
+##
+
+#* @vtlvariable name="enableProductReviews" type="java.lang.Boolean" *#
+#* @vtlvariable name="form" type="com.bps.ultracart.merchant.customerprofile.MyAccountIndexForm" *#
+#* @vtlvariable name="merchantId" type="java.lang.String" *#
+#* @vtlvariable name="header" type="java.lang.String" *#
+#* @vtlvariable name="footer" type="java.lang.String" *#
+#* @vtlvariable name="validated" type="java.lang.Boolean" *#
+#* @vtlvariable name="i18n" type="com.bpsinfo.storefront.tobjects.I18nWriter" *#
+
+#set( $bodyClass = 'access-customer-profile' )
+#set( $pageTitle = "My Account Customer Profile" )
+
+#parse('/snippets/top.vm')
+
+<!--[if lt IE 9]>
+<script type='text/javascript' src="/myaccount/js/html5shiv-printshiv.js" media="all"></script>
+<![endif]-->
+<script type="text/javascript">
+  var merchantId = '$!merchantId';
+</script>
+
+
+<script type="text/javascript" src="/myaccount/js/moment.js"></script>
+<script type="text/javascript" src="/myaccount/js/handlebars-v3.0.3.js"></script>
+<script type="text/javascript" src="/myaccount/js/myaccount_rest_1.3.js"></script>
+<script type="text/javascript" src="/myaccount/js/myaccount.js"></script>
+<script type="text/javascript" src="/myaccount/index_1.3.js"></script>
+
+#if($form.validated)
+<script type="text/javascript">
+  jQuery(document).ready(function () {
+    showSuccess("$i18n.write('myaccount.validationSuccess','Your email was validated.  Please login.')");
+  });
+</script>
+#{end}
+
+<script type="text/template" id="recent-orders-template">
+  <h4>$i18n.write('myaccount.recentActivityHeader','Recent Activity')</h4>
+  <table class='recent-orders-table'>
+    <thead>
+    <tr>
+      <th>$i18n.write('myaccount.orders.orderDateHeader','Order Date')</th>
+      <th>$i18n.write('myaccount.orders.orderIdHeader','Order ID')</th>
+      <th>$i18n.write('myaccount.orders.orderTotalHeader','Total')</th>
+      <th>$i18n.write('myaccount.orders.orderContentsHeader','Contents')</th>
+    </tr>
+    </thead>
+    <tbody>
+    {{#each orders}}
+    <tr>
+      <td>{{dateFormat creationDate}}</td>
+      <td><a href="/myaccount/orders.do?merchantId=$!{merchantId}#order/{{orderId}}">{{orderIdPublic}}</a></td>
+      <td>{{totalFormatted}}</td>
+      <td>
+          {{#each items}}
+            <div class="row half-margin-bottom">
+              <div class="columns small-8">
+                {{#with metaData}}{{\#if defaultThumbnailUrl}}<img class='order-item-thumbnail'
+                                                                   src="/thumbs/{{defaultThumbnailUrl}}" alt=''/>{{/if}}{{/with}}
+              </div>
+              <div class="columns small-8">
+                <a href="{{#with metaData}}{{viewUrl}}{{/with}}">{{description}}</a>
+              </div>
+            </div>
+          {{/each}}
+      </td>
+    </tr>
+    {{/each}}
+
+    </tbody>
+  </table>
+</script>
+
+<div class="row">
+  <div class="columns small-16">
+    <header>
+      <h1>$i18n.write('myaccount.applicationName','My Account')</h1>
+
+      <!-- Content -->
+      <p class='welcome-message'>$i18n.write('myaccount.welcomeHeader','Welcome to your account management screen. Please login below.')</p>
+      <nav role="navigation" style='display:none' class='myaccount-main-navigation'>
+        <ul>
+          <li><a href="/myaccount/password.do?merchantId=$!{merchantId}" class='nav-link'>$i18n.write('myaccount.navigation.password','Password')</a>
+            $i18n.write('myaccount.navigation.passwordDescription',' Change my Password')
+          </li>
+          <li><a href="/myaccount/orders.do?merchantId=$!{merchantId}" class='nav-link'>$i18n.write('myaccount.navigation.orders','Orders')</a>
+            $i18n.write('myaccount.navigation.ordersDescription',' View my orders and leave feedback')
+          </li>
+          ## #if($enableAutoOrders)
+          <li><a href="/myaccount/subscriptions.do?merchantId=$!{merchantId}" class='nav-link'>$i18n.write('myaccount.navigation.subscription','Subscriptions')</a>
+            $i18n.write('myaccount.navigation.subscriptionDescription',' View my and manage subscriptions')
+          </li>
+          ## #end
+          <li><a href="/myaccount/payments.do?merchantId=$!{merchantId}" class='nav-link'>$i18n.write('myaccount.navigation.payments','Payments')</a>
+            $i18n.write('myaccount.navigation.paymentsDescription',' View and manage my credit cards')
+          </li>
+          <li><a href="/myaccount/billing.do?merchantId=$!{merchantId}" class='nav-link'>$i18n.write('myaccount.navigation.billingAddresses','Billing Addresses')</a>
+            $i18n.write('myaccount.navigation.billingAddressesDescription',' View and manage my billing addresses')
+          </li>
+          <li><a href="/myaccount/shipping.do?merchantId=$!{merchantId}" class='nav-link'>$i18n.write('myaccount.navigation.shippingAddresses','Shipping Addresses')</a>
+            $i18n.write('myaccount.navigation.shippingAddressesDescription',' View and manage my shipping addresses')
+          </li>
+          <li><a href="/myaccount/settings.do?merchantId=$!{merchantId}" class='nav-link'>$i18n.write('myaccount.navigation.settings','Settings')</a>
+            $i18n.write('myaccount.navigation.settingsDescription',' Change Account Settings')
+          </li>
+          #if($enableProductReviews)
+          <li><a href="/myaccount/reviews.do?merchantId=$!{merchantId}" class='nav-link'>$i18n.write('myaccount.navigation.reviews','Reviews')</a>
+            $i18n.write('myaccount.navigation.reviewsDescription',' View product reviews I have made and write new ones')
+          </li>
+            #end
+          <li><a href="/myaccount/wishlist.do?merchantId=$!{merchantId}" class='nav-link'>$i18n.write('myaccount.navigation.wishlist','Wish List')</a>
+            $i18n.write('myaccount.navigation.wishlistDescription',' View my wish list')
+          </li>
+          <li class='nav-logout'><a href="#logout" class='nav-link'>$i18n.write('myaccount.navigation.logout','Logout')</a>
+            $i18n.write('myaccount.navigation.logoutDescription','Sign out of my account')
+          </li>
+        </ul>
+      </nav>
+    </header>
+  </div>
+</div>
+
+<div class="row half-margin-top">
+  <div class="columns small-full">
+    <!-- A <header> element is not required here as the heading only contains a single <h3> element -->
+
+    <div class="myaccount-notifications">
+      <div class="alert info text-left no-margin-top no-margin-bottom"></div>
+      <div class="alert success text-left no-margin-top no-margin-bottom"></div>
+      <div class="alert warning text-left no-margin-top no-margin-bottom"></div>
+      <div class="alert error text-left no-margin-top no-margin-bottom"></div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="columns small-16 medium-8 login">
+    <form id='login-form' class="validate">
+
+      #parse('/snippets/common/cs_token.vm')
+
+      <h2>$i18n.write('myaccount.loginHeader','Login to access your account')</h2>
+      <p>$i18n.write("myaccount.profileLoginText","Login to your account to access helpful features to managee your profile or expedite your checkout experience.")</p>
+      <label for="email" class="half-margin-top label-move">
+        <span>$i18n.write('myaccount.login.email','Email Address:')</span>
+        <input type="email" name="email" id="email" class='login-field' required />
+      </label>
+      <label for="password" class="label-move">
+        <span>$i18n.write('myaccount.login.password','Password:')</span>
+          <a id="email-password-button" class="email-password right">$i18n.write('myaccount.login.emailPassword','Email Password')</a>
+        <input type="password" name="password" id="password" class='login-field no-margin-bottom inspectletIgnore' required />
+      </label>
+      <div class='footer-buttons text-right half-margin-top'>
+        <button type="submit" id="login-button" class='button inactive no-margin' disabled >
+        Login
+        </button>
+      </div>
+    </form>
+  </div>
+  <div class="columns small-16 medium-8 create">
+    <form id='register-form' class="validate">
+
+      #parse('/snippets/common/cs_token.vm')
+
+      <h2>$i18n.write('myaccount.registerHeader','Register to create a new Account')</h2>
+      <p>$i18n.write("myaccount.registerText","Setting up an account will give you access to checkout features such as our convenient address book.")</p>
+
+      <label for="register-email" class="half-margin-top label-move">
+        <span>$i18n.write('myaccount.register.email','Email Address:')</span>
+        <input type="email" name="register-email" id="register-email" class='register-field' required />
+        ## <input type="hidden" id="theme-code" value="$!form.themeCode"/>
+      </label>
+      <label for="register-password" class="label-move">
+        <span>$i18n.write('myaccount.register.password','Password:')</span>
+        <input type="password" name="register-password" id="register-password" class='register-field inspectletIgnore' required />
+      </label>
+      <label for="register-password-again" class="label-move">
+        <span>$i18n.write('myaccount.register.passwordAgain','Password Again:')</span>
+        <input type="password" name="register-password-again" id="register-password-again" class='register-field inspectletIgnore' required />
+      </label>
+      <div class='footer-buttons text-right'>
+        <button type="submit" id="register-button" class='button inactive no-margin' disabled >
+        $i18n.write('myaccount.register.registerButton','Register')
+        </button>
+
+      </div>
+    </form>
+  </div>
+</div>
+<div class="row">
+  <div id="recent-activity" class="columns small-16">
+  </div>
+</div>
+
+#parse('/snippets/bottom.vm')

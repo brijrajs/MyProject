@@ -1,0 +1,54 @@
+#* @vtlvariable name="formatHelper" type="com.bpsinfo.ultracart.catalog.tobjects.FormatHelper" *#
+#* @vtlvariable name="i18n" type="com.bpsinfo.storefront.tobjects.I18nWriter" *#
+#* @vtlvariable name="form" type="com.bpsinfo.ultracart.checkout.ui.AccountLoginForm" *#
+
+#set($bodyClass = 'account-login-profile')
+#set( $pageTitle = 'Account Login' )
+#parse('/snippets/top.vm')
+
+#set( $title = $pageTitle )
+#parse('/snippets/title.vm')
+
+#parse('/snippets/errors.vm')
+#parse('/snippets/info_messages.vm')
+<div class="row">
+  <form class="validate" action="/checkout/accountLoginSave.do" method="post">
+    #parse('/snippets/common/storefront_template_spec_version.vm')
+    ## <input type="hidden" name="merchantId" value='$i18n.escape($!form.merchantId)'/>
+    <div class="columns small-16 medium-8 login">
+      <h2>Members</h2>
+      <label for="memberEmail" class="label-move">
+        <span>Email:</span>
+        <input type="text" name='memberEmail' id="memberEmail" value="$i18n.escape($!form.memberEmail)" required maxlength="50" />
+      </label>
+
+      <label for="memberPassword" class="label-move">
+        <span>Password:</span>
+        <input type='password' name="memberPassword" id="memberPassword" value="$i18n.escape($!form.memberPassword)" class="no-margin-bottom" required maxlength="32" />
+        <a href="/checkout/forgotPasswordLoad.do?returnTo=accountLogin">I forgot my password</a>
+      </label>
+
+
+      ## UltraCart uses encrypted tokens to dissuade cross site scripting attacks.
+      ## This should be in every UltraCart form.  Not every form employs the protection, but it won't hurt to have.
+      #if($form.requiresCrossSiteProtection)
+        <input type="hidden" name="_hdiv_token_" value="$i18n.escape($!form.crossSiteProtectionToken)" />
+        #else
+        <!-- no cross site scripting token required -->
+      #end
+      <div class="footer-buttons text-right half-margin-top">
+        
+        <button type="submit" name="memberSubmit" class="button inactive no-margin" disabled title="Login">Login</button>
+      </div>
+    </div>
+    <div class="columns small-16 medium-8 login" style="padding-left: 50px;">
+      <h2>Don't have an account?</h2>
+      <a style="font-size: 24px;" href="https://store.healthlabsnutra.com/cgi-bin/UCWholesaleSignup?merchantId=HEA12">Signup here..</a>
+    </div>
+  </form>
+</div>
+
+
+
+
+#parse('/snippets/bottom.vm')

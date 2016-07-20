@@ -1,0 +1,125 @@
+##
+## UltraCart - Mr Teas Template
+## http://www.ultracart.com/
+##
+## Copyright (c) 2015 BPS Info Solutions Inc.
+## License located here:
+## http://www.ultracart.com/storefront/license/
+##
+## Designed by Level 2 Design, LLC http://www.level2d.com/
+##
+
+<!-- cart -->
+	<div class="row">
+		<div class="columns small-16">
+			<table class="tablesaw tablesaw-stack no-margin-bottom" data-mode="stack">
+				<thead>
+					<tr>
+						<th class="col_item">$i18n.write("checkout.review.itemIdHeader","Item")</th>
+						<th class="col_description">$i18n.write("checkout.review.descriptionHeader","Description")</th>
+
+						#if($form.showOptions)
+							<th class="col_options">$i18n.write("checkout.review.optionsHeader","Options")</th>
+						#end ## if-showOptions
+
+						<th class="col_qty">$i18n.write("checkout.review.quantityHeader","Qty")</th>
+						<th class="col_amount">$i18n.write("checkout.review.amountHeader","Amount")</th>
+
+						#if($form.showAutoOrderFrequency)
+							<th class="col_auto">
+								$i18n.write("checkout.review.autoOrderHeader","Auto Order")
+							</th>
+						#end
+					</tr>
+				</thead>
+
+				<tbody>
+					## =========================================================================
+					## =========================================================================
+					## TODO revisit options
+					#foreach($item in $form.items)
+						<tr>
+							<!-- ========================== Item# / SKU ========================== -->
+							<td class="col_item">$i18n.escape($!item.itemId)</td>
+
+							<!-- ========================== Description ================================ -->
+							<td valign="top" class="col_description">
+								<span>$!item.description</span>
+							</td>
+
+							#if($form.showOptions && $item.options.size() > 0)
+								<!-- ========================== Options ================================ -->
+								<td class="col_options">
+									<dl>
+										#foreach($option in $item.options)
+											<dt>${i18n.escape($!option.name)}</dt>
+											<dd>${i18n.escape($!option.value)}</dd>
+										#end ## foreach option in item
+									</dl>
+								</td>
+							#end ## if-showOptions
+
+							<!-- ========================== Quantity ============================= -->
+							<td class="col_qty" valign="top" >$i18n.escape($!item.quantity)</td>
+
+							<!-- ========================== Amount ================================ -->
+							<td class="col_amount" valign="top" class="ucReviewItemAmountCell">
+								<span>$!item.amount</span>
+								#if($item.discount != "0.00")
+									<br/>
+									<span> - $!item.discount</span>
+								#end ## if-discount is not zero
+							</td>
+
+							#if($form.showAutoOrderFrequency)
+								<td valign="top" align="center">
+									<span>
+										$i18n.escape($item.autoOrderFrequency)
+									</span>
+								</td>
+							#end ## if-showAutoOrderFrequency
+						</tr>
+					#end ## foreach item in items
+					## =========================================================================
+					## =========================================================================
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<!-- /cart -->
+
+	<!-- cart-footer -->
+	<div class="row cart-footer no-margin-top">
+		<div class="equalizer-small-suspend equalizer-medium-suspend columns small-16" data-equalizer>
+			<div class="cart-footer-left" data-equalizer-watch>
+
+				#parse('/snippets/quote_review_addresses.vm')
+
+			</div>
+
+			<div class="cart-footer-right" data-equalizer-watch>
+				<div class="cart-breakdown">
+					##$i18n.write("checkout.review.summaryHeader","Summary")
+					#foreach($summaryLine in $form.summaryLineItems)
+						#set($tdClass = "ucShoppingCartText")
+						#if($summaryLine.discount)
+							#set($tdClass = "ucShoppingCartDiscountText")
+						#end
+
+						<div class="$tdClass breakdown-item">
+							<div class="label">$summaryLine.name:</div>
+							<div class="value">$summaryLine.amount</div>
+						</div>
+					#end ##foreach summaryLine
+				</div>
+
+				<div class="cart-total">
+					<div class="total breakdown-item">
+						<dt class="label">$i18n.write("checkout.quoteReview.totalField","TOTAL"):</dt>
+						<dd class="value">$!form.total</dd>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- cart-footer -->

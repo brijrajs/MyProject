@@ -1,0 +1,57 @@
+## auto_order_update_billing_decline
+## Subject: The subject line for this email is contained in the Languages sections under the key email.auto_order_update_billing_decline.subject for multi-lingual support.
+
+## Testing: Previewing an email template will use the latest order id in your store.  You may specify an order id by adding it to the following line:
+## uc:test-order-id="DEMO-12345"
+
+## $chargeAppearsOnStatementAs
+## $customField1
+## $customField2
+## $customField3
+## $customField4
+## $customField5
+## $customField6
+## $customField7
+## $customerFirstName
+## $customerName
+## $customerServiceEmail
+## $htmlDivOrder
+## $htmlTableOrder
+## $merchantName
+## $order
+## $orderId
+## $orderSummary
+## $orderSummaryHtml
+## $originalDate
+## $phone
+## $returnPolicy
+## $shippingMethod
+## $textOrder
+## $updateLink
+
+## $orderHelper
+##      $orderHelper.hasActivationCodes("ITEM_A")  <== returns true if the order has activation codes for the given item
+##      $orderHelper.getActivationCodes("ITEM_A")  <== returns the activation codes for an item
+##      $orderHelper.hasCoupon("5_OFF") <== returns true if the order has this coupon
+##      $orderHelper.purchased("ITEM_A,ITEM_B") <== returns true if one of the items is in the order.
+##      $orderHelper.notPurchased("ITEM_A,ITEM_B") <== returns true if one of the items is NOT in the order.
+##      $orderHelper.gift() <== returns true if the order is a gift
+##
+## $storeFront
+##      $storeFront.getFileUrl("/images/image1.gif")    <== this will return the full url to the file
+##      $storeFront.getStyle("/css/email.css")  <== this will load the css file and embed it within <style> tags in your email.
+## $i18n
+##      $i18n.write("key.path", "Default Value")
+##      $i18n.write("key.path", "Default Value", true) <== 3rd variable is to perform html escape. set to true to perform escaping
+
+
+Dear $customerName,
+
+Your auto order has been canceled due to several failed attempts to charge your credit card.
+The order was originally placed on $originalDate as order $orderId.
+If you would like to continue to receive the products, please update your information at our site by clicking the link below:
+
+$updateLink
+
+Sincerely,
+$merchantName

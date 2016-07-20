@@ -1,0 +1,87 @@
+#* @vtlvariable name="formatHelper" type="com.bpsinfo.ultracart.catalog.tobjects.FormatHelper" *#
+#* @vtlvariable name="i18n" type="com.bpsinfo.storefront.tobjects.I18nWriter" *#
+#* @vtlvariable name="form" type="com.bpsinfo.ultracart.checkout.ui.ReviewerLoginForm" *#
+
+## #end ##if-header
+#set($bodyClass = 'reviewer-login')
+
+#parse('/snippets/top.vm')
+
+#parse('/snippets/errors.vm')
+#parse('/snippets/info_messages.vm')
+<style>
+  #system .row {
+    margin: 0 auto !important;
+}
+</style>
+  <div class="row">
+    <div class="columns small-16 medium-8 login">
+      <form id='form-login' action="/checkout/reviewerLoginSave.do?merchantId=$formatHelper.urlEncode($!form.merchantId)" method="post" class="validate">
+      #parse('/snippets/common/storefront_template_spec_version.vm')
+        <h2>$i18n.write("checkout.reviewerLogin.existingMemberHeader","EXISTING MEMBERS")</h2>
+        <label for="memberEmail" class="label-move">
+          <span>$i18n.write("checkout.reviewerLogin.emailField","Email"):</span>
+          <input type='email' id="memberEmail" name="memberEmail" value="$i18n.escape($!form.memberEmail)" required maxlength="50" />
+        </label>
+        <label for="password" class="label-move">
+          <span>$i18n.write("checkout.reviewerLogin.passwordField","Password"):</span>
+          ## <input type="password" name="password" id="password" class='login-field no-margin-bottom' required />
+          <input type='password'
+                     id="memberPassword"
+                     name="memberPassword"
+                     value="$i18n.escape($!form.memberPassword)"
+                     required
+                     maxlength="30"
+                     class='no-margin-bottom' />
+          <a href="/checkout/forgotPasswordLoad.do?returnTo=reviewerLogin">$i18n.write("checkout.reviewerLogin.forgotPasswordText","I forgot my password")</a>
+        </label>
+        <div class='footer-buttons text-right half-margin-top'>
+          <button type="submit" name="memberSubmit" class='button inactive no-margin' disabled >
+            Login
+          </button>
+        </div>
+      </form>
+    </div>
+    <div class="columns small-16 medium-8 create">
+      <form id='form-create' action="/checkout/reviewerLoginSave.do?merchantId=$formatHelper.urlEncode($!form.merchantId)" method="post" class="validate">
+        #parse('/snippets/common/storefront_template_spec_version.vm')
+        <h2>$i18n.write("checkout.reviewerLogin.newMemberHeader","NEW MEMBERS")</h2>
+        <p>Setting up an account will give you access to checkout features such as our convenient address book.</p>
+
+        <label for="register-email" class="label-move">
+          <span>$i18n.write("checkout.reviewerLogin.emailField","Email"):</span>
+          <input type='email'
+                     name="newMemberEmail"
+                     value="$i18n.escape($!form.newMemberEmail)"
+                     required
+                     maxlength="50" />
+        </label>
+        <label for="register-password" class="label-move">
+          <span>$i18n.write("checkout.reviewerLogin.passwordField","Password"):</span>
+          <input type='password'
+                     name="newMemberPassword"
+                     value="$i18n.escape($!form.newMemberPassword)"
+                     required
+                     maxlength="30" />
+        </label>
+        <label for="register-password-again" class="label-move">
+          <span>$i18n.write("checkout.reviewerLogin.confirmPasswordField","Confirm Password"):</span>
+          <input type='password'
+                     name="newMemberConfirmPassword"
+                     value="$i18n.escape($!form.newMemberConfirmPassword)"
+                     required
+                     maxlength="30" />
+        </label>
+        <div class='footer-buttons text-right'>
+          <button type="submit" name="newMemberSubmit" id="register-button" class='button inactive no-margin' disabled >
+            $i18n.write('myaccount.register.registerButton','Register')
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+
+
+
+#parse('/snippets/bottom.vm')

@@ -1,0 +1,49 @@
+##
+## UltraCart - Mr Teas Template
+## http://www.ultracart.com/
+##
+## Copyright (c) 2015 BPS Info Solutions Inc.
+## License located here:
+## http://www.ultracart.com/storefront/license/
+##
+## Designed by Level 2 Design, LLC http://www.level2d.com/
+##
+
+#* @vtlvariable name="i18n" type="com.bpsinfo.storefront.tobjects.I18nWriter" *#
+#* @vtlvariable name="shippingAddressPart" type="com.bpsinfo.storefront.tobjects.ShippingAddressPart" *#
+
+## If this template gets loaded, that means $form.showShipping is true.
+## The class js-show-shipping is added below to provide javascript a place to access that info
+
+<div class="heading">shipping information</div>
+	<div class="outer-box box3">
+		<div id='shipping_addr_form' >
+                    <input class="small-input" type="text" id="shippingFirstName" placeholder="Frist Name" name="shippingFirstName" value="$i18n.escape($!shippingAddressPart.shippingFirstName)" required />
+					<input class="small-input pull-right" type="text" id="shippingLastName" placeholder="Last Name" name="shippingLastName" value="$i18n.escape($!shippingAddressPart.shippingLastName)" required />
+					
+                    <input type="text" id="shippingAddress1" placeholder="Address" name="shippingAddress1" value="$!shippingAddressPart.shippingAddress1" class="js-blur js-shipping-destination $jsGoogleAutocompleteField" required />
+					<input class="small-input js-tax-watch" type="text" placeholder="City" name="shippingCity" id="shippingCity" data-tax-name="city" value="$i18n.escape($!shippingAddressPart.shippingCity)" />
+	                
+                    <select id="ucFieldShippingCountry" name="shippingCountry" class="small-input pull-right js-tax-watch js-change js-shipping-destination" onchange="updateStateRequirementFlags()" required >
+						#foreach($country in $shippingAddressPart.countries)
+							<option value="$country" #if($country == $shippingAddressPart.shippingCountry)selected#{end}>$country</option>
+						#end
+					</select>
+                 
+                    <input type="text" id="ucShippingStateFieldId" placeholder="State" name="shippingState" value="$i18n.escape($!shippingAddressPart.shippingState)" class="small-input js-tax-watch js-blur js-shipping-destination" required />
+                    <input type="text" id="shippingZip" placeholder="Zip code" name="shippingZip" value="$i18n.escape($!shippingAddressPart.shippingZip)" class="small-input pull-right js-tax-watch js-blur js-shipping-destination" required />		
+                    
+                    <input class="small-input" type="text" placeholder="Phone" name="shippingPhone" value="$i18n.escape($!shippingAddressPart.shippingPhone)" #if($!shippingAddressPart.shippingPhoneRequired) required #end />
+
+  					<input type="text" placeholder="example@domain.com" class="small-input pull-right js-store-email" name="email" value="$i18n.escape($!shippingAddressPart.email)" data-merchantId="$merchantId" #if($!shippingAddressPart.requireEmail) required #end />
+  					
+               
+
+		<div class="column">
+			<input type="checkbox" name="billingDifferent" id="billingDifferent" #if($form.billingDifferent)checked#{end} />
+			<span>$i18n.write("checkout.single.billingInformationDifferent", "Check here if billing information is <b>different</b> from shipping information")</span>
+		</div>
+
+  		<div class="clearfix"></div>
+	</div>
+</div><!-- End Outer box --> 

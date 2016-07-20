@@ -1,0 +1,20 @@
+#* @vtlvariable name="formatHelper" type="com.bpsinfo.ultracart.catalog.tobjects.FormatHelper" *#
+#* @vtlvariable name="i18n" type="com.bpsinfo.storefront.tobjects.I18nWriter" *#
+#* @vtlvariable name="form" type="com.bpsinfo.ultracart.checkout.ui.WholesaleSignupForm" *#
+
+
+#set($bodyClass = 'wholesale-signup-confirmation')
+#set( $pageTitle = $i18n.write("checkout.wholesaleSignup.pageTitle", "Wholesale Signup") )
+
+#parse('/snippets/top.vm')
+
+<div class="row">
+  <h1>$i18n.write("checkout.wholesaleSignupConfirmation.thankYouForApplying","Thank you for applying.")</h1>
+  <h2>$i18n.write("checkout.wholesaleSignupConfirmation.additionalMessage","")</h2>
+  <a href="$!form.catalogUrl" class="button">Continue</a>
+</div>
+
+
+
+
+#parse('/snippets/bottom.vm')

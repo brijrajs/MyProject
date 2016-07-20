@@ -1,0 +1,67 @@
+#* @vtlvariable name="secureHostName" type="java.lang.String" *#
+#* @vtlvariable name="refererUrl" type="java.lang.String" *#
+#* @vtlvariable name="merchantId" type="java.lang.String" *#
+#* @vtlvariable name="i18n" type="com.bpsinfo.storefront.tobjects.I18nWriter" *#
+#* @vtlvariable name="formatHelper" type="com.bpsinfo.ultracart.catalog.tobjects.FormatHelper" *#
+#* @vtlvariable name="header" type="java.lang.String" *#
+#* @vtlvariable name="footer" type="java.lang.String" *#
+
+
+#set( $bodyClass = 'search' )
+#set( $pageTitle = 'Search' )
+#parse('/snippets/top.vm')
+
+#set( $title = 'Search' )
+#parse('/snippets/title.vm')
+
+## <body>
+## #end ##if-header
+## <link rel="stylesheet" type="text/css" href="/checkout/checkout.css" title="style">
+## <link rel="stylesheet" type="text/css" href="/checkout/checkout2.css" title="style">
+
+
+<form action="http://${secureHostName}/cgi-bin/UCSearch" method="post" target="_top">
+  #parse('/snippets/common/storefront_template_spec_version.vm')
+  <div style='text-align: center;'>
+    <br/>
+    <input type="hidden" name="SUBMITDATA" value="SUBMITDATA"/>
+    <input type="hidden" name="MERCHANTID" value="$i18n.escape($merchantId)"/>
+    <input type="hidden" NAME="REFERERURL" value="$i18n.escape($refererUrl)"/>
+    <br/>
+
+    <table align="center" border="0" cellpadding="0" cellspacing="0">
+      <tr>
+        <td colspan="2" class="ucSectionTitle">Search</td>
+      </tr>
+      <tr>
+        <td align="right" class="ucSubText">
+          Search&nbsp;&nbsp;
+        </td>
+        <td>&nbsp;<input type="text" name="DESCRIPTION" SIZE="25"/>&nbsp;&nbsp;</td>
+      </tr>
+      <tr>
+        <td valign="TOP" align="RIGHT" class="ucSubText">
+          &nbsp;Show out of stock&nbsp;&nbsp;
+        </td>
+        <td class="ucSubText">
+          <input type="RADIO" name="showOutOfStock" value="yes" checked='checked'>yes&nbsp;
+          <input type="RADIO" name="showOutOfStock" value="no">no
+        </td>
+      </tr>
+    </table>
+
+    <br/>
+    <br/>
+    <input type="submit" name="button" value="Start Search"/>
+
+  </div>
+</form>
+
+#parse('/snippets/bottom.vm')
+
+
+## #if("$!footer" != "")
+##   $!footer
+## #else
+## </body></html>
+## #end

@@ -1,0 +1,222 @@
+##
+## UltraCart - Mr Teas Template
+## http://www.ultracart.com/
+##
+## Copyright (c) 2015 BPS Info Solutions Inc.
+## License located here:
+## http://www.ultracart.com/storefront/license/
+##
+## Designed by Level 2 Design, LLC http://www.level2d.com/
+##
+
+#* @vtlvariable name="merchantId" type="java.lang.String" *#
+#* @vtlvariable name="header" type="java.lang.String" *#
+#* @vtlvariable name="footer" type="java.lang.String" *#
+#* @vtlvariable name="i18n" type="com.bpsinfo.storefront.tobjects.I18nWriter" *#
+#* @vtlvariable name="enableProductReviews" type="java.lang.Boolean" *#
+
+#set($bodyClass = "myaccount-reviews")
+#set( $pageTitle = "My Account Reviews" )
+
+#parse("/snippets/top.vm")
+
+
+<script type="text/javascript">
+  var merchantId = '$!merchantId';
+</script>
+<!--[if lt IE 9]>
+<script type='text/javascript' src="/myaccount/js/html5shiv-printshiv.js" media="all"></script>
+<![endif]-->
+
+<script type="text/javascript" src="/myaccount/js/moment.js"></script>
+<script type="text/javascript" src="/myaccount/js/handlebars-v3.0.3.js"></script>
+<script type="text/javascript" src="/myaccount/js/underscore_1.4.4.js"></script>
+<script type="text/javascript" src="/myaccount/js/backbone_1.0.js"></script>
+<script type="text/javascript" src="/myaccount/js/myaccount_rest_1.3.js"></script>
+<script type="text/javascript" src="/myaccount/js/myaccount.js"></script>
+<script type="text/javascript" src="/myaccount/reviews.js"></script>
+
+
+<script type="text/template" id="reviewed-template">
+
+  <div class="review-details row {{\#if featured}}featured{{/if}}">
+      <div class="columns small-16 medium-3">
+        {{\#if item.defaultThumbnailUrl}}
+          <img class='order-item-thumbnail' src="/thumbs/{{item.defaultThumbnailUrl}}" alt=''/>
+        {{else}}
+          <img class="order-item-thumbnail" src="/assets/imgs/no-image-220x293.png" alt="no image found" />
+        {{/if}}
+      </div>
+      <div class="columns small-16 medium-13">
+        <div class='review-line-item half-margin-bottom'>
+          <a href="{{item.viewUrl}}">{{item.description}}</a>
+          <br>
+          {{dateFormat submittedDate}}
+        </div>
+        <div class='review-line-item half-margin-bottom'><strong>{{title}}</strong></div>
+
+        $i18n.write('myaccount.ratings.ratingsHeader','Ratings:')
+
+        <div class='review-individual-ratings'>
+          <div class="review-overall">
+            <span class='rating-name'><strong>Overall </strong></span>
+            <span class="icon-stars-{{overall}}"></span>
+          </div>
+          {{\#if ratingName1}}
+          <div>
+            <span class='rating-name'>{{ratingName1}}</span>
+            <span class="icon-stars-{{ratingScore1}}"></span>
+          </div>
+          {{/if}}
+          {{\#if ratingName2}}
+           <div>
+            <span class='rating-name'>{{ratingName2}}</span>
+            <span class="icon-stars-{{ratingScore2}}"></span>
+          </div>
+          {{/if}}
+          {{\#if ratingName3}}
+          <div>
+            <span class='rating-name'>{{ratingName3}}</span>
+            <span class="icon-stars-{{ratingScore3}}"></span>
+          </div>
+          {{/if}}
+          {{\#if ratingName4}}
+          <div>
+            <span class='rating-name'>{{ratingName4}}</span>
+            <span class="icon-stars-{{ratingScore4}}"></span>
+          </div>
+          {{/if}}
+          {{\#if ratingName5}}
+          <div>
+            <span class='rating-name'>{{ratingName5}}</span>
+            <span class="icon-stars-{{ratingScore5}}"></span>
+          </div>
+          {{/if}}
+          {{\#if ratingName6}}
+          <div>
+            <span class='rating-name'>{{ratingName6}}</span>
+            <span class="icon-stars-{{ratingScore6}}"></span>
+          </div>
+          {{/if}}
+          {{\#if ratingName7}}
+          <div>
+            <span class='rating-name'>{{ratingName7}}</span>
+            <span class="icon-stars-{{ratingScore7}}"></span>
+          </div>
+          {{/if}}
+          {{\#if ratingName8}}
+          <div>
+            <span class='rating-name'>{{ratingName8}}</span>
+            <span class="icon-stars-{{ratingScore8}}"></span>
+          </div>
+          {{/if}}
+          {{\#if ratingName9}}
+          <div>
+            <span class='rating-name'>{{ratingName9}}</span>
+            <span class="icon-stars-{{ratingScore9}}"></span>
+          </div>
+          {{/if}}
+          {{\#if ratingName10}}
+          <div>
+            <span class='rating-name'>{{ratingName10}}</span>
+            <span class="icon-stars-{{ratingScore10}}"></span>
+          </div>
+          {{/if}}
+        </div>
+
+        <strong>Review</strong>
+
+        <div class="half-margin-bottom">{{review}}</div>
+
+        {{\#if storeFeedback}}
+
+        <div class="half-margin-bottom">{{storeFeedback}}</div>
+        {{/if}}
+
+        <div>Was this review helpful?&nbsp;&nbsp;<span class='disabled-looking'>|</span>&nbsp;&nbsp;Yes
+          {{helpfulYesVotes}}&nbsp;&nbsp;<span class='disabled-looking'>|</span>&nbsp;&nbsp;No {{helpfulNoVotes}}&nbsp;&nbsp;<span
+              class='disabled-looking'>|</span></div>
+
+
+      </div>
+  </div>
+</script>
+
+<script type="text/template" id="not-reviewed-yet-template">
+  <div class='not-reviewed-yet-details clearfix'>
+      <div class="columns small-16 medium-3">
+        {{\#if item.defaultThumbnailUrl}}
+          <img class='order-item-thumbnail' src="/thumbs/{{item.defaultThumbnailUrl}}" alt=''/>
+        {{else}}
+          <img class="order-item-thumbnail" src="/assets/imgs/no-image-220x293.png" alt="no image found" />
+        {{/if}}
+      </div>
+      <div class="columns small-16 medium-13">
+        <a href="{{item.viewUrl}}">{{item.description}}</a>
+        <input type="button" value="Review" class='button primary small right reviewButton'/>
+      </div>
+  </div>
+</script>
+
+<div class="row half-margin-top">
+  <div class="columns small-16 medium-13">
+    <a href="/myaccount/index.do?merchantId=$!{merchantId}">$i18n.write('myaccount.breadcrumb.myAccount','My Account')</a> &gt; <span class='disabled-looking'>$i18n.write('myaccount.breadcrumb.myReviews','My Reviews')</span>
+  </div>
+</div>
+
+<div class="row">
+  <div class="columns small-16">
+    <h1>$i18n.write('myaccount.reviewsHeader','My Reviews')</h1>
+    <p>$i18n.write('myaccount.reviewsMessage','Review your purchases and previously published reviews.')</p>
+    <div class="myaccount-notifications">
+      <div class="alert info text-left no-margin-top no-margin-bottom"></div>
+      <div class="alert success text-left no-margin-top no-margin-bottom"></div>
+      <div class="alert warning text-left no-margin-top no-margin-bottom"></div>
+      <div class="alert error text-left no-margin-top no-margin-bottom"></div>
+    </div>
+  </div>
+</div>
+
+
+
+#if($enableProductReviews)
+  <div id="not-reviewed-yet" class="row">
+    <h2>Review Your Purchases</h2>
+
+    <div class="reviews columns small-16">
+    </div>
+
+    <div style='clear:both'></div>
+    <div class='load-more'>
+      <input type="button" id="loadMoreNotReviewedYetButton" class="button" value="Show 5 More Items"/>
+    </div>
+    <div class='loading'>
+      $i18n.write('myaccount.ratings.pleaseWaitItems','Please wait. We are loading your purchased items now.')<br>
+      <img src='/myaccount/images/jquery.smallhbar.indicator.gif'/>
+    </div>
+  </div>
+
+
+  <div id="reviewed" class="row">
+    <h2>Your Published Reviews</h2>
+
+    <div class="reviews columns small-16">
+    </div>
+
+    <div style='clear:both'></div>
+    <div class='loading'>
+      $i18n.write('myaccount.ratings.pleaseWaitReviews','Please wait. We are loading your reviews now.')<br>
+      <img src='/myaccount/images/jquery.smallhbar.indicator.gif'/>
+    </div>
+    <div class='load-more'>
+      <input type="button" id="loadMoreReviewsButton" class="button" value="Show 5 More Reviews"/>
+    </div>
+
+  </div>
+#else
+  Sorry.  Product Reviews are not available.
+#end
+
+
+
+#parse("/snippets/bottom.vm")

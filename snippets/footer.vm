@@ -1,0 +1,181 @@
+##
+## UltraCart - Mr Teas Template
+## http://www.ultracart.com/
+##
+## Copyright (c) 2015 BPS Info Solutions Inc.
+## License located here:
+## http://www.ultracart.com/storefront/license/
+##
+## Designed by Level 2 Design, LLC http://www.level2d.com/
+##
+## uc:menu-used="footer"
+## uc:menu-used="help"
+## uc:menu-used="account"
+## uc:theme-attribute-boolean="Checkout Only Theme"
+## uc:site-attribute-string="title"
+## uc:site-attribute-string="street-address|12345 Main St"
+## uc:site-attribute-string="city|Atlanta"
+## uc:site-attribute-string="state|GA"
+## uc:site-attribute-string="zip|30303"
+## uc:site-attribute-string="phone|404.555.1212"
+## uc:site-attribute-string="fax|404.555.1213"
+## uc:site-attribute-string="contact-email|contact@mrteas.com"
+## uc:site-attribute-string="facebookAccount"
+## uc:site-attribute-string="twitterAccount"
+## uc:site-attribute-string="pinterestAccount"
+## uc:site-attribute-string="instagramAccount"
+<div style="clear:both;"></div>
+            
+			</div><!-- /system -->
+               
+             
+               
+   
+</div><!-- End bottom banners -->
+<!-- UC Template _footer -->
+<!-- Footer start -->
+<footer>
+	<div class="container">
+    	<div class="row">
+        	<div class="col-sm-12 col-md-5">
+            	<ul class="footer-main">
+                	<li>
+                    	<div class="heading">SiteMap</div>
+                        <ul>
+                        	<li><a href="http://healthlabsnutra.com/">Home</a></li>
+                            <li><a href="${baseUrl}/shop">Shop</a></li>
+                            <li><a href="http://healthlabsnutra.com/blog">Blog</a></li>
+                        	<li><a href="${baseUrl}/about">About Us</a></li>
+                        	<li><a href="${baseUrl}/faqs">FAQ</a></li>
+                        	<li><a href="${baseUrl}/contact">Contact Us</a></li>
+                            <li><a href="${baseUrl}/wholesale">Wholesale Login</a></li>
+                            <li><a href="https://store.healthlabsnutra.com/cgi-bin/UCWholesaleSignup?merchantId=HEA12">Wholesale Signup</a></li>
+                        </ul>
+                    </li><!-- End first collumn -->
+                	<li>
+                    	<div class="heading">Our Products</div>
+                        <ul>
+                        
+                        	<li><a href="${baseUrl}/shop/Digestive_Enzymes.html">Ultimate Digestion Solution </a></li>
+                        	<li><a href="${baseUrl}/shop/Advanced_Probiotic.html">Advanced Probiotic Solution</a></li>
+                        	<li><a href="${baseUrl}/shop/Omega-3-Krill-Oil.html">Omega-3 Krill Oil</a></li>
+                            <li><a href="${baseUrl}/shop/Vitamin-D3.html">Vitamin-D3</a></li>
+                        </ul>
+                    </li><!-- End second collumn -->
+                </ul>
+            </div><!-- End col-md-5 -->
+        	<div class="col-sm-12 col-md-7">
+            	<ul class="footer-main">
+                	<li>
+                    	<div class="heading">Email Us Anytime at </div>
+                        <div class="footer-email" style="font-size:20px;">support@healthlabsnutra.com</div>
+                        <p>We reply within 24 hours upon receiving<br> your email.</p>
+                        
+                    </li><!-- End third collumn -->
+                    <li class="footer-last">
+                    	<div class="heading">Contact Us</div>
+                        <ul class="contact">
+                        	<li><a href="#">Green Cove Springs, FL</a></li>
+                        	<li><a href="#">1.877.990.8411</a></li>
+                        	<li><a href="#">support@healthlabsnutra.com</a></li>
+                        	<li><a href="#">www.HealthLabsnutra.com</a></li>
+                        </ul>
+                    </li><!-- End last collumn -->
+                </ul>
+                <div class="clearfix"></div>
+                <!-- Newsletter inpu area -->
+                <div class="heading">Join The Mailing List</div>
+                <!-- AWeber Web Form Generator 3.0.1 -->
+<form method="post" class="af-form-wrapper" accept-charset="UTF-8" action="https://www.aweber.com/scripts/addlead.pl"  >
+<div style="display: none;">
+<input type="hidden" name="meta_web_form_id" value="1118306161" />
+<input type="hidden" name="meta_split_id" value="" />
+<input type="hidden" name="listname" value="awlist4184100" />
+<input type="hidden" name="redirect" value="http://healthlabsnutra.com/thank-you-signup/" id="redirect_a9a82fc99628ae092b48a87d78441e05" />
+
+<input type="hidden" name="meta_adtracking" value="My_Web_Form" />
+<input type="hidden" name="meta_message" value="1001" />
+<input type="hidden" name="meta_required" value="email" />
+
+<input type="hidden" name="meta_tooltip" value="" />
+</div>
+
+<input style="color:black;" placeholder="Enter your Email" class="text" id="awf_field-80375775" type="text" name="email" value="" tabindex="500"  />
+<input style="margin-top: 0px;" type="submit" name="submit" value="Subscribe" id="af-submit-image-1118306161" />
+
+</form>
+<script type="text/javascript">
+    <!--
+    (function() {
+        var IE = /*@cc_on!@*/false;
+        if (!IE) { return; }
+        if (document.compatMode && document.compatMode == 'BackCompat') {
+            if (document.getElementById("af-form-1118306161")) {
+                document.getElementById("af-form-1118306161").className = 'af-form af-quirksMode';
+            }
+            if (document.getElementById("af-body-1118306161")) {
+                document.getElementById("af-body-1118306161").className = "af-body inline af-quirksMode";
+            }
+            if (document.getElementById("af-header-1118306161")) {
+                document.getElementById("af-header-1118306161").className = "af-header af-quirksMode";
+            }
+            if (document.getElementById("af-footer-1118306161")) {
+                document.getElementById("af-footer-1118306161").className = "af-footer af-quirksMode";
+            }
+        }
+    })();
+    -->
+</script>
+
+<!-- /AWeber Web Form Generator 3.0.1 -->
+                
+                <!-- Social icons -->
+                <div class="clearfix"></div>
+                <div class="heading social-heading">Connect with Us</div>
+                <ul class="footer-social-icons">
+                    <li><a href="$site.attr('facebookAccount')"><img src="${baseUrl}/themes/MrTeas/assets/imgs/bottom-social-fb.png" alt="" /></a></li>
+                    <li><a href="$site.attr('twitterAccount')"><img src="${baseUrl}/themes/MrTeas/assets/imgs/bottom-social-twitter.png" alt="" /></a></li>
+                    <li><a href="$site.attr('pinterestAccount')"><img src="${baseUrl}/themes/MrTeas/assets/imgs/bottom-social-pin.png" alt="" /></a></li>
+                    <li><a href="#"><img src="${baseUrl}/themes/MrTeas/assets/imgs/bottom-social-google.png" alt="" /></a></li>
+                </ul>
+                
+                
+            </div><!-- End col-md-7 -->
+        </div><!-- End row -->
+    </div><!-- End container -->
+</footer><!-- End footer -->
+<div class="footer-bottom">
+	<div class="container">
+    	<div class="row">
+        	<div class="col-sm-12 col-md-6">
+                <a href="${baseUrl}/contact">Contact Us</a> | 
+                <a href="${baseUrl}/terms-and-conditions">Terms, Legal & Herbal Safety Guidelines</a> | 
+                <a href="${baseUrl}/privacy-policy">Privacy Policy</a>
+            </div>
+        	<div class="col-sm-12 col-md-6 copyrights">Copyright 2015 HealthLabsNutra All Rights Reserved.</div>
+        </div><!-- End row -->
+    </div><!-- End container -->
+</div><!-- End footer bottom 1 -->
+<!-- Footer bottom part 2 -->
+<div class="footer-bottom2">
+	<div class="container">
+    	<div class="row">
+        	<div class="col-sm-6 col-md-6 payment-first"><img class="img-responsive" src="${baseUrl}/themes/MrTeas/assets/imgs/payment-icon-1.png" alt="" /></div>
+        	<div class="col-sm-6 col-md-6 payment-second"><img class="img-responsive" src="${baseUrl}/themes/MrTeas/assets/imgs/payment-icon-2.png" alt="" /></div>
+            <div class="col-sm-8 col-sm-push-2 col-md-12 payment-last"><img class="img-responsive" src="${baseUrl}/themes/MrTeas/assets/imgs/payment-icon-3.png" alt="" /></div>
+            <div class="clearfix"></div>
+            <div class="col-sm-12 col-md-12">
+            	
+            </div>
+            <div class="col-sm-12 col-md-12">
+            	<div class="statement">** These statements have not been evaluated by the Food and Drug Administration. 
+                These products are not intended to diagnose, treat, cure or prevent any disease.</div>
+            </div>
+            <div class="col-sm-12 col-md-12">
+            	<p class="last-paragraph">The information provided on this site is intended for your general knowledge only and is not a substitute for professional medical advice or treatment for specific medical conditions. Always seek the advice of your physician or other qualified health care provider with any questions you may have regarding a medical condition. The information on this website is not intended to diagnose, treat, cure or prevent any disease. Never disregard medical advice or delay in seeking it because of something you have read on the Health Labs Nutra site. Products sold on this site are for personal use and not for resale.<br>
+All prices are in USD.</p>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End bottom footer 2  -->

@@ -1,0 +1,68 @@
+##
+## UltraCart - Mr Teas Template
+## http://www.ultracart.com/
+##
+## Copyright (c) 2015 BPS Info Solutions Inc.
+## License located here:
+## http://www.ultracart.com/storefront/license/
+##
+## Designed by Level 2 Design, LLC http://www.level2d.com/
+##
+
+#* @vtlvariable name="i18n" type="com.bpsinfo.storefront.tobjects.I18nWriter" *#
+#* @vtlvariable name="ucWrite" type="com.bpsinfo.storefront.tobjects.I18nWriter" *#
+#* @vtlvariable name="advertisingSourcesPart" type="com.bpsinfo.storefront.tobjects.AdvertisingSourcesPart" *#
+
+<div class="row">
+	<div class="columns small-16 medium-8">
+		<h2>$i18n.write("checkout.single.advertisingSourceHeader","WHERE DID YOU HEAR ABOUT US?")#if($advertisingSourcesPart.advertisingSourceRequired)* #{end}</h2>
+
+		## select then freeform: $advertisingSourcesPart.showAdvertisingSourceSelectThenFreeForm (this is undefined)
+		## select: $advertisingSourcesPart.showAdvertisingSourceDropDown
+		## freeform: $advertisingSourcesPart.showAdvertisingSourceFreeForm
+
+		#if($advertisingSourcesPart.showAdvertisingSourceSelectThenFreeForm)
+			<ul class="option-group advertising-source-options">
+				#foreach($advertisingSource in $advertisingSourcesPart.advertisingSources)
+					#if($advertisingSource != '')
+						<li>
+							<input type="radio" name="advertisingSource" value="$i18n.escape($advertisingSource)" id="advertisingSource${foreach.count}" #if($advertisingSource == $advertisingSourcesPart.advertisingSource)checked#{end} #if($advertisingSourcesPart.advertisingSourceRequired)required#{end}/>
+							<label for="advertisingSource${foreach.count}">
+								<strong>$i18n.escape($advertisingSource)</strong>
+							</label>
+							<br>
+							<input type="text" placeholder="$i18n.write("checkout.single.advertisingSourceInstructions","Please specify")" name="advertisingSourceOther" class="no-margin-bottom" value="$i18n.escape($!advertisingSourcesPart.advertisingSourceOther)" />
+							## #if($i18n.escape($advertisingSource) == 'Other')
+							## #end
+						</li>
+					#end ## if advertisingSource
+				#end ## endforeach
+			</ul>
+		#end ##if-showAdvertisingSourceSelectThenFreeForm
+
+		#if($advertisingSourcesPart.showAdvertisingSourceDropDown)
+			<ul class="option-group advertising-source-options">
+				#foreach($advertisingSource in $advertisingSourcesPart.advertisingSources)
+					#if($advertisingSource != '')
+						<li>
+							<input type="radio" name="advertisingSource" value="$i18n.escape($advertisingSource)" id="advertisingSource${foreach.count}" #if($advertisingSource == $advertisingSourcesPart.advertisingSource)checked#{end} #if($advertisingSourcesPart.advertisingSourceRequired)required#{end}/>
+							<label for="advertisingSource${foreach.count}">
+								<strong>$i18n.escape($advertisingSource)</strong>
+							</label>
+							#if($i18n.escape($advertisingSource) == 'Other')
+								<br>
+								<input type="text" placeholder="$i18n.write("checkout.single.advertisingSourceInstructions","Please specify")" name="advertisingSourceOther" class="no-margin-bottom" value="$i18n.escape($!advertisingSourcesPart.advertisingSourceOther)" />
+							#end
+						</li>
+					#end ## if advertisingSource
+				#end ## endforeach
+			</ul>
+		#end ##if-showAdvertisingSourceDropDown
+		#if($advertisingSourcesPart.showAdvertisingSourceFreeForm)
+			<label class="label-move">
+				<input type="text" placeholder="$i18n.write("checkout.single.advertisingSourceInstructions","Please specify")" name="advertisingSource" class="no-margin-bottom" value="$i18n.escape($!advertisingSourcesPart.advertisingSourceOther)" />
+				## <input type="text" placeholder="$i18n.write("checkout.single.advertisingSourceInstructions","Please specify")" name="advertisingSourceOther" class="no-margin-bottom" value="$i18n.escape($!advertisingSourcesPart.advertisingSourceOther)" />
+			</label>
+		#end ##if-showAdvertisingSourceFreeForm
+	</div>
+</div>

@@ -1,0 +1,457 @@
+{
+  "themeName": "Mr Teas",
+  "themeUri": "themes.ultracart.com",
+  "author": "UltraCart",
+  "authorUri": "www.ultracart.com",
+  "creationDate": "May 2015",
+  "previewImage": "preview.png",
+  "themeDescription": "Default UltraCart Theme",
+  "currentPreset": "Default",
+  "version": 1,
+  "supportsSocial": true,
+  "supportsSeo": true,
+  "supportsSearchPages": true,
+  "supportsSearchFacets": true,
+  "supportsStoreLocator": true,
+  "supportsInspectlet": true,
+  "supportsBlog": true,
+  "ignoreUpgradeOnHostName": "theme-mrteas.ultracartstore.com",
+  "sourceArchives": [
+    {
+      "directoryPath": "/_src/",
+      "zipPath": "/_src.zip"
+    }
+  ],
+  "pageAttributeConfigurations": {
+    "home slider": {
+      "supportsAutoPlay": true,
+      "supportsAutoPlaySpeed": true,
+      "supportsCoverMode": true,
+      "imageRecommendations": "Recommend a PNG 1000x563",
+      "supportsCaption1": true,
+      "supportsCaption2": true,
+      "supportsCaption3": false,
+      "supportsCaption4": false,
+      "supportsCaption5": false,
+      "supportsCaption6": false,
+      "supportsHtml": false
+    }
+  },
+  "gallery": {
+    "summary": ["Mr. Teas is the default UltraCart theme. This theme is ideal for any number of products and product variations. Fully responsive pages and retina ready. Two color presets included. Easily customizable color scheme","Home, Catalog, Product, About, and Contact page layouts included. Customized single and multi page checkout."],
+    "features": ["Full Scale Theme", "Responsive", "Responsive Product Gallery"],
+    "technical": ["Foundation", "jQuery", "SCSS/Grunt"],
+    "previewImages": [
+      {"name": "Home Page", "path": "/assets/gallery/preview1.png"},
+      {"name": "Catalog Page", "path": "/assets/gallery/preview2.png"},
+      {"name": "Product Page", "path": "/assets/gallery/preview3.png"},
+      {"name": "Lightbox", "path": "/assets/gallery/preview4.png"},
+      {"name": "Cart", "path": "/assets/gallery/preview5.png"},
+      {"name": "Product Review", "path": "/assets/gallery/preview6.png"},
+      {"name": "Page Footer", "path": "/assets/gallery/preview7.png"}
+    ],
+    "cost": 0.00,
+    "supportByUltraCart": true,
+    "supportEmail": "support@ultracart.com",
+    "trialPeriodDays": 0
+  },
+  "presets": [
+    {
+      "name": "Default",
+      "attributes":[
+        {"name": "Theme Color 01", "value": "#FFFFFF", "type": "color"},
+        {"name": "Theme Color 02", "value": "#EBEBEB", "type": "color"},
+        {"name": "Theme Color 03", "value": "#C2C2C2", "type": "color"},
+        {"name": "Theme Color 04", "value": "#626262", "type": "color"},
+        {"name": "Theme Color 05", "value": "#2D2D2D", "type": "color"},
+        {"name": "Theme Color 06", "value": "#3399CC", "type": "color"},
+        {"name": "Theme Color 07", "value": "#297AA3", "type": "color"},
+        {"name": "Theme Color 08", "value": "#6CADCE", "type": "color"},
+        {"name": "Theme Color 09", "value": "#619DBB", "type": "color"},
+        {"name": "Theme Color 10", "value": "#DA793E", "type": "color"},
+
+        {"name": "Primary Background Color", "value": "", "type": "color"},
+        {"name": "Secondary Background Color", "value": "", "type": "color"},
+        {"name": "Primary Font Color", "value": "", "type": "color"},
+        {"name": "Secondary Font Color", "value": "", "type": "color"},
+        {"name": "Primary Input Background Color", "value": "", "type": "color"},
+        {"name": "Primary Input Border Color", "value": "", "type": "color"},
+        {"name": "Primary Input Font Color", "value": "", "type": "color"},
+        {"name": "Primary Headers Font Color", "value": "", "type": "color"},
+        {"name": "Primary Headers Border Color", "value": "", "type": "color"},
+        {"name": "Secondary Headers Font Color", "value": "", "type": "color"},
+        {"name": "Primary Border Color", "value": "", "type": "color"},
+        {"name": "Primary Link Font Color", "value": "", "type": "color"},
+        {"name": "Primary Link Hover Font Color", "value": "", "type": "color"},
+        {"name": "Primary Button Background Color", "value": "", "type": "color"},
+        {"name": "Primary Button Hover Background Color", "value": "", "type": "color"},
+        {"name": "Primary Button Border Color", "value": "", "type": "color"},
+        {"name": "Primary Button Hover Border Color", "value": "", "type": "color"},
+        {"name": "Primary Button Font Color", "value": "", "type": "color"},
+        {"name": "Primary Button Hover Font Color", "value": "", "type": "color"},
+        {"name": "Secondary Button Background Color", "value": "", "type": "color"},
+        {"name": "Secondary Button Hover Background Color", "value": "", "type": "color"},
+        {"name": "Secondary Button Border Color", "value": "", "type": "color"},
+        {"name": "Secondary Button Hover Border Color", "value": "", "type": "color"},
+        {"name": "Secondary Button Font Color", "value": "", "type": "color"},
+        {"name": "Secondary Button Hover Font Color", "value": "", "type": "color"},
+        {"name": "Disabled Button Background Color", "value": "", "type": "color"},
+        {"name": "Disabled Button Border Color", "value": "", "type": "color"},
+        {"name": "Disabled Button Font Color", "value": "", "type": "color"},
+
+        {"name": "Primary Header Background Color", "value": "", "type": "color"},
+        {"name": "Primary Header Logo Font Color", "value": "", "type": "color"},
+        {"name": "Primary Header Logo Border Color", "value": "", "type": "color"},
+        {"name": "Primary Header Nav Font Color", "value": "", "type": "color"},
+        {"name": "Primary Header Nav Hover Font Color", "value": "", "type": "color"},
+        {"name": "Primary Header Sub Nav Background Color", "value": "", "type": "color"},
+        {"name": "Primary Header Sub Nav Font Color", "value": "", "type": "color"},
+        {"name": "Primary Header Sub Nav Hover Font Color", "value": "", "type": "color"},
+        {"name": "Secondary Header Background Color", "value": "", "type": "color"},
+        {"name": "Secondary Header Icons Color", "value": "", "type": "color"},
+        {"name": "Secondary Header Hover Icons Color", "value": "", "type": "color"},
+        {"name": "Secondary Header Promo Font Color", "value": "", "type": "color"},
+        {"name": "Secondary Header Cart Summary Background Color", "value": "", "type": "color"},
+        {"name": "Secondary Header Cart Summary Font Color", "value": "", "type": "color"},
+
+        {"name": "Footer Background Color", "value": "", "type": "color"},
+        {"name": "Footer Font Color", "value": "", "type": "color"},
+        {"name": "Footer Border Color", "value": "", "type": "color"},
+        {"name": "Footer Link Font Color", "value": "", "type": "color"},
+        {"name": "Footer Link Hover Font Color", "value": "", "type": "color"},
+        {"name": "Footer Logo Font Color", "value": "", "type": "color"},
+        {"name": "Footer Logo Border Color", "value": "", "type": "color"},
+
+        {"name": "Mobile Nav Background Color", "value": "", "type": "color"},
+        {"name": "Mobile Nav Font Color", "value": "", "type": "color"},
+        {"name": "Mobile Nav Border Color", "value": "", "type": "color"},
+        {"name": "Mobile Search Icon Color", "value": "", "type": "color"},
+        {"name": "Mobile Search Icon Background Color", "value": "", "type": "color"},
+
+        {"name": "Item View Link Button Background Color", "value": "", "type": "color"},
+        {"name": "Item View Link Button Font Color", "value": "", "type": "color"},
+        {"name": "Item Sale Banner Background Color", "value": ";", "type": "color"},
+        {"name": "Item Sale Banner Font Color", "value": "", "type": "color"},
+        {"name": "Item Sale Price Font Color", "value": "", "type": "color"},
+        {"name": "Item Out Of Stock Banner Background Color", "value": "", "type": "color"},
+        {"name": "Item Out Of Stock Banner Font Color", "value": "", "type": "color"},
+        {"name": "Item Review Star Color", "value": "", "type": "color"},
+        {"name": "Item No Image Available Image URL", "value": "/assets/imgs/no-image-220x220.png", "type": "string"},
+        {"name": "Item Show Options", "value": "True", "type": "boolean"},
+
+        {"name": "System Yes Color", "value": "#99CC33", "type": "color"},
+        {"name": "System Yes Hover Color", "value": "#88b52e", "type": "color"},
+        {"name": "System No Color", "value": "#DA3E3E", "type": "color"},
+        {"name": "System No Hover Color", "value": "#bf3737", "type": "color"},
+
+        {"name": "Home Slider Font Color", "value": "", "type": "color"},
+        {"name": "Google Autocomplete", "value": "true", "type": "boolean"}
+      ]
+    },
+    {
+      "name": "Fall",
+      "attributes":[
+        {"name": "Primary Background Color", "value": "#F3EED4", "type": "color"},
+        {"name": "Secondary Background Color", "value": "#DAD6BE", "type": "color"},
+        {"name": "Primary Font Color", "value": "#655643", "type": "color"},
+        {"name": "Secondary Font Color", "value": "#8D785C", "type": "color"},
+        {"name": "Primary Input Background Color", "value": "#FEFBEA", "type": "color"},
+        {"name": "Primary Input Border Color", "value": "#DAD6BE", "type": "color"},
+        {"name": "Primary Input Font Color", "value": "#655643", "type": "color"},
+        {"name": "Primary Headers Font Color", "value": "#655643", "type": "color"},
+        {"name": "Primary Headers Border Color", "value": "#DAD6BE", "type": "color"},
+        {"name": "Secondary Headers Font Color", "value": "#655643", "type": "color"},
+        {"name": "Primary Border Color", "value": "#DAD6BE", "type": "color"},
+        {"name": "Secondary Border Color", "value": "#DAD6BE", "type": "color"},
+        {"name": "Primary Link Font Color", "value": "#668C8D", "type": "color"},
+        {"name": "Primary Link Hover Font Color", "value": "#C04C27", "type": "color"},
+        {"name": "Primary Button Background Color", "value": "#668C8D", "type": "color"},
+        {"name": "Primary Button Hover Background Color", "value": "#4D6768", "type": "color"},
+        {"name": "Primary Button Border Color", "value": "#668C8D", "type": "color"},
+        {"name": "Primary Button Hover Border Color", "value": "#4D6768", "type": "color"},
+        {"name": "Primary Button Font Color", "value": "#F3EED4", "type": "color"},
+        {"name": "Primary Button Hover Font Color", "value": "#F3EED4", "type": "color"},
+        {"name": "Secondary Button Background Color", "value": "#655643", "type": "color"},
+        {"name": "Secondary Button Hover Background Color", "value": "#4D6768", "type": "color"},
+        {"name": "Secondary Button Border Color", "value": "#655643", "type": "color"},
+        {"name": "Secondary Button Hover Border Color", "value": "#4D6768", "type": "color"},
+        {"name": "Secondary Button Font Color", "value": "#F3EED4", "type": "color"},
+        {"name": "Secondary Button Hover Font Color", "value": "#F3EED4", "type": "color"},
+        {"name": "Disabled Button Background Color", "value": "#DAD6BE", "type": "color"},
+        {"name": "Disabled Button Border Color", "value": "#DAD6BE", "type": "color"},
+        {"name": "Disabled Button Font Color", "value": "#F3EED4", "type": "color"},
+
+        {"name": "Primary Header Background Color", "value": "#873D34", "type": "color"},
+        {"name": "Primary Header Logo Font Color", "value": "#F3EED4", "type": "color"},
+        {"name": "Primary Header Logo Border Color", "value": "#F3EED4", "type": "color"},
+        {"name": "Primary Header Nav Font Color", "value": "#F3EED4", "type": "color"},
+        {"name": "Primary Header Nav Hover Font Color", "value": "#668C8D", "type": "color"},
+        {"name": "Primary Header Sub Nav Background Color", "value": "#6C3129", "type": "color"},
+        {"name": "Primary Header Sub Nav Font Color", "value": "#F3EED4", "type": "color"},
+        {"name": "Primary Header Sub Nav Hover Font Color", "value": "#668C8D", "type": "color"},
+        {"name": "Secondary Header Background Color", "value": "#6C3129", "type": "color"},
+        {"name": "Secondary Header Icons Color", "value": "#F3EED4", "type": "color"},
+        {"name": "Secondary Header Promo Font Color", "value": "#F3EED4", "type": "color"},
+        {"name": "Secondary Header Cart Summary Background Color", "value": "#562721", "type": "color"},
+        {"name": "Secondary Header Cart Summary Font Color", "value": "#F3EED4", "type": "color"},
+
+        {"name": "Footer Background Color", "value": "#668C8D", "type": "color"},
+        {"name": "Footer Font Color", "value": "#435A5D", "type": "color"},
+        {"name": "Footer Border Color", "value": "#435A5D", "type": "color"},
+        {"name": "Footer Link Font Color", "value": "#F3EED4", "type": "color"},
+        {"name": "Footer Link Hover Font Color", "value": "#C04C27", "type": "color"},
+        {"name": "Footer Logo Font and Border Color", "value": "#F3EED4", "type": "color"},
+
+        {"name": "Mobile Nav Background Color", "value": "#6C3129", "type": "color"},
+        {"name": "Mobile Nav Font Color", "value": "#F3EED4", "type": "color"},
+        {"name": "Mobile Nav Border Color", "value": "#873d34", "type": "color"},
+        {"name": "Mobile Search Icon Color", "value": "#873d34", "type": "color"},
+        {"name": "Mobile Search Icon Background Color", "value": "#873d34", "type": "color"},
+
+        {"name": "Item View Link Button Background Color", "value": "#668C8D", "type": "color"},
+        {"name": "Item View Link Button Font Color", "value": "#F3EED4", "type": "color"},
+        {"name": "Item Sale Banner Background Color", "value": "#C04C27;", "type": "color"},
+        {"name": "Item Sale Banner Font Color", "value": "#F3EED4", "type": "color"},
+        {"name": "Item Sale Price Font Color", "value": "#C04C27", "type": "color"},
+        {"name": "Item Out Of Stock Banner Background Color", "value": "#655643", "type": "color"},
+        {"name": "Item Out Of Stock Banner Font Color", "value": "#F3EED4", "type": "color"},
+        {"name": "Item Review Star Color", "value": "#FFC900", "type": "color"},
+        {"name": "Item No Image Available Image URL", "value": "/assets/imgs/no-image-220x293.png", "type": "string"},
+        {"name": "Item Show Options", "value": "True", "type": "boolean"},
+
+        {"name": "System Yes Color", "value": "#99CC33", "type": "color"},
+        {"name": "System No Color", "value": "#DA3E3E", "type": "color"},
+
+        {"name": "Home Slider Font Color", "value": "#F3EED4", "type": "color"},
+        {"name": "Home Slider Dot Border Color", "value": "#F3EED4", "type": "color"},
+        {"name": "Home Slider Dot Hover Border Color", "value": "#F3EED4", "type": "color"},
+        {"name": "Home Slider Dot Hover Fill Color", "value": "#F3EED4", "type": "color"},
+        {"name": "Home Slider Dot Active Border Color", "value": "#FFFFFF", "type": "color"},
+        {"name": "Home Slider Dot Active Fill Color", "value": "#FFFFFF", "type": "color"},
+
+        {"name": "Google Autocomplete", "value": "true", "type": "boolean"}
+      ]
+    }
+  ],
+  "themeAttributeLayout": [
+    {
+      "sectionName": "Theme Settings",
+      "openByDefault": true,
+      "instructions": "General theme settings.",
+      "attributes": [
+        {
+          "name":       "Secondary Header Promo Content",
+          "tooltip":    "This text will show up above the header. Fewer the 70 characters (including spaces) is recommended."
+        },
+        {
+          "name":       "Information Only Theme",
+          "tooltip":    "Remove all buy and checkout buttons from item pages. Users will be able to view and browse items but will not be able to purchase items through the StoreFront."
+        },
+        {
+          "name":       "Google Autocomplete",
+          "tooltip":    "Address fields will autocomplete using Googles API."
+        },
+        {
+          "name":       "Use PNG Thumbnails",
+          "tooltip":    "Use PNG thumbnails instead of the default JPEG thumbnails. This will improve image quality. However, it may also, slightly, increase load time."
+        },
+        {
+          "name":       "Hide Out of Stock Banner",
+          "tooltip":    "Hide the default out of stock banner overlay on items that are out of stock."
+        },
+        {
+          "name":       "Hide Sale Banner",
+          "tooltip":    "Hide the default sale banner overlay on items that are on sale."
+        },
+        {
+          "name":       "Item No Image Available Image URL",
+          "tooltip":    "Input an image that will display if there is no image available for items within your UltraCart account."
+        },
+        {
+          "name":       "Item Show Options",
+          "tooltip":    "Show item options on the item page. If this box is not checked item options will display during the checkout process."
+        },
+        {
+          "name":       "Checkout Only Theme",
+          "tooltip":    "Check this box if you are ONLY using the UltraCart system to manage your checkout process."
+        },
+        {
+          "name":       "Checkout Only Theme Logo URL",
+          "tooltip":    "If you are only using the checkout portion of the UltraCart system you can specify a URL for your logo here."
+        }
+        ]
+    },
+    {
+      "sectionName": "Theme - Color Palette",
+      "openByDefault": true,
+      "instructions": "General theme color palette. Color changes here will change all elements with the specified color in the theme. To adjust colors to specific elements please use the color settings below.",
+      "attributes": [
+        "Theme Color 01",
+        "Theme Color 02",
+        "Theme Color 03",
+        "Theme Color 04",
+        "Theme Color 05",
+        "Theme Color 06",
+        "Theme Color 07",
+        "Theme Color 08",
+        "Theme Color 09",
+        "Theme Color 10"
+        ]
+    },
+    {
+      "sectionName": "Theme - Universal Background Colors",
+      "openByDefault": false,
+      "instructions": "Colors applied to background elements throughout the theme.",
+      "attributes": [
+        "Primary Background Color",
+        "Secondary Background Color"
+        ]
+    },
+    {
+      "sectionName": "Theme - Universal Font Colors",
+      "openByDefault": false,
+      "instructions": "Colors applied to paragraphs, headers, and links throughout the theme.",
+      "attributes": [
+        "Primary Font Color",
+        "Secondary Font Color",
+        "Primary Headers Font Color",
+        "Primary Headers Border Color",
+        "Secondary Headers Font Color",
+        "Primary Link Font Color",
+        "Primary Link Hover Font Color"
+        ]
+    },
+    {
+      "sectionName": "Theme - Universal Border Colors",
+      "openByDefault": false,
+      "instructions": "Colors applied to borders throughout the theme.",
+      "attributes": [
+        "Primary Border Color"
+        ]
+    },
+    {
+      "sectionName": "Theme - Universal Button Colors",
+      "openByDefault": false,
+      "instructions": "Colors applied to buttons throughout the theme.",
+      "attributes": [
+        "Primary Button Background Color",
+        "Primary Button Hover Background Color",
+        "Primary Button Border Color",
+        "Primary Button Hover Border Color",
+        "Primary Button Font Color",
+        "Primary Button Hover Font Color",
+        "Secondary Button Background Color",
+        "Secondary Button Hover Background Color",
+        "Secondary Button Border Color",
+        "Secondary Button Hover Border Color",
+        "Secondary Button Font Color",
+        "Secondary Button Hover Font Color",
+        "Disabled Button Background Color",
+        "Disabled Button Border Color",
+        "Disabled Button Font Color"
+        ]
+    },
+    {
+      "sectionName": "Theme - Universal Input Colors",
+      "openByDefault": false,
+      "instructions": "Colors applied to buttons throughout the theme.",
+      "attributes": [
+        "Primary Input Background Color",
+        "Primary Input Font Color",
+        "Primary Input Border Color"
+        ]
+    },
+    {
+      "sectionName": "Theme - Header Colors",
+      "openByDefault": false,
+      "instructions": "Colors applied to the theme header.",
+      "attributes": [
+        "Primary Header Background Color",
+        "Primary Header Logo Font Color",
+        "Primary Header Logo Border Color",
+        "Primary Header Nav Font Color",
+        "Primary Header Nav Hover Font Color",
+        "Primary Header Sub Nav Background Color",
+        "Primary Header Sub Nav Font Color",
+        "Primary Header Sub Nav Hover Font Color",
+        "Secondary Header Background Color",
+        "Secondary Header Icons Color",
+        "Secondary Header Hover Icons Color",
+        "Secondary Header Promo Font Color",
+        "Secondary Header Cart Summary Background Color",
+        "Secondary Header Cart Summary Font Color"
+        ]
+    },
+    {
+      "sectionName": "Theme - Footer Colors",
+      "openByDefault": false,
+      "instructions": "Colors applied to the theme footer.",
+      "attributes": [
+        "Footer Background Color",
+        "Footer Font Color",
+        "Footer Border Color",
+        "Footer Link Font Color",
+        "Footer Link Hover Font Color",
+        "Footer Logo Font Color",
+        "Footer Logo Border Color"
+        ]
+    },
+    {
+      "sectionName": "Theme - Item Colors",
+      "openByDefault": false,
+      "instructions": "Colors applied to item elements throughout the theme.",
+      "attributes": [
+        "Item View Link Button Background Color",
+        "Item View Link Button Font Color",
+        "Item Sale Banner Background Color",
+        "Item Sale Banner Font Color",
+        "Item Sale Price Font Color",
+        "Item Out Of Stock Banner Background Color",
+        "Item Out Of Stock Banner Font Color",
+        "Item Review Star Color"
+        ]
+    },
+    {
+      "sectionName": "Theme - Mobile Colors",
+      "openByDefault": false,
+      "instructions": "Colors applied mobile assets throughout the theme.",
+      "attributes": [
+        "Mobile Nav Background Color",
+        "Mobile Nav Font Color",
+        "Mobile Nav Border Color",
+        "Mobile Search Icon Color",
+        "Mobile Search Icon Background Color"
+        ]
+    },
+    {
+      "sectionName": "Element - Home Slider Colors",
+      "openByDefault": false,
+      "instructions": "Colors applied mobile assets throughout the theme.",
+      "attributes": [
+        "Home Slider Font Color",
+        "Home Slider Dot Border Color",
+        "Home Slider Dot Hover Border Color",
+        "Home Slider Dot Hover Fill Color",
+        "Home Slider Dot Active Border Color",
+        "Home Slider Dot Active Fill Color"
+        ]
+    },
+    {
+      "sectionName": "UltraCart - System Colors",
+      "openByDefault": true,
+      "instructions": "Colors that will drive preset UltraCart elements in the Checkout Process. Used for default UltraCart elements that are not, typically, associated with the theme. ",
+      "attributes": [
+        {
+          "name":       "System Yes Color",
+          "tooltip":    "Used for YES Buttons throught the checkout process"
+        },
+        "System Yes Hover Color",
+        {
+          "name":       "System No Color",
+          "tooltip":    "Used for No Buttons throught the checkout process"
+        },
+        "System no Hover Color"
+        ]
+    }
+  ]
+}

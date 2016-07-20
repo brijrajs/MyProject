@@ -1,0 +1,36 @@
+##
+## UltraCart - Mr Teas Template
+## http://www.ultracart.com/
+##
+## Copyright (c) 2015 BPS Info Solutions Inc.
+## License located here:
+## http://www.ultracart.com/storefront/license/
+##
+## Designed by Level 2 Design, LLC http://www.level2d.com/
+##
+
+#* @vtlvariable name="formatHelper" type="com.bpsinfo.ultracart.catalog.tobjects.FormatHelper" *#
+#* @vtlvariable name="i18n" type="com.bpsinfo.storefront.tobjects.I18nWriter" *#
+#* @vtlvariable name="form" type="com.bpsinfo.ultracart.checkout.ui.ReceiptForm" *#
+
+#set( $bodyClass = 'receipt' )
+#set( $title = $i18n.write("checkout.inProgress.pageTitle", "Processing In Progress") )
+#parse('/snippets/top.vm')
+
+<div class="row">
+  <div class="columns small-16">
+    <div class="processing">
+      <h2>$i18n.write("checkout.inProgress.weAreProcessing","We are processing your order.  Please Wait.")</h2>
+      <div class="loading"></div>
+      ## Do we need the submit button?
+      <p>
+        $i18n.write("checkout.inProgress.refreshNotice", "This page will automatically refresh in 3 seconds.")<br>
+        $i18n.write("checkout.inProgress.noRefreshInstructions", "If for any reason your browser does not automatically refresh you may click ")
+        <a href="$!form.refreshUrl">$i18n.write("checkout.inProgress.here","here").</a><br/>
+        <date class="date">$i18n.write("checkout.inProgress.lastRefresh", "Last refresh")  $!form.lastRefresh</date>
+      </p>
+    </div>
+  </div>
+</div>
+
+#parse('/snippets/bottom.vm')

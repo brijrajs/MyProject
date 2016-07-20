@@ -1,0 +1,221 @@
+##
+## UltraCart - Mr Teas Template
+## http://www.ultracart.com/
+##
+## Copyright (c) 2015 BPS Info Solutions Inc.
+## License located here:
+## http://www.ultracart.com/storefront/license/
+##
+## Designed by Level 2 Design, LLC http://www.level2d.com/
+##
+
+## uc:theme-attribute-boolean="Checkout Only Theme"
+## uc:theme-attribute-string="Item No Image Available Image URL"
+
+#* @vtlvariable name="formatHelper" type="com.bpsinfo.ultracart.catalog.tobjects.FormatHelper" *#
+#* @vtlvariable name="cartConstants" type="com.bpsinfo.storefront.tobjects.CartConstants" *#
+#* @vtlvariable name="itemsPart" type="com.bpsinfo.storefront.tobjects.ItemsPart" *#
+#* @vtlvariable name="i18n" type="com.bpsinfo.storefront.tobjects.I18nWriter" *#
+
+<div class="row">
+	<div class="columns small-16">
+		
+
+			#if($itemsPart.items.size() == 0)
+			<div class="product-panel">
+				<div class="product-info">
+					<h3 class="product-title">
+						$i18n.write('checkout.single.youHaveNotSelectedAProduct','You have not yet selected a product to purchase.')
+					</h3>
+				</div>
+
+				<div class="product-total">
+					<span class="product-qty">
+						<label>Qty</label>
+					</span>
+					<div class="product-pricetag">
+						<span class="product-pricetag-label">Amount</span>
+					</div>
+				</div>
+			</div>
+			#end ##if-items-size-0
+          
+            <div class="outer-box" style="padding-left: 5px;padding-right: 5px;">
+            	<table id="tablecontent" class="table table-responsive order-summary">
+                	<thead>
+                    	<tr class="tablehead" style="background:#efefef;">
+                        	<td width="10%">Qty</td>
+                            <td width="10%"></td>
+                        	<td width="50%">Item Description</td>
+                        	<td width="15%">Price</td>
+                        	<td width="15%">Sub Total</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        #foreach($item in $itemsPart.items)
+				          #set($itemIndex = $foreach.index)
+                    		<tr>
+                              <td>
+                                #if($itemsPart.hideQuantity)
+									<input type="hidden" name="items[${itemIndex}].quantity" value="$!item.quantity"/>
+								#else
+									#if($itemsPart.lockQuantity)
+										$item.quantity
+										<input type="hidden" name="items[${itemIndex}].quantity" value="$!item.quantity"/>
+									#else
+										<input style="width:50px;" type="number" name="items[${itemIndex}].quantity" value="$!item.quantity" size="3" maxlength="5" min="0" max="10000" class="ucShoppingCartField ucShoppingCartItemQuantity"/>
+									#end
+								#end
+
+                                #if(!$itemsPart.hideRemove)
+                                    <button type="submit" name="items[${itemIndex}].remove" class="product-remove-cart js-disable-state-requirement" title="Remove this from your cart">Remove</button>
+                                #end
+                                
+                              </td>
+                              <td>
+                                #if($item.thumbnailUrl)
+                                <img class="ucItemThumbnail" src="/thumbs/${item.thumbnailUrl}" width="${item.thumbnailWidth}" height="${item.thumbnailHeight}" alt='${item.Description}' /></td>
+                                #else
+                                 <img src="$baseThemeUrl/assets/imgs/no-image-220x293.png" border="0"/>
+                                #end
+                             
+                              
+                              <td>
+                               $item.description
+                                <span>$item.merchantItemId</span>
+                                
+                                <!-- product-options -->
+								#if ($item.getOptions().size() > 0)
+                                <div class="product-options">
+                                    <!-- Options here -->
+                                            #foreach($option in $item.options)
+                                                #set($optionIndex = $foreach.index) ## alias it to avoid nested foreach collisions
+                                                #if($option.type != $cartConstants.optionTypeHidden)
+                                                    <div class="label-group">
+                                                        <div class="#if($option.highlight)uc-highlight#{end} label-move">${option.label}
+                                                        </div>
+                                                #end
+
+                                                    <input type='hidden' name="items[${itemIndex}].options[$optionIndex].componentMerchantItemOid" value="$option.componentMerchantItemOid"/>
+                                                    <input type='hidden' name="items[${itemIndex}].options[$optionIndex].qualifierGroupId" value="$option.qualifierGroupId"/>
+
+                                                #if($option.type == $cartConstants.optionTypeDropdown)
+                                                    <select name="items[${itemIndex}].options[$optionIndex].value" class="ucShoppingCartField ucItemOptionSelect">
+                                                        #foreach($val in $option.values)
+                                                            <option #if($val == $option.value) selected='selected'#{end}>$val</option>
+                                                        #end
+                                                    </select>
+                                                    </div><!-- CLOSE LABEL GROUP DROPDOWN -->
+                                                #end ## end option.type == dropdown
+
+                                                #if($option.type == $cartConstants.optionTypeRadio)
+                                                    <div class="clearfix"></div>
+                                                    <ul class="option-group">
+                                                    #foreach($val in $option.values)
+                                                        <li>
+                                                            <input type="radio" name="items[${itemIndex}].options[$optionIndex].value" value="$i18n.escape($formatHelper.coalesce($val, ""))"#if($val == $option.value) checked=#{end}/>
+
+                                                            <label>
+                                                                <span>$val</span>
+                                                            </label>
+                                                        </li>
+                                                    #end
+                                                    </ul>
+                                                    </div><!-- CLOSE LABEL GROUP RADIO -->
+                                                #end ## end if option.type == radio
+
+                                                #if($option.type == $cartConstants.optionTypeFileAttachment)
+                                                    #if($option.getPofa())  ## pofa = placed order file attachment
+                                                        <div class="ucItemOptionFileAttachmentLabel">$option.value</div>
+                                                        <input type='hidden' name="items[${itemIndex}].options[$optionIndex].pofa" value="$!option.pofa"/>
+                                                    #end
+                                                    <input type='file' name="items[${itemIndex}].options[$optionIndex].file" maxlength='50' size='20' class='ucShoppingCartField ucItemOptionFileAttachment'/>
+                                                    </div><!-- CLOSE LABEL GROUP ATTACHEMENT -->
+                                                #end ## end if option.type == fileAttachment
+
+                                                #if($option.type == $cartConstants.optionTypeSingle)
+                                                    <input type="text" name="items[${itemIndex}].options[$optionIndex].value" class="ucShoppingCartField ucItemOptionText" value="$i18n.escape($!option.value)" maxlength="50" size="20"/>
+                                                    </div><!-- CLOSE LABEL GROUP SINGLE -->
+                                                #end ## end if option.type == single
+
+                                                #if($option.type == $cartConstants.optionTypeMultiline)
+                                                    <textarea name="items[${itemIndex}].options[$optionIndex].value" class="ucShoppingCartField ucItemOptionTextArea" rows="7" cols="35" wrap="off">$i18n.escape($!option.value)</textarea>
+                                                    </div><!-- CLOSE LABEL GROUP MULTILINE -->
+                                                #end  ## end if option.type == multiline
+
+                                                #if($option.type == $cartConstants.optionTypeHidden)
+                                                    <input type='hidden' name="items[${itemIndex}].options[$optionIndex].value" class="ucItemOptionHidden" value="$i18n.escape($!option.value)" />
+                                                #end ## end of option.type == hidden
+
+                                                #if($option.type == $cartConstants.optionTypeFixed)
+                                                    ## Possible for a file option to be located into a hidden if specified so we need to output the pofa
+                                                    #if($option.getPofa())  ## pofa = placed order file attachment
+                                                      <input type='hidden' name="items[${itemIndex}].options[$optionIndex].pofa" value="$!option.pofa"/>
+                                                    #end
+
+                                                    <input type='hidden' name="items[${itemIndex}].options[$optionIndex].value" value="$i18n.escape($!option.value)" />
+                                                    <span class="ucItemOptionFixed">$option.value</span>
+                                                    </div><!-- CLOSE LABEL GROUP FIXED -->
+                                                #end ## end if option.type == fixed
+                                            #end ##foreach-option
+                                        </div>
+                                #end ##if-showOptions
+                                <!-- /product-options -->
+                                    <input type='hidden' name="items[${itemIndex}].merchantItemOid" value="$!item.merchantItemOid"/>
+
+                                    #if("$!item.arbitraryUnitCost" != "")
+                                        <input type="hidden" name="items[${itemIndex}].arbitraryUnitCost" value="$!item.arbitraryUnitCost"/>
+                                    #end
+
+                                    #if("$!item.realtimePricingFetchDts" != "")
+                                        <input type="hidden" name="items[${itemIndex}].realtimePricingFetchDts" value="$i18n.escape($!item.realtimePricingFetchDts)"/>
+                                    #end
+
+                                    <input type="hidden" name="items[${itemIndex}].itemIndex" value="$item.itemIndex"/>
+                                    <input type="hidden" name="items[${itemIndex}].viewUrl" value="$i18n.escape($item.viewUrl)"/>
+                                    <input type="hidden" name="items[${itemIndex}].description" value="$i18n.escape($item.description)"/>
+                                    <input type="hidden" name="items[${itemIndex}].amount" value="$item.amount"/>
+
+                              </td>
+                              <td> $item.amount </td>
+                              <td> $item.amount</td>
+                        	</tr>
+                        #end ##end-foreach-items
+                    </tbody>
+                </table>
+                <div class="columns small-16">
+                        #if($form.showCouponEntry)
+							#if($form.showCouponSection)
+								#parse('/snippets/cart_coupons.vm')
+							#end ## if-showCouponSection
+						#end
+				</div>
+                <div class="columns small-8">
+                        #if($itemsPart.items.size() > 0)
+							<button style="width:80%;font-size:18px;" type="submit" name="updateQuantity" id="ucUpdateQuantityId" class="button green js-disable-state-requirement js-addNoValidate">Update</button>
+						#end  
+				</div>
+                
+               
+                
+                <div class="totals">
+                	
+                       
+                    <div>
+                        <p>Subtotal :</p>
+                        <p>Shipping :</p>
+                        <p>Taxes :</p>
+                        <p>Total:</p>
+                    </div>
+                    <div class="prices">
+                        <p>$cart.getSubTotalLocalized()</p>
+                        <p>--</p>
+                        <p>$0.00</p>
+                        <p>$cart.getSubTotalLocalized()</p>
+                    </div>
+                </div><!-- End totals -->
+                <div class="clearfix"></div>
+            </div><!-- End outer box -->
+            
+	</div>
+</div>

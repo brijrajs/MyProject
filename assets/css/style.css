@@ -1,0 +1,1535 @@
+@charset "utf-8";
+/* Main Stylesheet */
+
+@font-face {
+	font-family: 'Proxima Nova Regular';
+	src: url('https://s3.amazonaws.com/ultracartsff/HEA12/5763/themes/MrTeas/assets/fonts/mark_simonson_-_proxima_nova_regular-webfont.eot');
+	src: local('☺'), url('https://s3.amazonaws.com/ultracartsff/HEA12/5763/themes/MrTeas/assets/fonts/mark_simonson_-_proxima_nova_regular-webfont.woff') format('woff'), url('https://s3.amazonaws.com/ultracartsff/HEA12/5763/themes/MrTeas/assets/fonts/mark_simonson_-_proxima_nova_regular-webfont.ttf') format('truetype'), url('https://s3.amazonaws.com/ultracartsff/HEA12/5763/themes/MrTeas/assets/fonts/mark_simonson_-_proxima_nova_regular-webfont.svg') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'Proxima Nova Bold';
+	src: url('https://s3.amazonaws.com/ultracartsff/HEA12/5763/themes/MrTeas/assets/fonts/mark_simonson_-_proxima_nova_bold-webfont.eot');
+	src: local('☺'), url('https://s3.amazonaws.com/ultracartsff/HEA12/5763/themes/MrTeas/assets/fonts/mark_simonson_-_proxima_nova_bold-webfont.woff') format('woff'), url('https://s3.amazonaws.com/ultracartsff/HEA12/5763/themes/MrTeas/assets/fonts/mark_simonson_-_proxima_nova_bold-webfont.ttf') format('truetype'), url('https://s3.amazonaws.com/ultracartsff/HEA12/5763/themes/MrTeas/assets/fonts/mark_simonson_-_proxima_nova_bold-webfont.svg') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'BebasNeue';
+	src: url('https://s3.amazonaws.com/ultracartsff/HEA12/5763/themes/MrTeas/assets/fonts/BebasNeue_1.eot');
+	src: local('☺'), url('https://s3.amazonaws.com/ultracartsff/HEA12/5763/themes/MrTeas/assets/fonts/BebasNeue_1.woff') format('woff'), url('https://s3.amazonaws.com/ultracartsff/HEA12/5763/themes/MrTeas/assets/fonts/BebasNeue_1.ttf') format('truetype'), url('https://s3.amazonaws.com/ultracartsff/HEA12/5763/themes/MrTeas/assets/fonts/BebasNeue_1.svg') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+#system {
+    padding-bottom: 20px !important;
+}
+
+.product .product-img {
+  
+        overflow: hidden;
+}
+
+#system .row {
+  // margin-right: -15px !important;
+	// margin-left: -15px !important;
+   padding-left:5px; padding-right:5px;
+   margin:0 auto !important;
+}
+
+.breadcrumb {
+   display: none !important; 
+}
+
+.footer-bottom2 {
+     background-color: white; 
+}
+.lSAction{
+	display:none !important;	
+}
+
+a:hover{
+	text-decoration:none;	
+}
+
+
+.topbar{
+	background:#e1e1d4;
+	min-height:30px;
+	color:#b9b97e;
+	font-family: 'Proxima Nova Regular';
+}
+
+.top-links{
+	font-size:11px;
+	padding-top:6px;	
+}
+
+.top-links a{
+	color:#b9b97e;
+}
+
+.top-links span, .top-links span a{
+	color:#299d00;	
+}
+
+.top-icons{
+	text-align:right;
+	font-size:11px;
+	padding-top:5px;	
+}
+
+.top-icons img{
+	margin-left:2px;
+	margin-top:-2px;	
+}
+
+/* End top bar */
+
+/* Header */
+
+header{
+	background:#f5f5f4;
+	min-height:155px;
+	border-bottom:solid 2px #e6e6e6;	
+}
+
+header .logo{
+	margin-top:15px;	
+}
+
+.header-links{
+	margin-top:37px;
+	//margin-left:55px;
+}
+
+.header-links li{
+	display:inline-block;
+	min-width:155px;
+	float:left;
+	margin-left:20px;	
+}
+
+.header-links li:last-child{
+	float:right;
+	margin-left:-10px;
+}
+
+.header-links li:nth-child(2){
+	min-width:330px;
+}
+
+.header-links img{
+	float:left;
+	margin-right:5px;
+}
+
+.header-links div{
+	//font-family: 'Proxima Nova Regular';
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 13px;
+	color:#282b2f;
+	text-transform:uppercase;
+}
+
+.header-links strong{
+	color:#ffb400;
+	//font-family: 'Proxima Nova Bold';
+	font-size:20px;
+	display:block;
+}
+
+.header-links strong span{
+	color:#929292;	
+}
+
+.header-links li:last-child a{
+	color:#a8a8a8;
+	font-family: 'Proxima Nova Regular';
+	font-size:13px;
+	display:block;
+}
+
+.header-links li:first-child a{
+	color:#282b2f;
+}
+
+/* End header */
+
+/* Start Menu */
+.menubar{
+	background:#d4d4b8;
+	height:50px;
+	margin-top:15px;	
+}
+
+.menu{
+	padding-left:0px;
+	margin-bottom:0px;
+}
+
+.menu li{
+	display:inline-block;
+	margin-right:-4px;	
+}
+
+.menu li a{
+	color:#757540;
+	font-family: 'Proxima Nova Regular';
+	font-size:14px;
+	display:block;
+	padding:15px 25px;
+	text-shadow: 1px 1px 5px #CCCFC8;
+}
+
+
+.menu li a:hover{
+	background:#1e8c00;
+	color:#fff;
+	margin-bottom:-2px;
+	border-bottom:solid 2px #0d3d00;
+}
+
+.menu .active{
+	background:#1e8c00;
+	color:#fff;
+	margin-bottom:-2px;
+	border-bottom:solid 2px #0d3d00;
+}
+
+/* End Menu */
+
+/* Search Bar */
+
+.search{
+	
+}
+
+.search input{
+	width:220px;
+	height:30px;
+	background:#fff;
+	border:none;
+	margin-top:10px;
+	margin-left:-20px;
+	outline:none;
+	padding-left:5px;
+	padding-right:20px;
+	font-family: 'Proxima Nova Regular';
+-webkit-box-shadow: inset 0px 1px 59px 4px rgba(71,71,71,0.05);
+-moz-box-shadow: inset 0px 1px 59px 4px rgba(71,71,71,0.05);
+box-shadow: inset 0px 1px 59px 4px rgba(71,71,71,0.05);}
+
+.search button{
+	background:url(https://hea12.ultracartdev.com/themes/MrTeas_0_34/assets/imgs/search-icon.png) no-repeat 0px 0px;
+	width:21px;
+	height:21px;
+	border:none;
+	position:absolute;
+	right:30px;
+	top:15px;
+	outline:none;	
+}
+
+/* End Header Area */
+
+
+/* Start main content area */
+
+/*  Slider  */
+
+#myCarousel{
+	margin-top:15px;
+	margin-bottom:30px;	
+}
+
+
+/* Side bar */
+/* Categories */
+
+
+.green-heading{
+	background:#1e8c00;
+	font-size:14px;
+	color:#fff;
+	height:40px;
+	padding-top:10px;
+	text-align:center;
+	text-transform:uppercase;
+	font-family: 'Proxima Nova Regular';
+}
+
+.categories ul{
+	padding-left:0px;
+	margin-bottom:0px;
+	border:solid 1px #e3e3e3;
+	padding-bottom:10px;
+	padding-top:10px;
+}
+
+.categories ul li{
+	display:block;
+}
+
+.categories ul li a{
+	color:#aeaeae;
+	font-size:12px;
+	display:block;
+	padding:5px 0px;
+	height:30px;
+	padding-left:35px;
+	text-transform:uppercase;
+	font-family: 'Proxima Nova Regular';
+	background:url(../images/li-icon.png) no-repeat 18px 10px;	
+}
+
+.categories ul li a:hover{
+	background:url(../images/li-icon-hover.png) no-repeat 7px 8px #f2f2f2;	
+	color:#1e8c00;
+	padding-left:21px;
+	font-size:13px;
+	font-family: 'Proxima Nova Bold';
+}
+
+/* End Categories */
+
+/* Sidebar Ads */
+
+.side-img{
+	margin-top:15px;	
+}
+
+/* End Sidebar */
+
+
+/* Home page products Start */
+
+.gray-heading{
+	background:#ebebeb;
+	font-size:14px;
+	color:#2e2e2e;
+	height:40px;
+	padding-top:10px;
+	text-align:center;
+	text-transform:uppercase;
+	font-family: 'Proxima Nova Regular';
+	margin-bottom:15px;
+	margin-left:-15px;
+}
+
+
+
+.product{
+	border:solid 1px #e3e3e3;
+	text-align:center;
+	min-height:370px;
+	margin-bottom:15px;
+}
+
+
+.product .product-img{
+	margin-top:15px;
+	margin-bottom:15px;
+	min-height:183px;	
+}
+
+.product .product-desc{
+	color:#121212;
+	font-size:14px;
+	line-height:19px;
+	font-family: 'Proxima Nova Regular';
+	padding:0px 5px;
+}
+
+.product .product-price{
+	color:#1e8c00;
+	padding-top:5px;
+	font-size:24px;
+	font-family: 'Proxima Nova Bold';
+}
+
+
+.product .product-btn{
+	margin-top:10px;
+	margin-bottom:10px;
+}
+
+
+/* End home page products */
+
+
+
+/* Testimonials */
+
+.testimonial-outer{
+	border:solid 1px #e3e3e3;
+	margin-bottom:20px;
+	margin-top:5px;	
+}
+
+.testimonial-outer .heading{
+	font-family: 'BebasNeue';
+	font-size:30px;
+	color:#1a8a00;
+	background:#f5f5f4;
+	padding-left:15px;
+	padding-top:5px;
+	border-bottom:3px solid #d09d00;
+	
+}
+
+.testimonial-outer .item{
+	padding:25px 15px;	
+}
+
+.testimonial-outer .item ul{
+	margin-left:15px;	
+}
+
+.testimonial-img{
+	display:inline-block;
+	float:left;
+	margin-right:15px;
+}
+
+.peoples-info{
+	font-family: 'Proxima Nova Regular';
+	margin-bottom:10px;
+	margin-right:20px;
+}
+
+.peoples-info ul{
+	padding-left:0px;
+	margin-top:-10px;	
+}
+
+.peoples-info ul li{
+	display:inline-block;
+	float:left;	
+}
+
+.peoples-info ul li img{
+	width:13px;
+}
+
+.person{
+	float:left;
+	margin-right:10px;	
+}
+
+.peoples-info > p{
+	font-size:12px;
+	font-style:italic;
+	color:#202020;
+	line-height:14px;
+	height:100px;
+	overflow:hidden;
+}
+
+.person-info span{
+	color:#d09d00;
+	font-size:12px;
+	display:block;
+	text-transform:uppercase;
+	padding-top:5px;
+}
+
+.person-info p{
+	color:#a1a1a1;
+	font-size:11px;
+}
+
+
+
+
+/* Start bottom banners */
+.bottom-ads{
+	background:#f5f5f4;
+	border-top:solid 1px #e6e6e6;
+	min-height:170px;
+	padding-top:20px;
+}
+
+
+/* End bottom banners  */
+/* End Content area  */
+
+
+
+/* Start Footer Area */
+/* Main footer */
+
+footer{
+	background:#314623;
+	padding-top:30px;
+	padding-bottom:30px;
+	font-family: 'Proxima Nova Regular';
+}
+
+footer a{
+	color:#77b74d;
+	font-size:14px;
+}
+
+footer a:hover{
+	color:#77b74d;
+	text-decoration:underline;
+}
+
+footer .heading{
+	color:#fff;
+	font-size:18px;
+	padding-bottom:20px;
+	text-transform:uppercase;
+}
+
+
+.footer-main{
+	padding-left:0px;
+}
+
+.footer-main > li{
+	display:inline-block;
+	float:left;	
+}
+
+.footer-main > li:last-child{
+	float:right;
+	margin-right:20px;
+}
+
+.col-md-7 .footer-main > li:first-child{
+	margin-left:25px;
+
+}
+
+.footer-main li ul{
+	padding-left:0px;
+        margin-left: 0px;
+}
+
+.footer-main li ul li{
+	display:block;
+	line-height:30px;	
+}
+
+footer .footer-email{
+	color:#ffa800;
+	font-size:24px;	
+}
+
+footer p{
+	color:#77b74d;
+	font-size:14px;
+	padding-bottom:35px;
+}
+
+footer input[type=text]{
+	height:40px;
+	width:50%;
+	background:#5a6b4f;
+	border:none;
+	color:#fff;	
+	float:left;
+	display:inline-block;
+	padding:0px 5px;
+	outline:none;
+}
+
+footer input[type=submit]{
+	width:20%;
+	display:inline-block;
+	float:left;
+	color:#fff;
+	background:#ff9c00;
+	height:40px;
+	border:none;
+}
+
+footer input{
+	//margin-bottom:25px;
+	margin-top:-5px;	
+}
+
+
+.footer-social-icons{
+	padding-left:0px;
+	display:inline-block;
+	float:left;
+	margin-top:-4px;
+	margin-left:5px;	
+}
+
+.footer-social-icons li{
+	display:inline-block;
+	float:left;	
+}
+
+.social-heading{
+	display:inline-block;
+	float:left;	
+}
+
+.footer-last{
+	margin-right:0px !important;	
+}
+
+footer .contact li{
+	background:url(../imgs/contact-icons.png) no-repeat 0px 0px;
+	padding-left:30px;	
+}
+
+
+footer .contact li:nth-child(2){
+	background-position:0px -30px;
+}
+
+
+footer .contact li:nth-child(3){
+	background-position:0px -60px;
+}
+
+
+footer .contact li:nth-child(4){
+	background-position:0px -90px;
+}
+
+/* End main footer */
+
+/* Footer bottom 1 */
+.footer-bottom{
+	min-height:40px;
+	background:#f1f1ee;
+	font-size:15spx;
+	font-family: 'Proxima Nova Regular';
+	padding-top:10px;
+	color:#171717;
+}
+
+.footer-bottom .copyrights{
+	text-align:right;
+}
+
+.footer-bottom a{
+	color:#171717;
+}
+
+.footer-bottom a:hover{
+	text-decoration:underline;
+}
+
+/* Footer bottom 2 */
+
+.payment-first, .payment-second{
+	padding-top:20px;	
+}
+
+.payment-last{
+	text-align:center;	
+}
+
+.footer-bottom2 p{
+	color:#000;
+	font-size:15px;
+	text-align:center;
+	font-family: 'Proxima Nova Regular';
+}
+
+.statement{
+	color:#000;
+	font-size:11px;
+	text-align:center;
+	font-family: 'Proxima Nova Regular';
+	border:solid 2px #000;
+	width:70%;
+	padding:5px 15px;
+	display:block;
+	margin:auto auto;
+	margin-top:15px;
+	margin-bottom:25px;
+}
+
+p.last-paragraph{
+	color:#7b7a7a;	
+	font-size:12px;
+	text-align:center;
+	font-family: 'Proxima Nova Regular';
+	padding-bottom:25px;
+}
+
+/**********  End Home page *******/
+
+
+
+/************ Checkout Page ***********/
+
+.top{
+	padding-top:25px;	
+}
+
+.checkout .heading{
+	background:#1e8c00;
+	font-size:18px;
+	color:#fff;
+	height:50px;
+	padding-top:13px;
+	text-align:center;
+	text-transform:uppercase;
+	font-family: 'Proxima Nova Regular';
+}
+
+.outer-box{
+	border:solid 1px #ebebeb;
+	padding:15px 15px;
+	font-family: 'Proxima Nova Regular';
+}
+
+.outer-box input[type=text], .outer-box select{
+	background:#f7f7f7;
+	border:solid 1px #e0e0e0;
+	height:35px;
+	width:100%;	
+	margin-bottom:13px;
+	outline:none;
+	float:left;
+	padding:0px 5px;
+	color:#134453;
+	line-height:30px;
+}
+
+
+.outer-box textarea{
+	background:#f7f7f7;
+	border:solid 1px #e0e0e0;
+	height:70px;
+	width:100%;	
+	margin-bottom:13px;
+	outline:none;
+	padding:5px;
+	color:#134453;
+    clear: both !important;
+}
+
+
+.box1 p{
+	color:#a0a0a0;
+	font-size:12px;
+}
+
+.box1 p a{
+	color:#ffa300;
+	font-family: 'Proxima Nova Bold';
+	
+}
+
+.small-input{
+	width:48% !important;	
+}
+
+.outer-box label{
+	color:#134453;
+	font-size:14px;
+	font-weight:400;	
+}
+
+.box3 select{
+	// float:none !important;	
+}
+
+.box3 label{
+	width:150px;
+	text-align:right;
+	margin-right:15px;	
+}
+
+.box3 span{
+	color:#134453;
+	font-size:14px;
+	margin-left:7px;
+	margin-right:10px;	
+}
+
+.box4 p{
+	text-align:center;
+	color:#134453;
+	font-size:14px;	
+}
+
+.box4 .cards{
+	margin-left:10px;
+	margin-bottom:20px;	
+}
+
+.box4 label{
+	width:100px;
+	text-align:right;
+	margin-right:15px;
+	float:left;	
+}
+
+.box4 input, .box4 select{
+	float:none !important;	
+}
+
+.box4 input[type=text], .box4 select{
+	width:60%;	
+}
+
+label a{
+	color:#1b8cff;
+	font-size:10px;	
+}
+
+.box4 .small-input{
+	width:28% !important;	
+}
+
+.box4 .small2{
+	margin-left:12px;	
+}
+
+.box4 span{
+	color:#134453;
+	font-size:12px;
+	line-height:10px;	
+}
+
+.box4 input[type=submit]{
+	width:265px;
+	height:55px;
+	background:#1999fe;
+	border:none;
+	margin:auto;
+	margin-top:15px;
+	margin-bottom:15px;
+	display:block;
+	font-size:24px;
+	color:#fff;
+	text-transform:uppercase;
+	border-bottom:solid 3px #195dfd;	
+}
+
+
+.cards img{
+	display:block;
+	margin:auto auto;	
+}
+
+.box4{
+	margin-bottom:35px;	
+}
+
+
+<!-- End Left Collumn -->
+
+<!-- Start Right Collumn -->
+
+.tablehead{
+	background-color:#efefef !important;
+	font-size:14xp;
+	color:#151515;
+}
+
+.order-summary img{
+	width:30px;	
+}
+
+.order-summary span{
+	color:#cacaca;
+	display:block;	
+}
+
+.order-summary tr td:first-child{
+	vertical-align:middle;	
+}
+
+
+.order-summary tr:last-child{
+	border-bottom:solid 1px #e3e3e3;
+}
+
+.totals{
+	
+}
+
+.totals a{
+	width:170px;
+	height:45px;
+	background:#cbcbcb;
+	border-bottom:solid 3px #afafaf;
+	display:block;
+	font-size:14px;
+	text-transform:uppercase;
+	color:#fff;
+	text-align:center;
+	padding-top:13px;	
+	display:inline-block;
+	float:left;
+	margin-right:45px;
+	margin-top:30px;
+	margin-left:30px;
+}
+
+.totals div{
+	display:inline-block;
+	float:left;
+	color:#828282;
+	font-size:12px;
+	text-align:right;
+}
+
+.totals .prices{
+	margin-left:30px;
+}
+
+.totals div p:last-child{
+	font-size:18px;
+	color:#135700;
+	text-transform:uppercase;
+	font-family: 'Proxima Nova Bold';
+}
+
+
+/***** End Checkout Page *****/
+
+/****** Start single product page *****/
+
+/* Left Column  */
+
+#bx-pager{
+	margin-top:-30px;
+}
+
+#bx-pager img{
+	border:solid 1px #e7e7e7;
+	width:70px;
+	padding:10px 20px;
+	margin-left:7px;
+	margin-right:7px;
+	margin-bottom:10px;	
+}
+
+.bxslider img{
+	width:200px;
+	margin:20px auto;	
+}
+
+
+/* Right Column */
+.s-product-title{
+	color:#082300;
+	font-size:24px;
+	line-height:25px;
+	font-family: 'Proxima Nova Bold';
+}
+
+.single-product{
+	margin-top:25px;
+	font-family: 'Proxima Nova Regular';
+}
+
+.s-price{
+	color:#41b800;
+	font-size:35px;
+	font-family: 'Proxima Nova Bold';
+}
+
+
+.s-price span{
+	float:left;	
+	margin-bottom:-10px;
+}
+
+.s-price img{
+	float:left;
+	margin-top:11px;
+	margin-left:15px;	
+}
+
+.s-old-price{
+	color:#c4c4c4;
+	font-size:14px;
+}
+
+.s-desc{
+	color:#131313;
+	font-size:18px;
+	font-family: 'Proxima Nova';
+	line-height:23px;
+}
+
+.ways{
+	margin-top:10px;	
+}
+
+.choose input[type=radio], .choose select{
+	float:left;		
+}
+
+.choose input[type=radio]{
+	margin-right:10px;	
+}
+
+.choose select{
+	width:45px;
+	height:35px;
+	text-align:center;
+	margin-top:-10px;
+	margin-left:15px;
+	margin-right:15px;
+}
+
+.choose span{
+	color:#ffa800;
+	font-size:12px;
+	float:left;
+	margin-top:1px;
+}
+
+.choose p{
+	color:#303030;
+	font-size:16px;
+	float:left;
+}
+
+.choose{
+	clear:both;
+	margin-top:15px;
+	height:17px;	
+}
+
+
+.choose .s-save{
+	color:#0078fe;
+	font-size:16px;
+	margin-right:10px;
+	font-family: 'Proxima Nova Bold';
+	margin-top:0px;
+	margin-left:5px;
+}
+
+.s-best{
+	float:left;
+	margin-left:10px;	
+}
+
+.s-but-button img{
+	margin:auto auto;
+	display:block;
+	margin-top:10px;
+	margin-bottom:10px;
+}
+
+
+.reviews{
+	border-top:solid 1px #e1e1e1;
+	padding-top:15px;
+	padding-left:45px;	
+}
+
+.reviews div{
+	font-size:18px;
+	color:#0d0d0d;
+	font-family: 'Proxima Nova Bold';
+}
+
+.reviews div, .reviews span, .reviews .s-rating{
+	float:left;
+}
+
+.reviews .s-rating{
+	margin-left:10px;	
+}
+
+.reviews .s-rating img{
+	width:20px;
+}
+
+.reviews span{
+	font-size:12px;
+	color:#9d9d9d;
+	padding-top:6px;
+	margin-left:10px;	
+}
+
+
+.reviews .read-review, .reviews .write-review{
+	width:160px;
+	height:35px;
+	background:#dbdbdb;
+	color:#6a6a6a;
+	font-size:12px;
+	display:inline-block;
+	text-align:center;
+	border-bottom:solid 3px #b1b1b1;
+	text-transform:uppercase;
+	padding-top:9px;
+	margin-left:12px;
+}
+
+.reviews .write-review{
+	width:160px;
+	height:35px;
+	background:#ffa800;
+	color:#fff;
+	font-size:12px;
+	display:inline-block;
+	text-align:center;
+	border-bottom:solid 3px #ff7d00;
+	text-transform:uppercase;
+	padding-top:9px;
+	margin-left:5px;
+}
+
+
+
+/* Tabs */
+
+#parentHorizontalTab{
+	background:#ebebeb;	
+	padding-top:7px;
+	font-family: 'Proxima Nova Regular';
+	margin-top:35px;
+}
+
+
+.resp-tabs-list li:first-child{
+	margin-left:20px;	
+}
+
+
+#parentHorizontalTab strong{
+	margin-top:15px;
+	margin-bottom:15px;
+	display:block;	
+}
+
+#parentHorizontalTab span{
+	// font-family: 'Proxima Nova Bold';
+}
+
+.resp-tabs-container div{
+	//padding:20px;
+	color:#000;	
+}
+
+.resp-tabs-container div ul li{
+	margin-left:25px;	
+}
+
+.resp-tabs-container .list{
+	margin-left:30px;
+	margin-top:-20px;
+	display:block;
+	margin-bottom:0px;	
+}
+
+/* End Tabs */
+
+
+/* Reviews Start */
+
+.reviews-outer{
+	border:solid 1px #ebebeb;
+	margin-top:20px;	
+}
+
+.reviews-heading{
+	background:#ebebeb;
+	height:50px;
+	padding-top:10px;	
+}
+
+.reviews-heading div{
+	background:#fff;
+	padding:10px 0px;
+	text-align:center;
+	color:#2e2e2e;
+	font-size:14px;
+	width:150px;
+	margin-left:15px;
+}
+
+.review-title{
+	color:#000;
+	font-size:18px;
+	font-family: 'Proxima Nova Bold';
+}
+
+.review-date{
+	color:#999999;
+	font-size:14px;
+	font-family: 'Proxima Nova Regular';
+
+}
+
+.review-rating{
+	float:right;
+	display:block;
+	text-align:right;
+	margin-top:-25px;
+	margin-right:30px;
+	font-family: 'Proxima Nova Regular';
+}
+
+.review-rating span{
+	display:inline-block;
+	font-size:14px;
+}
+
+.review-rating .s-rating{
+	display:inline-block;	
+}
+
+.single-review{
+	font-family: 'Proxima Nova Regular';
+}
+
+.single-review p{
+	margin-top:15px;
+	font-size:14px;
+	color:#2b2b2b;
+	font-family: 'Proxima Nova Regular';
+	margin-bottom:10px;
+}
+
+.single-review li{
+	padding-top:20px;
+	padding-right:25px;
+	color:#000;
+	font-size:18px;
+	font-family: 'Proxima Nova Bold';
+		
+}
+
+/* End reviews  */
+
+.similar{
+	color:#2e2e2e;
+	font-family: 'Proxima Nova Bold';
+	font-size:18px;
+	padding-left:15px;
+	padding-bottom:15px;
+}
+
+.products-similar{
+	margin-top:20px;
+}
+
+
+.testimonial2{
+	margin-left:-15px;
+	margin-right:15px;	
+}
+
+.testimonial2 .person-info ul{
+	margin-top:0px;	
+}
+
+
+@media screen and (min-width:1200px){
+	.container{
+		width:960px !important;	
+	}
+	
+	.products .col-md-4{
+		padding-left:0px !important;
+	}
+	
+}
+
+
+
+
+
+@media screen and (min-width:768px) and (max-width:1199px){
+.header-links{
+	//margin-left:-65px;
+}
+
+
+.header-links li{
+	margin-left:35px;	
+}
+
+.products .col-md-4{
+	padding-left:0px !important;
+}
+
+
+.bottom-ads{
+	min-height:140px;
+}
+
+.order-summary{
+	font-size:10px;	
+}
+
+.totals a{
+	margin-right:25px;
+	margin-left:10px;
+	width:140px;
+	height:35px;
+	padding-top:10px;	
+}
+
+.totals div p:last-child{
+	font-family: 'Proxima Nova Regular';
+	font-size:14px;
+}
+
+.box3 label{
+	width:100px;	
+}
+}
+
+
+@media screen and (min-width:941px) and (max-width:991px){
+
+
+.footer-main > li:last-child{
+	float:none;
+	margin-left:120px;	
+}
+
+.footer-last{
+	float:right !important;
+	margin-top:-329px !important;	
+}
+
+.col-md-7 .footer-main > li:first-child{
+	margin-left:0px;	
+}
+
+.social-heading{
+	margin-top:-273px;
+	margin-left:350px;	
+}
+
+.footer-social-icons{
+	margin-top:-275px;
+	margin-left:515px;	
+}
+
+.footer-bottom{
+	text-align:center;
+	padding-bottom:10px;	
+}
+
+.footer-bottom .copyrights{
+	text-align:center;	
+}
+
+}
+
+@media screen and (min-width:768px) and (max-width:940px){
+
+.footer-main > li:last-child{
+	float:none;
+	margin-left:120px;	
+}
+
+.footer-last{
+	float:right !important;
+	margin-top:-329px !important;	
+}
+
+.col-md-7 .footer-main > li:first-child{
+	margin-left:0px;	
+}
+
+.social-heading{
+	margin-top:-273px;
+	margin-left:350px;	
+}
+
+.footer-social-icons{
+	margin-top:-275px;
+	margin-left:515px;	
+}
+
+.footer-bottom{
+	text-align:center;
+	padding-bottom:10px;	
+}
+
+.footer-bottom .copyrights{
+	text-align:center;	
+}
+
+.reviews .write-review{
+	margin-top:20px;	
+}
+
+.reviews span{
+	margin-left:2px;	
+}
+
+.reviews{
+	padding-left:0px;	
+}
+
+.choose p{
+	font-size:15px;	
+}
+
+}
+
+
+@media screen and (max-width:767px){
+.topbar, .top-icons{
+	text-align:center;
+	padding-bottom:4px;	
+}
+
+header .col-md-2{
+	text-align:center;	
+}
+
+
+.header-links{
+	// margin-left:-40px;	
+}
+
+.header-links strong{
+	font-size:16px;	
+}
+
+.header-links li{
+	margin-left:0px;
+	margin-bottom:20px;	
+}
+
+.header-links li:last-child{
+	float:none;
+	margin-left:0px;	
+}
+
+.side-img img{
+	width:100%;
+}
+
+.gray-heading{
+	margin-left:0px;
+	margin-top:15px;	
+}
+
+.bottom-ads img{
+	margin-bottom:15px;
+	width:100%;	
+}
+
+.footer-main > li:last-child{
+	margin-right:0px;	
+}
+
+.col-md-7 .footer-main > li:first-child{
+	margin-left:0px;
+	margin-top:15px;	
+}
+
+.footer-last{
+	float:left !important;
+	margin-bottom:25px;	
+}
+
+footer input[type="text"]{
+	width:70%;	
+}
+
+footer input[type="submit"]{
+	width:30%;	
+}
+
+.footer-bottom div{
+	text-align:center !important;	
+}
+
+.payment-last{
+	margin-top:25px;	
+}
+
+.statement{
+	width:100%;	
+}
+
+.header-links li:nth-child(2){
+	min-width:305px !important;	
+}
+
+
+
+.box3 label{
+	width:50px;
+	font-size:12px;	
+}
+
+.box4 label{
+	width:70px;	
+}
+
+.totals a{
+	margin-bottom:25px;	
+}
+
+.totals .prices{
+	float:right; 
+	margin-right:10px;	
+}
+
+.order-summary tr td:first-child{
+	vertical-align:top;	
+}
+.reviews .write-review{
+	margin-top:20px;
+	margin-left:75px;	
+}
+
+.reviews span{
+	margin-left:2px;	
+}
+
+.reviews{
+	padding-left:0px;	
+}
+
+.choose p{
+	font-size:13px;	
+}
+
+.reviews .read-review{
+	margin-top:25px;	
+    margin-left:75px;
+}
+
+
+.review-rating{
+	text-align:left;
+	margin-top:0px;
+	float:left;
+	margin-bottom:10px;
+	margin-right:83px;	
+}
+
+.resp-tabs-container .list, .resp-tabs-container div ul li{
+	margin-left:0px;	
+}
+
+.testimonial2{
+	margin-right:-15px;	
+}
+
+
+.logo{
+	margin-top:30px !important;	
+}
+
+
+}
+
+
+

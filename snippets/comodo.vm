@@ -1,0 +1,29 @@
+##
+## UltraCart - Mr Teas Template
+## http://www.ultracart.com/
+##
+## Copyright (c) 2015 BPS Info Solutions Inc.
+## License located here:
+## http://www.ultracart.com/storefront/license/
+##
+## Designed by Level 2 Design, LLC http://www.level2d.com/
+##
+
+#* @vtlvariable name="comodo" type="com.bpsinfo.storefront.tobjects.ComodoConfig" *#
+#* @vtlvariable name="formatHelper" type="com.bpsinfo.ultracart.catalog.tobjects.FormatHelper" *#
+#* @vtlvariable name="i18n" type="com.bpsinfo.storefront.tobjects.I18nWriter" *#
+
+#if("$!comodo" != "")
+	#if($comodo.loadComodo)
+
+		#if($comodo.secure)
+			<script type="text/javascript" src="https://secure.comodo.net/trustlogo/javascript/cot.js"></script>
+		#else
+			<script type="text/javascript" src="http://www.trustlogo.com/trustlogo/javascript/cot.js"></script>
+		#end
+
+		<script type="text/javascript">
+			COT("/ultracart/secure_site_new.gif", "SC2", "none");
+		</script>
+	#end
+#end

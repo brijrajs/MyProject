@@ -1,0 +1,109 @@
+#* @vtlvariable name="formatHelper" type="com.bpsinfo.ultracart.catalog.tobjects.FormatHelper" *#
+#* @vtlvariable name="i18n" type="com.bpsinfo.storefront.tobjects.I18nWriter" *#
+#* @vtlvariable name="form" type="com.bpsinfo.ultracart.checkout.ui.AutoOrderForm" *#
+
+#set( $pageGroup = 'multi-page-checkout' )
+#set( $bodyClass = 'multi-page-checkout auto-order' )
+#set( $pageTitle = $i18n.write("checkout.autoOrder.autoOrderHeader","AUTO ORDER") )
+
+#parse('/snippets/top.vm')
+
+#parse('/snippets/breadcrumbs.vm')
+
+#set( $title = $i18n.write("checkout.autoOrder.autoOrderHeader","AUTO ORDER") )
+
+#parse('/snippets/title.vm')
+
+<form action="/checkout/autoOrderSave.do" method="post">
+	#parse('/snippets/common/storefront_template_spec_version.vm')
+	#parse('/snippets/errors.vm')
+	#parse('/snippets/info_messages.vm')
+
+	<div class="row">
+		<div class="columns small-16">
+			<p>
+				$i18n.escape($!form.company) $i18n.write("checkout.autoOrder.instructionText1","is pleased to offer you the ability to automatically reorder any of the products listed below.  Simply select how often you would like each product.")
+				$i18n.escape($!form.company) $i18n.write("checkout.autoOrder.instructionText2","will automatically place a new order on your behalf using the same billing and shipping information as this order.  You can cancel your auto order at any time in the future.<br /><br /> If you do not want to automatically reorder, simply click the continue button.")
+			</p>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="columns small-16">
+			<h2>$i18n.write("checkout.autoOrder.itemsHeader","ITEMS")</h2>
+		</div>
+
+		<div class="columns small-16">
+			<table class="tablesaw tablesaw-stack no-margin" data-mode="stack">
+				<thead>
+					<tr>
+						<th>$i18n.write("checkout.autoOrder.itemIdHeader","Item")</th>
+						<th>$i18n.write("checkout.autoOrder.descriptionHeader","Description")</th>
+						#if($form.showOptions)
+							<th>$i18n.write("checkout.autoOrder.optionsHeader","Options")</th>
+						#end
+						<th>$i18n.write("checkout.autoOrder.quantityHeader","Qty")</th>
+						<th>$i18n.write("checkout.autoOrder.amountHeader","Amount")</th>
+						<th>$i18n.write("checkout.autoOrder.scheduleHeader","Schedule")</th>
+					</tr>
+				</thead>
+
+				<tbody>
+					#foreach($item in $form.items)
+						#set($itemIndex = $foreach.index)
+						<tr>
+							## Item ID
+							<td>
+								<input type="hidden" name="items[$itemIndex].itemId" value="$i18n.escape($!item.itemId)"/>
+								<input type="hidden" name="items[$itemIndex].quantity" value="$i18n.escape($!item.quantity)"/>
+								<input type="hidden" name="items[$itemIndex].description" value="$i18n.escape($!item.description)"/>
+								<input type="hidden" name="items[$itemIndex].amount" value="$i18n.escape($!item.amount)"/>
+								$i18n.escape($!item.itemId)
+							</td>
+
+							## Description
+							<td>$!item.description</td>
+
+							## Options
+							#if($form.showOptions)
+								<td>
+									#foreach($option in $item.options)
+										$i18n.escape($option.name):&nbsp;
+										$i18n.escape($option.value)
+										<input type="hidden" name="items[$itemIndex].options[$foreach.index].name" value="$option.name"/>
+										<input type="hidden" name="items[$itemIndex].options[$foreach.index].value" value="$option.value"/>
+									#end ##foreach- item options
+								</td>
+							#end
+
+							## Quantity
+							<td>$i18n.escape($!item.quantity)</td>
+
+							## Amount
+							<td>$${i18n.escape($!item.amount)}</td>
+
+							## Schedule
+							<td>
+								<input type="hidden" name="items[$foreach.index].autoOrderId" value="$item.autoOrderId"/>
+								<select name="items[$itemIndex].schedule" class="ucFormField">
+									#foreach($schedule in $item.schedules)
+										<option #if($schedule == $item.schedule)selected#{end} >$schedule</option>
+									#end
+								</select>
+							</td>
+						</tr>
+					#end
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+	#set( $button = 'Review Order' )
+	#parse('/snippets/button.continue.vm')
+</form>
+
+
+#parse('system://3.0/snippets/cart_exit_pop.vm')
+
+
+#parse('/snippets/bottom.vm')

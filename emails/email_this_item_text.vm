@@ -1,0 +1,42 @@
+## email_this_item
+## Subject: The subject line for this email is contained in the Languages sections under the key email.email_this_item.subject for multi-lingual support.
+
+## Testing: Previewing an email template will use the latest order id in your store.  You may specify an order id by adding it to the following line:
+## Note: THIS IS NOT USED FOR 'email this cart'.  See the next directive...
+## uc:test-order-id="DEMO-12345"
+
+## Testing: Previewing an 'email this item' template will use the test item ids to fabricate a shopping cart.
+## You may specify item ids as a csv list by adding it to the following line, however, since this email only deals with a single item, only the first will be used:
+## uc:test-item-ids="BONE,PDF,TSHIRT"
+
+
+## $company
+## $customerServiceEmail
+## $fromEmail
+## $fromName
+
+## $item
+## $itemCost
+## $itemDescription
+## $itemExtendedDescription
+## $itemImageUrl
+## $itemId
+## $itemManufacturerName
+## $itemManufacturerSku
+## $itemThumbnailUrl
+## $itemViewUrl
+
+## $toEmail
+
+## $storeFront
+##      $storeFront.getFileUrl("/images/image1.gif")    <== this will return the full url to the file
+##      $storeFront.getStyle("/css/email.css")  <== this will load the css file and embed it within <style> tags in your email.
+## $i18n
+##      $i18n.write("key.path", "Default Value")
+##      $i18n.write("key.path", "Default Value", true) <== 3rd variable is to perform html escape. set to true to perform escaping
+
+
+$itemId
+$itemDescription
+$itemExtendedDescription
+$itemViewUrl

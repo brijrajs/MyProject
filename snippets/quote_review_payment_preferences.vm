@@ -1,0 +1,31 @@
+##
+## UltraCart - Mr Teas Template
+## http://www.ultracart.com/
+##
+## Copyright (c) 2015 BPS Info Solutions Inc.
+## License located here:
+## http://www.ultracart.com/storefront/license/
+##
+## Designed by Level 2 Design, LLC http://www.level2d.com/
+##
+
+<div class="row">
+	<div class="columns small-16 medium-8">
+		<h2>$i18n.write("checkout.quoteReview.paymentPreferenceHeader","PAYMENT PREFERENCE")</h2>
+		<ul class="option-group payment-options">
+			#foreach($paymentPreference in $form.paymentPreferences)
+				<li #if($paymentPreference.value == $form.paymentPreference) class="active"#{end}>
+					<input type="radio" name="paymentPreference" value="$!paymentPreference.value" #if($paymentPreference.value == $form.paymentPreference) checked #{end} />
+					<label>
+						#if($paymentPreference.existingCardImage || $paymentPreference.existingCardText)
+							<img src="$paymentPreference.existingCardImage" alt="card image" />
+							<span class="half-margin-left">$paymentPreference.existingCardText</span>
+						#else
+							$paymentPreference.html
+						#end
+					</label>
+				</li>
+			#end ##foreach-paymentPreference
+		</ul>
+	</div>
+</div>

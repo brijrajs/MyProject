@@ -1,0 +1,64 @@
+##
+## UltraCart - Mr Teas Template
+## http://www.ultracart.com/
+##
+## Copyright (c) 2015 BPS Info Solutions Inc.
+## License located here:
+## http://www.ultracart.com/storefront/license/
+##
+## Designed by Level 2 Design, LLC http://www.level2d.com/
+##
+
+## uc:child-page-multimedia-default-used="true"
+
+#set($subgroups = $group.getChildren())
+
+#set($hasMultimedia = "false")
+
+#foreach($group in $subgroups)
+  #if($group.getDefaultMultimedia('Image'))
+    ## If any subgroups have default multimedia, set this to true
+    #set($hasMultimedia = "true")
+  #end
+#end
+
+<div class="product-list-images small four-up" data-equalizer>
+  <ul>
+    ## $formatHelper.sortByAttribute($subgroups, "sort_order", false)
+    ## $formatHelper.removeItemsWithoutCost($subgroups)
+    ## $formatHelper.removeOutOfStockItems($subgroups)
+
+    ## #set($subgroups = $formatHelper.getItemsForPage($subgroups, $page, 2))
+
+    #foreach($group in $subgroups)
+
+      <li class="group-children">
+        #if($group.getDefaultMultimedia('Image') && $group.getDefaultMultimedia('Image').getThumbnail(220, 220, false, $PNGThumbnails))
+          <a href="${baseUrl}${group.getPath()}" title="$group.getTitle()" class="product-photo">
+            <strong>${group.getTitle()}</strong>
+            <span class="link">View Category</span>
+
+            <img src="${baseThumbnailUrl}${group.getDefaultMultimedia('Image').getThumbnail(220, 220, false, $PNGThumbnails)}" width="220" height="220" alt="$group.getTitle()" />
+          </a>
+
+        #elseif($hasMultimedia == "false")
+
+        #else
+
+        <a href="${baseUrl}${group.getPath()}" title="$group.getTitle()" class="product-photo">
+          <strong>${group.getTitle()}</strong>
+          <span class="link">View Category</span>
+
+         <img src="${baseThemeUrl}${theme.attr('Item No Image Available Image URL')}" width="220" height="220" alt="$group.getTitle()" />
+        </a>
+
+        #end
+
+        <div data-equalizer-watch class="panel product-info js-link-anchor-parent">
+          <a href="${baseUrl}${group.getPath()}" title="" class="product-title">$group.getTitle()</a>
+        </div>
+      </li>
+    #end
+
+  </ul>
+</div>

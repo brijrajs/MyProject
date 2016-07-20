@@ -1,0 +1,209 @@
+##
+## UltraCart - Mr Teas Template
+## http://www.ultracart.com/
+##
+## Copyright (c) 2015 BPS Info Solutions Inc.
+## License located here:
+## http://www.ultracart.com/storefront/license/
+##
+## Designed by Level 2 Design, LLC http://www.level2d.com/
+##
+
+#* @vtlvariable name="merchantId" type="java.lang.String" *#
+#* @vtlvariable name="formatHelper" type="com.bpsinfo.ultracart.catalog.tobjects.FormatHelper" *#
+#* @vtlvariable name="i18n" type="com.bpsinfo.storefront.tobjects.I18nWriter" *#
+#* @vtlvariable name="form" type="com.bpsinfo.ultracart.affiliate.ui.partner.UpdateInformationForm" *#
+
+#set( $pageGroup = 'affiliate' )
+#set( $bodyClass = 'affiliate update-information' )
+#set( $pageTitle = 'Update Information - Affiliate Partner' )
+#parse('/snippets/top.vm')
+
+#set( $title = 'Your Current Information' )
+#parse('/snippets/title.vm')
+
+<form action="/affiliate/partner/updateInformationSave.do" method="post">
+    #parse('/snippets/common/storefront_template_spec_version.vm')
+	#parse('/snippets/errors.vm')
+	#parse('/snippets/info_messages.vm')
+
+	<div class="row">
+		<div class="columns small-full medium-half">
+
+			<div class="row no-padding-left no-padding-right">
+				<div class="columns small-8">
+					<label class="label-move">
+						<span>First Name*</span>
+						<input type="text" name="firstName" required placeholder="John" value="$i18n.escape($form.firstName)" maxlength="50"  />
+					</label>
+				</div>
+
+				<div class="columns small-8">
+					<label class="label-move">
+						<span>Last Name*</span>
+						<input type="text" name="lastName" required placeholder="Smith" value="$i18n.escape($form.lastName)" maxlength="50"  />
+					</label>
+				</div>
+			</div>
+
+			<div class="row no-padding-left no-padding-right">
+				<div class="columns small-8">
+					<label class="label-move">
+						<span>SSN/Tax ID</span>
+						#if($form.showTaxId)
+							<input type="text" name="taxId" required value="$i18n.escape($form.taxId)" maxlength="50"  />
+						#else
+							<input type="text" name="taxId" readonly value="$!form.taxIdMask" maxlength="50"  />
+						#end ##if-showTaxId
+					</label>
+				</div>
+
+				<div class="columns small-8">
+					<label class="label-move">
+						<span>Checks Payable To*</span>
+						<input type="text" name="checkPayableTo" required placeholder="Smith" value="$i18n.escape($form.checkPayableTo)" maxlength="100"  />
+					</label>
+				</div>
+			</div>
+
+			<div class="row no-padding-left no-padding-right">
+				<div class="columns small-8">
+					<label class="label-move">
+						<span>Web Site URL</span>
+						<input type="text" name="websiteUrl" required value="$i18n.escape($form.websiteUrl)" maxlength="100"  />
+					</label>
+				</div>
+
+				<div class="columns small-8">
+					<label class="label-move">
+						<span>Company Name</span>
+						<input type="text" name="companyName" placeholder="Smith" value="$i18n.escape($form.companyName)" maxlength="100"  />
+					</label>
+				</div>
+			</div>
+
+			<div class="row no-padding-left no-padding-right">
+				<div class="columns small-8">
+					<label class="label-move">
+						<span>Phone</span>
+						<input type="text" name="phone" required value="$i18n.escape($form.phone)" maxlength="100"  />
+					</label>
+				</div>
+
+				<div class="columns small-8">
+					<label class="label-move">
+						<span>Fax</span>
+						<input type="text" name="fax" value="$i18n.escape($form.fax)" maxlength="100"  />
+					</label>
+				</div>
+			</div>
+
+			<label class="label-move">
+				<span>E-Mail Address</span>
+				<input type="email" name="email" value="$i18n.escape($form.email)" class="ucDefault" size="30" maxlength="100"/>
+			</label>
+
+			#if($form.showPaypalEmail)
+				<label class="label-move">
+					<span>
+						PayPal E-Mail Address
+					</span>
+					<input type="email" name="paypalEmail" value="$i18n.escape($form.paypalEmail)" class="ucDefault" size="30" maxlength="100"/>
+					<small>(We will send your commission payments to this PayPal account.)</small>
+
+				</label>
+			#end ##if-showPaypalEmail
+
+			<label class="label-move">
+				<span>Notification of Orders</span>
+				<select name="emailNotificationSchedule" class="ucDefault">
+					#foreach($schedule in $form.emailNotificationSchedules)
+						<option #if($form.emailNotificationSchedule == $schedule)selected#{end}>$i18n.escape($schedule)</option>
+					#end
+				</select>
+			</label>
+
+			<div class="row no-padding-left no-padding-right">
+				<div class="columns small-8">
+					<label class="label-move">
+						<span>New Password</span>
+						<input type="password" name="password" value="$i18n.escape($form.password)" maxlength="100"  />
+					</label>
+				</div>
+
+				<div class="columns small-8">
+					<label class="label-move">
+						<span>New Password (Confirm)</span>
+						<input type="password" name="confirmPassword" value="$i18n.escape($form.confirmPassword)" maxlength="100"  />
+					</label>
+				</div>
+			</div>
+
+			#if($form.showGoogleConversionId)
+				<label class="label-move">
+					<span>Google Conversion ID</span>
+					<input type="text" name="googleConversionId" value="$i18n.escape($form.googleConversionId)" class="ucDefault" maxlength="30"/>
+				</label>
+				<small>(Optional - <a href="/affiliate/partner/findGoogle.jsp" class="js-help">help finding this number</a>)</small>
+			#end ##if-showGoogleConversionId
+
+			#if($form.showYsmAccountId)
+				<label class="label-move">
+					<span>Yahoo Search Marketing Account ID</span>
+					<input type='text' name="ysmAccountId" value="$i18n.escape($form.ysmAccountId)" class="ucDefault" size="30" maxlength="30"/>
+				</label>
+				<small>(Optional - <a href="/affiliate/partner/findYahoo.jsp" class="js-help">help finding this number</a>)</small>
+
+			#end ##if-showYsmAccountId
+		</div>
+
+		<div class="columns small-full medium-half">
+			<label class="label-move">
+				<span>Address</span>
+				<input type="text" name="address1" value="$i18n.escape($form.address1)" class="ucDefault" size="30" maxlength="100"/>
+			</label>
+
+			<label class="label-move">
+				<span>Address 2</span>
+				<input type="text" name="address2" value="$i18n.escape($form.address2)" class="ucDefault" size="30" maxlength="100"/>
+			</label>
+
+			<label class="label-move">
+				<span>City</span>
+				<input type="text" name="city" value="$i18n.escape($form.city)" class="ucDefault" size="30" maxlength="100"/>
+			</label>
+
+			<div class="row no-padding-left no-padding-right">
+				<div class="columns small-8">
+					<label class="label-move">
+						<span>State</span>
+						<input type="text" name="state" required value="$i18n.escape($form.state)" maxlength="50"  />
+					</label>
+				</div>
+
+				<div class="columns small-8">
+					<label class="label-move">
+						<span>Postal Code</span>
+						<input type="text" name="postalCode" placeholder="Smith" value="$i18n.escape($form.postalCode)" maxlength="100"  />
+					</label>
+				</div>
+			</div>
+
+			<label class="label-move">
+				<span>Country*</span>
+				<select name="country" required>
+					#foreach($country in $form.countries)
+						<option #if($country == $form.country)selected#{end}>$i18n.escape($country)</option>
+					#end
+				</select>
+			</label>
+		</div>
+	</div>
+
+	#set( $showBackButton = true )
+	#set( $button = 'Save Changes')
+	#parse('/snippets/affiliate/button.vm')
+	#parse('/snippets/common/cs_token.vm')
+</form>
+
+#parse('/snippets/bottom.vm')

@@ -1,0 +1,86 @@
+##
+## UltraCart - Mr Teas Template
+## http://www.ultracart.com/
+##
+## Copyright (c) 2015 BPS Info Solutions Inc.
+## License located here:
+## http://www.ultracart.com/storefront/license/
+##
+## Designed by Level 2 Design, LLC http://www.level2d.com/
+##
+## uc:contains-velocity="true"
+## uc:page-type="group"
+## uc:display-items="true"
+## uc:pagination="true"
+## uc:display-subgroups="true"
+## uc:child-page-multimedia-default-used="true"
+## uc:page-attribute-string="subtitle"
+#parse("/snippets/checkout_only_redirect.vm")
+#parse("/snippets/google_base_offer_id.vm")
+#parse("/snippets/top.vm")
+<style>
+  
+  #system > .row {
+        margin:0 auto !important;
+  }
+  .product-list-images img {
+         height: auto !important; 
+  }
+</style>
+	<div class="row no-margin">
+    <div class="columns small-16">
+      ##parse("/snippets/breadcrumbs.vm")
+    </div>
+  </div>
+  <div class="row">
+    <div class="columns small-16">
+      <!-- <h1 class="catalog-title">
+        #if($group.getAttribute("subtitle") && $group.getAttribute("subtitle") != '')
+          $group.getAttribute("subtitle")
+        #else
+          $group.Title
+        #end
+      </h1> -->
+    </div>
+  </div>
+  <div class="row">
+    <section class="columns small-16 medium-16 catalog-container">
+      #if($group.getChildren().size() > 0)
+       ## #parse("/snippets/subgroup_list.vm")
+        #if($group.getItemCount() > 0)
+         <!-- <div class="row">
+            <div class="columns small-16">
+              <div class="title"><span>Items</span>
+              </div>
+            </div>
+          </div> -->
+          <div class="row">
+            ##parse('/snippets/group_item_sort.vm')
+          </div>
+          #parse("/snippets/group_item_list.vm")
+        #else
+          <div class="row">
+            <p>No items are assigned to this page.</p>
+          </div>
+        #end
+      #else
+        #if($group.getItemCount() > 0)
+          <header class="row">
+            #parse('/snippets/group_item_sort.vm')
+            <div class="columns medium-9">
+              #parse("/snippets/pagination.vm")
+            </div>
+          </header>
+          #parse("/snippets/group_item_list.vm")
+        #else
+          <div class="row">
+            <p>No items are assigned to this page.</a>
+          </div>
+        #end
+      #end
+      <div class="columns small-16">
+        #parse("/snippets/pagination.vm")
+      </div>
+    </section>
+  </div>
+#parse("/snippets/bottom.vm")

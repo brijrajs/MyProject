@@ -1,0 +1,497 @@
+##
+## UltraCart - Mr Teas Template
+## http://www.ultracart.com/
+##
+## Copyright (c) 2015 BPS Info Solutions Inc.
+## License located here:
+## http://www.ultracart.com/storefront/license/
+##
+## Designed by Level 2 Design, LLC http://www.level2d.com/
+##
+
+#* @vtlvariable name="errors" type="java.util.Collection<com.bpsinfo.shocks.action.ActionError>" *#
+#* @vtlvariable name="formatHelper" type="com.bpsinfo.ultracart.catalog.tobjects.FormatHelper" *#
+#* @vtlvariable name="form" type="com.bpsinfo.ultracart.checkout.ui.SingleForm" *#
+#* @vtlvariable name="merchantId" type="java.lang.String" *#
+#* @vtlvariable name="i18n" type="com.bpsinfo.storefront.tobjects.I18nWriter" *#
+
+## uc:theme-attribute-boolean="Google Autocomplete"
+
+##TODO create a velocity class that does currency formatting to reduce the number of document.write js calls
+##TODO test cart_amazon_checkout and cart_paypal_checkout templates
+
+#set( $placesApi = 'true' )
+#set( $pageGroup = 'single-page-checkout' )
+#set( $bodyClass = 'single-page-checkout' )
+#set( $ucoPageClass = 'uco_page_single' )
+#set( $pageTitle = $i18n.write("checkout.single.pageTitle", "Checkout") )
+#parse('/snippets/top.vm')
+
+
+
+
+<style type="text/css">
+ @media screen and (max-width: 480px) {
+  #estimatedates {
+    font-size: 3.0vw; 
+  }
+          #tablecontent td:last-child {
+                   display:none !important; 
+          }
+      .prices {
+         margin-left:0px !important; 
+      }
+   }
+	#exitpopup
+	{
+		text-align:center;
+	}
+
+	#exitpopup h1
+	{
+		margin-top:0px;
+		padding-top:0px;
+		
+	}	
+	
+	#exitpopup p
+	{
+		text-align:left;
+	}
+body{margin:0px; padding:0px;}
+*{box-sizing:border-box;}
+.popUpBg{background:url(https://s3.amazonaws.com/ultracartsff/HEA12/7086/themes/MrTeas_0_32/assets/imgs/popupBg.png) no-repeat; background-size:100%; max-width:758px; height:429px; margin:0px auto; position:relative;}
+.gdBtn {
+  border-style: solid;
+  border-width: 1px;
+  border-color: rgb(2, 135, 18);
+  border-radius: 3px;
+  background-image: -moz-linear-gradient( 90deg, rgb(86,179,46) 0%, rgb(70,152,29) 47%, rgb(113,172,19) 49%, rgb(155,191,8) 100%);
+  background-image: -webkit-linear-gradient( 90deg, rgb(86,179,46) 0%, rgb(70,152,29) 47%, rgb(113,172,19) 49%, rgb(155,191,8) 100%);
+  background-image: -ms-linear-gradient( 90deg, rgb(86,179,46) 0%, rgb(70,152,29) 47%, rgb(113,172,19) 49%, rgb(155,191,8) 100%);
+  box-shadow: 0.5px 0.866px 0px 0px rgba(255, 176, 5, 0.75);
+  width: 100%;
+  height: 38px;
+  color:#ffffff; 
+  font-size:14px;
+  cursor:pointer;
+}
+.closeBtn{position:absolute; top:22px; right:22px; cursor:pointer;}
+.emailTb {
+  border-style: solid;
+  border-width: 1px;
+  border-color: rgb(174, 174, 174);
+  border-radius: 3px;
+  background-color: rgb(255, 255, 255);
+  box-shadow: 0.5px 0.866px 0px 0px rgba(255, 176, 5, 0.75),inset 0px 0px 6px 0px rgba(8, 8, 8, 0.22);
+  width: 100%;
+  height: 38px;
+}
+.bottomBar{position:absolute; right:2%; bottom:25%; width:62%;}
+.emailUl{margin:0px; padding:0px; list-style:none;}
+.emailUl li {display:inline-block; width:48%;}
+.emailUl li:last-child {margin-left:2%;}
+@media (max-width: 757px) {.bottomBar{bottom:19%;}}
+@media (max-width: 680px) {.bottomBar{bottom:22%;}}
+@media (max-width: 620px) {.bottomBar{bottom:30%;}}
+@media (max-width: 480px) {.bottomBar{bottom:43%;}}
+@media (max-width: 320px) {.bottomBar{bottom:60%;}}
+
+</style>
+
+
+<div style="width:670px; height:450px; margin:0px auto; display:none; position:fixed; color:#ffffff; padding:20px; -webkit-border-radius: 4px; -moz-border-radius: 4px; border-radius: 4px; z-index:999999; background:rgb(20, 20, 20); background: rgba(0, 0, 0, 0);" id="exitpopup">
+		<div class="popUpBg">
+<div class="closeBtn"><img src="https://store.healthlabsnutra.com/themes/MrTeas_0_32/assets/imgs/closeBtn.png" alt="image"></div>
+<div class="bottomBar">
+<ul class="emailUl">
+  
+  <!-- AWeber Web Form Generator 3.0.1 -->
+<form method="post"  onSubmit="javascript:check();" class="af-form-wrapper" accept-charset="UTF-8" action="https://www.aweber.com/scripts/addlead.pl"  >
+<div style="display: none;">
+<input type="hidden" name="meta_web_form_id" value="106176058" />
+<input type="hidden" name="meta_split_id" value="" />
+<input type="hidden" name="listname" value="awlist4227871" />
+<input type="hidden" name="redirect" value="https://store.healthlabsnutra.com/cgi-bin/UCEditor?merchantId=HEA12&coupon=DISCOUNT15" id="redirect_56909d1366fca36a509885ead0bea469" />
+
+<input type="hidden" name="meta_adtracking" value="My_Web_Form_exitpop" />
+<input type="hidden" name="meta_message" value="1001" />
+<input type="hidden" name="meta_required" value="email" />
+
+<input type="hidden" name="meta_tooltip" value="" />
+</div>
+
+
+<script type="text/javascript">
+    <!--
+    (function() {
+        var IE = /*@cc_on!@*/false;
+        if (!IE) { return; }
+        if (document.compatMode && document.compatMode == 'BackCompat') {
+            if (document.getElementById("af-form-106176058")) {
+                document.getElementById("af-form-106176058").className = 'af-form af-quirksMode';
+            }
+            if (document.getElementById("af-body-106176058")) {
+                document.getElementById("af-body-106176058").className = "af-body inline af-quirksMode";
+            }
+            if (document.getElementById("af-header-106176058")) {
+                document.getElementById("af-header-106176058").className = "af-header af-quirksMode";
+            }
+            if (document.getElementById("af-footer-106176058")) {
+                document.getElementById("af-footer-106176058").className = "af-footer af-quirksMode";
+            }
+        }
+    })();
+    -->
+</script>
+
+<!-- /AWeber Web Form Generator 3.0.1 -->
+  
+<li><input type="text" name="email" id="discount-email" class="emailTb" placeholder="Email Address" style="background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAASCAYAAABSO15qAAAAAXNSR0IArs4c6QAAALZJREFUOBFjYKAANDQ0rGWiQD9IqzgL0BQ3IKMXiB8AcSKQ/waIrYDsKUD8Fir2pKmpSf/fv3+zgPxfzMzMSbW1tbeBbAaQC+b+//9fB4h9gOwikCAQTAPyDYHYBciuBQkANfcB+WZAbPP37992kBgIUOoFBiZGRsYkIL4ExJvZ2NhAXmFgYmLKBPLPAfFuFhaWJpAYEBQC+SeA+BDQC5UQIQpJYFgdodQLLyh0w6j20RCgUggAAEREPpKMfaEsAAAAAElFTkSuQmCC&quot;); background-attachment: scroll; background-size: 16px 18px; background-position: 98% 50%; background-repeat: no-repeat;" autocomplete="off"></li>
+<li><input type="submit"  name="submit" id="af-submit-image-106176058" value="Get Discount" class="gdBtn"></li>
+</ul>
+  </form>
+</div>
+</div>
+</div>
+
+<style>
+#system .row {
+      margin-right: -15px !important;
+    margin-left: -15px !important;
+     padding-left:0px !important; padding-right:0px !important;
+}  
+</style>
+
+<script type="text/javascript">
+var stateOptionalCountries = ${form.stateOptionalCountriesJson},
+
+	lastShippingAddress1 = "",
+	lastShippingAddress2 = "",
+	lastShippingZip = "",
+	lastShippingState = "",
+	lastShippingCountry = ""
+
+	lastResidentialAddress = $i18n.escape($form.residentialAddress),
+	lastBusinessAddress = $i18n.escape($form.businessAddress),
+	showResidentialAddress = $form.showResidentialAddress,
+	showAddressType = $form.showAddressType,
+
+	shippingUrl = "$form.shippingUrl",
+
+	subtotal = $form.subtotal,
+	tax = $form.tax,
+	shipping = $form.shipping,
+	buysafeCost = $form.buysafeBondCost,
+	total = $form.total;
+
+var ultraCartHostedFieldsCssUrls = ['${baseUrl}/assets/css/ultracart-hosted-fields.css', 'https://fonts.googleapis.com/css?family=Lato:300,400,700,900,300italic,400italic,700italic|Cabin:400,500,700,400italic,500italic,700italic|Bitter:400,700,400italic'];
+</script>
+
+## the following snippet relies on the window.ultraCartHostedFieldsCssUrls array defined above.
+#parse('/snippets/cart_single_hosted_fields.vm')
+
+##parse('/snippets/breadcrumbs.vm')
+
+
+
+## determine item text depending on number of items in the cart
+#set( $itemText = 'items' )
+#if($cart.getItemUnitCount() == '1')
+	#set( $itemText = 'item' )
+#end
+
+
+#set( $title = "$cart.getItemUnitCount() $itemText in your cart" )
+##parse('/snippets/title.vm')
+
+
+<form id="ucSingle" name="ucSingle" method="post" autocomplete="OFF" enctype="multipart/form-data" novalidate
+	data-currencyCode="$form.currencyCode"
+	data-nfSuffix="$i18n.escape($form.currencySuffix)"
+	data-ccform="$form.requireCreditCardForm"
+	action="/checkout/singleSave.do?merchantId=${formatHelper.urlEncode($merchantId)}">
+	#parse('/snippets/common/storefront_template_spec_version.vm')
+	<div class="hide">
+		<!-- place hidden fields inside hidden div to avoid xhtml warning about inputs directly inside form -->
+		<input type="hidden" name="showEmail" value="$i18n.escape($!form.showEmail)"/>
+		<input type="hidden" name="showItems" value="$i18n.escape($!form.showItems)"/>
+		<input type="hidden" name="requireEmail" value="$i18n.escape($!form.requireEmail)"/>
+		<input type="hidden" name="requireEmailConfirm" value="$i18n.escape($!form.requireEmailConfirm)"/>
+		<input type="hidden" name="showReturnEmail" value="$i18n.escape($!form.showReturnEmail)"/>
+		<input type="hidden" name="showShipping" value="$i18n.escape($!form.showShipping)"/>
+		<input type="hidden" name="showAcceptCheckoutTerms" value="$i18n.escape($!form.showAcceptCheckoutTerms)"/>
+		<input type="hidden" name="showCreditCardForm" value="$i18n.escape($!form.showCreditCardForm)" id="showCreditCardFormId" class="js-show-credit-card-form-id" />
+		<input type="hidden" name="showBillingTitle" value="$date.escape($!form.showBillingTitle)"/>
+		<input type="hidden" name="requireBillingTitle" value="$i18n.escape($!form.requireBillingTitle)"/>
+		<input type="hidden" name="showShippingTitle" value="$i18n.escape($!form.showShippingTitle)"/>
+		<input type="hidden" name="requireShippingTitle" value="$i18n.escape($!form.requireShippingTitle)"/>
+		<input type="hidden" name="buysafeBondChange" value="$i18n.escape($!form.buysafeBondChange)" id="ucBuysafeBondChangeId"/>
+		<input type="hidden" name="changeCurrencyCode" value="$i18n.escape($!form.changeCurrencyCode)" id="changeCurrencyCodeId" class="js-change-currency-code-id"/>
+		<input type="hidden" name="usingStoredCard" value="$i18n.escape($!form.usingStoredCard)" id="usingStoredCardId"/>
+		<input type="hidden" name="storedCardMaskedNumber" value="$i18n.escape($!form.storedCardMaskedNumber)"/>
+		<input type="hidden" name="storedCardExp" value="$i18n.escape($!form.storedCardExp)"/>
+		<input type="hidden" name="advertisingSourceRequired" value="$i18n.escape($!form.advertisingSourceRequired)"/>
+		<input type="hidden" name="showAddressType" value="$i18n.escape($!form.showAddressType)"/>
+		<input type="hidden" name="showResidentialAddress" value="$i18n.escape($!form.showResidentialAddress)"/>
+
+		#if($form.gatewayTokenization)
+			<input type="hidden" name="gatewayTokenization" value="$i18n.escape($!form.gatewayTokenization)"/>
+			<input type="hidden" name="creditCardToken" value="$i18n.escape($!form.creditCardToken)" id="creditCardToken"/>
+		#end ##if-gatewayTokenization
+	</div>
+   
+
+	<!-- this input is here so that the default "enter key" behavior of the browser does an update quantity the field is invisible by design. -->
+	<span class="ucUpdateButtonOverlaySpan hide">
+		<input type="image"
+			id="ucUpdateQuantityId"
+			name="updateQuantity"
+			class="ucUpdateButtonOverlay js-update-quantity"
+			src="/checkout/images/spacer.gif"
+			alt="Update Qty."
+			border="0" />
+	</span>
+
+	#parse('/snippets/errors.vm')
+
+	#parse('/snippets/info_messages.vm')
+  
+    #set ($jsGoogleAutocompleteField = "")
+	#if ($theme.attr("Google Autocomplete") && $theme.attr("Google Autocomplete") == "true")
+	  #set ($jsGoogleAutocompleteField = "js-google-autocomplete-field")
+	#end
+  
+    ## start of my code
+    <div class="container top checkout">
+	<div class="row">
+		<div class="col-sm-6 col-md-6">
+			
+			#parse('/snippets/cart_shipping_address.vm')
+			
+		    #parse('/snippets/cart_billing_address.vm')
+					
+			
+			<div class="heading">payment Details</div>
+			<div class="outer-box box4">
+                
+                    
+				<p>We Accept :</p>
+				<div class="cards"><img class="img-responsive" src="${baseUrl}/themes/MrTeas/assets/imgs/cards.png" alt=""></div>
+                
+				
+                #if($form.showCreditCardForm)
+					##parse('/snippets/hr.vm')
+					#parse('/snippets/cart_credit_card.vm')
+				#end ##if-showCreditCardForm
+                
+                <div class="clearfix"></div>
+                <div style="text-align:center;"><input type="image" id="FINALIZEORDER" name="finalizeOrder" src="${baseUrl}/themes/MrTeas/assets/imgs/order_button.jpg"></div>
+                <div class="clearfix"></div>
+                ##if($form.show3rdPartyCheckout)
+						<div style="text-align: center;" class="express-checkout uco_section_express_checkout columns small-16 large-11" data-equalizer-watch>
+							
+
+							<ul class="uco_group_express_checkout_buttons">
+								##if($form.showAmazonCheckout)
+									#parse('/snippets/cart_amazon_checkout.vm')
+								##end
+
+								##if($form.showPayPalCheckout || $form.showPayPalCheckoutBml)
+									#parse('/snippets/cart_paypal_checkout.vm')
+								##end
+							</ul>
+						</div>
+				##end ## if-show3rdPartyCheckout
+                <div class="clearfix"></div>
+                <!--<div class="cards"><img class="img-responsive" src="${baseUrl}/themes/MrTeas/assets/imgs/secuirty.png" alt=""></div> -->
+				</div><!-- End outer box -->
+		</div><!-- End left collumn -->
+		
+		<div class="col-sm-6 col-md-6">
+			<div class="heading">Order Summary</div>
+             #if($form.showItems)
+				<!-- view-cart -->
+				#parse('/snippets/cart_items.vm')
+				<!-- /view-cart -->
+
+				<!-- affiliate-id -->
+				#if($form.showAffiliateId)
+					#parse('/snippets/cart_affiliate.vm')
+					#end ##if-showAffiliateId
+				<!-- /affiliate-id -->
+			 #end  ## if-show-items
+ 
+                
+			#if($itemsPart.items.size() == 0)
+			<div class="product-panel">
+				<div class="product-info">
+					<h3 class="product-title">
+						$i18n.write('checkout.single.youHaveNotSelectedAProduct','You have not yet selected a product to purchase.')
+					</h3>
+				</div>
+
+				<div class="product-total">
+					<span class="product-qty">
+						<label>Qty</label>
+					</span>
+					<div class="product-pricetag">
+						<span class="product-pricetag-label">Amount</span>
+					</div>
+				</div>
+			</div>
+			#end ##if-items-size-0
+          
+           <script>   
+function getMyDate(myDate) {
+  var n = myDate.getDay();
+if(n==0) {
+  myDate.setDate(myDate.getDate() + 1);
+}
+if(n==6) {
+  myDate.setDate(myDate.getDate() + 2);
+}
+dd = myDate.getDate(); 
+yyyy = myDate.getFullYear();              
+
+var shortMonthName = new Intl.DateTimeFormat("en-US", { month: "short" }).format;
+var mm = shortMonthName(myDate);
+myDate = mm+' '+dd+', '+yyyy;
+  return(myDate)
+}
+var shipDate = new Date();
+shipDate.setDate(shipDate.getDate() + 1);
+shipDate = getMyDate(shipDate);
+
+var delStartDate = new Date();
+delStartDate.setDate(delStartDate.getDate() + 5);
+delStartDate = getMyDate(delStartDate);
+              
+var delLastDate = new Date();
+delLastDate.setDate(delLastDate.getDate() + 6);
+delLastDate = getMyDate(delLastDate);              
+
+            </script>
+            <div class="" style="margin-top: 10px;">
+                  <div class="heading">Shipping Dates</div>   
+                    <div id="estimatedates" class="box-right outer-box" style="min-height: 80px;">
+                    <span id="estimate_ship_date" style="float: left;font-weight: bold;min-width: 50%;"><span class="big-bold">Estimated Ship Date</span><br> <script>document.write(shipDate);</script> </span>
+                   
+                    <span id="estimate_arrival_date" style="float:right;font-weight: bold;"><span class="big-bold">Estimated Arrival Date</span><br><script>document.write(delStartDate);</script> - <script>document.write(delLastDate);</script></span>
+				</div>     
+            </div>
+          
+            <div class="" style="margin-top: 10px;">
+                  <div class="heading">Secure Shopping</div>   
+                    <div class="smalltext-right outer-box"><strong>SHOP WITH CONFIDENCE</strong>
+					
+					<div style="margin:5px 0;"><img src="https://store.healthlabsnutra.com/themes/MrTeas_0_32/assets/imgs/lock.gif" alt="" width="25" height="34" border="0" align="left" style="margin:5px 10px 5px 0;"><strong>SHOPPING ON HealthLabsNutra 
+					    IS SAFE AND SECURE. GUARANTEED.</strong></div>
+
+You'll pay nothing if unauthorized charges are made to your credit card as a result of shopping at healthlabsnutra.com</div>   
+            </div>
+			
+        </div><!-- End right collumn -->
+        
+	</div><!-- End row -->
+</div>
+## end of my code
+
+	#if($form.showItems)
+		<!-- view-cart -->
+		##parse('/snippets/cart_items.vm')
+		<!-- /view-cart -->
+
+		<!-- affiliate-id -->
+		#if($form.showAffiliateId)
+			#parse('/snippets/cart_affiliate.vm')
+		#end ##if-showAffiliateId
+		<!-- /affiliate-id -->
+	#end  ## if-show-items
+
+	
+
+	#set ($jsGoogleAutocompleteField = "")
+	#if ($theme.attr("Google Autocomplete") && $theme.attr("Google Autocomplete") == "true")
+	  #set ($jsGoogleAutocompleteField = "js-google-autocomplete-field")
+	#end
+
+	<!-- shipping-address -->
+	#if($form.showShipping)
+		##parse('/snippets/cart_shipping_address.vm')
+	#end ## if-showShipping
+	<!-- /shipping-address -->
+
+
+	<!-- billing-address -->
+	##parse('/snippets/cart_billing_address.vm')
+	<!-- /billing-address -->
+
+
+	<!-- comments -->
+	##parse('/snippets/hr.vm')
+	#if($form.showComments)
+		##parse('/snippets/cart_comments.vm')
+	#end ## if-showComments
+	<!-- /comments -->
+
+
+	<!-- shipping and summary table -->
+	<div class="row">
+		#if($form.showShipping)
+			#parse('/snippets/cart_shipping.vm')
+		#end ##if-showShipping
+
+		<div class="columns small-16 medium-8">
+			##parse('/snippets/cart_summary.vm')
+		</div>
+	</div>
+	<!-- /shipping and summary table -->
+
+
+	#if($form.showAdvertisingSourceDropDown || $form.showAdvertisingSourceFreeForm || $form.showAdvertisingSourceSelectThenFreeForm)
+		##parse('/snippets/hr.vm')
+		##parse('/snippets/cart_advertising_sources.vm')
+	#end ##if-showAdvertisingSourceDropDown || showAdvertisingSourceFreeForm
+
+
+	<!-- credit-card-form -->
+	#if($form.showCreditCardForm)
+		##parse('/snippets/hr.vm')
+		##parse('/snippets/cart_credit_card.vm')
+	#end ##if-showCreditCardForm
+	<!-- /credit-card-form -->
+
+
+	<!-- checkout-terms -->
+	#if($form.showAcceptCheckoutTerms)
+		##parse('/snippets/hr.vm')
+		##parse('/snippets/cart_checkout_terms.vm')
+	#end ##if-showAcceptCheckoutTerms
+	<!-- /checkout-terms -->
+
+
+	<!-- finalize-order -->
+	##parse('/snippets/button.finalizeOrder.vm')
+	<!-- /finalize-order -->
+
+
+	<!-- return-policy -->
+	#if($form.showAcceptReturnPolicy)
+		##parse('/snippets/hr.vm')
+		##parse('/snippets/cart_return_policy.vm')
+	#end ##if-showAcceptReturnPolicy
+	<!-- /return-policy -->
+
+
+	<!-- /Shipping and summary table -->
+	#if($form.fireShippingDestinationChanged)
+		<span class="js-fire-shipping-destination-changed" data-shipping-method="$formatHelper.escapeJavascript($form.shippingMethod)"></span>
+	#end ##if-fireShippingDestinationChanged
+	<span id="debugDiv"></span>
+</form>
+
+#parse('system://3.0/snippets/cart_exit_pop.vm')
+
+<!-- bottom -->
+#parse('/snippets/bottom.vm')

@@ -1,0 +1,928 @@
+div.order {
+  /*width: 800px;*/
+  min-width: 550px;
+}
+
+div.order.refund-flag-yes {
+  min-width: 625px;
+}
+
+div.payment-status,
+div.payment-date,
+div.refunded-info,
+div.order-id,
+div.creation-date {
+  padding-bottom: 10px;
+}
+
+.billto-section,
+.shipto-section,
+.coupon-section {
+  width: 50%;
+  /* max-width: 300px; */
+}
+
+div.order-id .label,
+div.creation-date .label {
+  display: block;
+  width: 100px;
+  float: left;
+  text-align: left;
+  font-weight: bold;
+  color: #999;
+}
+
+.shipping-method span.shipping-method-label.label,
+.tax-county .tax-county-label,
+.gift-label.label,
+.gift-email-label.label {
+  width: 150px;
+  color: #999;
+}
+
+.coupon-section .coupon-header {
+  width: 150px;
+  float: left;
+}
+
+.coupon-section .coupon-code {
+  padding-bottom: 20px;
+  display: block;
+  clear: none;
+  width: 200px;
+  float: left;
+  border-top: 0;
+  border-left: 0;
+  padding-top: 0;
+}
+
+.advertising-source {
+  display: none;
+}
+
+div.items {
+  clear: both;
+}
+
+div.items .order-item {
+  clear: both;
+  border-bottom: 1px solid #bbb;
+  font-size: 0;
+  margin-bottom: 10px;
+}
+
+div.items .order-item span {
+  font-size: 14px;
+}
+
+.item-header {
+  margin: 20px 0 10px 0;
+  padding-bottom: 5px;
+  border-bottom: 1px solid #bbb;
+  font-size:0;
+}
+
+.item-header span {
+  font-size:14px;
+}
+
+span.item-id-header,
+span.item-id {
+  display: inline-block;
+  vertical-align: top;
+  /*width: 200px;*/
+  width: 20%;
+  word-wrap: break-word;
+}
+
+span.item-qty-header,
+span.item-qty {
+  display: inline-block;
+  vertical-align: top;
+  /*width: 100px;*/
+  width: 10%;
+  text-align: right;
+  padding-right: 20px;
+  padding-bottom: 10px;
+}
+
+span.item-description-header,
+span.item-description {
+  display: inline-block;
+  vertical-align: top;
+  /*width: 330px;*/
+  width: 30%;
+  padding-bottom:10px;
+}
+
+div.item-section.no-refund span.item-description-header,
+div.item-section.no-refund span.item-description {
+  display: inline-block;
+  vertical-align: top;
+  /*width: 430px;*/
+  width: 40%;
+  padding-bottom:10px;
+}
+
+div.item-section.no-discount span.item-description-header,
+div.item-section.no-discount span.item-description {
+  display: inline-block;
+  vertical-align: top;
+  /*width: 430px;*/
+  width: 40%;
+  padding-bottom:10px;
+}
+
+div.item-section.no-refund.no-discount span.item-description-header,
+div.item-section.no-refund.no-discount span.item-description {
+  display: inline-block;
+  vertical-align: top;
+  /*width: 498px;*/
+  width: 50%;
+  padding-bottom:10px;
+}
+
+span.item-cost-header,
+span.item-cost {
+  display: inline-block;
+  vertical-align: top;
+  /*width: 100px;*/
+  width: 20%;
+  text-align: right;
+  padding-bottom:10px;
+}
+
+div.item-section.no-refund span.item-refund-header,
+div.item-section.no-refund span.item-refund {
+  display: none;
+  width:0;
+}
+
+span.item-refund-header,
+span.item-refund {
+  display: inline-block;
+  vertical-align: top;
+  width: 10%;
+  /*width: 100px;*/
+  text-align: right;
+  padding-bottom: 10px;
+}
+
+div.item-section.no-discount span.item-discount-header,
+div.item-section.no-discount span.item-discount {
+  display: none;
+  width: 0;
+}
+
+span.item-discount-header,
+span.item-discount {
+  display: inline-block;
+  vertical-align: top;
+  width: 10%;
+  /*width: 100px;*/
+  text-align: right;
+  padding-bottom: 10px;
+}
+
+div.item-qualifier {
+  clear: both;
+  font-style: italic;
+  margin-bottom: 10px;
+}
+
+div.item-qualifier span.qualifier-label {
+  float: left;
+  font-weight: bold;
+}
+
+ul.qualifier-list {
+  display: inline;
+  margin: 0;
+  padding: 0;
+}
+
+ul.qualifier-list li {
+  display: inline;
+  margin: 0;
+  padding: 0;
+  font-size: 14px;
+}
+
+ul.qualifier-list li:after {
+  content: ", ";
+}
+
+ul.qualifier-list li.first:before {
+  content: " :  ";
+}
+
+ul.qualifier-list li.last:after {
+  content: "";
+}
+
+div.summary-section {
+  float: right;
+}
+
+div.summary-section div {
+  clear: both;
+}
+
+div.summary-section .label {
+  display: block;
+  float: left;
+  text-align: right;
+  margin-right: 5px;
+  padding-right: 5px;
+  padding-bottom: 1px;
+
+}
+
+div.summary-section .gift-wrap-label,
+div.summary-section .gift-wrap-title {
+  display: block;
+  float: left;
+  clear: both;
+  text-align: right;
+  margin-right: 5px;
+  padding-right: 5px;
+  padding-bottom: 1px;
+}
+
+div.summary-section.yes-discount {
+  /* width: 610px; */
+}
+div.summary-section.yes-discount.yes-refund {
+  /* width: 700px;*/
+}
+
+div.summary-section.yes-discount.yes-refund .label {
+  /* width: 510px; */
+}
+
+/* this is the same as the one below because when this condition is met, there will be one of the columns present to take up space as well. */
+
+div.summary-section .label,
+div.summary-section .gift-wrap-label,
+div.summary-section .gift-wrap-title {
+  width: 130px;
+}
+
+div.summary-section.yes-discount.no-refund .label,
+div.summary-section.yes-discount.no-refund .gift-wrap-label,
+div.summary-section.yes-discount.no-refund .gift-wrap-title {
+  width: 200px;
+}
+
+div.summary-section.no-discount.yes-refund .label,
+div.summary-section.no-discount.yes-refund .gift-wrap-label,
+div.summary-section.no-discount.yes-refund .gift-wrap-title {
+  width: 130px;
+}
+
+div.summary-section.no-discount.no-refund .label,
+div.summary-section.no-discount.no-refund .gift-wrap-label,
+div.summary-section.no-discount.no-refund .gift-wrap-title {
+  width: 200px;
+}
+
+div.summary-section .field,
+div.summary-section .gift-wrap-cost {
+  display: block;
+  float: left;
+  width: 95px;
+  text-align: right;
+}
+
+div.summary-section.yes-refund .refund {
+  display: block;
+  float: left;
+  width: 80px;
+  margin-right: 5px;
+  padding-right: 5px;
+  text-align: right;
+}
+
+div.summary-section.no-refund .refund {
+  display: none;
+}
+
+div.customer-info {
+  /*  width:600px; */
+}
+
+span.label {
+  text-align: left;
+}
+
+div.contact-header {
+  text-align: left;
+  padding-right: 205px;
+}
+
+div.billto-header, div.shipto-header {
+  text-align: left;
+  /*  padding-right: 155px; */
+  padding-bottom: 10px;
+}
+
+div.hide-shipto,
+div.hide-billto {
+  display: none !important;
+}
+
+div.end-of-order {
+  clear: both;
+}
+
+div.special-inst-section,
+div.currency-conversion,
+div.comments-section,
+div.merchant-notes-section,
+div.payment-status,
+div.payment-date,
+div.refunded-info,
+div.payment-info-section,
+div.contact-section,
+div.misc-section {
+  float: left;
+  clear: both;
+}
+
+div.currency-conversion {
+  text-align: right;
+}
+
+div.comments-section,
+div.currency-conversion {
+  float:none;
+  margin: 20px 0;
+  padding: 20px 0 0 0;
+  border-top: 1px dashed #bbb;
+}
+
+div.billto-section {
+  display: inline-block;
+}
+
+div.emptyField {
+  display: none;
+}
+
+div.shipto-section {
+  display: inline-block;
+}
+
+div.item-section {
+  clear: both;
+}
+
+div.payment-check .no-label .field {
+  display: block;
+  width: 97px;
+  float: left;
+  clear: left;
+  padding-right: 8px;
+  padding-bottom: 1px;
+  text-align: right;
+}
+
+div.payment-echeck .no-label .field {
+  display: block;
+  width: 97px;
+  float: left;
+  clear: left;
+  padding-right: 8px;
+  padding-bottom: 1px;
+  text-align: right;
+}
+
+
+div.payment-status .label,
+div.payment-date .label,
+div.refunded-info .label,
+div.payment-info-section .label,
+div.contact-section .label,
+div.misc-section .label,
+div.billto-section .label,
+div.shipto-section .label {
+  display: block;
+  width: 100px;
+  float: left;
+  clear: left;
+  padding-right: 5px;
+  padding-bottom: 1px;
+  font-weight: bold;
+}
+
+div.misc-section .field,
+div.contact-section .field {
+  display: block;
+  width: 200px;
+  float: right;
+  clear: right;
+  padding-bottom: 1px;
+}
+
+div.payment-status .field,
+div.payment-date .field,
+div.refunded-info .field,
+div.payment-info-section .field {
+  display: block;
+  width: 150px;
+  float: right;
+  clear: right;
+  padding-bottom: 1px;
+}
+
+div.billto-section .field,
+div.shipto-section .field {
+  display: block;
+  width: 150px;
+  float: left;
+  clear: right;
+  padding-bottom: 1px;
+}
+
+div.status-Refunded.payment-status .field {
+  color: red;
+  font-weight: bold;
+}
+
+div.status-Processed.payment-status .field {
+  color: #006400;
+  font-weight: bold;
+}
+
+.section-header {
+  font-weight: bold;
+  color: #999;
+}
+
+span.field {
+  text-align: left;
+}
+
+div.customer-info,
+div.before-customer,
+div.after-customer {
+  clear: both;
+}
+
+div.before-customer,
+div.customer-info {
+  border-bottom: 1px dashed #bbb;
+}
+
+div.order-section {
+  margin: 10px 0;
+  padding: 5px 0;
+}
+
+div.order .clr {
+  clear: both;
+}
+
+.item-section {
+  border-top: 1px dashed #bbb;
+}
+
+.return-policy-container,
+.customer-service-info,
+.gift-msg-section {
+  clear: both;
+  padding:20px 0;
+  border-top: 1px dashed #bbb;
+}
+
+div.gift-msg-section {
+  padding:20px 0 10px 0;
+}
+
+.customer-service-info {
+  padding: 20px 0 0 0;
+}
+
+.coupon-section {
+  clear: both;
+}
+
+.customer-service-header,
+.customer-service-phone .label,
+.customer-service-email .label,
+.return-policy-header {
+  font-weight:bold;
+  padding-right:10px;
+}
+
+.customer-service-header,
+.return-policy-header {
+  color: #999;
+}
+
+/* Only Devices between 768px and 940px*/
+@media only screen and (min-width: 768px) and (max-width: 980px) {
+  div.misc-section .field, div.contact-section .field,
+  .coupon-section .coupon-code {
+    clear:both;
+  }
+
+
+  div.item-section {
+    width: 100%;
+    /*width: 748px;*/
+    padding: 0;
+  }
+
+  /*span.item-id-header,
+  span.item-id {
+    width: 130px;
+  }
+
+  span.item-qty-header,
+  span.item-qty {
+    width: 80px;
+    padding-right: 20px;
+  }
+
+  span.item-description-header,
+  span.item-description {
+    display: inline-block;
+    width: 298px;
+    padding-bottom:10px;
+  }
+
+  div.item-section.no-refund span.item-description-header,
+  div.item-section.no-refund span.item-description {
+    display: inline-block;
+    width: 378px;
+    padding-bottom:10px;
+  }
+
+  div.item-section.no-discount span.item-description-header,
+  div.item-section.no-discount span.item-description {
+    display: inline-block;
+    width: 378px;
+    padding-bottom:10px;
+  }
+
+  div.item-section.no-refund.no-discount span.item-description-header,
+  div.item-section.no-refund.no-discount span.item-description {
+    display: inline-block;
+    width: 416px;
+    padding-bottom:10px;
+  }
+
+  .no-discount span.item-discount-header,
+  .no-discount span.item-discount {
+    width :0;
+  }
+
+  .yes-discount span.item-discount-header,
+  .yes-discount span.item-discount {
+    width :80px;
+  }
+
+  .no-refund span.item-refund-header,
+  .no-refund span.item-refund {
+    width: 0;
+  }
+
+  .yes-refund span.item-refund-header,
+  .yes-refund span.item-refund {
+    width: 80px;
+  }
+
+  span.item-cost-header,
+  span.item-cost {
+    width: 80px;
+  }*/
+
+
+
+  div.summary-section {
+    width:100%;
+    /*width: 748px;*/
+    padding: 0;
+    float: left;
+  }
+
+  div.summary-section div {
+    clear: both;
+    float: right;
+  }
+
+  div.comments-section {
+    margin: 20px 0;
+    padding: 20px 0 0 0;
+    border-top: 1px dashed #bbb;
+  }
+}
+
+
+
+/* Only Devices between 641px and 767px*/
+@media only screen and (min-width: 641px) and (max-width: 767px) {
+  div.misc-section .field, div.contact-section .field,
+  .coupon-section .coupon-code {
+    clear:both;
+  }
+
+
+  div.item-section {
+    /*width: 620px;*/
+    width: 100%;
+    padding: 0;
+  }
+
+  /*span.item-id-header,
+  span.item-id {
+    width: 120px;
+  }
+
+  span.item-qty-header,
+  span.item-qty {
+    width: 80px;
+    padding-right: 10px;
+  }
+
+  span.item-description-header,
+  span.item-description {
+    display: inline-block;
+    width: 180px;
+    padding-bottom:10px;
+  }
+
+  div.item-section.no-refund span.item-description-header,
+  div.item-section.no-refund span.item-description {
+    display: inline-block;
+    width: 260px;
+    padding-bottom:10px;
+  }
+
+  div.item-section.no-discount span.item-description-header,
+  div.item-section.no-discount span.item-description {
+    display: inline-block;
+    width: 260px;
+    padding-bottom:10px;
+  }
+
+  div.item-section.no-refund.no-discount span.item-description-header,
+  div.item-section.no-refund.no-discount span.item-description {
+    display: inline-block;
+    width: 340px;
+    padding-bottom:10px;
+  }
+
+  .no-discount span.item-discount-header,
+  .no-discount span.item-discount {
+    width :0;
+  }
+
+  .yes-discount span.item-discount-header,
+  .yes-discount span.item-discount {
+    width :80px;
+  }
+
+  .no-refund span.item-refund-header,
+  .no-refund span.item-refund {
+    width: 0;
+  }
+
+  .yes-refund span.item-refund-header,
+  .yes-refund span.item-refund {
+    width: 80px;
+  }
+
+  span.item-cost-header,
+  span.item-cost {
+    width: 80px;
+  }*/
+
+  div.summary-section {
+    width: 100%;
+    padding: 0;
+    float: left;
+  }
+
+  div.summary-section div {
+    clear: both;
+    float: right;
+  }
+
+  div.comments-section {
+    margin: 20px 0;
+    padding: 20px 0 0 0;
+    border-top: 1px dashed #bbb;
+  }
+}
+
+/* Only Devices between 300px and 640px*/
+@media only screen and (min-width: 300px) and (max-width: 640px) {
+
+  div.item-section {
+    /*width: 258px;*/
+    width: 100%;
+    padding: 0;
+  }
+
+  div.items {
+  }
+
+  div.item-header {
+    display: none;
+  }
+
+  span.item-id-header,
+  span.item-id {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    width: 258px;
+    clear: both;
+  }
+  span.item-id:before {
+    content:"Item ID:";
+    font-weight: bold;
+    display: block;
+    width: 100px;
+    float: left;
+  }
+
+  span.item-qty-header,
+  span.item-qty {
+    width: 258px;
+    padding-right:0;
+    clear:both;
+    text-align:right;
+  }
+  span.item-qty:before {
+    content:"Quantity:";
+    display: block;
+    font-weight: bold;
+    width: 100px;
+    float: left;
+    text-align:left;
+  }
+
+
+  span.item-description-header,
+  span.item-description {
+    width: 258px;
+  }
+  div.item-section.no-refund.no-discount span.item-description-header,
+  div.item-section.no-refund.no-discount span.item-description {
+    width: 258px;
+    padding-left: 100px;
+  }
+  div.item-section.yes-refund.no-discount span.item-description-header,
+  div.item-section.yes-refund.no-discount span.item-description {
+    width: 258px;
+    padding-left: 100px;
+  }
+  div.item-section.no-refund.yes-discount span.item-description-header,
+  div.item-section.no-refund.yes-discount span.item-description {
+    width: 258px;
+    padding-left: 100px;
+  }
+  div.item-section.yes-refund.yes-discount span.item-description-header,
+  div.item-section.yes-refund.yes-discount span.item-description {
+    width: 258px;
+    padding-left: 100px;
+  }
+  span.item-description:before {
+    content:"Description:";
+    font-weight: bold;
+    display: block;
+    width: 100px;
+    position: absolute;
+    left: 10px;
+    text-align: right;
+  }
+
+  .no-discount span.item-discount-header,
+  .no-discount span.item-discount {
+    display: none;
+    width: 0;
+  }
+
+  .yes-discount span.item-discount-header,
+  .yes-discount span.item-discount {
+    width: 258px;
+    text-align: right;
+  }
+
+  .yes-discount span.item-discount:before {
+    content: "Discount:";
+    font-weight: bold;
+    display: block;
+    width: 100px;
+    float: left;
+    text-align: left;
+  }
+
+  .no-refund span.item-refund-header,
+  .no-refund span.item-refund {
+    display: none;
+    width: 0;
+  }
+
+  .yes-refund span.item-refund-header,
+  .yes-refund span.item-refund {
+    width: 258px;
+    text-align: right;
+  }
+
+  .yes-refund span.item-refund:before {
+    content: "Refund:";
+    font-weight: bold;
+    display: block;
+    width: 100px;
+    float: left;
+    text-align: left;
+  }
+
+  span.item-cost-header,
+  span.item-cost {
+    width: 258px;
+    text-align: right;
+  }
+  span.item-cost:before {
+    content: "Cost:";
+    font-weight: bold;
+    display: block;
+    width: 100px;
+    float: left;
+    text-align: left;
+  }
+
+  div.summary-section {
+    width: 258px;
+    padding: 0;
+    float: left;
+  }
+
+  div.summary-section {
+    width: 100%;
+    padding: 0;
+    float: left;
+  }
+
+  div.summary-section div {
+    clear: both;
+    width: 258px;
+    float: right;
+  }
+
+  div.summary-section.no-discount.no-refund .label,
+  div.summary-section.no-discount.no-refund .gift-wrap-label,
+  div.summary-section.no-discount.no-refund .gift-wrap-title {
+    width: 158px;
+  }
+
+  div.comments-section {
+    margin: 20px 0;
+    padding: 20px 0 0 0;
+    border-top: 1px dashed #bbb;
+  }
+
+}
+
+
+/* Devices smaller than 640em */
+@media only screen and (max-width: 640px) {
+
+  div.order {
+    min-width: 300px;
+  }
+
+  div.shipto-section {
+    display: block;
+  }
+
+  .billto-section, .shipto-section {
+    width: 100%;
+    max-width: 300px;
+  }
+
+  div.misc-section .field, div.contact-section .field {
+    clear: both;
+  }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

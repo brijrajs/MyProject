@@ -1,0 +1,133 @@
+##
+## UltraCart - Mr Teas Template
+## http://www.ultracart.com/
+##
+## Copyright (c) 2015 BPS Info Solutions Inc.
+## License located here:
+## http://www.ultracart.com/storefront/license/
+##
+## Designed by Level 2 Design, LLC http://www.level2d.com/
+##
+
+## uc:display-items="true"
+## uc:item-multimedia-default-used="true"
+
+## uc:theme-attribute-string="Item No Image Available Image URL"
+
+## uc:theme-attribute-boolean="Hide Sale Banner"
+## uc:theme-attribute-boolean="Hide Out of Stock Banner"
+
+## This may be set by the parent to three-up if facets are displayed
+#if (!$groupItemListClass)
+  #set( $groupItemListClass = "four-up")
+#end
+<div class="col-xs-12 col-sm-4 col-md-3" style="padding-top:30px;padding-left: 0px;">
+        	<div class="categories">
+            	<div class="green-heading">Categories</div>
+                <ul>
+                	<li><a href="https://store.healthlabsnutra.com/storewidesale">Store Wide Sale</a></li>
+                	<li><a href="https://store.healthlabsnutra.com/digestiveenzymes">Digestive Enzymes</a></li>
+                	<li><a href="https://store.healthlabsnutra.com/probiotics">Probiotics</a></li>
+                	<li><a href="https://store.healthlabsnutra.com/KrillOil">Krill Oil</a></li>
+                    <li><a href="https://store.healthlabsnutra.com/GeneralHealth">General Health</a></li>
+                    <li><a href="https://store.healthlabsnutra.com/MensHealth">Men's Health</a></li>
+                    <li><a href="https://store.healthlabsnutra.com/WomensHealth">Women's Health</a></li>
+                	<li><a href="https://store.healthlabsnutra.com/Omega3">Omega 3</a></li>
+                	<li><a href="https://store.healthlabsnutra.com/COq10">COq10</a></li>
+                    
+                	
+                </ul>
+            </div><!-- End categories -->
+            
+            <div class="side-img"><img class="img-responsive" src="https://s3.amazonaws.com/ultracartsff/HEA12/7086/themes/MrTeas/assets/imgs/img-ad1.jpg" alt="" style="display: none !important;"></div>
+            <div class="side-img"><img class="img-responsive" src="https://s3.amazonaws.com/ultracartsff/HEA12/7086/themes/MrTeas/assets/imgs/img-ad2.jpg" alt="" style="display: none !important;"></div>
+            
+        </div>
+<div style="padding-top:30px;padding-right:0px;" class="col-xs-12 col-sm-8 col-md-9 product-list-images small $groupItemListClass" data-equalizer>
+  <ul>
+    #set($groupItems = $group.getItemsForPage($page))
+    ## $formatHelper.sortByAttribute($groupItems, "sort_order", false)
+    ## $formatHelper.removeItemsWithoutCost($groupItems)
+    ## $formatHelper.removeOutOfStockItems($groupItems)
+
+    ## Below manually sets the url segment that is used to construct the item path
+
+    ## #set($groupItems = $formatHelper.getItemsForPage($groupItems, $page, 2))
+
+    #foreach($item in $groupItems)
+
+      #if($item.getSaleCost())
+        #set($saleClass = "sale")
+      #else
+        #set($saleClass = "")
+      #end
+
+      #if($item.isInventoryTracked())
+        #if($item.getAvailableQuantity() && $item.getAvailableQuantity() < 1)
+          #set($stockClass = "out-of-stock")
+        #else
+          #set($stockClass = "")
+        #end
+      #else
+        #set($stockClass = "")
+      #end
+
+      <li data-equalizer-watch class="$saleClass #if($theme.attr('Hide Out of Stock Banner') == 'false') $stockClass #end">
+        <a href="${baseUrl}${item.getPath()}" title="$item.getTitle()" class="product-photo">
+          <strong>${item.getTitle()}</strong>
+          <span class="link">View</span>
+          #if($item.getDefaultMultimedia('Image') && $item.getDefaultMultimedia('Image').getThumbnail(220, 220, true, $PNGThumbnails))
+            <img src="${baseThumbnailUrl}${item.getDefaultMultimedia('Image').getThumbnail(220, 220, true, $PNGThumbnails)}" class="UC-default-item-multimedia" width="220" height="220" alt="$item.getTitle()" />
+          #else
+            <img src="${baseThemeUrl}${theme.attr('Item No Image Available Image URL')}" width="220" height="220" alt="$item.getTitle()" />
+          #end
+          #if($item.getSaleCost() && $theme.attr("Hide Sale Banner") == "false")
+            <sub>
+              <em>Sale!</em>
+            </sub>
+          #end
+          #if($item.isInventoryTracked() && $theme.attr("Hide Out of Stock Banner") == "false")
+            #if($item.getAvailableQuantity() && $item.getAvailableQuantity() < 1)
+              <sub>
+                <em>Out of stock</em>
+              </sub>
+            #end
+          #end
+        </a>
+        <div class="product-info">
+          <a href="${baseUrl}${item.getPath()}" title="" class="product-title">${item.getTitle()}</a>
+          #if($item.isReviewable())
+            #if (!$item.hasApprovedReview())
+              <div class="review-stars">
+                No Reviews
+              </div>
+
+            #else
+              <div class="review-stars">
+                $item.getReviewOverallAsHtml([
+                  "<span class='icon-star-0-4'></span>",
+                  "<span class='icon-star-1-4'></span>",
+                  "<span class='icon-star-2-4'></span>",
+                  "<span class='icon-star-3-4'></span>",
+                  "<span class='icon-star-4-4'></span>"
+                ]) ($item.getReviewCount())
+              </div>
+            #end
+          #else
+            Not Reviewable
+          #end
+          <p class="product-description">$formatHelper.excerpt($formatHelper.removeHtml(${item.getExtendedDescriptionNoEscape()}), 130)</p>
+          #if($item.getMAPLocalized(false))
+            <span class="price">$item.getMAPLocalized(false)</span>
+          #elseif($item.getSaleCost())
+            <span class="price"><strike>$item.getRegularCostLocalized()</strike></span>
+            <span class="price sale">$item.getSaleCostLocalized()</span>
+          #else
+            <span class="price">$item.getCostLocalized()</span>
+          #end
+        </div>
+      </li>
+    #end
+
+  </ul>
+</div>

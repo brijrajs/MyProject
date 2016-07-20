@@ -1,0 +1,399 @@
+{
+  "contentGuides": [
+    {
+      "directive": "uc:theme-attribute-color",
+      "name": "Disabled Button Background Color",
+      "selector": "button, .button, button, .button"
+    },
+    {
+      "directive": "uc:theme-attribute-color",
+      "name": "Disabled Button Border Color",
+      "selector": "button, .button, button, .button"
+    },
+    {
+      "directive": "uc:theme-attribute-color",
+      "name": "Disabled Button Font Color",
+      "selector": "button, .button, button, .button"
+    },
+    {
+      "directive": "uc:theme-attribute-color",
+      "name": "Footer Background Color",
+      "selector": "#main-footer"
+    },
+    {
+      "directive": "uc:theme-attribute-color",
+      "name": "Footer Border Color",
+      "selector": "#main-footer h1, #main-footer body.catalog.sidebar aside h2, body.catalog.sidebar aside #main-footer h2, #main-footer .subfooter, #main-footer .subfooter"
+    },
+    {
+      "directive": "uc:theme-attribute-color",
+      "name": "Footer Font Color",
+      "selector": "#main-footer, #main-footer h1, #main-footer body.catalog.sidebar aside h2, body.catalog.sidebar aside #main-footer h2, #main-footer address, #main-footer .subfooter .credits em"
+    },
+    {
+      "directive": "uc:theme-attribute-color",
+      "name": "Footer Link Font Color",
+      "selector": "#main-footer a, #main-footer address a, #main-footer .subfooter .credits em a"
+    },
+    {
+      "directive": "uc:theme-attribute-color",
+      "name": "Footer Link Hover Font Color",
+      "selector": "#main-footer a, #main-footer .subfooter .credits em a"
+    },
+    {
+      "directive": "uc:theme-attribute-color",
+      "name": "Footer Logo Border Color",
+      "selector": "#main-footer .subfooter .store-title"
+    },
+    {
+      "directive": "uc:theme-attribute-color",
+      "name": "Footer Logo Font Color",
+      "selector": "#main-footer .subfooter .store-title"
+    },
+    {
+      "directive": "uc:theme-attribute-color",
+      "name": "Home Slider Dot Active Border Color",
+      "selector": ".slick-dots li.slick-active button"
+    },
+    {
+      "directive": "uc:theme-attribute-color",
+      "name": "Home Slider Dot Active Fill Color",
+      "selector": ".slick-dots li.slick-active button"
+    },
+    {
+      "directive": "uc:theme-attribute-color",
+      "name": "Home Slider Dot Border Color",
+      "selector": ".featured-products-gallery .slick-dots button"
+    },
+    {
+      "directive": "uc:theme-attribute-color",
+      "name": "Home Slider Dot Hover Border Color",
+      "selector": ".slick-dots li button, .slick-dots li button"
+    },
+    {
+      "directive": "uc:theme-attribute-color",
+      "name": "Home Slider Dot Hover Fill Color",
+      "selector": ".slick-dots li button, .slick-dots li button"
+    },
+    {
+      "directive": "uc:theme-attribute-color",
+      "name": "Home Slider Font Color",
+      "selector": ".featured-products-gallery h1, .featured-products-gallery, body.catalog.sidebar aside h2, body.catalog.sidebar aside, .featured-products-gallery h2"
+    },
+    {
+      "directive": "uc:theme-attribute-color",
+      "name": "Item Out Of Stock Banner Background Color",
+      "selector": ".product-list-images .out-of-stock sub:after, .product-list-images .out-of-stock sub:before"
+    },
+    {
+      "directive": "uc:theme-attribute-color",
+      "name": "Item Out Of Stock Banner Font Color",
+      "selector": ".product-list-images .out-of-stock sub"
+    },
+    {
+      "directive": "uc:theme-attribute-color",
+      "name": "Item Review Star Color",
+      "selector": ".review-stars span"
+    },
+    {
+      "directive": "uc:theme-attribute-color",
+      "name": "Item Sale Banner Background Color",
+      "selector": ".product-list-images .sale sub, .product-list-images .sale sub:after, .product-list-images .sale sub:before"
+    },
+    {
+      "directive": "uc:theme-attribute-color",
+      "name": "Item Sale Banner Font Color",
+      "selector": ".product-list-images .sale sub"
+    },
+    {
+      "directive": "uc:theme-attribute-color",
+      "name": "Item Sale Price Font Color",
+      "selector": ".price.sale"
+    },
+    {
+      "directive": "uc:theme-attribute-color",
+      "name": "Item View Link Button Background Color",
+      "selector": ".product-list-images .link"
+    },
+    {
+      "directive": "uc:theme-attribute-color",
+      "name": "Item View Link Button Font Color",
+      "selector": ".product-list-images .link"
+    },
+    {
+      "directive": "uc:theme-attribute-color",
+      "name": "Mobile Nav Background Color",
+      "selector": "body"
+    },
+    {
+      "directive": "uc:theme-attribute-color",
+      "name": "Mobile Nav Border Color",
+      "selector": "#main-nav li ul, #main-nav a, #main-nav li \u003e a"
+    },
+    {
+      "directive": "uc:theme-attribute-color",
+      "name": "Mobile Nav Font Color",
+      "selector": "#main-nav a, #main-nav li \u003e a"
+    },
+    {
+      "directive": "uc:theme-attribute-color",
+      "name": "Mobile Search Icon Background Color",
+      "selector": "#main-header .header-search a"
+    },
+    {
+      "directive": "uc:theme-attribute-color",
+      "name": "Mobile Search Icon Color",
+      "selector": "#main-header .header-search a:before"
+    },
+    {
+      "directive": "uc:theme-attribute-color",
+      "name": "Primary Background Color",
+      "selector": "#galaxy, .title span, .cart-summary h2, .slick-prev, .slick-next, .slick-dots li button, .tabs dd.active \u003e a, .tabs dd.active \u003e a, .tabs dd \u003e a, .tabs dd.active \u003e a, .product-list-images .out-of-stock:before, .product-list-images .out-of-stock sub, #main-header .menu-cart"
+    },
+    {
+      "directive": "uc:theme-attribute-color",
+      "name": "Primary Border Color",
+      "selector": "hr, hr, hr, .cart-summary .total::before, .cart-summary .total::before, .cart-summary .total::before, .cart h2, .cart-summary, .title:before, .title span, .option-group li, .panel, .slick-prev, .slick-next, .slick-dots li button, .product-list-images.viewer ul.slick-dots .slick-active button, .slick-prev, .slick-prev, .slick-next, .slick-next, .slick-slide.slick-center, .tabs, .tabs dd \u003e a, .tabs dd:first-child \u003e a, body.product-page .row.collapse.product-review, body.product-page .row.collapse.product-review .review-user, body.product-page .row.collapse.product-review .review-user, .social-buttons a, .product-panel, .product-panel .product-options, .cart-footer .cart-footer-left, .cart-footer .cart-footer-right, .scrollbox, table, table td, table th, .cart-footer .cart-breakdown, .order, div.before-customer, div.customer-info, .item-header, div.items .order-item, .item-section, .return-policy-container, .customer-service-info, .gift-msg-section, .cart-summary dl, .cart h2, .product-panel .product-total .product-qty label, .product-panel .product-total .product-pricetag-label, .product-panel .product-total .product-qty label, .product-panel .product-total .product-pricetag-label, .product-panel .product-total .product-qty, .product-panel .product-total .product-pricetag"
+    },
+    {
+      "directive": "uc:theme-attribute-color",
+      "name": "Primary Button Background Color",
+      "selector": ".paging li.page.current, button, .button, button.primary, .button.primary, .tabs dd \u003e a"
+    },
+    {
+      "directive": "uc:theme-attribute-color",
+      "name": "Primary Button Font Color",
+      "selector": ".paging li.page.current, button, .button, button.primary, .button.primary"
+    },
+    {
+      "directive": "uc:theme-attribute-color",
+      "name": "Primary Button Hover Background Color",
+      "selector": ".paging li.page.current, button, button, .button, .button, .button, button.primary, .button.primary"
+    },
+    {
+      "directive": "uc:theme-attribute-color",
+      "name": "Primary Button Hover Font Color",
+      "selector": ".paging li.page.current, button, button, .button, .button, .button, button.primary, .button.primary"
+    },
+    {
+      "directive": "uc:theme-attribute-color",
+      "name": "Primary Font Color",
+      "selector": "body, .product-info, .price, .slick-prev:before, .slick-next:before, .tabs dd.active a, .tabs .tab-title.active a, .tabs dd \u003e a, .review-user .author, .social-buttons a, .social-buttons a, .product-panel .product-info .product-title a, .product-panel .product-total .product-pricetag, label, .label-move span, .label-group \u003e label, .label-group \u003e span, .cart h2, .product-panel .product-total .product-qty label, .product-panel .product-total .product-pricetag-label"
+    },
+    {
+      "directive": "uc:theme-attribute-color",
+      "name": "Primary Header Background Color",
+      "selector": "#main-header"
+    },
+    {
+      "directive": "uc:theme-attribute-color",
+      "name": "Primary Header Logo Border Color",
+      "selector": "#main-header .company-logo span"
+    },
+    {
+      "directive": "uc:theme-attribute-color",
+      "name": "Primary Header Logo Font Color",
+      "selector": "#main-header .company-logo span"
+    },
+    {
+      "directive": "uc:theme-attribute-color",
+      "name": "Primary Header Nav Font Color",
+      "selector": "#main-nav a, #main-nav \u003e li.active \u003e a, #main-nav li.has-subnav:after"
+    },
+    {
+      "directive": "uc:theme-attribute-color",
+      "name": "Primary Header Nav Hover Font Color",
+      "selector": "#main-header .header-search a:before"
+    },
+    {
+      "directive": "uc:theme-attribute-color",
+      "name": "Primary Header Sub Nav Background Color",
+      "selector": "#main-nav li ul"
+    },
+    {
+      "directive": "uc:theme-attribute-color",
+      "name": "Primary Header Sub Nav Font Color",
+      "selector": "#main-nav li ul a, #main-nav li ul"
+    },
+    {
+      "directive": "uc:theme-attribute-color",
+      "name": "Primary Header Sub Nav Hover Font Color",
+      "selector": "#main-nav li ul a"
+    },
+    {
+      "directive": "uc:theme-attribute-color",
+      "name": "Primary Headers Border Color",
+      "selector": "h1, body.catalog.sidebar aside h2"
+    },
+    {
+      "directive": "uc:theme-attribute-color",
+      "name": "Primary Headers Font Color",
+      "selector": "h1, body.catalog.sidebar aside h2, div.order-id .label, div.creation-date .label, div.billto-header, div.shipto-header, .shipping-method span.shipping-method-label.label, .tax-county .tax-county-label, .gift-label.label, .gift-email-label.label, .section-header, .return-policy-header, .customer-service-header"
+    },
+    {
+      "directive": "uc:theme-attribute-color",
+      "name": "Primary Input Background Color",
+      "selector": "select, input, input[type\u003d\"text\"], input[type\u003d\"password\"], input[type\u003d\"date\"], input[type\u003d\"datetime\"], input[type\u003d\"datetime-local\"], input[type\u003d\"month\"], input[type\u003d\"week\"], input[type\u003d\"email\"], input[type\u003d\"number\"], input[type\u003d\"search\"], input[type\u003d\"tel\"], input[type\u003d\"time\"], input[type\u003d\"url\"], input[type\u003d\"color\"], textarea, input[type\u003d\"text\"][disabled], input[type\u003d\"text\"][readonly], fieldset[disabled] input[type\u003d\"text\"], input[type\u003d\"password\"][disabled], input[type\u003d\"password\"][readonly], fieldset[disabled] input[type\u003d\"password\"], input[type\u003d\"date\"][disabled], input[type\u003d\"date\"][readonly], fieldset[disabled] input[type\u003d\"date\"], input[type\u003d\"datetime\"][disabled], input[type\u003d\"datetime\"][readonly], fieldset[disabled] input[type\u003d\"datetime\"], input[type\u003d\"datetime-local\"][disabled], input[type\u003d\"datetime-local\"][readonly], fieldset[disabled] input[type\u003d\"datetime-local\"], input[type\u003d\"month\"][disabled], input[type\u003d\"month\"][readonly], fieldset[disabled] input[type\u003d\"month\"], input[type\u003d\"week\"][disabled], input[type\u003d\"week\"][readonly], fieldset[disabled] input[type\u003d\"week\"], input[type\u003d\"email\"][disabled], input[type\u003d\"email\"][readonly], fieldset[disabled] input[type\u003d\"email\"], input[type\u003d\"number\"][disabled], input[type\u003d\"number\"][readonly], fieldset[disabled] input[type\u003d\"number\"], input[type\u003d\"search\"][disabled], input[type\u003d\"search\"][readonly], fieldset[disabled] input[type\u003d\"search\"], input[type\u003d\"tel\"][disabled], input[type\u003d\"tel\"][readonly], fieldset[disabled] input[type\u003d\"tel\"], input[type\u003d\"time\"][disabled], input[type\u003d\"time\"][readonly], fieldset[disabled] input[type\u003d\"time\"], input[type\u003d\"url\"][disabled], input[type\u003d\"url\"][readonly], fieldset[disabled] input[type\u003d\"url\"], input[type\u003d\"color\"][disabled], input[type\u003d\"color\"][readonly], fieldset[disabled] input[type\u003d\"color\"], textarea[disabled], textarea[readonly], fieldset[disabled] textarea, .picker__input[type\u003d\"text\"][readonly], .picker__input[type\u003d\"date\"][readonly]"
+    },
+    {
+      "directive": "uc:theme-attribute-color",
+      "name": "Primary Input Border Color",
+      "selector": "select, input, input[type\u003d\"text\"], input[type\u003d\"password\"], input[type\u003d\"date\"], input[type\u003d\"datetime\"], input[type\u003d\"datetime-local\"], input[type\u003d\"month\"], input[type\u003d\"week\"], input[type\u003d\"email\"], input[type\u003d\"number\"], input[type\u003d\"search\"], input[type\u003d\"tel\"], input[type\u003d\"time\"], input[type\u003d\"url\"], input[type\u003d\"color\"], textarea, input[type\u003d\"text\"][disabled], input[type\u003d\"text\"][readonly], fieldset[disabled] input[type\u003d\"text\"], input[type\u003d\"password\"][disabled], input[type\u003d\"password\"][readonly], fieldset[disabled] input[type\u003d\"password\"], input[type\u003d\"date\"][disabled], input[type\u003d\"date\"][readonly], fieldset[disabled] input[type\u003d\"date\"], input[type\u003d\"datetime\"][disabled], input[type\u003d\"datetime\"][readonly], fieldset[disabled] input[type\u003d\"datetime\"], input[type\u003d\"datetime-local\"][disabled], input[type\u003d\"datetime-local\"][readonly], fieldset[disabled] input[type\u003d\"datetime-local\"], input[type\u003d\"month\"][disabled], input[type\u003d\"month\"][readonly], fieldset[disabled] input[type\u003d\"month\"], input[type\u003d\"week\"][disabled], input[type\u003d\"week\"][readonly], fieldset[disabled] input[type\u003d\"week\"], input[type\u003d\"email\"][disabled], input[type\u003d\"email\"][readonly], fieldset[disabled] input[type\u003d\"email\"], input[type\u003d\"number\"][disabled], input[type\u003d\"number\"][readonly], fieldset[disabled] input[type\u003d\"number\"], input[type\u003d\"search\"][disabled], input[type\u003d\"search\"][readonly], fieldset[disabled] input[type\u003d\"search\"], input[type\u003d\"tel\"][disabled], input[type\u003d\"tel\"][readonly], fieldset[disabled] input[type\u003d\"tel\"], input[type\u003d\"time\"][disabled], input[type\u003d\"time\"][readonly], fieldset[disabled] input[type\u003d\"time\"], input[type\u003d\"url\"][disabled], input[type\u003d\"url\"][readonly], fieldset[disabled] input[type\u003d\"url\"], input[type\u003d\"color\"][disabled], input[type\u003d\"color\"][readonly], fieldset[disabled] input[type\u003d\"color\"], textarea[disabled], textarea[readonly], fieldset[disabled] textarea"
+    },
+    {
+      "directive": "uc:theme-attribute-color",
+      "name": "Primary Input Font Color",
+      "selector": "select, input, input[type\u003d\"text\"], input[type\u003d\"password\"], input[type\u003d\"date\"], input[type\u003d\"datetime\"], input[type\u003d\"datetime-local\"], input[type\u003d\"month\"], input[type\u003d\"week\"], input[type\u003d\"email\"], input[type\u003d\"number\"], input[type\u003d\"search\"], input[type\u003d\"tel\"], input[type\u003d\"time\"], input[type\u003d\"url\"], input[type\u003d\"color\"], textarea, input[type\u003d\"text\"][disabled], input[type\u003d\"text\"][readonly], fieldset[disabled] input[type\u003d\"text\"], input[type\u003d\"password\"][disabled], input[type\u003d\"password\"][readonly], fieldset[disabled] input[type\u003d\"password\"], input[type\u003d\"date\"][disabled], input[type\u003d\"date\"][readonly], fieldset[disabled] input[type\u003d\"date\"], input[type\u003d\"datetime\"][disabled], input[type\u003d\"datetime\"][readonly], fieldset[disabled] input[type\u003d\"datetime\"], input[type\u003d\"datetime-local\"][disabled], input[type\u003d\"datetime-local\"][readonly], fieldset[disabled] input[type\u003d\"datetime-local\"], input[type\u003d\"month\"][disabled], input[type\u003d\"month\"][readonly], fieldset[disabled] input[type\u003d\"month\"], input[type\u003d\"week\"][disabled], input[type\u003d\"week\"][readonly], fieldset[disabled] input[type\u003d\"week\"], input[type\u003d\"email\"][disabled], input[type\u003d\"email\"][readonly], fieldset[disabled] input[type\u003d\"email\"], input[type\u003d\"number\"][disabled], input[type\u003d\"number\"][readonly], fieldset[disabled] input[type\u003d\"number\"], input[type\u003d\"search\"][disabled], input[type\u003d\"search\"][readonly], fieldset[disabled] input[type\u003d\"search\"], input[type\u003d\"tel\"][disabled], input[type\u003d\"tel\"][readonly], fieldset[disabled] input[type\u003d\"tel\"], input[type\u003d\"time\"][disabled], input[type\u003d\"time\"][readonly], fieldset[disabled] input[type\u003d\"time\"], input[type\u003d\"url\"][disabled], input[type\u003d\"url\"][readonly], fieldset[disabled] input[type\u003d\"url\"], input[type\u003d\"color\"][disabled], input[type\u003d\"color\"][readonly], fieldset[disabled] input[type\u003d\"color\"], textarea[disabled], textarea[readonly], fieldset[disabled] textarea"
+    },
+    {
+      "directive": "uc:theme-attribute-color",
+      "name": "Primary Link Font Color",
+      "selector": ".breadcrumb a, a, .product-list-images .product-info .product-title, .calendar-picker:after, .has-tip, .cart-summary .total"
+    },
+    {
+      "directive": "uc:theme-attribute-color",
+      "name": "Primary Link Hover Font Color",
+      "selector": "a"
+    },
+    {
+      "directive": "uc:theme-attribute-color",
+      "name": "Secondary Background Color",
+      "selector": ".cart h2, .cart-summary, .panel.active, .panel, .product-list-images.viewer ul.slick-dots .slick-active button, .slick-prev, .slick-prev, .slick-next, .slick-next, .tabs dd \u003e a, body.product-page .row.collapse.product-review:nth-child(odd), .social-buttons a, .cart-footer .cart-footer-right, table th, .cart-footer .cart-breakdown, table tr:nth-child(even), .cart h2, .product-panel .product-total .product-qty label, .product-panel .product-total .product-pricetag-label"
+    },
+    {
+      "directive": "uc:theme-attribute-color",
+      "name": "Secondary Button Background Color",
+      "selector": "button.secondary, .button.secondary"
+    },
+    {
+      "directive": "uc:theme-attribute-color",
+      "name": "Secondary Button Border Color",
+      "selector": "button.secondary, .button.secondary"
+    },
+    {
+      "directive": "uc:theme-attribute-color",
+      "name": "Secondary Button Font Color",
+      "selector": "button.secondary, .button.secondary"
+    },
+    {
+      "directive": "uc:theme-attribute-color",
+      "name": "Secondary Button Hover Background Color",
+      "selector": "button.secondary, .button.secondary"
+    },
+    {
+      "directive": "uc:theme-attribute-color",
+      "name": "Secondary Button Hover Border Color",
+      "selector": "button.secondary, .button.secondary"
+    },
+    {
+      "directive": "uc:theme-attribute-color",
+      "name": "Secondary Button Hover Font Color",
+      "selector": "button.secondary, .button.secondary"
+    },
+    {
+      "directive": "uc:theme-attribute-color",
+      "name": "Secondary Font Color",
+      "selector": ".small, small, body.product-page .row.collapse.product-review time, .product-panel .product-info .product-id, .scrollbox"
+    },
+    {
+      "directive": "uc:theme-attribute-color",
+      "name": "Secondary Header Background Color",
+      "selector": "#main-header .secondary-masthead, #main-nav li ul li.has-subnav ul"
+    },
+    {
+      "directive": "uc:theme-attribute-color",
+      "name": "Secondary Header Cart Summary Background Color",
+      "selector": "#main-header .header-cart, #main-header .menu-cart:before"
+    },
+    {
+      "directive": "uc:theme-attribute-color",
+      "name": "Secondary Header Cart Summary Font Color",
+      "selector": "#main-header .header-cart-summary"
+    },
+    {
+      "directive": "uc:theme-attribute-color",
+      "name": "Secondary Header Hover Icons Color",
+      "selector": "#main-header .social-links.small a, #main-header .account-link a, #main-header .header-search.active a:before"
+    },
+    {
+      "directive": "uc:theme-attribute-color",
+      "name": "Secondary Header Icons Color",
+      "selector": "#main-header .menu-cart, #main-header .icon-menu, #main-header .social-links.small a, #main-header .account-link a, #main-header .header-search a:before"
+    },
+    {
+      "directive": "uc:theme-attribute-color",
+      "name": "Secondary Header Promo Font Color",
+      "selector": "#main-header .header-message"
+    },
+    {
+      "directive": "uc:theme-attribute-color",
+      "name": "Secondary Headers Font Color",
+      "selector": "h2, .panel-title, .title, .product-info .product-title, .cart h2, h3, h4"
+    },
+    {
+      "directive": "uc:theme-attribute-color",
+      "name": "System No Color",
+      "selector": "button.error, .button.error"
+    },
+    {
+      "directive": "uc:theme-attribute-color",
+      "name": "System No Hover Color",
+      "selector": "button.error, .button.error"
+    },
+    {
+      "directive": "uc:theme-attribute-color",
+      "name": "System Yes Color",
+      "selector": "button.success, .button.success"
+    },
+    {
+      "directive": "uc:theme-attribute-color",
+      "name": "System Yes Hover Color",
+      "selector": "button.success, .button.success"
+    },
+    {
+      "directive": "uc:theme-attribute-color",
+      "name": "Theme Color 01",
+      "selector": "select, input, input[type\u003d\"text\"], input[type\u003d\"password\"], input[type\u003d\"date\"], input[type\u003d\"datetime\"], input[type\u003d\"datetime-local\"], input[type\u003d\"month\"], input[type\u003d\"week\"], input[type\u003d\"email\"], input[type\u003d\"number\"], input[type\u003d\"search\"], input[type\u003d\"tel\"], input[type\u003d\"time\"], input[type\u003d\"url\"], input[type\u003d\"color\"], textarea, input[type\u003d\"text\"][disabled], input[type\u003d\"text\"][readonly], fieldset[disabled] input[type\u003d\"text\"], input[type\u003d\"password\"][disabled], input[type\u003d\"password\"][readonly], fieldset[disabled] input[type\u003d\"password\"], input[type\u003d\"date\"][disabled], input[type\u003d\"date\"][readonly], fieldset[disabled] input[type\u003d\"date\"], input[type\u003d\"datetime\"][disabled], input[type\u003d\"datetime\"][readonly], fieldset[disabled] input[type\u003d\"datetime\"], input[type\u003d\"datetime-local\"][disabled], input[type\u003d\"datetime-local\"][readonly], fieldset[disabled] input[type\u003d\"datetime-local\"], input[type\u003d\"month\"][disabled], input[type\u003d\"month\"][readonly], fieldset[disabled] input[type\u003d\"month\"], input[type\u003d\"week\"][disabled], input[type\u003d\"week\"][readonly], fieldset[disabled] input[type\u003d\"week\"], input[type\u003d\"email\"][disabled], input[type\u003d\"email\"][readonly], fieldset[disabled] input[type\u003d\"email\"], input[type\u003d\"number\"][disabled], input[type\u003d\"number\"][readonly], fieldset[disabled] input[type\u003d\"number\"], input[type\u003d\"search\"][disabled], input[type\u003d\"search\"][readonly], fieldset[disabled] input[type\u003d\"search\"], input[type\u003d\"tel\"][disabled], input[type\u003d\"tel\"][readonly], fieldset[disabled] input[type\u003d\"tel\"], input[type\u003d\"time\"][disabled], input[type\u003d\"time\"][readonly], fieldset[disabled] input[type\u003d\"time\"], input[type\u003d\"url\"][disabled], input[type\u003d\"url\"][readonly], fieldset[disabled] input[type\u003d\"url\"], input[type\u003d\"color\"][disabled], input[type\u003d\"color\"][readonly], fieldset[disabled] input[type\u003d\"color\"], textarea[disabled], textarea[readonly], fieldset[disabled] textarea, #galaxy, .title span, .cart-summary h2, #main-nav a, #main-nav li \u003e a, #main-nav li ul a, #main-header .header-cart-summary, #main-header .header-search a:before, .featured-products-gallery h1, .featured-products-gallery, body.catalog.sidebar aside h2, body.catalog.sidebar aside, .featured-products-gallery h2, .featured-products-gallery .slick-dots button, .paging li.page.current, .paging li.page.current, button, .button, button.primary, .button.primary, button, button, .button, .button, .button, button.primary, .button.primary, button.secondary, .button.secondary, button.secondary, .button.secondary, #main-footer a, #main-footer address a, #main-footer .subfooter .store-title, #main-footer .subfooter .store-title, #main-footer .subfooter .credits em a, .slick-prev, .slick-next, .slick-dots li button, .tabs dd.active \u003e a, .tabs dd.active \u003e a, .tabs dd \u003e a, .tabs dd.active \u003e a, .product-list-images .link, .product-list-images .sale sub, .product-list-images .out-of-stock sub, .product-list-images .out-of-stock:before, .product-list-images .out-of-stock sub, .picker__input[type\u003d\"text\"][readonly], .picker__input[type\u003d\"date\"][readonly]"
+    },
+    {
+      "directive": "uc:theme-attribute-color",
+      "name": "Theme Color 02",
+      "selector": "select, input, input[type\u003d\"text\"], input[type\u003d\"password\"], input[type\u003d\"date\"], input[type\u003d\"datetime\"], input[type\u003d\"datetime-local\"], input[type\u003d\"month\"], input[type\u003d\"week\"], input[type\u003d\"email\"], input[type\u003d\"number\"], input[type\u003d\"search\"], input[type\u003d\"tel\"], input[type\u003d\"time\"], input[type\u003d\"url\"], input[type\u003d\"color\"], textarea, input[type\u003d\"text\"][disabled], input[type\u003d\"text\"][readonly], fieldset[disabled] input[type\u003d\"text\"], input[type\u003d\"password\"][disabled], input[type\u003d\"password\"][readonly], fieldset[disabled] input[type\u003d\"password\"], input[type\u003d\"date\"][disabled], input[type\u003d\"date\"][readonly], fieldset[disabled] input[type\u003d\"date\"], input[type\u003d\"datetime\"][disabled], input[type\u003d\"datetime\"][readonly], fieldset[disabled] input[type\u003d\"datetime\"], input[type\u003d\"datetime-local\"][disabled], input[type\u003d\"datetime-local\"][readonly], fieldset[disabled] input[type\u003d\"datetime-local\"], input[type\u003d\"month\"][disabled], input[type\u003d\"month\"][readonly], fieldset[disabled] input[type\u003d\"month\"], input[type\u003d\"week\"][disabled], input[type\u003d\"week\"][readonly], fieldset[disabled] input[type\u003d\"week\"], input[type\u003d\"email\"][disabled], input[type\u003d\"email\"][readonly], fieldset[disabled] input[type\u003d\"email\"], input[type\u003d\"number\"][disabled], input[type\u003d\"number\"][readonly], fieldset[disabled] input[type\u003d\"number\"], input[type\u003d\"search\"][disabled], input[type\u003d\"search\"][readonly], fieldset[disabled] input[type\u003d\"search\"], input[type\u003d\"tel\"][disabled], input[type\u003d\"tel\"][readonly], fieldset[disabled] input[type\u003d\"tel\"], input[type\u003d\"time\"][disabled], input[type\u003d\"time\"][readonly], fieldset[disabled] input[type\u003d\"time\"], input[type\u003d\"url\"][disabled], input[type\u003d\"url\"][readonly], fieldset[disabled] input[type\u003d\"url\"], input[type\u003d\"color\"][disabled], input[type\u003d\"color\"][readonly], fieldset[disabled] input[type\u003d\"color\"], textarea[disabled], textarea[readonly], fieldset[disabled] textarea, h1, body.catalog.sidebar aside h2, .cart h2, .cart-summary, .slick-dots li button, .slick-dots li button, .slick-dots li button, .slick-dots li button, .slick-dots li.slick-active button, .slick-dots li.slick-active button, button, .button, button, .button, .panel.active, .panel, .product-list-images.viewer ul.slick-dots .slick-active button, .slick-prev, .slick-prev, .slick-next, .slick-next, .tabs dd \u003e a, body.product-page .row.collapse.product-review:nth-child(odd), .social-buttons a, .cart-footer .cart-footer-right, table th, .cart-footer .cart-breakdown, #main-header .menu-cart, .cart h2, .product-panel .product-total .product-qty label, .product-panel .product-total .product-pricetag-label"
+    },
+    {
+      "directive": "uc:theme-attribute-color",
+      "name": "Theme Color 03",
+      "selector": "#main-header, hr, hr, hr, .cart-summary .total::before, .cart-summary .total::before, .cart-summary .total::before, .cart h2, .cart-summary, .title:before, .title span, .option-group li, #main-header .header-search a, button, .button, button, .button, button, .button, button, .button, .panel, .slick-prev, .slick-next, .slick-dots li button, .product-list-images.viewer ul.slick-dots .slick-active button, .slick-prev, .slick-prev, .slick-next, .slick-next, .slick-slide.slick-center, .tabs, .tabs dd \u003e a, .tabs dd:first-child \u003e a, body.product-page .row.collapse.product-review time, body.product-page .row.collapse.product-review, body.product-page .row.collapse.product-review .review-user, body.product-page .row.collapse.product-review .review-user, .social-buttons a, .product-panel, .product-panel .product-options, .cart-footer .cart-footer-left, .cart-footer .cart-footer-right, .scrollbox, table, table td, table th, .cart-footer .cart-breakdown, .order, div.before-customer, div.customer-info, .item-header, div.items .order-item, .item-section, .return-policy-container, .customer-service-info, .gift-msg-section, .cart-summary dl, .cart h2, .product-panel .product-total .product-qty label, .product-panel .product-total .product-pricetag-label, .product-panel .product-total .product-qty label, .product-panel .product-total .product-pricetag-label, .product-panel .product-total .product-qty, .product-panel .product-total .product-pricetag, #main-nav li ul"
+    },
+    {
+      "directive": "uc:theme-attribute-color",
+      "name": "Theme Color 04",
+      "selector": "body, .product-info, .price, select, input, input[type\u003d\"text\"], input[type\u003d\"password\"], input[type\u003d\"date\"], input[type\u003d\"datetime\"], input[type\u003d\"datetime-local\"], input[type\u003d\"month\"], input[type\u003d\"week\"], input[type\u003d\"email\"], input[type\u003d\"number\"], input[type\u003d\"search\"], input[type\u003d\"tel\"], input[type\u003d\"time\"], input[type\u003d\"url\"], input[type\u003d\"color\"], textarea, input[type\u003d\"text\"][disabled], input[type\u003d\"text\"][readonly], fieldset[disabled] input[type\u003d\"text\"], input[type\u003d\"password\"][disabled], input[type\u003d\"password\"][readonly], fieldset[disabled] input[type\u003d\"password\"], input[type\u003d\"date\"][disabled], input[type\u003d\"date\"][readonly], fieldset[disabled] input[type\u003d\"date\"], input[type\u003d\"datetime\"][disabled], input[type\u003d\"datetime\"][readonly], fieldset[disabled] input[type\u003d\"datetime\"], input[type\u003d\"datetime-local\"][disabled], input[type\u003d\"datetime-local\"][readonly], fieldset[disabled] input[type\u003d\"datetime-local\"], input[type\u003d\"month\"][disabled], input[type\u003d\"month\"][readonly], fieldset[disabled] input[type\u003d\"month\"], input[type\u003d\"week\"][disabled], input[type\u003d\"week\"][readonly], fieldset[disabled] input[type\u003d\"week\"], input[type\u003d\"email\"][disabled], input[type\u003d\"email\"][readonly], fieldset[disabled] input[type\u003d\"email\"], input[type\u003d\"number\"][disabled], input[type\u003d\"number\"][readonly], fieldset[disabled] input[type\u003d\"number\"], input[type\u003d\"search\"][disabled], input[type\u003d\"search\"][readonly], fieldset[disabled] input[type\u003d\"search\"], input[type\u003d\"tel\"][disabled], input[type\u003d\"tel\"][readonly], fieldset[disabled] input[type\u003d\"tel\"], input[type\u003d\"time\"][disabled], input[type\u003d\"time\"][readonly], fieldset[disabled] input[type\u003d\"time\"], input[type\u003d\"url\"][disabled], input[type\u003d\"url\"][readonly], fieldset[disabled] input[type\u003d\"url\"], input[type\u003d\"color\"][disabled], input[type\u003d\"color\"][readonly], fieldset[disabled] input[type\u003d\"color\"], textarea[disabled], textarea[readonly], fieldset[disabled] textarea, .small, small, #main-nav li ul, #main-nav a, #main-nav li \u003e a, #main-header .menu-cart, #main-header .icon-menu, #main-header .social-links.small a, #main-header .account-link a, #main-header .header-message, #main-header .header-cart, #main-footer, #main-footer h1, #main-footer body.catalog.sidebar aside h2, body.catalog.sidebar aside #main-footer h2, #main-footer h1, #main-footer body.catalog.sidebar aside h2, body.catalog.sidebar aside #main-footer h2, #main-footer .subfooter, #main-footer .subfooter, #main-footer address, #main-footer .subfooter .credits em, .slick-prev:before, .slick-next:before, .tabs dd.active a, .tabs .tab-title.active a, .tabs dd \u003e a, .review-user .author, .social-buttons a, .social-buttons a, .product-list-images .out-of-stock sub:after, .product-list-images .out-of-stock sub:before, .product-panel .product-info .product-title a, .product-panel .product-total .product-pricetag, .product-panel .product-info .product-id, label, .label-move span, .label-group \u003e label, .label-group \u003e span, .scrollbox, #main-header .header-search a:before, #main-header .menu-cart:before, .cart h2, .product-panel .product-total .product-qty label, .product-panel .product-total .product-pricetag-label, #main-nav a, #main-nav \u003e li.active \u003e a, #main-nav li.has-subnav:after, #main-nav li ul"
+    },
+    {
+      "directive": "uc:theme-attribute-color",
+      "name": "Theme Color 05",
+      "selector": "body, #main-header .company-logo span, #main-header .company-logo span, h1, h2, .panel-title, .title, .product-info .product-title, .cart h2, h3, h4, body.catalog.sidebar aside h2, #main-header .secondary-masthead, #main-footer, div.order-id .label, div.creation-date .label, div.billto-header, div.shipto-header, .shipping-method span.shipping-method-label.label, .tax-county .tax-county-label, .gift-label.label, .gift-email-label.label, .section-header, .return-policy-header, .customer-service-header, #main-nav li ul li.has-subnav ul"
+    },
+    {
+      "directive": "uc:theme-attribute-color",
+      "name": "Theme Color 06",
+      "selector": ".breadcrumb a, #main-nav li ul a, #main-header .social-links.small a, #main-header .account-link a, #main-header .header-search a:before, #main-header .header-search.active a:before, a, .paging li.page.current, button, .button, button.primary, .button.primary, button, .button, button.primary, .button.primary, .product-list-images .product-info .product-title, #main-footer a, #main-footer .subfooter .credits em a, .tabs dd \u003e a, .product-list-images .link, .calendar-picker:after, .has-tip, .cart-summary .total"
+    },
+    {
+      "directive": "uc:theme-attribute-color",
+      "name": "Theme Color 07",
+      "selector": "a, .paging li.page.current, button, button, .button, .button, .button, button.primary, .button.primary, button, button, .button, .button, .button, button.primary, .button.primary"
+    },
+    {
+      "directive": "uc:theme-attribute-color",
+      "name": "Theme Color 08",
+      "selector": "button.secondary, .button.secondary, button.secondary, .button.secondary, button.secondary, .button.secondary, button.secondary, .button.secondary"
+    },
+    {
+      "directive": "uc:theme-attribute-color",
+      "name": "Theme Color 10",
+      "selector": ".product-list-images .sale sub, .product-list-images .sale sub:after, .product-list-images .sale sub:before, .price.sale"
+    }
+  ]
+}

@@ -1,0 +1,538 @@
+##
+## UltraCart - Mr Teas Template
+## http://www.ultracart.com/
+##
+## Copyright (c) 2015 BPS Info Solutions Inc.
+## License located here:
+## http://www.ultracart.com/storefront/license/
+##
+## Designed by Level 2 Design, LLC http://www.level2d.com/
+##
+
+## uc:theme-attribute-string="Item No Image Available Image URL"
+
+#* @vtlvariable name="merchantId" type="java.lang.String" *#
+#* @vtlvariable name="header" type="java.lang.String" *#
+#* @vtlvariable name="footer" type="java.lang.String" *#
+#* @vtlvariable name="i18n" type="com.bpsinfo.storefront.tobjects.I18nWriter" *#
+
+
+#set( $bodyClass = "myaccount-billing" )
+#set( $pageTitle = "My Account Billing" )
+
+#parse("/snippets/top.vm")
+
+<div class="row half-margin-top">
+  <div class="columns small-16 medium-13">
+    <a href="/myaccount/index.do?merchantId=$!{merchantId}">$i18n.write('myaccount.breadcrumb.myAccount','My Account')</a> &gt; <span class='disabled-looking'>$i18n.write('myaccount.breadcrumb.mySubscriptions','My Subscriptions')</span>
+  </div>
+</div>
+
+<script type="text/javascript">
+  var merchantId = '$!merchantId';
+</script>
+
+<!--[if lt IE 9]>
+<script type='text/javascript' src="/myaccount/js/html5shiv-printshiv.js" media="all"></script>
+<![endif]-->
+<link href="//secure.ultracart.com/js/date-picker-v5/css/datepicker.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="//secure.ultracart.com/js/date-picker-v5/js/datepicker.js"></script>
+
+## <script type="text/javascript" src="/core/assets/js/lib/myaccount.lib.uc.js"></script>
+## <script type="text/javascript" src="/core/assets/js/myaccount/autoorders_1.0.js"></script>
+<script type="text/javascript" src="/myaccount/js/moment.js"></script>
+<script type="text/javascript" src="/myaccount/js/handlebars-v3.0.3.js"></script>
+<script type="text/javascript" src="/myaccount/js/underscore_1.4.4.js"></script>
+<script type="text/javascript" src="/myaccount/js/backbone_1.0.js"></script>
+<script type="text/javascript" src="/myaccount/js/myaccount_rest_1.5.js"></script>
+<script type="text/javascript" src="/myaccount/js/myaccount.js"></script>
+
+<script type="text/javascript" src="/myaccount/autoorders_1.0.js"></script>
+
+<script type="text/javascript" src="//secure.ultracart.com/js/json3.min.js"></script>
+<script type="text/javascript" src="//secure.ultracart.com/checkout/checkout-hosted-fields-1.0.js"></script>
+
+
+## <script type="text/javascript" src="/myaccount/js/modernizr-2.6.2.js"></script>
+## <script type="text/javascript" src="/myaccount/js/jquery-1.10.1.min.js"></script>
+
+
+<script type="text/template" id="payment-edit-template">
+  <table>
+    <tr>
+      <td class='payment-label'>$i18n.write('myaccount.editCreditCard.cardTypeLabel','Card Type')</td>
+      <td>
+        <select name="cardType">
+          <option disabled='disabled'>- Please select a card type -</option>
+          {{#ucSelectOption2 "Visa" creditCardType}}Visa{{/ucSelectOption2}}
+          {{#ucSelectOption2 "MasterCard" creditCardType}}MasterCard{{/ucSelectOption2}}
+          {{#ucSelectOption2 "Discover" creditCardType}}Discover{{/ucSelectOption2}}
+          {{#ucSelectOption2 "Diners Club" creditCardType}}Diner's Club{{/ucSelectOption2}}
+          {{#ucSelectOption2 "JCB" creditCardType}}JCB{{/ucSelectOption2}}
+          {{#ucSelectOption2 "AMEX" creditCardType}}American Express{{/ucSelectOption2}}
+        </select>
+        <span class='red'>[required]</span>
+      </td>
+    </tr>
+
+    <tr>
+      <td class='payment-label'>$i18n.write('myaccount.editCreditCard.cardNumberLabel','Card Number')</td>
+      <td>
+        <input type="text" class="credit-card-number-field" name="cardNumber" value="{{cardNumber}}" size="30"
+               maxlength="30"/>
+        <input type="hidden" class="credit-card-token-field" name="creditCardNumberToken" value=""/>
+        <span class='red'>[required]</span>
+      </td>
+    </tr>
+    <tr>
+      <td>&nbsp;</td>
+      <td style='font-size:0.7em'>$i18n.write('myaccount.editCreditCard.cardNumberNote',
+        'You do not need to re-enter your card number to make other changes.')</td>
+    </tr>
+
+
+    <tr>
+      <td class='payment-label'>$i18n.write(
+        'myaccount.editCreditCard.editCreditCard.expirationDateLabel','Expiration Date')</td>
+      <td>
+        <select name="cardExpMonth">
+          {{#ucSelectOption2 "1" creditCardExpirationMonth}}01{{/ucSelectOption2}}
+          {{#ucSelectOption2 "2" creditCardExpirationMonth}}02{{/ucSelectOption2}}
+          {{#ucSelectOption2 "3" creditCardExpirationMonth}}03{{/ucSelectOption2}}
+          {{#ucSelectOption2 "4" creditCardExpirationMonth}}04{{/ucSelectOption2}}
+          {{#ucSelectOption2 "5" creditCardExpirationMonth}}05{{/ucSelectOption2}}
+          {{#ucSelectOption2 "6" creditCardExpirationMonth}}06{{/ucSelectOption2}}
+          {{#ucSelectOption2 "7" creditCardExpirationMonth}}07{{/ucSelectOption2}}
+          {{#ucSelectOption2 "8" creditCardExpirationMonth}}08{{/ucSelectOption2}}
+          {{#ucSelectOption2 "9" creditCardExpirationMonth}}09{{/ucSelectOption2}}
+          {{#ucSelectOption2 "10" creditCardExpirationMonth}}10{{/ucSelectOption2}}
+          {{#ucSelectOption2 "11" creditCardExpirationMonth}}11{{/ucSelectOption2}}
+          {{#ucSelectOption2 "12" creditCardExpirationMonth}}12{{/ucSelectOption2}}
+        </select> /
+        <select name="cardExpYear">
+          {{#each years}}
+          {{#ucSelectOption2 this ../creditCardExpirationYear}}{{this}}{{/ucSelectOption2}}
+          {{/each}}
+        </select>
+        <span class='red'>[required]</span>
+      </td>
+    </tr>
+
+    <tr>
+      <td colspan='2'>
+        <input type="button" class="button subscription-payment-save-button"
+               value="$i18n.write('myaccount.editCreditCard.saveButton','Save Changes')"/>
+        <input type="button" class="button secondary subscription-payment-cancel-button"
+               value="$i18n.write('myaccount.editCreditCard.cancelButton','Cancel')"/>
+      </td>
+    </tr>
+
+  </table>
+  <div style='clear:both'></div>
+</script>
+
+
+
+<script type="text/template" id="shipdate-edit-template">
+  <div class="subscription-date-wrapper">
+    <div>
+      Select desired date for next shipment:
+    </div>
+    <div>
+      <input type='text'
+             name="desiredShipDate"
+             value=""
+             id="{{shipDateId}}"
+             maxlength="10"
+             class="w8em format-y-d-m highlight-days-67"/>
+
+    </div>
+    <div>
+      <input type="button" class="button subscription-shipdate-save-button"
+             value="$i18n.write('myaccount.subscription.saveButton','Save Changes')"/>
+      <input type="button" class="button secondary subscription-shipdate-cancel-button"
+             value="$i18n.write('myaccount.subscription.cancelButton','Cancel')"/>
+
+    </div>
+  </div>
+  <div style='clear:both'></div>
+</script>
+
+
+
+
+<script type="text/template" id="address-edit-template">
+
+  <table class='address-edit-table'>
+    <tr>
+      <td class='address-label'>$i18n.write('myaccount.subscription.firstNameLabel','First Name')</td>
+      <td>
+        <input type="text" name="firstName" value="{{firstName}}" size="30" maxlength="30"/>
+        <input type="hidden" name="addressType" value="{{addressType}}"/>
+        <span class='red'>[required]</span>
+      </td>
+    </tr>
+
+    <tr>
+      <td class='address-label'>$i18n.write('myaccount.subscription.lastNameLabel','Last Name')</td>
+      <td>
+        <input type="text" name="lastName" value="{{lastName}}" size="30" maxlength="30"/>
+        <span class='red'>[required]</span>
+      </td>
+    </tr>
+
+    <tr>
+      <td class='address-label'>$i18n.write('myaccount.subscription.titleLabel','Title')</td>
+      <td><input type="text" name="title" value="{{title}}" size="50" maxlength="50"/></td>
+    </tr>
+
+    <tr>
+      <td class='address-label'>$i18n.write('myaccount.subscription.companyLabel','Company')</td>
+      <td><input type="text" name="company" value="{{company}}" size="50" maxlength="50"/></td>
+    </tr>
+
+    <tr>
+      <td class='address-label'>$i18n.write('myaccount.subscription.address1Label','Address 1')</td>
+      <td>
+        <input type="text" name="address1" value="{{address1}}" size="50" maxlength="50"/>
+        <span class='red'>[required]</span>
+      </td>
+    </tr>
+    <tr>
+      <td>&nbsp;</td>
+      <td style='font-size:0.7em'>$i18n.write(
+        'myaccount.subscription.address1Description','Street address, P.O. box, company name, c/o')</td>
+    </tr>
+
+    <tr>
+      <td class='address-label'>$i18n.write('myaccount.subscription.address2Label','Address 2')</td>
+      <td><input type="text" name="address2" value="{{address2}}" size="50" maxlength="50"/></td>
+    </tr>
+    <tr>
+      <td>&nbsp;</td>
+      <td style='font-size:0.7em'>$i18n.write(
+        'myaccount.subscription.address2Description','Apartment, suite, unit, building, floor, etc.')</td>
+    </tr>
+
+    <tr>
+      <td class='address-label'>$i18n.write('myaccount.subscription.cityLabel','City')</td>
+      <td>
+        <input type="text" name="city" value="{{city}}" size="30" maxlength="32"/>
+        <span class='red'>[required]</span>
+      </td>
+    </tr>
+
+    <tr>
+      <td class='address-label'>$i18n.write('myaccount.subscription.stateLabel','State')</td>
+      <td>
+        <input type="text" name="state" value="{{state}}" size="30" maxlength="32"/>
+        <span class='red'>[required]</span>
+      </td>
+    </tr>
+
+    <tr>
+      <td class='address-label'>$i18n.write('myaccount.subscription.zipCodeLabel','Zip Code')</td>
+      <td>
+        <input type="text" name="postalCode" value="{{postalCode}}" size="20" maxlength="20"/>
+        <span class='red'>[required]</span>
+      </td>
+    </tr>
+
+    <tr>
+      <td class='address-label'>$i18n.write('myaccount.subscription.countryLabel','Country')</td>
+      <td>
+        <input type="text" name="country" value="{{country}}" size="30" maxlength="32"/>
+        <span class='red'>[required]</span>
+      </td>
+    </tr>
+
+    <tr>
+      <td class='address-label'>$i18n.write('myaccount.subscription.dayPhoneLabel','Day Phone')</td>
+      <td><input type="text" name="dayPhone" value="{{dayPhone}}" size="20" maxlength="25"/></td>
+    </tr>
+
+    {{\#if isBilling}}
+    <tr>
+      <td class='address-label'>$i18n.write('myaccount.subscription.eveningPhoneLabel','Evening Phone')</td>
+      <td><input type="text" name="eveningPhone" value="{{eveningPhone}}" size="20" maxlength="25"/></td>
+    </tr>
+    {{/if}}
+
+    <tr>
+      <td colspan='2'>
+        <input type="button" class="button subscription-address-save-button"
+               value="$i18n.write('myaccount.subscription.saveButton','Save Changes')"/>
+        <input type="button" class="button secondary subscription-address-cancel-button"
+               value="$i18n.write('myaccount.subscription.cancelButton','Cancel')"/>
+      </td>
+    </tr>
+
+  </table>
+
+  <div style='clear:both'></div>
+</script>
+
+
+<script type="text/template" id="subscriptions-template">
+  {{\#if loading}}
+    $i18n.write('myaccount.subscriptions.pleaseWait','Please wait. We are loading your subscriptions now.')<br>
+  <img src='/assets/imgs/ajax-loader.gif'/>
+  {{else}}
+
+  <section>
+    <header class='subscription-header'>
+      <nav role="navigation"></nav>
+    </header>
+    <div id="subscriptions"><!-- individual subscriptions will render here.  --></div>
+    <footer class='subscription-footer'>
+      <nav role="navigation"></nav>
+    </footer>
+  </section>
+  {{/if}}
+</script>
+
+<script type="text/template" id="subscription-template">
+  <!-- the backbone view will wrap this content in an <article class="subscription"></article> tag -->
+  <div class='subscription-wrapper'>
+    <h1 class='order-tiny-word margin-bottom'>SUBSCRIPTION</h1>
+    <sub class='order-tiny-word'>Next Shipment Date {{dateFormat shipmentDts}}<br />
+      {{\#if enableUpdateShipDate}}<input type="button" value="Change Next Shipment Date"
+                                          class='button secondary tiny updateShipDateButton subscription-action-button'/>{{/if}}
+                                          </sub>
+
+      {{\#if enableCancel}}<input type="button" value="Cancel this Subscription"
+                                                    class='button secondary tiny right cancelButton subscription-action-button'/>{{/if}}
+
+    <div class='order-detail-link half-margin-bottom'><a
+        href="/myaccount/orderDetail.do?merchantId=$!{merchantId}&orderId={{referenceOrderId}}">Original Order
+      {{referenceOrderId}}</a></div>
+  </div>
+
+  <div class='subscription-items-header'>Contents of Next Shipment</div>
+  <div class='subscription-items'>
+
+    <table>
+      <tr>
+        <th>Quantity</th>
+        <th>Thumbnail</th>
+        <th>Title</th>
+      </tr>
+      {{#each nextShipment}}
+      <tr>
+        <td>Qty {{quantity}}</td>
+        <td>
+          {{#with item}}
+            {{\#if defaultThumbnailUrl}}
+              <img class='order-item-thumbnail' src="/thumbs/{{defaultThumbnailUrl}}" alt=''/>
+            {{else}}
+              <img src="${baseUrl}${theme.attr('Item No Image Available Image URL')}" class="order-item-thumbnail" height="70" width="70" />
+            {{/if}}
+          {{/with}}
+        </td>
+        <td><a href="{{item.viewUrl}}">{{item.description}}</a></td>
+      </tr>
+      {{/each}}
+    </table>
+
+  </div>
+  <div style='clear:both'></div>
+
+
+  <div class="subscription-edit-panel" style="display:none">
+    <!-- this is where the edit fields will render and display -->
+  </div>
+
+  <div class="subscription-details margin-top"">
+    <div class="billing-details">
+      {{\#if enableUpdateBilling}}<input type="button" value="Update Billing Address"
+                                         class='right button primary small updateBillingButton subscription-action-button'/>{{/if}}
+      <h2 class='order-tiny-word'>BILLING</h2>
+      <div class="billing-view">
+        <table>
+          <tr>
+            <td class='address-label'>$i18n.write('myaccount.subscription.firstNameLabel','First Name')</td>
+            <td>{{billToFirstName}}</td>
+          </tr>
+
+          <tr>
+            <td class='address-label'>$i18n.write('myaccount.subscription.lastNameLabel','Last Name')</td>
+            <td>{{billToLastName}}</td>
+          </tr>
+
+          {{\#if billToTitle}}
+          <tr>
+            <td class='address-label'>$i18n.write('myaccount.subscription.titleLabel','Title')</td>
+            <td>{{billToTitle}}</td>
+          </tr>
+          {{/if}}
+
+
+          {{\#if billToCompany}}
+          <tr>
+            <td class='address-label'>$i18n.write('myaccount.subscription.companyLabel','Company')</td>
+            <td>{{billToCompany}}</td>
+          </tr>
+          {{/if}}
+
+          <tr>
+            <td class='address-label'>$i18n.write('myaccount.subscription.address1Label','Address 1')</td>
+            <td>{{billToAddress1}}</td>
+          </tr>
+
+          {{\#if billToAddress2}}
+          <tr>
+            <td class='address-label'>$i18n.write('myaccount.subscription.address2Label','Address 2')</td>
+            <td>{{billToAddress2}}</td>
+          </tr>
+          {{/if}}
+
+          <tr>
+            <td class='address-label'>$i18n.write('myaccount.subscription.cityLabel','City')</td>
+            <td>{{billToCity}}</td>
+          </tr>
+
+          <tr>
+            <td class='address-label'>$i18n.write('myaccount.subscription.stateLabel','State')</td>
+            <td>{{billToState}}</td>
+          </tr>
+
+          <tr>
+            <td class='address-label'>$i18n.write('myaccount.subscription.zipCodeLabel','Zip Code')</td>
+            <td>{{billToPostalCode}}</td>
+          </tr>
+
+          <tr>
+            <td class='address-label'>$i18n.write('myaccount.subscription.countryLabel','Country')</td>
+            <td>{{billToCountry}}</td>
+          </tr>
+
+          <tr>
+            <td class='address-label'>$i18n.write('myaccount.subscription.dayPhoneLabel','Day Phone')</td>
+            <td>{{billToDayPhone}}</td>
+          </tr>
+
+          <tr>
+            <td class='address-label'>$i18n.write('myaccount.subscription.eveningPhoneLabel','Evening Phone')</td>
+            <td>{{billToEveningPhone}}</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+
+    <div class="shipping-details margin-top"">
+      {{\#if enableUpdateShipping}}<input type="button" value="Update Shipping Address"
+                                          class='right button primary small updateShippingButton subscription-action-button'/>{{/if}}
+      <h2 class='order-tiny-word'>SHIPPING</h2>
+      <div class="shipping-view">
+        <table>
+          <tr>
+            <td class='address-label'>$i18n.write('myaccount.subscription.firstNameLabel','First Name')</td>
+            <td>{{shipToFirstName}}</td>
+          </tr>
+
+          <tr>
+            <td class='address-label'>$i18n.write('myaccount.subscription.lastNameLabel','Last Name')</td>
+            <td>{{shipToLastName}}</td>
+          </tr>
+
+          {{\#if shipToTitle}}
+          <tr>
+            <td class='address-label'>$i18n.write('myaccount.subscription.titleLabel','Title')</td>
+            <td>{{shipToTitle}}</td>
+          </tr>
+          {{/if}}
+
+          {{\#if shipToCompany}}
+          <tr>
+            <td class='address-label'>$i18n.write('myaccount.subscription.companyLabel','Company')</td>
+            <td>{{shipToCompany}}</td>
+          </tr>
+          {{/if}}
+
+          <tr>
+            <td class='address-label'>$i18n.write('myaccount.subscription.address1Label','Address 1')</td>
+            <td>{{shipToAddress1}}</td>
+          </tr>
+
+          {{\#if shipToAddress2}}
+          <tr>
+            <td class='address-label'>$i18n.write('myaccount.subscription.address2Label','Address 2')</td>
+            <td>{{shipToAddress2}}</td>
+          </tr>
+          {{/if}}
+
+          <tr>
+            <td class='address-label'>$i18n.write('myaccount.subscription.cityLabel','City')</td>
+            <td>{{shipToCity}}</td>
+          </tr>
+
+          <tr>
+            <td class='address-label'>$i18n.write('myaccount.subscription.stateLabel','State')</td>
+            <td>{{shipToState}}</td>
+          </tr>
+
+          <tr>
+            <td class='address-label'>$i18n.write('myaccount.subscription.zipCodeLabel','Zip Code')</td>
+            <td>{{shipToPostalCode}}</td>
+          </tr>
+
+          <tr>
+            <td class='address-label'>$i18n.write('myaccount.subscription.countryLabel','Country')</td>
+            <td>{{shipToCountry}}</td>
+          </tr>
+
+          <tr>
+            <td class='address-label'>$i18n.write('myaccount.subscription.dayPhoneLabel','Day Phone')</td>
+            <td>{{shipToPhone}}</td>
+          </tr>
+
+          <tr>
+            <td class='address-label'>$i18n.write('myaccount.subscription.eveningPhoneLabel','Evening Phone')</td>
+            <td>{{shipToEveningPhone}}</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="payment-details margin-top">
+      {{\#if enableUpdatePayment}}<input type="button" value="Update Credit Card"
+                                         class='right button primary small updatePaymentButton subscription-action-button'/>{{/if}}
+      <h2 class='order-tiny-word'>PAYMENT</h2>
+      <div class="payment-view">
+        <table>
+          <tr>
+            <td class='payment-label'>$i18n.write('myaccount.editCreditCard.cardTypeLabel','Card Type')</td>
+            <td>{{creditCardType}}</td>
+          </tr>
+
+          <tr>
+            <td class='payment-label'>$i18n.write('myaccount.editCreditCard.cardNumberLabel','Card Number')</td>
+            <td>{{creditCardNumber}}</td>
+          </tr>
+          <tr>
+            <td class='payment-label'>$i18n.write(
+              'myaccount.editCreditCard.editCreditCard.expirationDateLabel','Expiration Date')</td>
+            <td>{{creditCardExpirationMonth}}&nbsp;/&nbsp;{{creditCardExpirationYear}}</td>
+          </tr>
+        </table>
+      </div>
+
+    </div>
+
+    <div style='clear:both'></div>
+
+  </div>
+
+  <div style='clear:both'></div>
+
+</script>
+
+
+<div class="row">
+  <div class="columns small-16">
+    <main role='main' id='subscriptions'></main>
+  </div>
+</div>
+
+#parse("/snippets/bottom.vm")

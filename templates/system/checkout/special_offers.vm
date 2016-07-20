@@ -1,0 +1,314 @@
+##
+## UltraCart - Mr Teas Template
+## http://www.ultracart.com/
+##
+## Copyright (c) 2015 BPS Info Solutions Inc.
+## License located here:
+## http://www.ultracart.com/storefront/license/
+##
+## Designed by Level 2 Design, LLC http://www.level2d.com/
+##
+
+#* @vtlvariable name="formatHelper" type="com.bpsinfo.ultracart.catalog.tobjects.FormatHelper" *#
+#* @vtlvariable name="i18n" type="com.bpsinfo.storefront.tobjects.I18nWriter" *#
+#* @vtlvariable name="form" type="com.bpsinfo.ultracart.checkout.ui.SpecialOffers2Form" *#
+
+
+##  This url has been moved up here to allow the page to work in preview mode as well.
+##  In preview mode, 'returnUrl' will be set.  So check for that here.  If it's present, use it.
+##  Otherwise, use the default.
+#set( $formAction = "/checkout/specialOffers2Save.do?merchantId=${formatHelper.urlEncode($form.merchantId)}" )
+#if($form.redirectUrl) ## used in 'preview' mode
+	#set($formAction = $form.redirectUrl)
+#end
+
+#set( $pageGroup = 'multi-page-checkout' )
+#set( $bodyClass = 'multi-page-checkout special-offers' )
+#set( $pageTitle = 'Special Offers' )
+#parse('/snippets/top.vm')
+
+#parse('/snippets/breadcrumbs.vm')
+
+#set( $title = 'Special Offers' )
+#parse('/snippets/title.vm')
+
+<script type="text/javascript">
+
+	var ucSubmitInProgress = false;
+
+	function ucOKToSubmit() {
+		if (ucSubmitInProgress) {
+			alert("Your selection is being processed, please do not click the button twice.");
+			return false;
+		}
+		ucSubmitInProgress = true;
+		return true;
+	}
+
+	function ucSelectItem(value, quantity) {
+		if (quantity) {
+			// Add a hidden YES input to make it look like they clicked the yes image
+			document.specialOffers.innerHTML = document.specialOffers.innerHTML + "<input type='hidden' name='yes' value='true'/>";
+
+			// Now input the specified quantity.
+			try {
+				if (document.getElementById('ucUpsellQuantityField')) {
+					document.getElementById('ucUpsellQuantityField').value = '' + quantity;
+				}
+			} catch (err) {
+			}
+
+			// Locate the SELECT object
+			var s = document.getElementById('ucUpsellCustomerChoiceSelect');
+
+			// Check to see if they are using the select a specific item method with a single item upsel.
+			if (s == null) {
+				// Submit the form
+				document.specialOffers.submit();
+				return;
+			}
+
+			// Find the item ID that matches
+			for (var i = 0; i < s.length; i++) {
+				if (s.options[i].value == value) {
+					s.selectedIndex = i;
+
+					// Submit the form
+					document.specialOffers.submit();
+					return;
+				}
+			}
+
+		} else {
+			// Add a hidden YES input to make it look like they clicked the yes image
+			document.specialOffers.innerHTML = document.specialOffers.innerHTML + "<input type='hidden' name='yes' value='true'/>";
+
+			// Locate the SELECT object
+			var select = document.getElementById('ucUpsellCustomerChoiceSelect');
+
+			// Check to see if they are using the select a specific item method with a single item upsell.
+			if (select == null) {
+				// Submit the form
+				document.specialOffers.submit();
+				return;
+			}
+
+			// Find the item ID that matches
+			for (var j = 0; j < select.length; j++) {
+				if (select.options[j].value == value) {
+					select.selectedIndex = j;
+
+					// Submit the form
+					document.specialOffers.submit();
+					return;
+				}
+			}
+
+		}
+
+	}
+
+	function ucSelectMultiple(multipleSelectionDetails) {
+		// Add a hidden YES input to make it look like they clicked the yes image and add the hidden multiple selection detials field
+		// The multipleSelectionDetails value needs to be a CSV list like: itemId,quantity,itemId,quantity,...
+		document.specialOffers.innerHTML = document.specialOffers.innerHTML + "<input type='hidden' name='yes' value='true'/><input type='hidden' name='multipleSelectionDetails' value='" + multipleSelectionDetails + "'/>";
+
+		// Submit the form
+		document.specialOffers.submit();
+	}
+
+	function ucSelectYes() {
+		if (document.getElementById('ucUpsellQuantityField')) {
+			// Call the other method with the value of the quantity field so it works correctly even when they call the wrong method.
+			ucSelectYesWithQuantity(document.getElementById('ucUpsellQuantityField').value);
+		} else {
+			// Add a hidden YES input to make it look like they clicked the yes image
+			document.specialOffers.innerHTML = document.specialOffers.innerHTML + "<input type='hidden' name='yes' value='true'/>";
+
+			// Submit the form
+			document.specialOffers.submit();
+		}
+	}
+
+	function ucSelectYesWithQuantity(quantity) {
+		// Add a hidden YES input to make it look like they clicked the yes image
+		document.specialOffers.innerHTML = document.specialOffers.innerHTML + "<input type='hidden' name='yes' value='true'/>";
+
+		// Now input the specified quantity.
+		try {
+			if (document.getElementById('ucUpsellQuantityField')) {
+				document.getElementById('ucUpsellQuantityField').value = '' + quantity;
+			}
+		} catch (err) {
+		}
+
+
+		// Submit the form
+		document.specialOffers.submit();
+	}
+
+	function ucSelectNo() {
+		// Add a hidden NO input to make it look like they clicked the yes image
+		document.specialOffers.innerHTML = document.specialOffers.innerHTML + "<input type='hidden' name='no' value='true'/>";
+
+		// Submit the form
+		document.specialOffers.submit();
+	}
+
+	function ucMirrorSelectOptions(primary, mirror) {
+		var selectPrimary = document.getElementById(primary);
+		var selectMirror = document.getElementById(mirror);
+
+		if (selectPrimary == null || selectMirror == null) return;
+
+		// First clear all the options
+		selectMirror.options.length = 0;
+
+		// Now let's copy them over
+		for (var i = 0; i < selectPrimary.options.length; i++) {
+			var option = selectPrimary.options[i];
+
+			// Make a copy of the option
+			var newOption = new Option();
+			newOption.text = option.text;
+			newOption.value = option.value;
+
+			selectMirror.options[selectMirror.options.length] = newOption;
+		}
+
+		// Copy over the selected value too
+		selectMirror.selectedIndex = selectPrimary.selectedIndex;
+	}
+
+	function ucMirrorSelectChanges(primary, mirror) {
+		var selectPrimary = document.getElementById(primary);
+		var selectMirror = document.getElementById(mirror);
+
+		if (selectPrimary == null || selectMirror == null) return;
+
+		// Make the primary match whatever the mirror has done
+		selectPrimary.selectedIndex = selectMirror.selectedIndex;
+	}
+
+	function ucTouchCart() {
+		try {
+			var xmlhttp;
+
+			// code for IE7+, Firefox, Chrome, Opera, Safari
+			if (window.XMLHttpRequest) {
+				xmlhttp=new XMLHttpRequest();
+			} else {
+				// code for IE6, IE5
+				xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+			}
+
+			xmlhttp.onreadystatechange=function() {
+				// Do not care about the response
+			};
+
+			xmlhttp.open("GET","/checkout/touchLoad.do", true);
+			xmlhttp.send();
+
+			// Register this to fire again in 15 minutes.
+			setTimeout(ucTouchCart, 900000);
+		} catch(e){}
+	}
+
+	// Touch the cart after 15 minutes.
+	setTimeout(ucTouchCart, 900000);
+
+</script>
+
+#if($form.beforeHtml)
+	<div class="row">
+		<div class="columns small-16">
+			$!form.beforeHtml
+		</div>
+	</div>
+#end
+
+#parse('/snippets/errors.vm')
+#parse('/snippets/info_messages.vm')
+
+
+<form action="$formAction" name="specialOffers" class="ucSpecialOffersForm" method="post" onsubmit="return ucOKToSubmit();">
+
+	<input type="hidden" name="merchantItemUpsellOid" value="$!form.merchantItemUpsellOid"/>
+	<input type="hidden" name="allowMultiple" value="$i18n.escape($!form.allowMultiple)"/>
+	<input type="hidden" name="limit" value="$!form.limit"/>
+	<input type="hidden" name="customerChoiceAllowed" value="$i18n.escape($!form.customerChoiceAllowed)"/>
+	<input type="hidden" name="token" value="$i18n.escape($!form.token)"/>
+	#parse('/snippets/common/storefront_template_spec_version.vm')
+	#if($form.fixedQuantity || (!$form.fixedQuantity && !$form.allowMultiple))
+		<input type="hidden" name="quantity" value="$form.quantity"/>
+	#end ##if-fixedQuantity
+
+	#if($form.options.size() != 0)
+		<div id="ucOptionsTableId" class="row">
+			<div class="columns small-16">
+				#foreach($option in $form.options)
+					<label class="label-group">
+						<input type="hidden" name="options[$foreach.index].name" value="$i18n.escape($option.name)"/>
+						<input type="hidden" name="options[$foreach.index].label" value="$i18n.escape($option.label)"/>
+						<span>$i18n.escape($option.label)</span>
+							<select name="options[$foreach.index].value" class="ucFormField">
+								#foreach($val in $option.values)
+									<option #if($val == $option.value)selected='selected'#{end}>$i18n.escape($val)</option>
+								#end ##foreach value in option.values
+							</select>
+						</td>
+					</label>
+				#end ##foreach option
+			</div>
+		</div>
+	#end ##if-options.size() != 0
+
+	#if($form.customerChoiceAllowed)
+		<div class="row">
+			<div class="columns small-16">
+				<div id="ucUpsellCustomerChoice" class="label-group">
+					<span class="ucDefault" id="ucUpsellCustomerChoiceSpan">Select an Item</span>
+					<select name="customerChoiceSku" id="ucUpsellCustomerChoiceSelect" class="ucFormField">
+						#foreach($customerChoice in $form.customerChoices)
+							<option value="$i18n.escape($customerChoice.value)" #if($form.customerChoiceSku && $form.customerChoiceSku == $customerChoice.value)selected#{end}>
+								$i18n.escape($customerChoice.description)
+							</option>
+						#end
+					</select>
+				</div>
+			</div>
+		</div>
+	#end ##if-customerChoiceAllowed
+
+	#if(!$form.fixedQuantity)
+		#if($form.allowMultiple)
+			<div class="row">
+				<div class="columns small-16 medium-2">
+					<label class="label-move">
+						<span id="ucUpsellQuantitySpan">Quantity (#if("$!form.limit" != "")Limit: $!form.limit#{end})</span>
+						<input type="number" name="quantity" value="$!form.quantity" class="ucFormField" size="5" maxlength="5" min="0" id="ucUpsellQuantityField" #if("$!form.limit" != "")max="$!form.limit"#end/>
+					</label>
+				</div>
+			</div>
+		#end ##if-allowMultiple == true
+	#end ##if-fixedQuantity == false
+
+	<div class="row">
+		<div class="columns small-8 text-center">
+			<button id="ucUpsellNoButtonId" type="submit" name="no" class="button error no-margin-bottom">No</button>
+		</div>
+		<div class="columns small-8 text-center">
+			<button id="ucUpsellYesButtonId" type="submit" name="yes" class="button success no-margin-bottom">Yes</button>
+		</div>
+	</div>
+</form>
+
+#if($form.afterHtml)
+	<div class="row">
+		<div class="columns small-16">
+			$!form.afterHtml
+		</div>
+	</div>
+#end
+
+#parse('/snippets/bottom.vm')

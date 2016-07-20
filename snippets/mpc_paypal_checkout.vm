@@ -1,0 +1,42 @@
+##
+## UltraCart - Mr Teas Template
+## http://www.ultracart.com/
+##
+## Copyright (c) 2015 BPS Info Solutions Inc.
+## License located here:
+## http://www.ultracart.com/storefront/license/
+##
+## Designed by Level 2 Design, LLC http://www.level2d.com/
+##
+
+#set( $lang = {
+	"ENG" : "en_US",
+	"GER" : "de_DE",
+	"FRE" : "fr_FR",
+	"ITA" : "it_IT",
+	"ESP" : "fr_FR"
+})
+
+#set( $code = $lang.get($i18n.isoCode) )
+
+#if( !$code )
+	#set( $code = $lang.get("ENG") )
+#end
+
+#if($form.showPayPal)
+	<li class="small-text-center">
+		<input type="image" name="paypalCheckout" class="js-paypal-processing" alt="$i18n.write("checkout.viewcart.paypalBenefits", "Fast, secure checkout with PayPal")" src="$baseThemeUrl/assets/imgs/checkout-pp-logo-medium.png"/>
+	</li>
+#end
+
+#if($i18n.isoCode == "ENG" && $form.showPayPalBml)
+	<li class="small-text-center">
+		<input type="image" name="paypalCheckoutBml" class="js-paypal-processing" src="$baseThemeUrl/assets/imgs/checkout-ppcredit-logo-medium.png"/><br>
+		<a target="_blank" href="https://www.securecheckout.billmelater.com/paycapture-content/fetch?hash=AU826TU8&content=/bmlweb/ppwpsiw.html">
+			<img src="https://www.paypalobjects.com/webstatic/en_US/btn/btn_bml_text.png" />
+		</a>
+	</li>
+#end
+
+## foundation reveal processing notification
+#parse('/snippets/paypal-processing.vm')

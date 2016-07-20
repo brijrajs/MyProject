@@ -1,0 +1,70 @@
+#* @vtlvariable name="formatHelper" type="com.bpsinfo.ultracart.catalog.tobjects.FormatHelper" *#
+#* @vtlvariable name="i18n" type="com.bpsinfo.storefront.tobjects.I18nWriter" *#
+#* @vtlvariable name="form" type="com.bpsinfo.ultracart.checkout.ui.WishListLoginForm" *#
+
+#set($bodyClass = 'wishlist-login')
+#set( $pageTitle = $i18n.write("checkout.wishListLogin.pageTitle", "Wish List Login") )
+#parse('/snippets/top.vm')
+
+#set( $title = $pageTitle )
+#parse('/snippets/title.vm')
+
+#parse('/snippets/errors.vm')
+#parse('/snippets/info_messages.vm')
+<div class="row">
+  <form action="/checkout/wishListLoginSave.do?merchantId=$formatHelper.urlEncode($!form.merchantId)" class="validate" method="post">
+    #parse('/snippets/common/storefront_template_spec_version.vm')
+    #parse('/snippets/common/cs_token.vm')
+
+    <div class="columns small-16 medium-8 login">
+      <h2>$i18n.write("checkout.wishListLogin.existingMemberHeader","Existing Members")</h2>
+
+      <label for="memberEmail" class="label-move">
+        <span>$i18n.write("checkout.wishListLogin.emailField","Email"):</span>
+        <input type="email" name="memberEmail" id="memberEmail" value="$i18n.escape($form.memberEmail)" required maxlength="50" />
+      </label>
+      <label for="memberPassword" class="label-move">
+        <span>$i18n.write("checkout.wishListLogin.passwordField","Password"):</span>
+        <input type="password" name="memberPassword" id="memberPassword" value="$i18n.escape($form.memberPassword)" class='no-margin-bottom' required maxlength="30" />
+        <a href="/checkout/forgotPasswordLoad.do?returnTo=wishListLogin">$i18n.write("checkout.wishListLogin.forgotPasswordText","I forgot my password")</a>
+      </label>
+      <div class='footer-buttons text-right half-margin-top'>
+        <button type="submit" name="memberSubmit" class='button inactive no-margin' disabled >
+          Login
+        </button>
+      </div>
+    </div>
+  </form>
+
+  <form action="/checkout/wishListLoginSave.do?merchantId=$formatHelper.urlEncode($!form.merchantId)" class="validate" method="post">
+    #parse('/snippets/common/storefront_template_spec_version.vm')
+    #parse('/snippets/common/cs_token.vm')
+
+    <div class="columns small-16 medium-8">
+      <h2>$i18n.write("checkout.wishListLogin.newMemberHeader","New Members")</h2>
+
+      <label for="newMemberEmail" class="label-move">
+        <span>$i18n.write("checkout.wishListLogin.emailField","Email"):</span>
+        <input type="email"  name="newMemberEmail" id="newMemberEmail" value="$i18n.escape($form.newMemberEmail)" required maxlength="50" />
+        ## <input type="hidden" id="theme-code" value="$!form.themeCode"/>
+      </label>
+      <label for="newMemberPassword" class="label-move">
+        <span>$i18n.write("checkout.wishListLogin.passwordField","Password"):</span>
+        <input type="password" name="newMemberPassword" id="newMemberPassword" value="$i18n.escape($form.newMemberPassword)" required maxlength="30" />
+      </label>
+      <label for="newMemberConfirmPassword" class="label-move">
+        <span>$i18n.write("checkout.wishListLogin.confirmPasswordField","Confirm Password"):</span>
+        <input type="password" name="newMemberConfirmPassword" id="newMemberConfirmPassword" value="$i18n.escape($form.newMemberConfirmPassword)" required maxlength="30" />
+      </label>
+      <div class='footer-buttons text-right'>
+        <button type="submit" name="newMemberSubmit" class='button inactive no-margin' disabled >
+          Register
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
+
+
+
+#parse('/snippets/bottom.vm')

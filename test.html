@@ -1,0 +1,119 @@
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places"></script>
+<script type="text/javascript" src="https://secure.ultracart.com/merchant/js/v3/vendor/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/assets/js/libraries.0.1.3.js"></script>
+<style>
+/*  input:-webkit-autofill {
+    display: none;
+    position: absolute;
+    left: -99999px;
+    z-index: -99999;
+  }*/
+</style>
+<script type="text/javascript">
+jQuery(document).ready(function(){
+  var input = document.getElementById('address1');
+  var options = {
+    types: ['address']
+  };
+  
+  if(!$.browser.webkit) {
+    alert('not webkit');
+    autocomplete = new google.maps.places.Autocomplete(input, options);
+    // When the user selects an address from the dropdown,
+    // populate the address fields in the form.
+    google.maps.event.addListener(autocomplete, 'place_changed', function() {
+      var place = autocomplete.getPlace();
+      console.log("they selected", place);
+
+      // Variables for intermediate collection
+      var streetNumber ="";
+      var street = "";
+      var postalCodeSuffix = "";
+      var neighborhood = "";
+
+      // Final address variables
+      var address1 = "";
+      var city = "";
+      var state = "";
+      var postalCode = "";
+      var country = "";
+
+      for (var key in place.address_components) {
+        var address_component = place.address_components[key];
+        if (address_component.types[0] == "street_number") {
+          streetNumber = address_component.short_name;
+        }
+        if (address_component.types[0] == "route") {
+          street = address_component.long_name;
+        }
+        if (address_component.types[0] == "locality") {
+          city = address_component.long_name;
+        }
+        if (address_component.types[0] == "neighborhood") {
+          neighborhood = address_component.long_name;
+        }
+        if (address_component.types[0] == "administrative_area_level_1") {
+          state = address_component.short_name;
+        }
+        if (address_component.types[0] == "postal_code") {
+          postalCode = address_component.short_name;
+        }
+        if (address_component.types[0] == "postal_code_suffix") {
+          postalCodeSuffix = address_component.short_name;
+        }
+        if (address_component.types[0] == "country") {
+          country = address_component.long_name;
+        }
+        //console.log(address_component);
+        //console.log(address_component.types[0], address_component.long_name);
+      }
+
+      address1 = (streetNumber + " " + street).trim();
+      if (postalCodeSuffix) {
+        postalCode += "-" + postalCodeSuffix;
+      }
+      if (neighborhood) {
+        city = neighborhood;
+      }
+
+      console.log("Update form with address", 
+       {
+         "address1": address1,
+         "city": city,
+         "state": state,
+         "postalCode": postalCode,
+         "country": country
+       }
+      );
+     
+      // Perform some magic to set the searchable address field with only the address
+      setTimeout(function(){
+        jQuery('#address1').val(address1).on( "blur.checkout", function(e){
+          e.stopPropagation();
+              this.value = address1;
+              jQuery('#address1').off("blur.checkout");
+          });
+      },100);
+
+        jQuery("#address2").val("");
+        jQuery("#city").val(city);
+        jQuery("#state").val(state);
+        jQuery("#zip").val(postalCode);
+        jQuery("#country").val(country);
+      
+    });
+  }
+
+
+});
+</script>
+
+<form autocomplete="off">
+Address1    <input type="text" name="address1" id="address1" style="width: 300px;" autocomplete="off"> <br/>
+Address2    <input type="text" name="address2" id="address2" style="width: 300px;"> <br/>
+City        <input type="text" name="city" id="city" style="width: 300px;"> <br/>
+State       <input type="text" name="state" id="state" style="width: 300px;"> <br/>
+Zip/Postal  <input type="text" name="zip" id="zip" style="width: 300px;"> <br/>
+Country     <input type="text" name="country" id="country" style="width: 300px;"> <br/>
+
+</form>

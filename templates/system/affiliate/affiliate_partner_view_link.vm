@@ -1,0 +1,72 @@
+##
+## UltraCart - Mr Teas Template
+## http://www.ultracart.com/
+##
+## Copyright (c) 2015 BPS Info Solutions Inc.
+## License located here:
+## http://www.ultracart.com/storefront/license/
+##
+## Designed by Level 2 Design, LLC http://www.level2d.com/
+##
+
+#* @vtlvariable name="merchantId" type="java.lang.String" *#
+#* @vtlvariable name="formatHelper" type="com.bpsinfo.ultracart.catalog.tobjects.FormatHelper" *#
+#* @vtlvariable name="i18n" type="com.bpsinfo.storefront.tobjects.I18nWriter" *#
+#* @vtlvariable name="form" type="com.bpsinfo.ultracart.affiliate.ui.partner.ViewLinkForm" *#
+
+#set( $pageGroup = 'affiliate' )
+#set( $bodyClass = 'affiliate view-link' )
+#set( $pageTitle = 'View Link - Affiliate Partner' )
+#parse('/snippets/top.vm')
+
+#set( $title = 'Link' )
+#parse('/snippets/title.vm')
+
+#if($form.invisible)
+	<div class="row">
+		<div class="columns small-16">
+			<p>Simply place a link on <strong>$form.invisibleLinkUrl</strong> to <strong>$form.destinationUrl</strong></p>
+		</div>
+	</div>
+#else
+
+	#if($form.preview)
+		<div class="row">
+			<div class="columns small-16">
+				<h2>Preview</h2>
+
+				$form.previewHtml
+			</div>
+		</div>
+	#end ##if-preview
+
+	<div class="row">
+		<div class="columns small-16">
+			<label class="label-group">
+				<span>Your affiliate link is</span>
+				<textarea name="completeHtml" readonly="true">$i18n.escape($!form.completeHtml)</textarea>
+			</label>
+
+			<label class="label-group">
+				<span>If you want to link your own content, you can use this link instead.</span>
+				<input type="text" name="partialHtml" value="$i18n.escape($!form.partialHtml)"/>
+			</label>
+
+			<label class="label-group">
+				<span>
+					If you want to link your own content and pass a sub id, you can use this link instead.<br>
+					<strong>Replace 1234 with your sub id.</strong>
+				</span>
+				<input type='text' name="partialHtmlWithSubId" value="$i18n.escape($!form.partialHtmlWithSubId)" />
+			</label>
+		</div>
+	</div>
+#end ## if-invisible
+
+
+	#set( $showBackButton = true )
+	#set( $showManageLinksButton = true )
+	#set( $hideButton = true )
+	#parse('/snippets/affiliate/button.vm')
+
+#parse('/snippets/bottom.vm')

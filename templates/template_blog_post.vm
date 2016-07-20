@@ -1,0 +1,104 @@
+##
+## UltraCart - Mr Teas Template
+## http://www.ultracart.com/
+##
+## Copyright (c) 2015 BPS Info Solutions Inc.
+## License located here:
+## http://www.ultracart.com/storefront/license/
+##
+## Designed by Level 2 Design, LLC http://www.level2d.com/
+##
+
+## uc:contains-velocity="true"
+## uc:page-type="blog post"
+## uc:item-multimedia-default-used="true"
+
+## uc:site-attribute-string="facebookAccount"
+## uc:site-attribute-string="twitterAccount"
+## uc:site-attribute-string="pinterestAccount"
+## uc:site-attribute-boolean="shareFacebook"
+## uc:site-attribute-boolean="shareTwitter"
+## uc:site-attribute-boolean="sharePinterest"
+
+## uc:blog-post-attribute-string="sample string"
+## uc:blog-post-attribute-simplelist="sample simple"
+## uc:blog-post-attribute-definitionlist="sample definition"
+## uc:blog-post-attribute-multiline="sample multiline"
+## uc:blog-post-attribute-color="sample color"
+## uc:blog-post-attribute-boolean="sample boolean"
+## uc:blog-post-attribute-integer="sample integer"
+## uc:blog-post-attribute-html="sample html"
+
+## uc:theme-attribute-boolean="Information Only Theme"
+
+#parse("/snippets/checkout_only_redirect.vm")
+
+#set($bodyClass = "product-page")
+#set($outOfStock = false)
+#if($item.isInventoryTracked())
+  #if($item.getAvailableQuantity() && $item.getAvailableQuantity() < 1)
+      #set($outOfStock = true)
+  #end
+#end
+
+#parse("/snippets/google_base_offer_id.vm")
+
+#parse("/snippets/top.vm")
+
+<div class="row no-margin">
+  <div class="columns small-16">
+    #parse("/snippets/breadcrumbs.vm")
+  </div>
+</div>
+<div class="row">
+  <div class="columns small-16 post-full">
+    <h1>$blogPost.getTitle()</h1>
+    <sub class="post-info">
+
+      #if ($blogPost.getPublicationDate())
+        ${blogPost.getPublicationDate()}
+      #else
+        Draft Post
+      #end
+
+      #if (!$blogPost.getAuthor() && $blogPost.getAuthor().length() > 0)
+      | By: ${blogPost.getAuthor()}
+      #end
+    </sub>
+    <div>$blogPost.getBody()</div>
+    <div class="full-divider"></div>
+  </div>
+</div>
+
+## BEGIN DISQUS COMMENTS ##
+#if ($blogPost.isAllowComments())
+  #if ($site.getDisqusShortName() && $site.getDisqusShortName().length() > 0)
+    <div class="row">
+      <div class="columns small-16">
+        <div id="disqus_thread"></div>
+
+        <script type="text/javascript">
+            /* * * CONFIGURATION VARIABLES * * */
+            var disqus_shortname = '$site.getDisqusShortName()';
+            var disqus_identifier = '$blogPost.getStoreFrontBlogPostOid()';
+            var disqus_title = '$formatHelper.escapeJavascript($blogPost.getTitle())';
+
+            /* * * DON'T EDIT BELOW THIS LINE * * */
+            (function() {
+                var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+            })();
+        </script>
+        <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+      </div>
+    </div>
+  #else
+    $log.error("CONFIG", "Comments are enabled on this blog post, but the Disqus Short Name is not configured on your blog settings.")
+    $log.error("CONFIG", "Please see http://docs.ultracart.com/display/ucdoc/Configuring+Disqus+Comments+for+StoreFront+Blogs")
+  #end
+#end
+## END DISQUS COMMENTS ##
+
+#parse("/snippets/bottom.vm")

@@ -1,0 +1,159 @@
+##
+## UltraCart - Mr Teas Template
+## http://www.ultracart.com/
+##
+## Copyright (c) 2015 BPS Info Solutions Inc.
+## License located here:
+## http://www.ultracart.com/storefront/license/
+##
+## Designed by Level 2 Design, LLC http://www.level2d.com/
+##
+
+#* @vtlvariable name="exitPop" type="com.bpsinfo.storefront.tobjects.ExitPop" *#
+
+#if("$!exitPop" != "")
+
+
+<!-- BEGIN EXIT POP -->
+<style type="text/css">
+  #mb_center {
+    z-index: 8000;
+  }
+
+  #mb_bottom {
+    z-index: 7500;
+  }
+
+  #mb_overlay {
+    z-index: 7000;
+  }
+
+</style>
+
+## <script type="text/javascript" src="/mootools.v1.11.js"></script>
+## <script type="text/javascript" src="/js/lightbox/js/moodalbox.js"></script>
+## <link rel="stylesheet" href="/js/lightbox/css/moodalbox.css" type="text/css" media="screen"/>
+
+<script type="text/javascript">
+
+  (function () {
+// This is set to true at first to avoid false firing
+    var noCouponPop = true;
+    var couponAlertText = "$!exitPop.exitPopText";
+
+// Setup the onbeforeunload function handle
+    window.onbeforeunload = function (ev) {
+      // Is the cookie set already?
+      if (readCookie("seenPopup")) {
+        noCouponPop = true;
+      }
+
+      // Check to see if we want to show the exit pop
+      if (!noCouponPop) {
+        // Set a cookie saying that we've already seen the popup
+        createCookie("seenPopup", "true", 300);
+
+
+        // Tell the browser to go back up to the top of the page.
+        // document.location.hash="Top";
+
+        // Display our light-boxed coupon page
+        MOOdalBox.open( // case matters
+            "/checkout/exitPopCouponLoad.do?merchantId=${exitPop.merchantId}&screenBrandingThemeOid=${exitPop.screenBrandingThemeOid}&storeFront=true", // the link URL
+            "The coupon has already been applied to your cart.  Click close to finish your order.", // the caption (link's title) - can be blank
+            "550 450" // width and height of the box - can be left blank
+        );
+
+        // Remove our window hook
+        window.onbeforeunload = null;
+
+        // Return the text that will be displayed back the browser with the cancel or OK dialog
+        return couponAlertText;
+      }
+
+//      return null;
+    };
+
+    // Setup the on load function handle
+
+    function exitPopOnLoad(ev) {
+      noCouponPop = false;
+    }
+
+    if (window.attachEvent) {
+      window.attachEvent('onload', exitPopOnLoad);
+    } else {
+      if (window.onload) {
+        var currentOnLoad = window.onload;
+        window.onload = function () {
+          currentOnLoad();
+          exitPopOnLoad();
+        };
+      } else {
+        window.onload = exitPopOnLoad;
+      }
+    }
+
+
+    function attachClickAndFormHandler() {
+      // Attach a click handler to the link
+      $$('a').each(function (item, index) {
+        item.addEvent('click', function () {
+          // We clicked something on our own page so we don't want an pop here.
+          noCouponPop = true;
+        });
+      });
+
+      $$('form').each(function (item, index) {
+        item.addEvent('submit', function () {
+          // We clicked something on our own page so we don't want an pop here.
+          noCouponPop = true;
+        });
+      });
+    }
+
+    attachClickAndFormHandler();
+
+    function createCookie(name, value, days) {
+      var expires = "";
+      if (days) {
+        var date = new Date();
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+        expires = "; expires=" + date.toGMTString();
+      }
+
+      document.cookie = name + "=" + value + expires + "; path=/";
+    }
+
+    function readCookie(name) {
+      var nameEQ = name + "=";
+      var ca = document.cookie.split(';');
+      for (var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+      }
+
+      return null;
+    }
+
+    function eraseCookie(name) {
+      createCookie(name, "", -1);
+    }
+
+  }());
+</script>
+
+## <a href="#" data-reveal-id="myModal">Click Me For A Modal</a>
+
+## <div id="myModal" class="reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
+##   <div id="exitPopCouponImage"></div>
+##   ## <h2 id="modalTitle">Awesome. I have it.</h2>
+##   ## <p class="lead">Your couch.  It is mine.</p>
+##   ## <p>I'm a cool paragraph that lives inside of an even cooler modal. Wins!</p>
+##   <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+## </div>
+
+
+<!-- END EXIT POP -->
+#end ##if-exitPop

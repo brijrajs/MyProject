@@ -1,0 +1,159 @@
+#* @vtlvariable name="formatHelper" type="com.bpsinfo.ultracart.catalog.tobjects.FormatHelper" *#
+#* @vtlvariable name="i18n" type="com.bpsinfo.storefront.tobjects.I18nWriter" *#
+#* @vtlvariable name="form" type="com.bpsinfo.ultracart.autoorder.ui.AutoOrderUpdateBillingForm" *#
+
+#set( $bodyClass = 'auto-order auto-order-update-billing' )
+#set( $pageTitle = $i18n.write("autoorder.updateBilling.pageTitle", "Update Billing") )
+#parse('/snippets/top.vm')
+
+#set( $title = $pageTitle )
+#parse('/snippets/title.vm')
+
+<form name="ucReview" action="/autoorder/autoOrderUpdateBillingSave.do" autocomplete="OFF" method='post'>
+	#parse('/snippets/common/storefront_template_spec_version.vm')
+	<input type="hidden" name="merchantId" value="$i18n.escape($form.merchantId)"/>
+	<input type="hidden" name="token" value="$i18n.escape($form.token)"/>
+
+	#parse('/snippets/errors.vm')
+	#parse('/snippets/info_messages.vm')
+
+
+	<div class="row">
+
+		<!-- billing -->
+		<div class="columns small-16 medium-8">
+			<h2>$i18n.write("autoOrder.updateBilling.billingAddressHeader","BILLING ADDRESS")</h2>
+
+			<div class="row">
+				<div class="columns small-16 medium-8">
+					<label class="label-move">
+						<span>$i18n.write("autoOrder.updateBilling.firstNameField","First Name")*</span>
+						<input type="text" name="firstName" value="$i18n.escape($form.firstName)" maxlength="30" />
+					</label>
+				</div>
+
+				<div class="columns small-16 medium-8">
+					<label class="label-move">
+						<span>$i18n.write("autoOrder.updateBilling.lastNameField","Last Name")*</span>
+						<input type="text" name="lastName" value="$i18n.escape($form.lastName)" maxlength="30" />
+					</label>
+				</div>
+			</div>
+
+			<label class="label-move">
+				<span>$i18n.write("autoOrder.updateBilling.companyField","Company")#if($form.requireCompany)*#{end}</span>
+				<input type="text" name="company" value="$i18n.escape($form.company)" />
+			</label>
+
+			<label class="label-move">
+				<span>$i18n.write("autoOrder.updateBilling.address1Field","Address 1")*</span>
+				<input type="text" name="address1" value="$i18n.escape($form.address1)" />
+			</label>
+
+			<label class="label-move">
+				<span>$i18n.write("autoOrder.updateBilling.address2Field","Address 2")</span>
+				<input type="text" name="address2" value="$i18n.escape($form.address2)" />
+			</label>
+
+			<label class="label-move">
+				<span>$i18n.write("autoOrder.updateBilling.cityField","City")*</span>
+				<input type="text" name="city" value="$i18n.escape($form.city)" />
+			</label>
+
+			<div class="row">
+				<div class="columns small-16 medium-8">
+					<label class="label-move">
+						<span>$i18n.write("autoOrder.updateBilling.stateProvinceRegionField","State/Province/Region")*</span>
+						<input type="text" name="state" value="$i18n.escape($form.state)" />
+					</label>
+				</div>
+
+				<div class="columns small-16 medium-8">
+					<label class="label-move">
+						<span>$i18n.write("autoOrder.updateBilling.zipPostalCodeField","Zip/Postal Code")*</span>
+						<input type="text" name="zip" value="$i18n.escape($form.zip)" maxlength="20" />
+					</label>
+				</div>
+			</div>
+
+			<label class="label-move">
+				<span>$i18n.write("autoOrder.updateBilling.countryField","Country")*</span>
+				<select name="country" class="ucFormField">
+					#foreach($country in $form.countries)
+						<option #if($form.country && $country == $form.country)selected#{end} >$i18n.escape($country)</option>
+					#end
+				</select>
+			</label>
+
+			<div class="row">
+				<div class="columns small-16 medium-8">
+					<label class="label-move">
+						<span>$i18n.write("autoOrder.updateBilling.daytimePhoneField","Daytime Phone")#if($form.requireDayPhone)*#{end}</span>
+						<input type="text" name="dayPhone" value="$i18n.escape($form.dayPhone)" maxlength="25" />
+					</label>
+				</div>
+
+				<div class="columns small-16 medium-8">
+					<label class="label-move">
+						<span>$i18n.write("autoOrder.updateBilling.eveningPhoneField","Evening Phone")#if($form.requireEveningPhone)*#{end}</span>
+						<input type="text" name="eveningPhone" value="$i18n.escape($form.eveningPhone)" maxlength="25" />
+					</label>
+				</div>
+			</div>
+		</div>
+		<!-- /billing -->
+
+		<!-- credit-card -->
+		<div class="columns small-16 medium-8">
+			<h2>$i18n.write("autoOrder.updateBilling.creditCardHeader","CREDIT CARD PAYMENT")</h2>
+
+			<label class="label-move">
+				<span>$i18n.write("autoOrder.updateBilling.creditCardType","Credit Card Type")*</span>
+				<select name="creditCardType" class="ucFormField">
+					#foreach($ccType in $form.creditCardTypes)
+						<option value="$ccType.value" #if($form.creditCardType && $ccType.value == $form.creditCardType)selected#{end} >$i18n.escape($ccType.description)</option>
+					#end
+				</select>
+			</label>
+
+			<label class="label-move">
+				<span>$i18n.write("autoOrder.updateBilling.creditCardNumber","Credit Card #")*</span>
+				<input type="text" name="creditCardNumber" value="$i18n.escape($form.creditCardNumber)" maxlength="20" />
+			</label>
+
+			<div class="row">
+				<label class="label-move">
+					<div class="columns small-16 medium-8">
+						<span>$i18n.write("autoOrder.updateBilling.creditCardExpirationDate","Expiration Date")*</span>
+						<select name="creditCardExpMonth" class="ucFormField">
+							#foreach($expMonth in $form.creditCardExpMonths)
+								<option value="$expMonth.value" #if($form.creditCardExpMonth && $expMonth.value == $form.creditCardExpMonth)selected#{end} >$i18n.escape($expMonth.description)</option>
+							#end
+						</select>
+					</div>
+
+					<div class="columns small-16 medium-8">
+						<span>&nbsp;</span>
+						<select name="creditCardExpYear" class="ucFormField">
+							#foreach($expYear in $form.creditCardExpYears)
+								<option value="$expYear.value" #if($form.creditCardExpYear && $expYear.value == $form.creditCardExpYear)selected#{end} >$i18n.escape($expYear.description)</option>
+							#end
+						</select>
+					</div>
+				</label>
+			</div>
+		</div>
+		<!-- /credit-card -->
+	</div>
+
+	#parse('/snippets/hr.vm')
+	<div class="row footer-buttons">
+		<div class="columns small-16 text-right">
+			<button  name="Submit Order" class="no-margin-right no-margin-bottom">Submit</button>
+		</div>
+	</div>
+
+	#parse('/snippets/common/cs_token.vm')
+</form>
+
+#parse('/snippets/bottom.vm')

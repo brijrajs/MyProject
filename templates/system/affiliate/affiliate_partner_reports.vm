@@ -1,0 +1,376 @@
+##
+## UltraCart - Mr Teas Template
+## http://www.ultracart.com/
+##
+## Copyright (c) 2015 BPS Info Solutions Inc.
+## License located here:
+## http://www.ultracart.com/storefront/license/
+##
+## Designed by Level 2 Design, LLC http://www.level2d.com/
+##
+
+#* @vtlvariable name="merchantId" type="java.lang.String" *#
+#* @vtlvariable name="formatHelper" type="com.bpsinfo.ultracart.catalog.tobjects.FormatHelper" *#
+#* @vtlvariable name="i18n" type="com.bpsinfo.storefront.tobjects.I18nWriter" *#
+#* @vtlvariable name="form" type="com.bpsinfo.ultracart.affiliate.ui.partner.AffiliatePartnerReportsForm" *#
+
+## TODO table css
+## TODO make sure old code is translated
+
+#set( $pageGroup = 'affiliate' )
+#set( $bodyClass = 'affiliate partner-reports' )
+#set( $pageTitle = 'Affiliate Partner Reports' )
+#parse('/snippets/top.vm')
+
+#set( $title = 'Reports')
+#parse('/snippets/title.vm')
+
+<form method="get" action="/affiliate/partner/reportsLoad.do">
+	<input type="hidden" name="merchantId" value="$i18n.escape($merchantId)" />
+    #parse('/snippets/common/storefront_template_spec_version.vm')
+	#parse('/snippets/affiliate/date_picker.vm')
+
+	<div class="row no-margin-top">
+		<div class="columns small-16">
+			<label class="label-group">
+				<span>Report Type</span>
+
+				<select name="report">
+					#if($form.showCommissionAnalysis)
+						<option value="commissionAnalysis" #if("$!form.report" == "commissionAnalysis")selected#{end}>
+							Commission Analysis
+						</option>
+					#end ## if-showCommissionAnalysis
+
+					<option value="ledgerEntries"  #if("$!form.report" == "ledgerEntries")selected#{end}>Completed Transactions</option>
+					<option value="trafficEntries"  #if("$!form.report" == "trafficEntries")selected#{end}>Click History</option>
+					<option value="impressionEntries"  #if("$!form.report" == "impressionEntries")selected#{end}>Impression Entries</option>
+				</select>
+			</label>
+
+			<button type="submit" value="Change" class="button">Change</button>
+		</div>
+	</div>
+</form>
+
+#if($form.tooManyRecordsUseExport)
+	#parse( 'snippets/hr.vm' )
+	<div class="row">
+		<div class="columns small-16">
+			<h2>
+				$i18n.write('checkout.importMessagesHeader', 'Important Message')
+			</h2>
+			<p>
+				There are more than 25,000 records for this report.  Please choose a smaller time period or use the export
+				options at the bottom of the page for further analysis.
+			</p>
+		</div>
+	</div>
+	#parse( 'snippets/hr.vm' )
+#end
+
+<div class="row">
+	<div class="columns-16">
+		<table class="report $form.report" data-report="$form.report">
+			<thead>
+				<tr>
+					#if($form.report == 'ledgerEntries')
+						<th width="140" data-name="date" data-searchable="1" data-orderable="1">Trans. Date</th>
+						<th width="250" data-name="memo" data-searchable="1" data-orderable="1">Memo</th>
+						<th width="100" data-name="subId" data-searchable="1" data-orderable="1">Sub-Category ID</th>
+
+						#if($form.showTierNumber)
+							<th width="70" data-name="tierNumber" data-searchable="1" data-orderable="1">Tier</th>
+						#end
+
+						#if($form.showTransactionPercentage)
+							<th width="70" data-name="percentage" data-searchable="1" data-orderable="1">Percentage</th>
+						#end
+
+						<th width="70" data-name="amount" data-searchable="1" data-orderable="1">Amount</th>
+						<th width="70" data-name="paid" data-searchable="1" data-orderable="1">Paid</th>
+						<th width="70" data-name="balance" data-searchable="1" data-orderable="1">Balance</th>
+						<th width="70" data-name="state" data-searchable="1" data-orderable="1">Status</th>
+						<th width="100" data-name="paymentInfoLedgerOid" data-searchable="1" data-orderable="1">Payment Info</th>
+
+						#if($form.showCustomerName)
+							<th width="100" data-name="firstName" data-searchable="1" data-orderable="1">Buyer F. Name</th>
+							<th width="100" data-name="lastName" data-searchable="1" data-orderable="1">Buyer L. Name</th>
+						#end
+					#end
+
+					#if($form.report == 'commissionAnalysis')
+
+					#end
+
+					#if($form.report == 'trafficEntries')
+						<th width="140" data-name="clickDate" data-searchable="1" data-orderable="1">Click Date</th>
+						<th width="100" data-name="ipAddress" data-searchable="1" data-orderable="1">IP Address</th>
+						<th width="100" data-name="subCategoryId" data-searchable="1" data-orderable="1">Sub-Category ID</th>
+						<th width="200" data-name="referralSource" data-searchable="1" data-orderable="1">Referral Source</th>
+					#end
+
+					#if($form.report == 'impressionEntries')
+						<th width="140" data-name="viewDate" data-searchable="1" data-orderable="1">View Date</th>
+						<th width="100" data-name="ipAddress" data-searchable="1" data-orderable="1">IP Address</th>
+						<th width="100" data-name="subCategoryId" data-searchable="1" data-orderable="1">Sub-Category ID</th>
+						<th width="200" data-name="referralSource" data-searchable="1" data-orderable="1">Referral Source</th>
+					#end
+				</tr>
+			</thead>
+
+			<tbody>
+
+			</tbody>
+		</table>
+	</div>
+</div>
+
+
+#if("$!form.report" != "")
+	<div class="row">
+		<div class="columns small-16">
+			<a href="/affiliate/partner/exportLoad.do?reportSource=$!form.reportSource&exportType=xml&${form.exportQueryParams}">
+				<span class="fa fa-fw fa-file-code-o"></span> Export To XML
+			</a> |
+			<a href="/affiliate/partner/exportLoad.do?reportSource=$!form.reportSource&exportType=csv&${form.exportQueryParams}">
+				<span class="fa fa-fw fa-file-excel-o"></span> Export To CSV
+			</a>
+		</div>
+	</div>
+#end ## if-report
+
+
+## TODO revisit datatables options with more affiliate data.
+<script type="text/javascript">
+#if($form.report == 'commissionAnalysis')
+	window.reportData = $!form.commissionAnalysisRecordsJson;
+	window.commissionHeaders = $!form.commissionAnalysisHeadersJson;
+#end
+
+#if($form.report == 'trafficEntries')
+	window.reportData = $!form.trafficEntriesJson;
+#end
+
+#if($form.report == 'impressionEntries')
+	window.reportData = $!form.impressionEntriesJson;
+#end
+
+#if($form.report == 'ledgerEntries')
+	window.reportData = $!form.ledgerEntriesJson;
+#end
+</script>
+
+#set( $showBackButton = true )
+#set( $hideButton = true )
+#parse('/snippets/affiliate/button.vm')
+
+#parse('/snippets/bottom.vm')
+
+#**
+
+## TODO Remove old code once data is tested
+
+## TODO not sure how to go about this thing
+## This is a javascript table showing ledger values.  Great pain is taken here to avoid stomping on any merchant defined jQuery
+## in the screen branding header and footer.
+<link type="text/css" rel="stylesheet" href="/js/jquery-ui-themes/overcast/jquery-ui-1.8.2.custom.css"/>
+<link type="text/css" rel="stylesheet" href="/js/jquery.jqGrid.ui.css"/>
+<script type='text/javascript' src="/html5-boilerplate/js/vendor/modernizr-2.6.2.min.js"></script>
+<script type="text/javascript" src="/js/json2.js"></script>
+
+<script type="text/javascript">
+	function percentageFormatter(cellValue, options, rowObject) {
+		if (!cellValue) {
+			return '0%';
+		}
+		return (cellValue).toFixed(0) + '%';
+	}
+
+	function viewLedgerFormatter(cellValue, options, rowObject) {
+		if(cellValue){
+			return "<a href='/affiliate/partner/ledgerLoad.do?ledgerOid=" + cellValue + "&merchantId=$!{merchantId}'>Payment Info<\/a>";
+		} else {
+			return "";
+		}
+
+	}
+
+
+	//noinspection JSUnusedAssignment
+	var showTierNumber = false;
+	//noinspection JSUnusedAssignment
+	var showTransactionPercentage = false;
+	//noinspection JSUnusedAssignment
+	var showCustomerName = false;
+		#if($form.showTierNumber) showTierNumber = true; #{end}
+		#if($form.showTransactionPercentage) showTransactionPercentage = true; #{end}
+		#if($form.showCustomerName) showCustomerName = true; #{end}
+
+	//noinspection JSUnusedAssignment
+	var caption = '';
+	var reportData = [];
+	var headers = [];
+	var columnModel = [];
+
+		#if($form.report == 'ledgerEntries')
+		// configuring report for ledgerEntries
+
+		headers.push('Trans. Date');
+		columnModel.push({name: 'date', index: 'date', width: 140, align: "left", sorttype: 'text'});
+
+		headers.push('Memo');
+		columnModel.push({name: 'memo', index: 'memo', width: 250, align: "left", sorttype: 'text'});
+
+		headers.push('Sub-Category ID');
+		columnModel.push({name: 'subId', index: 'subId', width: 100, align: "left", sorttype: 'text'});
+
+		if (showTierNumber) {
+			headers.push('Tier');
+			columnModel.push({name: 'tierNumber', index: 'tierNumber', width: 70, align: "right", sorttype: 'int'});
+		}
+		if (showTransactionPercentage) {
+			headers.push('Percentage');
+			columnModel.push({name: 'percentage', index: 'percentage', width: 70, align: "right", sorttype: 'float', formatter: percentageFormatter});
+		}
+		headers.push('Amount');
+		columnModel.push({name: 'amount', index: 'amount', width: 70, align: "right", sorttype: 'number'});
+		headers.push('Paid');
+		columnModel.push({name: 'paid', index: 'paid', width: 70, align: "right", sorttype: 'number'});
+		headers.push('Balance');
+		columnModel.push({name: 'balance', index: 'balance', width: 70, align: "right", sorttype: 'number'});
+		headers.push('Status');
+		columnModel.push({name: 'state', index: 'state', width: 70, align: "left", sorttype: 'text'});
+		headers.push('Payment Info');
+		//TODO add the link to this column
+		columnModel.push({name: 'paymentInfoLedgerOid', index: 'paymentInfoLedgerOid', width: 100, align: "center", sorttype: 'int', formatter: viewLedgerFormatter});
+
+		if (showCustomerName) {
+			headers.push('Buyer F. Name');
+			columnModel.push({name: 'firstName', index: 'firstName', width: 100, align: "left", sorttype: 'text'});
+			headers.push('Buyer L. Name');
+			columnModel.push({name: 'lastName', index: 'lastName', width: 100, align: "left", sorttype: 'text'});
+		}
+		caption = 'Completed Transactions';
+		reportData = $!form.ledgerEntriesJson;
+		#end
+
+
+		#if($form.report == 'commissionAnalysis')
+		// configuring report for commissionAnalysis
+		caption = 'Commission Analysis';
+		reportData = $!form.commissionAnalysisRecordsJson;
+
+			var colWidths = {
+				'transactionDate': 140,
+				'status': 80,
+				'orderId': 140,
+				'itemDescription': 250,
+				'expectedPayment1': 140,
+				'expectedPayment2': 140,
+				'expectedPayment3': 140,
+				'expectedPayment4': 140,
+				'expectedPayment5': 140,
+				'expectedPayment6': 140,
+				'expectedPayment7': 140,
+				'expectedPayment8': 140,
+				'expectedPayment9': 140,
+				'expectedPayment10': 140,
+				'expectedPayment11': 140,
+				'expectedPayment12': 140
+			};
+
+
+		var commissionHeaders = $!form.commissionAnalysisHeadersJson;
+		//noinspection JSUnusedAssignment
+		for (var i = 0; i < commissionHeaders.length; i++) {
+			//noinspection JSUnusedAssignment
+			headers.push(commissionHeaders[i].key);
+			//noinspection JSUnusedAssignment
+			columnModel.push({name: commissionHeaders[i].value, index: commissionHeaders[i].value, width: (colWidths[commissionHeaders[i].value] || 100), align: "left", sorttype: 'text'});
+		}
+		#end
+
+
+		#if($form.report == 'trafficEntries')
+		// configuring report for trafficEntries
+		caption = 'Click History';
+		reportData = $!form.trafficEntriesJson;
+		headers = ['Click Date', 'IP Address', 'Sub-Category ID', 'Referral Source'];
+		columnModel = [
+			{name: 'clickDate', index: 'clickDate', width: 140, align: "left", sorttype: 'text'},
+			{name: 'ipAddress', index: 'ipAddress', width: 100, align: "left", sorttype: 'text'},
+			{name: 'subCategoryId', index: 'subCategoryId', width: 100, align: "left", sorttype: 'text'},
+			{name: 'referralSource', index: 'referralSource', width: 200, align: "left", sorttype: 'text'}
+		];
+		#end
+
+
+		#if($form.report == 'impressionEntries')
+		// configuring report for impressionEntries
+		caption = 'Impression Entries';
+		reportData = $!form.impressionEntriesJson;
+
+		headers = ['View Date', 'IP Address', 'Sub-Category ID', 'Referral Source'];
+		columnModel = [
+			{name: 'viewDate', index: 'viewDate', width: 140, align: "left", sorttype: 'text'},
+			{name: 'ipAddress', index: 'ipAddress', width: 100, align: "left", sorttype: 'text'},
+			{name: 'subCategoryId', index: 'subCategoryId', width: 100, align: "left", sorttype: 'text'},
+			{name: 'referralSource', index: 'referralSource', width: 200, align: "left", sorttype: 'text'}
+		];
+		#end
+
+
+	Modernizr.load([
+		{
+			test: window.jQuery,
+			nope: ['/js/jquery-1.7.2.min.js'],
+			both: ['/js/jquery-ui-1.8.2.custom.min.js', '/js/jquery.jqGrid.locale-en.js', '/js/jquery.jqGrid.min.js'],
+			complete: function () {
+				jQuery(document).ready(function () {
+					#if("$!form.report" != "")
+						loadReport();
+					#else
+						/* not doing anything here.  no report has been selected. */
+					#end
+
+				});
+			}
+		}
+	]);
+
+
+	function loadReport() {
+		jQuery("#reportGrid").jqGrid({
+			ajaxGridOptions: {global: false},
+			data: reportData,
+			datatype: "local",
+			colNames: headers,
+			colModel: columnModel,
+			forceFit: true,
+			rowNum: 100,
+			rowTotal: 5000,
+			rowList: [50, 100, 200, 300, 500],
+			striped: true,
+			height: 'auto',
+			sortname: 'date',
+			viewrecords: true,
+			sortorder: "asc",
+			pager: '#reportPager',
+			rownumbers: false,
+			caption: caption });
+	}
+
+</script>
+
+#if($form.tooManyRecordsUseExport)
+<div class='messageContainer'>
+	<div class='messageHeader'><span id='ucErrorMessageIcon'></span>$i18n.write('checkout.importMessagesHeader', 'Important Message')</div>
+		<div class='message'>There are more than 25,000 records for this report.  Please choose a smaller time period or use the export options at the bottom of the page for further analysis.</div>
+</div>
+<br/><br/>
+#end
+
+<table id="reportGrid" summary="report"></table>
+<div id="reportPager"></div>
+**#

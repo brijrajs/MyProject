@@ -1,0 +1,40 @@
+##
+## UltraCart - Mr Teas Template
+## http://www.ultracart.com/
+##
+## Copyright (c) 2015 BPS Info Solutions Inc.
+## License located here:
+## http://www.ultracart.com/storefront/license/
+##
+## Designed by Level 2 Design, LLC http://www.level2d.com/
+##
+#* @vtlvariable name="i18n" type="com.bpsinfo.storefront.tobjects.I18nWriter" *#
+#* @vtlvariable name="billingAddressPart" type="com.bpsinfo.storefront.tobjects.BillingAddressPart" *#
+<!-- Billing Table -->
+## Do Not Add Required to the inputs: Because this form defaults to invisible, the required attributes are applied with javascript.
+<div class="js-billing-section #if(!$billingAddressPart.billingDifferent)hide#{end}">
+ <div class="heading">billing information</div>
+	<div class="outer-box box3">
+		<div id='billing_addr_form' >
+                    <input class="small-input" type="text" id="billingFirstName" placeholder="First Name" name="billingFirstName" value="$i18n.escape($!billingAddressPart.billingFirstName)" required />
+					<input class="small-input pull-right" type="text" id="billingLastName" placeholder="Last Name" name="billingLastName" value="$i18n.escape($!billingAddressPart.billingLastName)" required />
+					
+					<input type="text" id="billingAddress1" placeholder="Address" name="billingAddress1" data-tax-name="address1" class="$jsGoogleAutocompleteField js-tax-watch" value="$i18n.escape($!billingAddressPart.billingAddress1)" />
+          			
+          			<input class="small-input js-tax-watch" type="text" placeholder="City" name="billingCity" id="billingCity" data-tax-name="city" value="$i18n.escape($!billingAddressPart.billingCity)" />
+	                
+                    <select id="ucFieldbillingCountry" name="billingCountry" class="small-input pull-right js-tax-watch js-change js-billing-destination" onchange="updateStateRequirementFlags()" required >
+						#foreach($country in $billingAddressPart.countries)
+							<option value="$country" #if($country == $billingAddressPart.billingCountry)selected#{end}>$country</option>
+						#end
+					</select>
+                 
+                    <input type="text" id="ucbillingStateFieldId" placeholder="State" name="billingState" value="$i18n.escape($!billingAddressPart.billingState)" class="small-input js-tax-watch js-blur js-billing-destination" required />
+                    <input type="text" id="billingZip" placeholder="Zip code" name="billingZip" value="$i18n.escape($!billingAddressPart.billingZip)" class="small-input pull-right js-tax-watch js-blur js-billing-destination" required />		
+                    
+                    <input class="small-input" type="text" placeholder="Phone" name="billingPhone" value="$i18n.escape($!billingAddressPart.billingPhone)" #if($!billingAddressPart.billingPhoneRequired) required #end />
+            
+  		<div class="clearfix"></div>
+	</div>
+</div><!-- End Outer box --> 
+</div>

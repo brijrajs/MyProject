@@ -1,0 +1,77 @@
+##
+## UltraCart - Mr Teas Template
+## http://www.ultracart.com/
+##
+## Copyright (c) 2015 BPS Info Solutions Inc.
+## License located here:
+## http://www.ultracart.com/storefront/license/
+##
+## Designed by Level 2 Design, LLC http://www.level2d.com/
+##
+
+#* @vtlvariable name="formatHelper" type="com.bpsinfo.ultracart.catalog.tobjects.FormatHelper" *#
+#* @vtlvariable name="i18n" type="com.bpsinfo.storefront.tobjects.I18nWriter" *#
+#* @vtlvariable name="form" type="com.bpsinfo.ultracart.affiliate.ui.AffiliateLoginForm" *#
+
+#set( $pageGroup = 'affiliate' )
+#set( $bodyClass = 'affiliate log-in' )
+#set( $pageTitle = 'Affiliate Login' )
+#parse('/snippets/top.vm')
+
+#set( $title = $pageTitle )
+#parse('/snippets/title.vm')
+
+#parse('/snippets/errors.vm')
+#parse('/snippets/info_messages.vm')
+
+<div class="row">
+	<form class="validate" name="ucAffiliateLogin" action="/affiliate/affiliateLoginSave.do" method="post">
+		<input type="hidden" name="merchantId" value="$i18n.escape($!form.merchantId)"/>
+		<input type="hidden" name="target" value="$i18n.escape($!form.target)"/>
+	    #parse('/snippets/common/storefront_template_spec_version.vm')
+
+		<div class="columns small-16 medium-8 login">
+			<h2>Login</h2>
+			<label class="label-move">
+				<span>Affiliate ID*</span>
+				<input type="text" name="affiliateId" value="$i18n.escape($form.affiliateId)" required maxlength="30" />
+			</label>
+
+			<label class="label-move">
+				<span>Password*</span>
+				<input type="password" name="password" value="$i18n.escape($form.password)" class="inspectletIgnore" required maxlength="32" />
+			</label>
+
+			<div class="footer-buttons text-right">
+				<button type="submit" class="button no-margin" title="Login">Login</button>
+			</div>
+		</div>
+
+		#parse('/snippets/common/cs_token.vm')
+	</form>
+
+	<form class="validate" name="ucAffiliateLogin" action="/affiliate/affiliateLoginSave.do" method="post">
+		<input type="hidden" name="merchantId" value='$i18n.escape($!form.merchantId)'/>
+
+
+	    #parse('/snippets/common/storefront_template_spec_version.vm')
+
+		<div class="columns small-16 medium-8 forgot-password">
+			<h2>Forgot Password</h2>
+			<label class="label-move">
+				<span>Email Address</span>
+				<input type="email" name="email" required value="$i18n.escape($form.email)" />
+			</label>
+
+			<p>Lost your password?  We'll email your password to you.</p>
+
+			<div class="footer-buttons text-right">
+				<button type="submit" class="button no-margin" name="sendPassword" title="Login">Retrieve</button>
+			</div>
+		</div>
+
+		#parse('/snippets/common/cs_token.vm')
+	</form>
+</div>
+
+#parse('/snippets/bottom.vm')

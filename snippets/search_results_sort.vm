@@ -1,0 +1,26 @@
+##
+## UltraCart - Mr Teas Template
+## http://www.ultracart.com/
+##
+## Copyright (c) 2015 BPS Info Solutions Inc.
+## License located here:
+## http://www.ultracart.com/storefront/license/
+##
+## Designed by Level 2 Design, LLC http://www.level2d.com/
+##
+
+<form action="/cgi-bin/UCSearch" method="POST">
+	<input type="hidden" name="MERCHANTID" value="${merchantId}">
+	<input type="hidden" name="MERCHANTSEARCHID" value="${merchantSearchId}">
+	<input type="hidden" name="sort_by_update" value="true">
+
+	<label class="search-sort">
+		<span>Sort By:</span>
+		<select name="sort_by" onchange="jQuery(this).parents('form').submit()">
+		#foreach ($sortByOption in $sortByOptions)
+		  <option #if($sortByOption == $sortBy)selected#end>$formatHelper.escapeHtml($sortByOption)</option>
+		#end
+		</select>
+	</label>
+
+</form>

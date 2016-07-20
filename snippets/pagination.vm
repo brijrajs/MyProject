@@ -1,0 +1,80 @@
+##
+## UltraCart - Mr Teas Template
+## http://www.ultracart.com/
+##
+## Copyright (c) 2015 BPS Info Solutions Inc.
+## License located here:
+## http://www.ultracart.com/storefront/license/
+##
+## Designed by Level 2 Design, LLC http://www.level2d.com/
+##
+
+<div class="pagination pagination-right">
+
+
+  #set($pageCount = $group.getPageCount())
+  #if ($pageCount > 1)
+    #set($minPage = $page - 5)
+    #if ($minPage < 1)
+       #set($minPage = 1)
+    #end
+
+    #set($maxPage = $page + 5)
+    #if ($maxPage > $pageCount)
+       #set($maxPage = $pageCount)
+    #end
+
+    #if ($minPage > 1 && $maxPage < 10)
+       #set ($minPage = 1)
+    #end
+
+    #if ($pageCount - $minPage < 10)
+       #set ($maxPage = $pageCount)
+    #end
+
+    #if ($page == $pageCount)
+      <a href="$baseUrl${group.Path}index-1.html" class="pagination-last" title="Go to the first page">View First</a>
+    #else
+      <a href="$baseUrl${group.Path}index-${pageCount}.html" class="pagination-last" title="Go to the last page">View Last</a>
+    #end
+
+
+    <ul>
+
+      <!-- #if ($page == 1)
+      <li>
+        <span>&lsaquo;</span>
+      </li>
+      #else
+        #set($pageNumber = $page - 1)
+        <li>
+          <a href="$baseUrl${group.Path}index-${pageNumber}.html" class="next_previous">&lsaquo;</a>
+        </li>
+      #end -->
+
+      #foreach( $pageIndex in [$minPage..$maxPage] )
+        #if ($pageIndex == $page)
+          <li class="current">
+            <a href="#">$pageIndex</a>
+          </li>
+        #else
+          <li>
+            <a href="$baseUrl${group.Path}index-${pageIndex}.html">$pageIndex</a>
+          </li>
+        #end
+      #end
+
+      <!-- #if ($pageCount == $page)
+        <li>
+          <span>&rsaquo;</span>
+        </li>
+      #else
+        #set($pageNumber = $page + 1)
+        <li>
+          <a href="$baseUrl${group.Path}index-${pageNumber}.html" class="next_previous">&rsaquo;</a>
+        </li>
+      #end -->
+    </ul>
+  <span>Pages: $page/${pageCount}</span>
+  #end
+</div>

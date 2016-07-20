@@ -1,0 +1,38 @@
+##
+## UltraCart - Mr Teas Template
+## http://www.ultracart.com/
+##
+## Copyright (c) 2015 BPS Info Solutions Inc.
+## License located here:
+## http://www.ultracart.com/storefront/license/
+##
+## Designed by Level 2 Design, LLC http://www.level2d.com/
+##
+
+<div class="hide-for-medium-down">
+	## DESKTOP NAVIGATION
+	#set($navigation = $pagingManager.getPageNavigation(7))
+	<div class="search-pagination" data-merchant-id="${merchantId}" data-merchant-search-id="${merchantSearchId}">
+		#if (!$navigation.isFirstVisible())
+			<em>$pagingManager.getFirstPage().getHtmlForLink("View First")</em>
+		#end
+		#if (!$navigation.isLastVisible())
+			&nbsp;<em>$pagingManager.getLastPage().getHtmlForLink("View Last")</em>
+		#end
+		<em class="currrent-of-total">Pages: ${pagingManager.getCurrentPageNumber()}/${pagingManager.getTotalPages()}</em>
+		#if($pagingManager.getTotalPages() > 1)
+			${navigation.getHtml(true)}
+		#end
+	</div>
+</div>
+<div class="hide-for-large-up">
+	## MOBILE NAVIGATION
+	#set($navigation = $pagingManager.getPageNavigation(3))
+
+	<div class="search-pagination" data-merchant-id="${merchantId}" data-merchant-search-id="${merchantSearchId}">
+		<em class="currrent-of-total">Pages: ${pagingManager.getCurrentPageNumber()}/${pagingManager.getTotalPages()}</em>
+		#if($pagingManager.getTotalPages() > 1)
+			${navigation.getHtml()}
+		#end
+	</div>
+</div>

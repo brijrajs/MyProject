@@ -1,0 +1,23 @@
+##
+## UltraCart - Mr Teas Template
+## http://www.ultracart.com/
+##
+## Copyright (c) 2015 BPS Info Solutions Inc.
+## License located here:
+## http://www.ultracart.com/storefront/license/
+##
+## Designed by Level 2 Design, LLC http://www.level2d.com/
+##
+
+#if(!$hideHR)
+	#parse('hr.vm')
+#end
+
+#if(!$button)
+	#set( $button = 'Complete Order' )
+#end
+<div class="row footer-buttons">
+	<div class="columns small-16 text-right">
+		<button type="submit" id="FINALIZEORDER" name="finalizeOrder" class="no-margin js-removeNoValidate">$button</button>
+	</div>
+</div>

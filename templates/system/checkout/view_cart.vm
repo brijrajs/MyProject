@@ -1,0 +1,206 @@
+##
+## UltraCart - Mr Teas Template
+## http://www.ultracart.com/
+##
+## Copyright (c) 2015 BPS Info Solutions Inc.
+## License located here:
+## http://www.ultracart.com/storefront/license/
+##
+## Designed by Level 2 Design, LLC http://www.level2d.com/
+##
+
+#* @vtlvariable name="i18n" type="com.bpsinfo.storefront.tobjects.I18nWriter" *#
+#* @vtlvariable name="formatHelper" type="com.bpsinfo.ultracart.catalog.tobjects.FormatHelper" *#
+#* @vtlvariable name="form" type="com.bpsinfo.ultracart.checkout.ui.CartForm" *#
+#* @vtlvariable name="cartConstants" type="com.bpsinfo.storefront.tobjects.CartConstants" *#
+
+#set( $pageGroup = 'multi-page-checkout' )
+#set( $bodyClass = 'multi-page-checkout view-cart' )
+#set( $pageTitle = $i18n.write("checkout.viewCart.pageTitle", "Shopping Cart") )
+#parse('/snippets/top.vm')
+#parse('/snippets/breadcrumbs.vm')
+
+## determine item text depending on number of items in the cart
+#set( $itemText = 'items' )
+#if($cart.getItemUnitCount() == '1')
+	#set( $itemText = 'item' )
+#end
+
+#set( $title = "$cart.getItemUnitCount() $itemText in your cart" )
+#parse('/snippets/title.vm')
+
+## Display screen always throws them back to the HTML select screen
+<form id="ucViewCartFormId" name="ucViewCart" method="post" #if($form.useMultipart)enctype="multipart/form-data"#{end}
+	data-currencyCode="$form.currencyCode"
+	action="/cgi-bin/UCEditor?merchantId=$formatHelper.urlEncode($form.merchantId)">
+	#parse('/snippets/common/storefront_template_spec_version.vm')
+
+	<div class="hide">
+		<!-- the following submit makes sure the default behavior of the page is to perform an update. -->
+		<input type="submit" name="recalculate" value="recalculate" class="hide" />
+
+		<!-- place hidden fields inside hidden div to avoid xhtml warning about inputs directly inside form -->
+		<input type="hidden" name="merchantId" value="$formatHelper.escapeHtml($!form.merchantId)"/>
+		<input type="hidden" name="submitCart" VALUE="SUBMITDATA"/>
+		<input type="hidden" name="buysafeBondChange" value="" id="ucBuysafeBondChangeId"/>
+		<input type="hidden" name="changeCurrencyCode" value="" id="changeCurrencyCodeId" class="js-change-currency-code-id"/>
+		<input type="hidden" name="showShipping" value="$i18n.escape($!form.showShipping)"/>
+		<input type="hidden" name="showPayPal" value="$i18n.escape($!form.showPayPal)"/>
+	</div>
+
+
+	#parse("/snippets/errors.vm")
+	#parse("/snippets/info_messages.vm")
+
+	#if($form.proactiveEmailCollection)
+		<div class="row">
+			<div class="columns small-8">
+				<label class="label-move">
+					<span>$i18n.write("checkout.viewcart.yourContactEmailField", "Your contact email")</span>
+					<input type="text" placeholder="email@domain.com" name="email" class="no-margin-bottom" maxlength="100" />
+				</label>
+			</div>
+		</div>
+	#end ## end proactiveEmailCollection
+
+	<!-- cart -->
+	## item subtotal, buysafe, subtotal table
+
+	## Subtotal
+	## if Buysafe is selected then say "Item Subtotal" instead of "Subtotal"
+	#set( $separateSubtotal = false )
+	#set( $subtotalField = $i18n.write("checkout.viewcart.subtotalField", "Subtotal") )
+	#if($form.buysafeBondAvailable && $form.buysafeBondWanted && !$form.buysafeBondFree)
+		#set( $separateSubtotal = true )
+		#set( $subtotalField = $i18n.write("checkout.viewcart.itemSubtotalField", "Item Subtotal") )
+	#end
+	#parse('/snippets/mpc_items.vm')
+	<!-- /cart -->
+
+	#if($form.showAffiliateId || $form.showReferralCode)
+		<div class="row">
+			<section class="affiliate">
+				<div class="columns small-16 medium-6 affiliate-id">
+					#if($form.showAffiliateId)
+						<div class="row collapse">
+							<label class="label-move" for="input-affiliate">
+								<h2>$i18n.write("checkout.viewcart.enterAffiliateCode", "Affiliate Code (optional)")</h2>
+							</label>
+
+							<div class="small-10 large-16 columns">
+								<input type="text" id="input-affiliate" placeholder="Enter it here!" name="affiliateId" value="$i18n.escape($!affiliatePart.affiliateId)" />
+							</div>
+
+							<div class="small-6 large-16 columns">
+								<button type="submit" name="applyAffiliateId" data-depends="#input-affiliate" class="button postfix inactive" disabled>Apply</button>
+							</div>
+						</div>
+					#end ## if-showAffiliateId
+
+					#if($form.showReferralCode)
+						<div class="row collapse">
+							<label class="label-move" for="input-referral">
+								<h2>Enter $form.referralCodeDescription:</h2>
+							</label>
+
+							<div class="small-10 large-16 columns">
+								<input type="text" id="input-referral" placeholder="Enter it here!" name="referralCode" value="$formatHelper.escapeHtml($form.referralCode)" />
+							</div>
+
+							<div class="small-6 large-16 columns">
+								<button type="submit" id="APPLY_REFERRAL_CODE" name="applyReferralCode" data-depends="#input-affiliate" class="button postfix inactive" disabled>Apply $form.referralCodeDescription</button>
+							</div>
+						</div>
+					#end ## if-showReferralCode
+				</div>
+
+				## #if($form.showShipping)
+				## 	<div class="columns small-16 medium-10 medium-text-right">
+				## 		<h2>Estimated Shipping Costs</h2>
+				## 		## Estimated shipping table
+				## 		<div id="estimatedShipping" class="js-estimated-shipping" data-url="/cgi-bin/UCCalculateShipping?MerchantID=$formatHelper.urlEncode($form.merchantId)&json=true&CALCULATE=YES">Calculating...</div>
+				## 		<div class="actual-shipping">
+				## 			<a href="/cgi-bin/UCEditor?MerchantID=$formatHelper.urlEncode($form.merchantId)&amp;LoadActualShippingEstimate=YES">Actual shipping</a> values will be based on your shipping destination.
+				## 		</div>
+				## 	</div>
+				## #end
+			</section>
+		</div>
+	#end ## if-showAffiliateId || showReferralCode
+
+	<!-- checkout-options -->
+	#if($form.showCouponEntry || $form.showAmazon || $form.payPalExpressCheckout)
+		<div class="row">
+			<div class="equalizer-small-suspend equalizer-medium-suspend columns small-16" data-equalizer>
+				<div class="express-checkout-coupon">
+					#if($form.showCoupons)
+						<div class="coupon-code columns small-16 large-5" data-equalizer-watch>
+							## Display the coupons section if the merchant has any defined
+							#if($form.showCoupons)
+								#parse('/snippets/mpc_coupons.vm')
+							#end ## end showCoupons
+						</div>
+					#end
+
+					#if($form.showAmazon || $form.payPalExpressCheckout)
+						<div class="express-checkout columns small-16 large-11" data-equalizer-watch>
+							<h2>Express Checkout</h2>
+							<p>Use one of these express checkouts or continue on to use a credit card</p>
+
+							<ul>
+								#if($form.showAmazon)
+									#parse('/snippets/mpc_amazon_checkout.vm')
+								#end
+
+								#if($form.payPalExpressCheckout)
+									#parse('/snippets/mpc_paypal_checkout.vm')
+								#end
+							</ul>
+						</div>
+					#end
+				</div>
+			</div>
+		</div>
+	#end
+	<!-- /checkout-options -->
+
+
+	<!-- finalize-order -->
+	#set( $button = 'Checkout' )
+	#set( $hideHR = true )
+	#parse('/snippets/button.finalizeOrder.vm')
+	<!-- /finalize-order -->
+
+	#if($form.showShipping)
+		<div class="row">
+			<section class="estimated-shipping-costs">
+				<div class="columns small-16 medium-text-right small-text-right">
+					<h2 class="js-estimate-title" data-actual='$i18n.write("checkout.viewcart.shippingCosts","Actual Shipping Costs")'>$i18n.write("checkout.viewcart.estimatedShippingCosts","Estimated Shipping Costs")</h2>
+					## Estimated shipping table
+					<div id="estimatedShipping" class="js-estimated-shipping" data-url="/cgi-bin/UCCalculateShipping?MerchantID=$formatHelper.urlEncode($form.merchantId)&json=true&CALCULATE=YES">$i18n.write("checkout.viewcart.shipping.calculatingmessage", "Calculating...")</div>
+					<div class="js-actual-shipping js-actual-shipping">
+						<a href="/cgi-bin/UCEditor?MerchantID=$formatHelper.urlEncode($form.merchantId)&amp;LoadActualShippingEstimate=YES">$i18n.write("checkout.viewcart.shipping.actualshippinglink", "Actual shipping")</a> $i18n.write("checkout.viewcart.shipping.actualshippingmessage", "values are based on your shipping destination.")
+					</div>
+				</div>
+			</section>
+		</div>
+	#end
+
+	## Related items
+	#if(!$form.lockedItems && ($form.relatedItems && $form.relatedItems.size() > 0))
+		#parse('/snippets/mpc_related.vm')
+	#end ##if-relatedItems
+
+	#if($form.buysafeSpacer)
+		<div class="clearfix"></div>
+	#end
+</form>
+
+#if("$!form.hostLinkHtml" != "")
+	$!form.hostLinkHtml
+#end
+
+
+#parse('system://3.0/snippets/cart_exit_pop.vm')
+
+#parse('/snippets/bottom.vm')

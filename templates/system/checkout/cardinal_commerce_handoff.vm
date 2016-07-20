@@ -1,0 +1,47 @@
+#* @vtlvariable name="formatHelper" type="com.bpsinfo.ultracart.catalog.tobjects.FormatHelper" *#
+#* @vtlvariable name="i18n" type="com.bpsinfo.storefront.tobjects.I18nWriter" *#
+#* @vtlvariable name="form" type="com.bpsinfo.ultracart.checkout.ui.CardinalCommerceHandoffForm" *#
+
+#set( $bodyClass = 'cardinal-commerce' )
+#set( $title = $i18n.write("checkout.cardinalCommerce.pageTitle", "Cardinal Commerce") )
+#parse('/snippets/top.vm')
+
+<table cellspacing="0" cellpadding="0" border="0" width="400">
+  <tbody>
+  <tr>
+    <td>
+        <span class="ucColorSubHeader">
+          $i18n.write("checkout.cardinalCommerce.Header","PAYMENT AUTHENTICATION")
+        </span>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <img src="/checkout/images/spacer.gif" width="400" height="10" border="0" alt=''/>
+    </td>
+  </tr>
+  <tr>
+    <td>
+        <span class="ucDefault">
+          $i18n.write("checkout.cardinalCommerce.instructions", "For your security, please fill out the form below to complete your order.")
+        </span>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <iframe src="/checkout/cardinalCommerceHandoffLoad.do?internalForm=true" width="400" height="400" frameborder="0">
+        Frames are currently disabled or not supported by your browser.
+        Please click <a href="/checkout/cardinalCommerceHandoffLoad.do?internalForm=true">here</a> to continue
+        processing your transaction.
+      </iframe>
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+
+
+#parse('system://3.0/snippets/cart_exit_pop.vm')
+
+
+#parse('/snippets/bottom.vm')

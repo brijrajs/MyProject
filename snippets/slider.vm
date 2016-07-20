@@ -1,0 +1,138 @@
+##
+## UltraCart - Mr Teas Template
+## http://www.ultracart.com/
+##
+## Copyright (c) 2015 BPS Info Solutions Inc.
+## License located here:
+## http://www.ultracart.com/storefront/license/
+##
+## Designed by Level 2 Design, LLC http://www.level2d.com/
+##
+
+## uc:contains-velocity="true"
+
+## uc:page-attribute-slider="home slider"
+
+## uc:page-attribute-itemset="home slider items"
+## uc:page-attribute-string="home slider autoplay speed"
+## uc:page-attribute-boolean="home slider autoplay"
+
+## uc:item-attribute="featured-subtitle"
+## uc:item-attribute="featured-title"
+## uc:item-multimedia-code="featured"
+
+
+  ## Fetch the slider object
+  #set($slider = false)
+  #if ($group.attrSlider("home slider"))
+    #set($slider = $group.attrSlider("home slider"))
+  #end
+  ## Extract the settings with fallback to legacy attributes
+  #set($autoplaySpeed = 3000)
+
+  #if ($slider) 
+    #set($slideAutoplay = $slider.getSettings().isAutoPlay())
+  #elseif($group.getAttribute("home slider autoplay"))
+    #set($slideAutoplay = $group.getAttribute("home slider autoplay"))
+  #else
+    #set($slideAutoplay = false)
+  #end
+  #if ($slider)
+    #set($autoplaySpeed = $slider.getSettings().getAutoPlaySpeed())
+  #elseif($group.getAttribute("home slider autoplay speed") && $group.getAttribute("home slider autoplay speed") != "")
+    #set($autoplaySpeed = $group.getAttribute("home slider autoplay speed"))
+  #else
+    #set($autoplaySpeed = 3000)
+  #end
+  
+  ## No Cover Mode
+  #set($featuredProductsGalleryClass = "")
+  #if ($slider && !$slider.getSettings().isCoverMode())
+    #set($featuredProductsGalleryClass = "no-cover-mode")
+  #end
+
+  <div class="featured-products-gallery $featuredProductsGalleryClass"
+    data-autoplay-speed='$autoplaySpeed'
+    data-autoplay='$slideAutoplay'>
+    <ul>    
+    ## New slide output
+    #if ($slider)
+      #foreach ($slide in $slider.getSlides())
+        #if($slide.isEnabled())
+          #if(!$slide.isPreview() || ($slide.isPreview() && $merchantLoggedIn))
+            <li style="#if($slider.getSettings().isCoverMode()) background-image: url(${slide.getImage()}); #end">
+              #if($slide.getLink().length() > 0)
+                <a href="${slide.getLink()}">
+              #end
+              #if(!$slider.getSettings().isCoverMode())
+                <img src="${slide.getImage()}">
+              #end
+                  
+              <div class="featured-overlay" style="height:100%;">
+                #if($slide.getCaption1() && $slide.getCaption1().length() > 0)
+                  <h1>$formatHelper.escapeHtml($slide.getCaption1())</h1>
+                #end
+                #if($slide.getCaption2() && $slide.getCaption2().length() > 0)
+                  <h2>$formatHelper.escapeHtml($slide.getCaption2())</h2>
+                #end
+              </div>
+              #if($slide.getLink().length() > 0)
+                </a>
+              #end
+            </li>
+          #end
+        #end
+      #end      
+    #end
+    
+    ## Legacy Home slider item output  
+	#set($featuredItems = $group.attrItemSet("home slider items"))
+    #if($featuredItems.size() > 0)
+
+      #foreach($item in $featuredItems)
+
+        #if ( $item.getMultimediaByCode("featured") )
+          #set( $featuredImage = $item.getMultimediaByCode('featured') )
+          #set( $featuredClass = "UC-item-multimedia-code-featured")
+        #elseif ( $item.getDefaultMultimedia('Image') )
+          #set( $featuredImage = $item.getDefaultMultimedia('Image') )
+          #set( $featuredClass = "UC-default-item-multimedia")
+        #else
+          #set($featuredImage = false)
+        #end
+
+        #if ($featuredImage)
+            <li style="background-image: url($featuredImage.getViewSsl());" class="$featuredClass">
+              #if($item.getPath()) ## we do this so the link doesn't 404 if an item is assigned to the slider, but not actually assigned anywhere in the catalog
+                <a href="${item.getPath()}">
+              #end
+                <div class="featured-overlay" style="height:100%;">
+                  #if($item.getAttribute('featured-title') && $item.getAttribute('featured-title').length() > 0)
+                    <h1 class="UC-item-attribute-featured-title">$item.getAttribute('featured-title')</h1>
+                  #end
+                  #if($item.getAttribute('featured-subtitle') && $item.getAttribute('featured-subtitle').length() > 0)
+                    <h2 class="UC-item-attribute-featured-subtitle">$item.getAttribute('featured-subtitle')</h2>
+                  #end
+                </div>
+              #if($item.getPath())
+                </a>
+              #end
+            </li>
+        #else
+          ## Implement a server side Velocity call that generates this error message in their admin panel log.
+          <!-- Item: $item.getMerchantItemID() has no featured image or default image assigned.  Omitting from home slider -->
+        #end
+      #end
+    #end
+    ## End Legacy Home slider item output
+
+    ## Default theme slide if there is nothing configured
+    #if (!$slider && $featuredItems.size() == 0)
+      <li style="background-image: url(${baseUrl}/assets/imgs/feature-slide-1.jpg);">
+        <h1>Welcome to Mr Teas</h1>
+        <h2>Subtitle</h2>
+      </li>
+    #end
+    </ul>
+
+  </div>

@@ -1,0 +1,25 @@
+#set( $bodyClass = 'apo-fpo-shipping' )
+#set( $pageTitle = 'APO/FPO Shipping' )
+#set( $hideHeader = true )
+#set( $hideFooter = true )
+#parse('/snippets/popup_top.vm')
+
+#set( $title = $pageTitle )
+#parse('/snippets/title.vm')
+
+<div class="row">
+	<div class="columns small-16">
+		<p>
+			For APO or FPO addresses, please enter APO or FPO in the <strong>City</strong> field and one of the following
+			two-letter codes in the <strong>State</strong> field:
+		</p>
+
+		<ul>
+			<li>AE for Armed Forces Europe, Middle East, Africa, and Canada;</li>
+			<li>AA for Armed Forces Americas; and AP for Armed Forces Pacific;</li>
+		</ul>
+
+		<p>Also, make sure that you have selected United States in the <strong>Country</strong> field.</p>
+	</div>
+</div>
+#parse('/snippets/popup_bottom.vm')

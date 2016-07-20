@@ -1,0 +1,92 @@
+##
+## UltraCart - Mr Teas Template
+## http://www.ultracart.com/
+##
+## Copyright (c) 2015 BPS Info Solutions Inc.
+## License located here:
+## http://www.ultracart.com/storefront/license/
+##
+## Designed by Level 2 Design, LLC http://www.level2d.com/
+##
+
+## uc:item-multimedia-default-used="true"
+#* @vtlvariable name="i18n" type="com.bpsinfo.storefront.tobjects.I18nWriter" *#
+
+<div class="row">
+	<div class="columns small-full">
+		<div class="title">
+			<span class="ucSuggestedItemsHeader">$i18n.write("checkout.viewcart.suggestedItemsHeader", "Suggested Items")</span>
+		</div>
+
+		<div class="product-list-images small gallery no-padding-bottom">
+			<ul>
+				#foreach($relatedItem in $form.relatedItems)
+					<li>
+						<input type="hidden" name="relatedItems[$foreach.index].merchantItemId" value="$relatedItem.merchantItemId"/>
+						<input type="hidden" name="relatedItems[$foreach.index].merchantItemOid" value="$relatedItem.merchantItemOid"/>
+
+						#if("$!relatedItem.viewUrl" != "")
+							<a href="/checkout/trackRelatedItemBrowsingLoad.do?merchantId=$formatHelper.urlEncode($form.merchantId)&merchantItemOid=$relatedItem.merchantItemOid" title="View this item (${formatHelper.escapeHtml($relatedItem.formattedCost)})" class="product-photo">
+						#else
+							<span class="product-photo">
+						#end
+
+						<strong>
+							$!relatedItem.descriptionWithBreaks
+
+							#if ($relatedItem.hasVariations)
+								<br/>(click for details)
+							#end
+						</strong>
+
+						<span class="link">View</span>
+
+						#if($relatedItem.storeFrontItem.getDefaultMultimedia('Image') && $relatedItem.storeFrontItem.getDefaultMultimedia('Image').getThumbnail(220, 220, true, $PNGThumbnails))
+							<img src="${baseThumbnailUrl}${relatedItem.storeFrontItem.getDefaultMultimedia('Image').getThumbnail(220, 220, true, $PNGThumbnails)}" class="UC-default-item-multimedia" border="0" height="220" width="220" alt=''/>
+						#else
+							<img src="$baseThemeUrl/assets/imgs/no-image.png" border="0"/>
+						#end
+
+						#if("$!relatedItem.viewUrl" != "")
+							</a>
+						#else
+							</span>
+						#end
+
+						<div class="product-info">
+							#if("$!relatedItem.viewUrl" != "")
+								<a href="/checkout/trackRelatedItemBrowsingLoad.do?merchantId=$formatHelper.urlEncode($form.merchantId)&merchantItemOid=$relatedItem.merchantItemOid" title="View this item (${formatHelper.escapeHtml($relatedItem.formattedCost)})" class="product-title" >
+							#else
+								<span class="product-title">
+							#end
+
+							$!relatedItem.description
+
+							#if("$!relatedItem.viewUrl" != "")
+								</a>
+							#else
+								</span>
+							#end
+
+							#if (!$relatedItem.hasVariations())
+								<input type="checkbox" name="relatedItems[$foreach.index].selected" value="$formatHelper.escapeHtml($relatedItem.merchantItemId)"/>
+							#end
+
+							<span class="price">${formatHelper.escapeHtml($relatedItem.formattedCost)}</span>
+						</div>
+					</li>
+				#end ## end foreach related item
+			</ul>
+		</div>
+	</div>
+</div>
+
+#parse('hr.vm')
+<div class="row footer-buttons">
+	## the RECALCULATE id is used twice (regrettably), so using a variable name for it keeps editors from complaining.
+	#set($relatedItemsButtonId = "RECALCULATE")
+	<div class="columns small-16 text-right">
+		<button type="submit" id="$relatedItemsButtonId" name="recalculate" class="no-margin-right no-margin-bottom js-update-quantity">Add to Cart</button>
+	</div>
+
+</div>

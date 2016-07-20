@@ -1,0 +1,39 @@
+#* @vtlvariable name="header" type="java.lang.String" *#
+#* @vtlvariable name="footer" type="java.lang.String" *#
+#* @vtlvariable name="error" type="java.lang.String" *#
+
+#if("$!header" != "")
+  $!header
+#else
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <title>Error #if("$!title" != "") - $!title #{end}</title>
+  <link rel="stylesheet" type="text/css" href="/checkout/checkout2.css" title="style">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <style type='text/css'>
+    .ucErrorTitle{
+      font-size:1.1em;
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body>
+<div style="width:80%;margin:20px auto;font-family: verdana,serif;font-size: 0.8em;">
+<div style="margin:10px; border:1px solid #C0C0C0;border-radius: 5px; padding: 10px; text-align: center">
+#end ##if-header
+
+#if("$!title" != "")
+  <div class='ucErrorTitle'>$!title</div>
+#{end}
+$!error
+
+#if("$!footer" != "")
+  $!footer
+#else
+</div>
+</div>
+</body>
+</html>
+#end

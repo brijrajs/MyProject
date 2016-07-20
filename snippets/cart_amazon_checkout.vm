@@ -1,0 +1,45 @@
+##
+## UltraCart - Mr Teas Template
+## http://www.ultracart.com/
+##
+## Copyright (c) 2015 BPS Info Solutions Inc.
+## License located here:
+## http://www.ultracart.com/storefront/license/
+##
+## Designed by Level 2 Design, LLC http://www.level2d.com/
+##
+
+#* @vtlvariable name="amazonCheckoutPart" type="com.bpsinfo.storefront.tobjects.AmazonCheckoutPart" *#
+#* @vtlvariable name="i18n" type="com.bpsinfo.storefront.tobjects.I18nWriter" *#
+
+<li id="ucAmazonCheckoutSection" class="ucColorSubHeader  small-text-center">
+	<input type="hidden" name="amazonOrderReferenceId" value="" id="ucAmazonOrderReferenceId"/>
+	<input type="hidden" name="amazonCheckout" value="" id="ucAmazonCheckoutId"/>
+
+	<script type="text/javascript" src="${amazonCheckoutPart.amazonWidgetUrl}?sellerId=${formatHelper.urlEncode($amazonCheckoutPart.amazonMerchantId)}"></script>
+
+	<div id="payWithAmazonDiv" class="js-disable-state-requirement js-removeNoValidate" style="padding-top: 5px; padding-bottom: 5px;">
+		<img src="${amazonCheckoutPart.amazonButtonUrl}?sellerId=${formatHelper.urlEncode($amazonCheckoutPart.amazonMerchantId)}&size=large&color=orange" style="cursor: pointer;"/>
+	</div>
+
+	<script type="text/javascript">
+		var amazonOrderReferenceId;
+		new OffAmazonPayments.Widgets.Button ({
+			sellerId: '${formatHelper.escapeJavascript($amazonCheckoutPart.amazonMerchantId)}',
+			useAmazonAddressBook: ${amazonCheckoutPart.isAmazonUseAddressBook()},
+			onSignIn: function(orderReference) {
+				// Store the information into the form and submit the page.
+				document.getElementById('ucAmazonOrderReferenceId').value = orderReference.getAmazonOrderReferenceId();
+				document.getElementById('ucAmazonCheckoutId').value = "true";
+				document.getElementById('ucSingle').submit();
+			},
+			onError: function(error) {
+				// your error handling code
+			}
+		}).bind("payWithAmazonDiv");
+	</script>
+
+	<script type="text/javascript">
+		document.getElementById('ucAmazonCheckoutId').value = "";
+	</script>
+</li>

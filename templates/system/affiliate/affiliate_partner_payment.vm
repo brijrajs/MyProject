@@ -1,0 +1,85 @@
+##
+## UltraCart - Mr Teas Template
+## http://www.ultracart.com/
+##
+## Copyright (c) 2015 BPS Info Solutions Inc.
+## License located here:
+## http://www.ultracart.com/storefront/license/
+##
+## Designed by Level 2 Design, LLC http://www.level2d.com/
+##
+
+#* @vtlvariable name="formatHelper" type="com.bpsinfo.ultracart.catalog.tobjects.FormatHelper" *#
+#* @vtlvariable name="i18n" type="com.bpsinfo.storefront.tobjects.I18nWriter" *#
+#* @vtlvariable name="form" type="com.bpsinfo.ultracart.affiliate.ui.partner.AffiliatePartnerPaymentForm" *#
+
+#set( $pageGroup = 'affiliate' )
+#set( $bodyClass = 'affiliate partner-payments' )
+#set( $pageTitle = 'Affiliate Partner Payment Information' )
+#parse('/snippets/top.vm')
+
+#set( $title = 'Payment Information')
+#parse('/snippets/title.vm')
+
+#if($form.hasPaymentInformation)
+
+	<div class="row">
+		<div class="columns small-16">
+			<table class="ledger_table">
+				<tr>
+					<td>Payment Date</td>
+					<td class="text-right">$!form.paymentDate</td>
+				</tr>
+				<tr>
+					<td>Payment Amount</td>
+					<td class="text-right">$!form.paymentAmountFormatted</td>
+				</tr>
+				<tr>
+					<td>Check Number</td>
+					<td class="text-right">$!form.paymentCheckNumber</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="columns small-16">
+			<table class="report">
+				<thead>
+					<th width="85" data-name="date" data-searchable="1" data-orderable="1">Transaction Date</th>
+					<th width="70" data-name="amount" data-searchable="1" data-orderable="1">Amount</th>
+					<th width="70" data-name="paid" data-searchable="1" data-orderable="1">Paid</th>
+					<th width="70" data-name="balance" data-searchable="1" data-orderable="1">Balance</th>
+					<th width="70" data-name="state" data-searchable="1" data-orderable="1">Status</th>
+					<th width="300" data-name="memo" data-searchable="1" data-orderable="1">Memo</th>
+				</thead>
+
+				<tbody>
+
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+	## #foreach($record in $form.ledgerRecords)
+	## 	<tr>
+	## 		<td>$record.date</td>
+	## 		<td>$record.amount</td>
+	## 		<td>$record.paid</td>
+	## 		<td>$record.balance</td>
+	## 		<td>$record.state</td>
+	## 		<td>$record.memo</td>
+	## 	</tr>
+	## #end
+
+	<script type="text/javascript">
+		window.reportData = $!form.paymentInformationJson;
+	</script>
+
+#end ## if hasPaymentInformation
+
+#set( $showBackButton = true )
+#set( $hideButton = true )
+#parse('/snippets/affiliate/button.vm')
+
+#parse('/snippets/bottom.vm')

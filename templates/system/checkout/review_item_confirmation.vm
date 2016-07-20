@@ -1,0 +1,21 @@
+#* @vtlvariable name="formatHelper" type="com.bpsinfo.ultracart.catalog.tobjects.FormatHelper" *#
+#* @vtlvariable name="i18n" type="com.bpsinfo.storefront.tobjects.I18nWriter" *#
+#* @vtlvariable name="form" type="com.bpsinfo.ultracart.checkout.ui.ReviewItemForm" *#
+
+
+#set($bodyClass = 'review-item-confirmation')
+
+#parse('/snippets/top.vm')
+
+<div class="row">
+	<div class="columns small-16">
+		<h1>$i18n.write("checkout.reviewItemConfirmation.thankYouForSubmitting","Thank you for submitting your review.")</h1>
+		<h2>$i18n.write("checkout.reviewItemConfirmation.additionalMessage","")</h2>
+		<a href="$form.catalogUrl" class="button">Continue</a>
+	</div>
+</div>
+
+
+
+
+#parse('/snippets/bottom.vm')

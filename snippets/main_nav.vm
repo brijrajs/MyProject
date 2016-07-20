@@ -1,0 +1,56 @@
+##
+## UltraCart - Mr Teas Template
+## http://www.ultracart.com/
+##
+## Copyright (c) 2015 BPS Info Solutions Inc.
+## License located here:
+## http://www.ultracart.com/storefront/license/
+##
+## Designed by Level 2 Design, LLC http://www.level2d.com/
+##
+
+## uc:menu-used="header"
+## uc:theme-attribute-boolean="Checkout Only Theme"
+
+#if($theme.attr("Checkout Only Theme", "false") != "true")
+  <nav id="main-nav">
+    ## get the menu object with the getMenu("menu name") method on the $menuManager Object.
+    #set($mainMenuObj = $menuManager.getMenu("header"))
+    ## Then, output your menu
+
+    ##option 1: getHtml() method
+    $mainMenuObj.getHtml()
+
+    #if ($site.supportCustomerProfiles)
+      <ul>
+        <li class="account-link hide-for-large-up">
+          <a href="${myAccountUrlHttps}&OVERRIDECONTINUESHOPPINGURL=$baseUrl" title="Go to your account">My Account</a>
+        </li>
+      </ul>
+    #end
+
+    ##option 2: build it manually by looping through the returned values of $mainMenuObj.getMenuItems()
+
+    ## <ul class="menu-header">
+      ## #foreach($menuItem in $mainMenuObj.getMenuItems())
+      ##   <li> <a href="$menuItem.getURL()" title="$menuItem.getDescription()">$menuItem.getDescription()</a>
+      ##     #set($subMenuItems = $menuItem.getChildMenuItems())
+      ##     #if($subMenuItems.size() > 0)
+      ##       <ul>
+      ##         #foreach($subMenuItem in $subMenuItems)
+      ##           <li>
+      ##             <a href="$subMenuItem.getURL()" title="$subMenuItem.getDescription()">$subMenuItem.getDescription()</a>
+      ##           </li>
+      ##         #end
+      ##       </ul>
+      ##     #end
+      ##   </li>
+      ## #end
+      ## #if ($site.supportCustomerProfiles)
+      ##     <li class="account-link hide-for-large-up">
+      ##       <a href="${myAccountUrlHttps}&OVERRIDECONTINUESHOPPINGURL=$baseUrl" title="Go to your account">My Account</a>
+      ##     </li>
+      ## #end
+    ## </ul>
+  </nav>
+#end

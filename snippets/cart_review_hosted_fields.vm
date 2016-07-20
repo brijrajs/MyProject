@@ -1,0 +1,57 @@
+##
+## UltraCart - Mr Teas Template
+## http://www.ultracart.com/
+##
+## Copyright (c) 2015 BPS Info Solutions Inc.
+## License located here:
+## http://www.ultracart.com/storefront/license/
+##
+## Designed by Level 2 Design, LLC http://www.level2d.com/
+##
+
+##
+## The commented scripts below can be useful to bring in JSON and the correct
+## version of jQuery needed for the hosted fields to work properly
+##
+
+## <script type="text/javascript" src="/js/jquery-1.11.3.min.js"></script>
+## <script type="text/javascript" src="/js/json3.min.js"></script>
+## <script type="text/javascript">
+##   // Take the version that we just included and scope it locally.  The noConflict will return $ and jQuery to their
+##   // original values so that the version of jQuery used for the hosted fields does not conflict with any other existing
+##   // version of jQuery or other JS library that use $ that are on the page.
+##   var jQueryHostedFields = $.noConflict(true);
+##   // Also make sure that we're providing consistent JSON functionality in browsers, but don't pollute existing libraries
+##   // by running our version in noConflict mode.  This will restore whatever is there similar to jQuery.
+##   // This will also make sure we have a JSON implementation in older versions of IE.
+##   var jsonHostedFields = JSON3.noConflict();
+## </script>
+
+<script type="text/javascript" src="/checkout/checkout-hosted-fields-1.0.js"></script>
+<script type="text/javascript">
+
+  window.ultraCartHostedFieldsDebugMode = false;
+  jQuery(document).ready(function() {
+    UltraCartHostedFields.setup(jQuery, JSON, {
+          'sessionCredentials': {
+            'merchantId': '$formatHelper.escapeJavascript($!merchantId)',
+            'shoppingCartToken': '$formatHelper.escapeJavascript($!shoppingCartToken)'
+          },
+          'cssUrls': window.ultraCartHostedFieldsCssUrls, // Set this to an array of URLs to inject CSS into the hosted fields
+          'form': '#ucReview',
+          'hostedFields':{
+            'creditCardNumber': {
+              'selector': '#creditCardNumber',
+              callback: function( card ) {
+                $('#creditCardType').val( card.cardType );
+              }
+            },
+            'creditCardCvv2': {
+              'selector': '#creditCardVerificationNumber'
+            }
+          },
+          'overlayZIndex': 999
+        });
+  });
+
+</script>

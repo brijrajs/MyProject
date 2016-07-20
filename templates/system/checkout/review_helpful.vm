@@ -1,0 +1,19 @@
+#* @vtlvariable name="formatHelper" type="com.bpsinfo.ultracart.catalog.tobjects.FormatHelper" *#
+#* @vtlvariable name="i18n" type="com.bpsinfo.storefront.tobjects.I18nWriter" *#
+#* @vtlvariable name="form" type="com.bpsinfo.ultracart.checkout.ui.ReviewHelpfulForm" *#
+
+
+#set($bodyClass = 'review-helpful')
+
+#parse('/snippets/top.vm')
+
+<div class="row">
+  <h1>$i18n.write("checkout.reviewHelpfulConfirmation.thankYouForSubmitting","Thank you for submitting your feedback.")</h1>
+  <h2>$i18n.write("checkout.reviewHelpfulConfirmation.additionalMessage","")</h2>
+  <a href="$!form.catalogUrl" class="button">Continue</a>
+</div>
+
+
+
+
+#parse('/snippets/bottom.vm')

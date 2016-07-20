@@ -1,0 +1,61 @@
+##
+## UltraCart - Mr Teas Template
+## http://www.ultracart.com/
+##
+## Copyright (c) 2015 BPS Info Solutions Inc.
+## License located here:
+## http://www.ultracart.com/storefront/license/
+##
+## Designed by Level 2 Design, LLC http://www.level2d.com/
+##
+
+
+<div class="row">
+	#if($form.showAddress == 'shipping' || $form.showAddress == 'both')
+		<div class="columns small-16 medium-8">
+			<div class="shipping-info text-left">
+				<strong>$i18n.write("checkout.quoteReview.shippingInfoHeader","Shipping Info")</strong>
+				<br>
+				<span class="ucReviewAddressText">
+					#foreach($si in $form.shippingInfo)
+		              $i18n.escape($si)<br>
+		            #end
+	            </span>
+
+	            #if($form.showAddress == 'both')
+
+	            	<strong>$!form.shippingMethod</strong>
+
+	            #else
+
+					<strong>$!form.shippingMethod $!form.shipping3rdPartyAccountNumber</strong>
+
+					#if("$!form.shipOnDate" != "")
+						<br/>$i18n.write("checkout.review.shipOnDateField","Ship on date")
+						: $i18n.escape($!form.shipOnDate)
+					#end ##if-shipOnDate is not empty
+
+					#if("$!form.deliveryDate" != "")
+						<br/>$i18n.write("checkout.review.deliveryDateField","Delivery date")
+						: $i18n.escape($!form.deliveryDate)
+					#end ##if-deliveryDate is not empty
+
+	            #end
+			</div>
+		</div>
+	#end
+
+	#if($form.showAddress == 'billing' || $form.showAddress == 'both')
+		<div class="columns small-16 medium-8">
+			<div class="billing-info text-left">
+				<strong>$i18n.write("checkout.quoteReview.billingInfoHeader","Billing Info")</strong>
+				<br>
+				<span class="ucReviewAddressText">
+					#foreach($bi in $form.billingInfo)
+						$i18n.escape($bi)<br/>
+		            #end ##foreach billingInfo record
+	            </span>
+			</div>
+		</div>
+	#end
+</div>

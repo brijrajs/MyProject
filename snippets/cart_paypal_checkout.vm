@@ -1,0 +1,47 @@
+##
+## UltraCart - Mr Teas Template
+## http://www.ultracart.com/
+##
+## Copyright (c) 2015 BPS Info Solutions Inc.
+## License located here:
+## http://www.ultracart.com/storefront/license/
+##
+## Designed by Level 2 Design, LLC http://www.level2d.com/
+##
+
+#* @vtlvariable name="payPalPart" type="com.bpsinfo.storefront.tobjects.PayPalCheckoutPart" *#
+#* @vtlvariable name="i18n" type="com.bpsinfo.storefront.tobjects.I18nWriter" *#
+
+#set( $lang = {
+	"ENG" : "en_US",
+	"GER" : "de_DE",
+	"FRE" : "fr_FR",
+	"ITA" : "it_IT",
+	"ESP" : "fr_FR"
+})
+
+#set( $code = $lang.get($i18n.isoCode) )
+
+#if( !$code )
+	#set( $code = $lang.get("ENG") )
+#end
+
+##if($form.showPayPalCheckout)
+	<li class="small-text-center">
+		<input type="image" name="checkoutWithPayPal" src="$baseThemeUrl/assets/imgs/checkout-pp-logo-medium.png" class="js-disable-state-requirement js-addNoValidate uco_button_paypal js-paypal-processing" border="0" />
+		## <input type="image" name="checkoutWithPayPal" src="$baseThemeUrl/assets/imgs/checkout-pp-logo-medium.png" class="js-disable-state-requirement js-removeNoValidate" border="0" />
+	</li>
+##end
+
+#if($i18n.isoCode == "ENG" && $form.showPayPalCheckoutBml)
+	<!--<li class="small-text-center uco_group_paypal_credit">
+		<input class="js-disable-state-requirement js-addNoValidate uco_button_paypal_credit js-paypal-processing" type="image" name="checkoutWithPayPalBml" src="$baseThemeUrl/assets/imgs/checkout-ppcredit-logo-medium.png" border="0"/><br>
+		## <input class="js-disable-state-requirement js-removeNoValidate" type="image" name="checkoutWithPayPalBml" src="$baseThemeUrl/assets/imgs/checkout-ppcredit-logo-medium.png" border="0"/><br>
+		<a class="uco_link_paypal_credit" target="_blank" href="https://www.securecheckout.billmelater.com/paycapture-content/fetch?hash=AU826TU8&content=/bmlweb/ppwpsiw.html">
+			<img src="https://www.paypalobjects.com/webstatic/en_US/btn/btn_bml_text.png" />
+		</a>
+	</li> -->
+#end
+
+## foundation reveal processing notification
+#parse('/snippets/paypal-processing.vm')

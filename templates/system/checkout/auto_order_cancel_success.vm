@@ -1,0 +1,29 @@
+#* @vtlvariable name="formatHelper" type="com.bpsinfo.ultracart.catalog.tobjects.FormatHelper" *#
+#* @vtlvariable name="i18n" type="com.bpsinfo.storefront.tobjects.I18nWriter" *#
+#* @vtlvariable name="form" type="com.bpsinfo.ultracart.autoorder.ui.AutoOrderCancelQueryForm" *#
+
+#set( $bodyClass = 'auto-order auto-order-cancel-success' )
+#set( $pageTitle = $i18n.write("autoOrder.cancelQuery.pageTitle", "Auto Order Cancel Inquiry") )
+#parse('/snippets/top.vm')
+
+#set( $title = $i18n.write("autoOrder.cancelQuery.inquiryHeader","AUTO ORDER CANCEL INQUIRY") )
+#parse('/snippets/title.vm')
+
+<form method="get" action="$!form.continueShoppingUrl">
+	#parse('/snippets/common/storefront_template_spec_version.vm')
+	<div class="row">
+		<div class="columns small-16">
+			<p>
+				#if($form.instantCancel)
+					$i18n.write("autoOrder.cancelQuery.cancelConfirmation","Your auto order has been cancelled.")
+				#else
+					$i18n.write("autoOrder.cancelQuery.emailSentPart1","An email has been sent to") ${i18n.escape($!form.email)}$i18n.write("autoOrder.cancelQuery.emailSentPart2",".  Please open the email and click the link provided to cancel the order.")
+				#end
+			</p>
+		</div>
+	</div>
+
+	#parse('/snippets/button.continue.vm')
+</form>
+
+#parse('/snippets/bottom.vm')

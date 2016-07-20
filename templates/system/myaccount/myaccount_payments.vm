@@ -1,0 +1,109 @@
+##
+## UltraCart - Mr Teas Template
+## http://www.ultracart.com/
+##
+## Copyright (c) 2015 BPS Info Solutions Inc.
+## License located here:
+## http://www.ultracart.com/storefront/license/
+##
+## Designed by Level 2 Design, LLC http://www.level2d.com/
+##
+
+#* @vtlvariable name="merchantId" type="java.lang.String" *#
+#* @vtlvariable name="header" type="java.lang.String" *#
+#* @vtlvariable name="footer" type="java.lang.String" *#
+#* @vtlvariable name="i18n" type="com.bpsinfo.storefront.tobjects.I18nWriter" *#
+
+
+#set($bodyClass = "myaccount-payments")
+#set( $pageTitle = "My Account Payments" )
+
+#parse("/snippets/top.vm")
+
+<script type="text/javascript">
+  var merchantId = '$!merchantId';
+</script>
+<!--[if lt IE 9]>
+<script type='text/javascript' src="/myaccount/js/html5shiv-printshiv.js" media="all"></script>
+<![endif]-->
+
+<script type="text/javascript" src="/myaccount/js/moment.js"></script>
+<script type="text/javascript" src="/myaccount/js/handlebars-v3.0.3.js"></script>
+<script type="text/javascript" src="/myaccount/js/underscore_1.4.4.js"></script>
+<script type="text/javascript" src="/myaccount/js/backbone_1.0.js"></script>
+<script type="text/javascript" src="/myaccount/js/myaccount_rest_1.3.js"></script>
+<script type="text/javascript" src="/myaccount/js/myaccount.js"></script>
+<script type="text/javascript" src="/myaccount/payments.js"></script>
+
+
+<script type="text/template" id="payments-template">
+  {{\#if loading}}
+  $i18n.write('myaccount.payments.pleaseWait','Please wait. We are loading your credit cards now.')<br>
+  <img src='/myaccount/images/jquery.smallhbar.indicator.gif'/>
+  {{else}}
+
+  <section>
+
+    <header class='payment-header'>
+      <nav role="navigation">
+        <input type="button" class="addButton button primary small" value="$i18n.write('myaccount.payments.addNewCreditCardButton','Add New Credit Card')"/>
+      </nav>
+    </header>
+
+
+    <div id="payments">
+      <!-- individual payments will render here.  -->
+    </div>
+    <div style='clear:both'></div>
+
+    <footer class='payment-footer'>
+      <nav role="navigation">
+        {{\#if hasPayments}}
+        <input type="button" class="addButton button primary small" value="$i18n.write('myaccount.payments.addNewCreditCardButton','Add New Credit Card')"/>
+        {{/if}}
+      </nav>
+    </footer>
+
+
+
+  </section>
+  {{/if}}
+</script>
+
+<script type="text/template" id="payment-template">
+  <!-- the backbone view will wrap this content in an <article class="payment"></article> tag -->
+  <div class='payments row'>
+    <ul class='payment-fields'>
+      <li>{{position}}. <strong>{{cardNumber}}</strong></li>
+      <li>{{cardName}}</li>
+
+      <li>Expires {{cardExpMonth}} / {{cardExpYear}} {{\#if expired}}<span class='expired'>[expired]</span>{{/if}}</li>
+      {{\#if lastUsedDate}}<li>Last used on {{dateFormat lastUsedDate}}</li>{{/if}}
+    </ul>
+    <div class="payment-actions">
+      <input type="button" class="paymentButton editButton button primary small" value="$i18n.write('myaccount.shippingAddresses.editButton','Edit')"/>
+      <input type="button" class="paymentButton deleteButton button secondary small" value="$i18n.write('myaccount.shippingAddresses.deleteButton','Delete')"/>
+    </div>
+
+  </div>
+</script>
+
+<div class="row half-margin-top">
+  <div class="columns small-16 medium-13">
+    <a href="/myaccount/index.do?merchantId=$!{merchantId}">$i18n.write('myaccount.breadcrumb.myAccount','My Account')</a> &gt; <span class='disabled-looking'>$i18n.write('myaccount.breadcrumb.payments','Payment Methods')</span>
+  </div>
+</div>
+
+<div class="row">
+  <div class="columns small-16">
+    <h1>$i18n.write('myaccount.paymentsHeader','Payment Methods')</h1>
+    <p>$i18n.write('myaccount.paymentsMessage','Use the form below to add, remove or edit your payment methods.')</p>
+  </div>
+</div>
+
+  <main role='main' class="row">
+    <div id='payments' class="columns small-16"></div>
+  </main>
+  <div style='clear:both'></div>
+
+#parse("/snippets/bottom.vm")

@@ -1,0 +1,279 @@
+#* @vtlvariable name="formatHelper" type="com.bpsinfo.ultracart.catalog.tobjects.FormatHelper" *#
+#* @vtlvariable name="i18n" type="com.bpsinfo.storefront.tobjects.I18nWriter" *#
+#* @vtlvariable name="form" type="com.bpsinfo.ultracart.checkout.ui.SpecialOffersConfirmationForm" *#
+#* @vtlvariable name="cartConstants" type="com.bpsinfo.storefront.tobjects.CartConstants" *#
+
+
+##  This url has been moved up here to allow the page to work in preview mode as well.
+##  In preview mode, 'returnUrl' will be set.  So check for that here.  If it's present, use it.
+##  Otherwise, use the default.
+#set($formAction = "/checkout/specialOffersConfirmationSave.do?merchantId=${formatHelper.urlEncode($form.merchantId)}")
+#if($form.redirectUrl) ## used in 'preview' mode
+	#set($formAction = $form.redirectUrl)
+#end
+
+#set( $pageGroup = 'multi-page-checkout' )
+#set( $bodyClass = 'multi-page-checkout special-offers-confirmation' )
+#set( $pageTitle = $i18n.write("checkout.specialOffersConfirmation.pageTitle","Special Offers Confirmation") )
+#parse('/snippets/top.vm')
+
+#parse('/snippets/breadcrumbs.vm')
+
+#set( $title = $i18n.write("checkout.specialOffersConfirmation.pageTitle","Special Offers Confirmation") )
+#parse('/snippets/title.vm')
+
+## had its own column $i18n.write("checkout.specialOffersConfirmation.removeHeader","Remove")
+
+<form name="ucSpecialOffersConfirmation" enctype="multipart/form-data" id="ucSpecialOffersConfirmation" method="post" action="$formAction" autocomplete="OFF">
+	<input type="hidden" name="showOptions" value="$!form.showOptions"/>
+	#parse('/snippets/common/storefront_template_spec_version.vm')
+	#parse('/snippets/errors.vm')
+	#parse('/snippets/info_messages.vm')
+
+	<div class="row">
+		<div class="columns small-16">
+			<table class="tablesaw tablesaw-stack no-margin-bottom" data-mode="stack">
+				<thead>
+					<tr>
+						<th>$i18n.write("checkout.specialOffersConfirmation.itemHeader","Item")</th>
+						<th>$i18n.write("checkout.specialOffersConfirmation.descriptionHeader","Description")</th>
+						<th width="100">$i18n.write("checkout.specialOffersConfirmation.quantityHeader","Qty")</th>
+						#if($form.showOptions)<th>$i18n.write("checkout.specialOffersConfirmation.optionsHeader","Options")</th>#{end}
+						<th width="100" class="text-right">$i18n.write("checkout.specialOffersConfirmation.amountHeader","Amount")</th>
+					</tr>
+				</thead>
+
+				<tbody>
+					#if($form.items.size() == 0)
+						<tr valign="top">
+							<td colspan="10">
+								<p>You have not yet selected a product to purchase.</p>
+							</td>
+						</tr>
+					#else
+						#foreach($item in $form.items)
+							#set($itemIndex = $foreach.index)
+
+							<tr>
+								## Item
+								<td>
+									$i18n.escape($item.merchantItemId)
+									#*
+										#if("$!item.thumbnailUrl" != "")
+											<br /><img src="/thumbs/${item.thumbnailUrl}" border="0" alt=''/>
+										#end ##if thumbnail
+									*#
+								</td>
+
+								## Description
+								<td class="ucShoppingBackground">$!item.description</td>
+
+								## Qty
+								<td>
+									<input type="text" name="items[$itemIndex].quantity" value="$!item.quantity" size="3" maxlength="5" class="ucShoppingCartField"/>
+									<input type="hidden" name="items[$itemIndex].upsell" value="$i18n.escape($!item.upsell)"/>
+									<input type="hidden" name="items[$itemIndex].removableOnConfirmation" value="$i18n.escape($!item.removableOnConfirmation)"/>
+									<input type="hidden" name="items[$itemIndex].merchantItemOid" value="$!item.merchantItemOid"/>
+									<input type="hidden" name="items[$itemIndex].itemIndex" value="$!item.itemIndex"/>
+									<input type="hidden" name="items[$itemIndex].viewUrl" value="$i18n.escape($!item.viewUrl)"/>
+									<input type="hidden" name="items[$itemIndex].description" value="$i18n.escape($!item.description)"/>
+									<input type="hidden" name="items[$itemIndex].merchantItemId" value="$i18n.escape($!item.merchantItemId)"/>
+									<input type="hidden" name="items[$itemIndex].amount" value="$i18n.escape($!item.amount)"/>
+
+									#if($item.removableOnConfirmation)
+										<button type="submit" name="items[${itemIndex}].remove" class="product-remove-cart" title="Remove this from your cart">Remove</button>
+									#end ##if-removableOnConfirmation
+								</td>
+
+								## Options
+								#if($form.showOptions)
+									<td>
+										#foreach($option in $item.options)
+											#set($optionIndex = $foreach.index) ## alias it to avoid nested foreach collisions
+											#if($option.type != $cartConstants.optionTypeHidden)
+												$option.label
+											#end
+
+											<input type="hidden" name="items[${itemIndex}].options[$optionIndex].qualifierGroupId" value="$option.qualifierGroupId"/>
+
+											#if($option.type == $cartConstants.optionTypeDropdown)
+												<select name="items[${itemIndex}].options[$optionIndex].value" class="ucShoppingCartField">
+													#foreach($val in $option.values)
+														<option #if($val == $option.value) selected='selected'#{end}>$val</option>
+													#end
+												</select>
+											#end
+
+											#if($option.type == $cartConstants.optionTypeRadio)
+												#foreach($val in $option.values)
+													<div>
+														<input type="radio" name="items[${itemIndex}].options[$optionIndex].value" value="$i18n.escape($formatHelper.coalesce($val, ""))"/>
+														$val
+													</div>
+												#end
+											#end
+
+											#if($option.type == $cartConstants.optionTypeFileAttachment)
+												#if($option.getPofa())  ## pofa = placed order file attachment
+													<div>$option.value</div>
+													<input type="hidden" name="items[${itemIndex}].options[$optionIndex].pofa" value="$!option.pofa"/>
+												#end
+												<input type="file" name="items[${itemIndex}].options[$optionIndex].file" maxlength="50" />
+											#end
+
+											#if($option.type == $cartConstants.optionTypeMultiline)
+												<textarea name="items[${itemIndex}].options[$optionIndex].value" class="ucShoppingCartField" wrap="off">$i18n.escape($!option.value)</textarea>
+											#end
+
+											#if($option.type == $cartConstants.optionTypeHidden)
+												<input type="hidden" name="items[${itemIndex}].options[$optionIndex].value" value="$i18n.escape($!option.value)"/>
+											#end
+
+											#if($option.type == $cartConstants.optionTypeFixed)
+												<input type="hidden" items[${itemIndex}].options[$optionIndex].value value="$i18n.escape($!option.value)" />
+												$option.value
+											#end
+										#end ##foreach-option
+									</td>
+								#end ##if-showOptions
+
+								## Amount
+								<td>
+									$!item.amount
+
+									#if("$!item.discount" != "")
+										(-\$${item.discount})
+									#end ## if there was a discount
+								</td>
+							</tr>
+						#end ##foreach item in items
+					#end ## if there are no items
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+	<div class="row cart-footer no-margin-top">
+		<div class="columns small-16 equalizer-small-suspend equalizer-medium-suspend" data-equalizer>
+			<div class="cart-footer-left small-only-text-center medium-text-right" data-equalizer-watch>
+				<button type="submit" name="updateQuantity" id="ucUpdateQuantityId" class="button green">Update</button>
+			</div>
+
+			<div class="cart-footer-right" data-equalizer-watch>
+				<div class="cart-breakdown">
+					#foreach($summaryLine in $form.summaryLines)
+						#if($i18n.escape($summaryLine.name) != 'Total')
+							<div class="breakdown-item">
+								<div class="label">$i18n.escape($summaryLine.name)</div>
+								<div class="value">$!summaryLine.amount</div>
+							</div>
+						#end
+					#end ##foreach summaryLine
+				</div>
+
+				<div class="cart-total">
+					#foreach($summaryLine in $form.summaryLines)
+						#if($i18n.escape($summaryLine.name) == 'Total')
+							<div class="breakdown-item">
+								<div class="label">$i18n.escape($summaryLine.name)</div>
+								<div class="value">$!summaryLine.amount</div>
+							</div>
+						#end
+					#end ##foreach summaryLine
+				</div>
+			</div>
+		</div>
+	</div>
+
+	#if (!${form.isAmazon()})
+		<div class="row">
+			<div class="shipping-information columns small-16 medium-8 large-5">
+				<h2>$i18n.write("checkout.specialOffersConfirmation.shippingInformationHeader","Shipping Information")</h2>
+
+				#if("$!form.shippingFirstName" != "")
+					<span class="name">$i18n.escape($!{form.shippingFirstName}) $i18n.escape($!{form.shippingLastName})</span><br>
+				#end
+
+				#if("$!form.shippingCompany" != "")
+					<span class="company">$i18n.escape($!{form.shippingCompany})</span><br>
+				#end
+
+				<span class="address_1">$i18n.escape($!form.shippingAddress1)</span><br>
+
+				#if("$!form.shippingAddress2" != "")
+					<span class="address_2">$i18n.escape($!{form.shippingAddress2})</span><br>
+				#end
+
+				<span class="city">$i18n.escape($!form.shippingCity)</span>, <span class="state">$i18n.escape($!form.shippingState)</span> <span class="zip">$i18n.escape($!form.shippingZip)</span><br>
+				<span class="country">$i18n.escape($!form.shippingCountry)</span><br>
+
+				#if("$!form.shippingPhone" != "")
+					<br>
+					<a href="tel:$i18n.escape($!{form.shippingPhone})" title="Call this number" class="phone">$i18n.escape($!{form.shippingPhone})</a>
+				#end
+
+				#if("$!form.email" != "")
+					<br>
+					<a href="mailto:$i18n.escape($!{form.email})" title="Call this number" class="email">$i18n.escape($!{form.email})</a><br>
+				#end
+			</div>
+
+			<div class="columns small-16 medium-8 large-5">
+				<h2>$i18n.write("checkout.specialOffersConfirmation.billingInformationHeader","Billing Information")</h2>
+
+				#if("$!form.billingFirstName" != "")
+					<span class="name">$i18n.escape($!{form.billingFirstName}) $i18n.escape($!{form.billingLastName})</span><br>
+				#end
+
+				#if("$!form.billingCompany" != "")
+					<span class="company">$i18n.escape($!{form.billingCompany})</span><br>
+				#end
+
+				<span class="address_1">$i18n.escape($!form.billingAddress1)</span><br>
+
+				#if("$!form.billingAddress2" != "")
+					<span class="address_2">$i18n.escape($!{form.billingAddress2})</span><br>
+				#end
+
+				<span class="city">$i18n.escape($!form.billingCity)</span>, <span class="state">$i18n.escape($!form.billingState)</span> <span class="zip">$i18n.escape($!form.billingZip)</span><br>
+
+				<span class="country">$i18n.escape($!form.billingCountry)</span><br>
+
+				#if("$!form.billingPhone" != "")
+					<br>
+					<a href="tel:$i18n.escape($!{form.billingPhone})" title="Call this number" class="phone">$i18n.escape($!{form.billingPhone})</a>
+				#end
+
+				#if("$!form.email" != "")
+					<br>
+					<a href="mailto:$i18n.escape($!{form.email})" title="Call this number" class="email">$i18n.escape($!{form.email})</a><br>
+				#end
+			</div>
+
+			<div class="columns small-16 medium-16 large-6">
+				#if($form.paymentMethodLines.size() > 0)
+					<h2>$i18n.escape($!form.paymentMethod) $i18n.write("checkout.specialOffersConfirmation.informationHeader","Information")</h2>
+
+					#foreach($paymentMethodLine in $form.paymentMethodLines)
+						<dl class="row">
+							<dt class="columns small-8 medium-8">$i18n.escape($paymentMethodLine.name)</dt>
+							<dd class="columns small-8 medium-8">$i18n.escape($paymentMethodLine.value)</dd>
+						</dl>
+					#end ##foreach payment method line
+				#end ## if there are payment method lines
+			</div>
+		</div>
+
+		#parse('/snippets/hr.vm')
+
+		<div class="row footer-buttons">
+			<div class="columns small-16 text-right">
+				<button type="submit" name="confirm" class="no-margin">Finalize Order</button>
+			</div>
+		</div>
+	#end ## if form.isAmazon
+</form>
+
+
+
+#parse('/snippets/bottom.vm')

@@ -1,0 +1,276 @@
+#* @vtlvariable name="formatHelper" type="com.bpsinfo.ultracart.catalog.tobjects.FormatHelper" *#
+#* @vtlvariable name="i18n" type="com.bpsinfo.storefront.tobjects.I18nWriter" *#
+#* @vtlvariable name="form" type="com.bpsinfo.ultracart.checkout.ui.ReviewItemForm" *#
+
+
+#set($bodyClass = 'review-item')
+
+#parse('/snippets/top.vm')
+
+<div class="row">
+  <form action="/checkout/reviewItemSave.do" method='post' class="validate">
+    #parse('/snippets/common/storefront_template_spec_version.vm')
+    <input type='hidden' name="merchantId" value="$i18n.escape($!form.merchantId)"/>
+    <input type='hidden' name="itemId" value="$i18n.escape($!form.itemId)"/>
+    <input type='hidden' name="showNickname" value="$i18n.escape($!form.showNickname)"/>
+    <input type='hidden' name="showLocation" value="$i18n.escape($!form.showLocation)"/>
+    <input type='hidden' name="showStoreSection" value="$i18n.escape($!form.showStoreSection)"/>
+    <input type='hidden' name="showProfileQuestions" value="$i18n.escape($!form.showProfileQuestions)"/>
+    #foreach($question in $form.questions)
+      <input type='hidden' name='questions[$foreach.index].format' value='$i18n.escape($!question.format)'/>
+      <input type='hidden' name='questions[$foreach.index].question' value='$i18n.escape($!question.question)'/>
+      <input type='hidden' name='questions[$foreach.index].size' value='$!question.size'/>
+      <input type='hidden' name='questions[$foreach.index].rows' value='$!question.rows'/>
+      <input type='hidden' name='questions[$foreach.index].cols' value='$!question.cols'/>
+      <input type='hidden' name='questions[$foreach.index].maxLength' value='$!question.maxLength'/>
+      #set($questionIndex = $foreach.index)
+      #foreach($option in $question.options)
+      <input type='hidden' name='questions[$questionIndex].options[$foreach.index]' value="$i18n.escape($option)"/>
+      #end ## foreach option in the question.options
+    #end ## foreach question
+    #foreach($rating in $form.ratings)
+      <input type='hidden' name="ratings[$foreach.index].name" value="$rating.name"/>
+    #end
+
+    #parse('/snippets/errors.vm')
+    #parse('/snippets/info_messages.vm')
+
+    <div class="columns small-16">
+      <h1 class="half-margin-bottom">Reviewing: $!form.description</h1>
+    </div>
+
+    #if("$!form.imageUrl" != "") ##if-imageUrl is not empty.
+      <div class="columns small-16 medium-3 small-only-text-center">
+        <img src="$!form.imageUrl" class="half-margin-bottom">
+      </div>
+      <div class="columns small-16 medium-13 half-margin-bottom">
+        ## <strong>$!form.description<strong><br/>
+            $!form.extendedDescription
+      </div>
+    #else
+      <div class="columns small-16 half-margin-bottom">
+        ## <strong>$!form.description<strong><br/>
+        $!form.extendedDescription
+      </div>
+    #end
+
+    <div class="columns small-16">
+      <h2>Product Rating</h2>
+      <table>
+        <tr>
+          <td>
+
+          </td>
+          #foreach($score in $form.scores)
+            <td align="center">
+              <span class="icon-star-4-4"></span>
+            </td>
+          #end ##foreach score
+          <td>
+          </td>
+        </tr>
+
+        #foreach($rating in $form.ratings)
+          #set($ratingIndex = $foreach.index)
+          <tr>
+            <td class="ucFormLabel">
+              $i18n.escape($rating.name)
+            </td>
+            #foreach($score in $form.scores)
+              <td align="center">
+                <input type='radio' name="ratings[$ratingIndex].score"
+                       #if($rating.score == $score)checked='checked'#{end} value="$!score"/>
+              </td>
+            #end ##foreach score in scores
+            <td class="ucDefault">
+              (1=Worst; $!form.ratingScaleMax=Best )
+            </td>
+          </tr>
+        #end ##foreach rating in ratings
+
+        <tr>
+          <td>
+          </td>
+          #foreach($score in $form.scores)
+            <td align="center" class="ucDefault">
+              $i18n.escape($score)
+            </td>
+          #end ## foreach score
+          <td>
+          </td>
+        </tr>
+      </table>
+        <h2>I would recommend this product to a friend:</h2>
+      <div class="columns small-16 half-margin-bottom">
+        <label for="recommendToFriend" class="half-margin-left">
+            <div>
+              <input type='radio' name="recommendToFriend" value="true"
+                     #if($form.recommendToFriend && $form.recommendToFriend == 'true')checked='checked'#{end}/><strong> Yes</strong>
+              <input type='radio' name="recommendToFriend" value="false" class="half-margin-left"
+                     #if($form.recommendToFriend && $form.recommendToFriend == 'false')checked='checked'#{end}/><strong> No</strong>
+            </div>
+
+        </label>
+      </div>
+      ## <div class="columns small-8 half-margin-bottom">
+      ## </div>
+    </div>
+
+    <div class="clearfix"></div>
+
+    #if($form.showNickname)
+      <div class="columns small-16">
+        <h2>Reviewer Nickname</h2>
+        <label for="nickname" class="label-move half-margin-bottom">
+          <span>Nickname:</span>
+          <input type='text' name="nickname" id="nickname" value="$i18n.escape($!form.nickname)" maxlength="25" class="no-margin-bottom"/>
+          <small>4-25 characters. This will be the nickname shown on all your future reviews. Please do not use your real name.</small>
+        </label>
+      </div>
+    #end ## if-showNickname
+
+    <div class="columns small-16">
+      <h2>Review</h2>
+      <label for="title" class="label-move half-margin-bottom">
+        <span>Review Title:</span>
+        <input type="text" name="title" id="title" maxlength="250" class="no-margin-bottom" value="$i18n.escape($!form.title)" />
+        <small>Example: Best Purchase Ever</small>
+      </label>
+
+      <label for="review" class="label-move half-margin-bottom">
+        <span>Review:</span>
+        <textarea name="review" id="review" class="no-margin-bottom">$i18n.escape($!form.review)</textarea>
+        <small >If you write review text, it should be at least 50 characters, otherwise only your ratings will count.</small>
+      </label>
+    </div>
+    #if($form.showProfileQuestions)
+      <div class="columns small-16">
+        <h2>Reviewer Profile</h2>
+        #if($form.showLocation)
+          <label for="location" class="label-move half-margin-bottom">
+            <span>Location:</span>
+            <input type='text'
+                     name="location"
+                     id="location"
+                     class="no-margin-bottom"
+                     value="$i18n.escape($!form.location)"
+                     maxlength="50" />
+            <small>Example: New York, NY</small>
+          </label>
+        #end ##if-showLocation
+        #foreach($question in $form.questions)
+
+
+            #if($question.format == 'single line')
+
+              <label for="questions[$foreach.index].answer" class="label-move half-margin-bottom">
+                <span>$i18n.escape($!question.question):</span>
+                <input type='text' name='questions[$foreach.index].answer' id="questions[$foreach.index].answer" value="$i18n.escape($question.answer)" maxlength="$question.maxLength"/>
+
+            #elseif($question.format == 'multiple line')
+
+              <label for="questions[$foreach.index].answer" class="label-move half-margin-bottom">
+                <span>$i18n.escape($!question.question):</span>
+                <textarea name='questions[$foreach.index].answer' id="questions[$foreach.index].answer">$i18n.escape($question.answer)</textarea>
+
+            #elseif($question.format == 'drop down')
+              <label for="questions[$foreach.index].answer" class="half-margin-bottom">
+                <span>$i18n.escape($!question.question):</span>
+                <select name='questions[$foreach.index].answer' id="questions[$foreach.index].answer">
+                  #foreach($option in $question.options)
+                    <option #if($question.answer && $option == $question.answer)selected='selected'#{end} >$i18n.escape($option)</option>
+                  #end ##each option in this question
+                </select>
+
+            #end ## if-question.format
+
+          </label>
+
+        #end ##foreach-question
+
+      </div>
+    #end ##if-showProfileQuestions
+
+    #if($form.showStoreSection)
+      <div class="columns small-16 half-margin-bottom">
+        <h2>Our Store</h2>
+        <table>
+          <tr>
+            <td class="ucDefault" align="center">0</td>
+            <td class="ucDefault" align="center">1</td>
+            <td class="ucDefault" align="center">2</td>
+            <td class="ucDefault" align="center">3</td>
+            <td class="ucDefault" align="center">4</td>
+            <td class="ucDefault" align="center">5</td>
+            <td class="ucDefault" align="center">6</td>
+            <td class="ucDefault" align="center">7</td>
+            <td class="ucDefault" align="center">8</td>
+            <td class="ucDefault" align="center">9</td>
+            <td class="ucDefault" align="center">10</td>
+          </tr>
+          <tr>
+            <td align="center"><input type='radio' name='recommendStoreToFriend' value="0"
+                                      #if($form.recommendStoreToFriend == "0")checked='checked'#{end} /></td>
+            <td align="center"><input type='radio' name='recommendStoreToFriend' value="1"
+                                      #if($form.recommendStoreToFriend == "1")checked='checked'#{end} /></td>
+            <td align="center"><input type='radio' name='recommendStoreToFriend' value="2"
+                                      #if($form.recommendStoreToFriend == "2")checked='checked'#{end} /></td>
+            <td align="center"><input type='radio' name='recommendStoreToFriend' value="3"
+                                      #if($form.recommendStoreToFriend == "3")checked='checked'#{end} /></td>
+            <td align="center"><input type='radio' name='recommendStoreToFriend' value="4"
+                                      #if($form.recommendStoreToFriend == "4")checked='checked'#{end} /></td>
+            <td align="center"><input type='radio' name='recommendStoreToFriend' value="5"
+                                      #if($form.recommendStoreToFriend == "5")checked='checked'#{end} /></td>
+            <td align="center"><input type='radio' name='recommendStoreToFriend' value="6"
+                                      #if($form.recommendStoreToFriend == "6")checked='checked'#{end} /></td>
+            <td align="center"><input type='radio' name='recommendStoreToFriend' value="7"
+                                      #if($form.recommendStoreToFriend == "7")checked='checked'#{end} /></td>
+            <td align="center"><input type='radio' name='recommendStoreToFriend' value="8"
+                                      #if($form.recommendStoreToFriend == "8")checked='checked'#{end} /></td>
+            <td align="center"><input type='radio' name='recommendStoreToFriend' value="9"
+                                      #if($form.recommendStoreToFriend == "9")checked='checked'#{end} /></td>
+            <td align="center"><input type='radio' name='recommendStoreToFriend' value="10"
+                                      #if($form.recommendStoreToFriend == "10")checked='checked'#{end} /></td>
+          </tr>
+          <tr>
+            <td colspan="11">
+              <table width="100%">
+                <tr>
+                  <td class="ucDefault">0 = Not Recommend</td>
+                  <td class="ucDefault" align="right">10 = Highly Recommend</td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+        <label for="storeFeedback" class="label-move half-margin-bottom">
+          <span>Please tell us why:</span>
+          <textarea name="storeFeedback" id="storeFeedback" class="no-margin-bottom">$i18n.escape($!form.storeFeedback)</textarea>
+          <small>(will not appear on our site)</small>
+        </label>
+      </div>
+
+    #end ##if-showStoreSection
+
+    <div class="columns small-16 half-margin-top">
+      <h2>Terms and Conditions</h2>
+
+      <div class="half-margin-bottom">
+        <textarea name="termsAndConditions" readonly="true" class="no-margin-bottom">$i18n.escape($!form.termsAndConditions)</textarea>
+        <input type='checkbox' name="agreeToTermsAndConditions"
+          #if($form.agreeToTermsAndConditions)checked='checked'#{end}/>
+        <span>I have read the terms and conditions and agree to them.</span>
+      </div>
+      <div>
+        <button type="submit" name="memberSubmit" alt="Submit" class="right">Submit Review</button>
+      </div>
+    </div>
+
+  </form>
+</div>
+
+
+
+
+
+#parse('/snippets/bottom.vm')

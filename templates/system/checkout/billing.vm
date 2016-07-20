@@ -1,0 +1,363 @@
+#* @vtlvariable name="formatHelper" type="com.bpsinfo.ultracart.catalog.tobjects.FormatHelper" *#
+#* @vtlvariable name="i18n" type="com.bpsinfo.storefront.tobjects.I18nWriter" *#
+#* @vtlvariable name="form" type="com.bpsinfo.ultracart.checkout.ui.BillingForm" *#
+
+## uc:theme-attribute-boolean="Google Autocomplete"
+
+#set( $placesApi = 'true' )
+#set( $pageGroup = 'multi-page-checkout' )
+#set( $bodyClass = 'multi-page-checkout billing' )
+#set( $pageTitle = $i18n.write("checkout.viewCart.pageTitle", "Shopping Cart") )
+#parse('/snippets/top.vm')
+
+#parse('/snippets/breadcrumbs.vm')
+
+#set( $title = $i18n.write("checkout.billingAddress.billingAddressHeader","BILLING ADDRESS"))
+##
+#parse('/snippets/title.vm')
+
+<script type="text/javascript">
+	function hideSpan(divId) {
+		if (document.getElementById(divId) != null) {
+			document.getElementById(divId).style.visibility = 'hidden';
+			document.getElementById(divId).style.display = 'none';
+		}
+	}
+
+	function showSpan(divId) {
+		if (document.getElementById(divId) != null) {
+			document.getElementById(divId).style.visibility = 'visible';
+			document.getElementById(divId).style.display = 'inline';
+		}
+	}
+
+	var stateOptionalCountries = ${form.stateOptionalCountriesJson};
+
+	function updateStateRequirementFlags() {
+		// Adjust the shipping state flag
+		var billToCountry = "";
+
+		if (document.ucBilling.country.selectedIndex > -1) {
+			billToCountry = document.ucBilling.country.options[document.ucBilling.country.selectedIndex].text;
+		}
+
+		if (stateOptionalCountries.indexOf(billToCountry) == -1) {
+			showSpan('ucBillingStateRequiredId');
+		} else {
+			hideSpan('ucBillingStateRequiredId');
+		}
+
+	}
+
+</script>
+<form name="ucBilling" method="post" action="/checkout/billingSave.do?merchantId=$formatHelper.urlEncode($form.merchantId)">
+	#parse('/snippets/common/storefront_template_spec_version.vm')
+	<input type="hidden" name="showEmail" value="$i18n.escape($!form.showEmail)"/>
+	<input type="hidden" name="emailOnly" value="$i18n.escape($!form.emailOnly)"/>
+	<input type="hidden" name="requireEmail" value="$i18n.escape($!form.requireEmail)"/>
+	<input type="hidden" name="requireEmailConfirm" value="$i18n.escape($!form.requireEmailConfirm)"/>
+
+	#parse('/snippets/errors.vm')
+	#parse('/snippets/info_messages.vm')
+
+<!-- Address book -->
+	#if(!$form.emailOnly)
+
+		#if($form.addressBook.size() > 0) ## if form.addressBook has entries
+			<script type="text/javascript">
+				function ucUseAddress(address) {
+					document.ucBilling.firstName.value = address['firstName'] || '';
+					document.ucBilling.lastName.value = address['lastName'] || '';
+					#if($form.showTitle)
+						document.ucBilling.title.value = address['title'] || '';
+					#end
+					document.ucBilling.company.value = address['company'] || '';
+					document.ucBilling.address1.value = address['address1'] || '';
+					document.ucBilling.address2.value = address['address2'] || '';
+					document.ucBilling.city.value = address['city'] || '';
+					document.ucBilling.state.value = address['state'] || '';
+					document.ucBilling.zip.value = address['postalCode'] || '';
+					document.ucBilling.dayPhone.value = address['dayPhone'] || '';
+					document.ucBilling.eveningPhone.value = address['eveningPhone'] || '';
+
+					var country = document.ucBilling.country;
+					if (country) {
+						var countryVal = address['country'] || '';
+						if (country.nodeName.toLowerCase() == 'input') {
+							document.ucBilling.country.value = countryVal;
+						} else if (country.nodeName.toLowerCase() == 'select') {
+
+							document.ucBilling.country.selectedIndex = -1;
+							for (i = 0; i < document.ucBilling.country.options.length; i++) {
+								if (document.ucBilling.country.options[i].text == countryVal) {
+									document.ucBilling.country.selectedIndex = i;
+									break;
+								}
+							}
+
+						}
+					}
+					return false;
+				}
+			</script>
+			<div class="row shipping-panels equalizer-small-suspend" data-equalizer>
+				<h2>$i18n.write("checkout.billingAddress.addressBookHeader","ADDRESS BOOK")</h2>
+
+				#foreach($address in $form.addressBook)
+					<div class="columns small-16 medium-8 large-4 address" data-equalizer-watch>
+						<div class="panel" data-equalizer-watch>
+							#if("$!address.company" != "")
+								$i18n.escape($!{address.company})<br>
+							#end
+							$i18n.escape($!{address.firstName}) $i18n.escape($!{address.lastName})<br>
+							$i18n.escape($!{address.address1})<br>
+							#if("$!address.address2" != "")
+								$i18n.escape($!{address.address2})<br>
+							#end
+							$i18n.escape($!{address.city}) $i18n.escape($!{address.state}) $i18n.escape($!{address.postalCode})
+							<br>
+							$i18n.escape($!{address.country})
+							<br>
+							<script type="text/javascript">
+								function useAddress${foreach.count}() {
+									var address = null;  // this looks redundant, but it keeps the editors from howling about uninitialized values.
+									address = $address.toJson();
+									return ucUseAddress(address);
+								}
+							</script>
+							<button name="useThisAddress" onclick="return useAddress${foreach.count}();" class="ucUseThisAddressButtonOverlay">Use This Address</button>
+						</div>
+					</div>
+				#end ##foreach-row in address book
+			</div>
+		#end ## if form.addressBook has entries
+
+	#end ## if-NOT-emailOnly
+
+
+	#if($form.showPayPalExpressCheckout)
+		<div class="row">
+			<h2 class="columns small-16">
+				$i18n.write("checkout.billingAddress.paypalExpressCheckoutHeader","FAST, SECURE CHECKOUT WITH PAYPAL")
+			</h2>
+
+			<div class="columns small-16 medium-8">
+				<p>
+					$i18n.write("checkout.billingAddress.paypalExpressCheckoutBenefits","Save time.  Checkout securely.<br />Pay without sharing your financial information.")
+				</p>
+			</div>
+			<div class="columns small-16 medium-8">
+				<a href="/checkout/payPalExpressCheckoutLoad.do">
+					<img src="https://www.paypal.com/en_US/i/btn/btn_xpressCheckoutsm.gif" border="0" alt="paypal"/>
+				</a>
+			</div>
+		</div>
+
+		#parse('/snippets/hr.vm')
+	#end ##if-showPayPalExpressCheckout
+
+
+
+
+	<div class="row">
+		#if(!$form.emailOnly)
+			<div class="columns small-16 medium-8">
+				<label class="label-move uco_group_billing_company">
+					<span>$i18n.write("checkout.billingAddress.companyField","Company")#if($form.requireCompany)* #{end}</span>
+					<input type="text" placeholder="" name="company" value="$i18n.escape($!form.company)" maxlength="50"/>
+				</label>
+
+				<div class="row no-padding-left no-padding-right">
+					#set( $nameClass = 'medium-8')
+					#if($form.showTitle)
+						#set( $nameClass = 'medium-6')
+						<div class="columns small-8 medium-4">
+							<label class="label-move">
+								<span>$i18n.write("checkout.shippingAddress.titleField","Title")#if($form.requireTitle)* #{end}</span>
+								<input type="text" name="title" value="$i18n.escape($form.title)" maxlength="50" />
+							</label>
+						</div>
+					#end ##if-showTitle
+
+					<div class="columns small-8 $nameClass">
+						<label class="label-move">
+							<span>$i18n.write("checkout.billingAddress.firstNameField","First Name")*</span>
+							<input type="text" placeholder="Jane" name="firstName" required value="$i18n.escape($!form.firstName)" maxlength="30" />
+						</label>
+					</div>
+
+					<div class="columns small-8 $nameClass">
+						<label class="label-move">
+							<span>$i18n.write("checkout.billingAddress.lastNameField","Last Name")*</span>
+							<input type="text" placeholder="Smith" name="lastName" required value="$i18n.escape($!form.lastName)" maxlength="30" />
+						</label>
+					</div>
+				</div>
+
+				#set ($jsGoogleAutocompleteField = "")
+				#if ($theme.attr("Google Autocomplete") && $theme.attr("Google Autocomplete") == "true")
+				  #set ($jsGoogleAutocompleteField = "js-google-autocomplete-field")
+				#end
+
+				<label class="label-move">
+					<span>$i18n.write("checkout.billingAddress.address1Field","Address 1")*</span>
+					<input type="text" placeholder="456 Second St." name="address1" id="address1" class="$jsGoogleAutocompleteField" value="$i18n.escape($!form.address1)" maxlength="32" autocomplete="off" required />
+				</label>
+
+				<label class="label-move">
+					<span>$i18n.write("checkout.billingAddress.address2Field","Address 2")</span>
+					<input type="text" placeholder="Suite B" name="address2" id="address2" value="$i18n.escape($!form.address2)" />
+				</label>
+
+				<label class="label-move">
+					<span>$i18n.write("checkout.billingAddress.cityField","City") *</span>
+					<input type="text" placeholder="Hixson" name="city" id="city" value="$i18n.escape($!form.city)" maxlength="32" />
+				</label>
+			</div>
+
+			<div class="columns small-16 medium-8">
+				<div class="row no-padding-left no-padding-right">
+					<div class="columns small-8 medium-8">
+						<label class="label-move">
+							<span>$i18n.write("checkout.billingAddress.stateProvinceRegionField","State/Province/Region")*</span>
+							<input type="text" placeholder="TN" name="state" id="state" value="$i18n.escape($!form.state)" maxlength="32" />
+						</label>
+					</div>
+
+					<div class="columns small-8 medium-8">
+						<label class="label-move">
+							<span>$i18n.write("checkout.billingAddress.zipPostalCodeField","Zip/Postal Code")*</span>
+							<input type="text" placeholder="37343" name="zip" id="zip" value="$i18n.escape($!form.zip)" maxlength="20" />
+						</label>
+					</div>
+				</div>
+
+				<label class="label-move">
+					<span>$i18n.write("checkout.billingAddress.countryField","Country")*</span>
+					<select name="country" id="country" class="ucFormField" onchange="updateStateRequirementFlags();">
+						#foreach($country in $form.countries)
+							<option #if("$country" == "$form.country")selected#{end}>$country</option>
+						#end
+					</select>
+				</label>
+
+				<div class="row no-padding-left no-padding-right">
+					<div class="columns small-8 medium-8">
+						<label class="label-move">
+							<span>$i18n.write("checkout.billingAddress.daytimePhoneField","Daytime Phone")#if($form.requireDayPhone)* #{end}</span>
+							<input type="text" placeholder="(555) 555 5454" name="dayPhone" value="$i18n.escape($!form.dayPhone)" maxlength="25" #if($form.requireDayPhone)required #{end} />
+
+						</label>
+					</div>
+
+					<div class="columns small-8 medium-8">
+						<label class="label-move">
+							<span>$i18n.write("checkout.billingAddress.eveningPhoneField","Evening Phone")#if($form.requireEveningPhone)* #{end}</span>
+							<input type="text" placeholder="(555) 555 5454" name="eveningPhone" value="$i18n.escape($!form.eveningPhone)" maxlength="25" #if($form.requireEveningPhone)required #{end} />
+						</label>
+					</div>
+				</div>
+
+				#if($form.showEmail)
+					<label class="label-move">
+						<span>
+							$i18n.write("checkout.billingAddress.emailAddressField", "Email Address")
+							($i18n.write("checkout.billingAddress.forEmailConfirmationText","for email confirmation")#if($form.requireEmail)* #{end}
+						</span>
+						<input type="email" placeholder="example@domain.com" name="email" value="$i18n.escape($!form.email)" #if($form.requireEmail)required#{end} />
+					</label>
+
+					#if($form.requireEmailConfirm)
+						<label class="label-move">
+							<span>
+								$i18n.write("checkout.billingAddress.emailAddressConfirmField","Confirm Email Address")#if($form.requireEmail)* #{end}
+							</span>
+							<input type="email" placeholder="example@domain.com" name="emailConfirm" value="$i18n.escape($!form.emailConfirm)" #if($form.requireEmail)required#{end} />
+						</label>
+					#end ##if-requireEmailConfirm
+
+
+					#if($form.showCcEmail)
+						<label class="label-move">
+							<span>$i18n.write("checkout.billingAddress.ccEmailAddressField","CC Email Address")</span>
+							<input type="text" placeholder="example@domain.com" name="ccEmail" value="$i18n.escape($!form.ccEmail)" />
+						</label>
+					#end ##if-showCcEmail
+				#end ##if-showEmail
+			</div>
+
+
+			#if($form.showMailingList)
+				<div class="columns small-16">
+					<label class="label-group no-margin">
+						<input type="checkbox" name="mailingList" value="true" #if($form.mailingList)checked#{end} />
+						$i18n.write("checkout.billingAddress.emailUpdateText","Please send me email updates of news and special offers")
+					</label>
+				</div>
+			#end ##if-showMailingList
+
+			#if($form.showBillingSameAsShipping)
+				<div class="columns small-16 medium-16">
+					<label class="label-group no-margin">
+						<input type="checkbox" name="billingSameAsShipping" value="true" #if($form.billingSameAsShipping)checked#{end}/>
+						$i18n.write("checkout.billingAddress.useBillingAsShipping","Use my billing address as my shipping address")
+					</label>
+				</div>
+			#end ## if-showBillingSameAsShipping
+		#end ##if-NOT emailOnly
+	</div>
+
+
+	#if($form.allowGifts)
+		#parse('/snippets/hr.vm')
+
+		<div class="row">
+			<div class="columns small-16">
+				<h2>
+					$i18n.write("checkout.billingAddress.giftInformationHeader","GIFT INFORMATION")
+					($i18n.write("checkout.billingAddress.optionalText","optional"))
+				</h2>
+
+				#if("$!form.giftCharge" != "$0.00")
+					<p>
+						$i18n.write("checkout.billingAddress.giftHandlingChargeTextStart","There is a") $!form.giftCharge
+						$i18n.write("checkout.billingAddress.giftHandlingChargeTextEnd","handling charge if this is a gift order.")
+					</p>
+				#end
+			</div>
+
+			<div class="clearfix"></div>
+
+			<div class="columns small-16 medium-8">
+				<label class="label-move">
+					<span>
+						$i18n.write("checkout.billingAddress.giftEmailField","Gift Email")
+						(${i18n.write("checkout.billingAddress.giftEmailForConfirmationText","for email confirmation")})
+					</span>
+					<input type="email"
+						name="giftEmail"
+						placeholder="example@domain.com"
+						value="$i18n.escape($!form.giftEmail)"
+						maxlength="100"/>
+				</label>
+
+				<label class="label-move">
+					<span>$i18n.write("checkout.billingAddress.giftMessageField","Gift Message") $i18n.escape($!form.giftMaxLengthMessage):</span>
+					<textarea name="giftMessage" wrap="virtual">$i18n.escape($!form.giftMessage)</textarea>
+				</label>
+			</div>
+		</div>
+	#end ##if-allowGifts
+
+	#parse('/snippets/button.continue.vm')
+</form>
+
+<script type="text/javascript">
+	updateStateRequirementFlags();
+</script>
+
+
+#parse('system://3.0/snippets/cart_exit_pop.vm')
+
+
+#parse('/snippets/bottom.vm')

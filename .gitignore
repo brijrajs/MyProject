@@ -1,0 +1,11 @@
+.sass-cache/
+node_modules/
+.DS_Store
+_adminpanel
+assets/imgs/sprites*.png
+assets/css/main.css
+assets/js/*.js
+.remote-sync.json
+sftp-config.json
+*.sublime-project
+*.sublime-workspace

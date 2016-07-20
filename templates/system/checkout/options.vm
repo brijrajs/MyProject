@@ -1,0 +1,302 @@
+##
+## UltraCart - Mr Teas Template
+## http://www.ultracart.com/
+##
+## Copyright (c) 2015 BPS Info Solutions Inc.
+## License located here:
+## http://www.ultracart.com/storefront/license/
+##
+## Designed by Level 2 Design, LLC http://www.level2d.com/
+##
+
+#* @vtlvariable name="formatHelper" type="com.bpsinfo.ultracart.catalog.tobjects.FormatHelper" *#
+#* @vtlvariable name="i18n" type="com.bpsinfo.storefront.tobjects.I18nWriter" *#
+#* @vtlvariable name="form" type="com.bpsinfo.ultracart.checkout.ui.OptionsForm" *#
+
+#set( $pageGroup = 'multi-page-checkout' )
+#set( $bodyClass = 'multi-page-checkout options' )
+#set( $pageTitle = $i18n.write("checkout.options.pageTitle", "Options") )
+#parse('/snippets/top.vm')
+
+#parse('/snippets/breadcrumbs.vm')
+#set( $title = $i18n.write("checkout.options.pageTitle", "Options") )
+#parse('/snippets/title.vm')
+
+
+<script type="text/javascript">
+
+	function hideDiv(divId) {
+		document.getElementById(divId).style.visibility = 'hidden';
+		document.getElementById(divId).style.display = 'none';
+	}
+
+	function showDiv(divId) {
+		document.getElementById(divId).style.visibility = 'visible';
+		document.getElementById(divId).style.display = 'block';
+	}
+
+	function showMethodOptions() {
+		// we're using the setTimeout to force the functions to be called async
+		// this allows these functions to have access to the results of the onclick
+		setTimeout(function(){
+			show3rdParty();
+			showLiftGateOption();
+		}, 0);
+	}
+
+	function show3rdParty() {
+		hideDiv('shippingAccountNumberDiv');
+		$!form.show3rdPartyJavascript
+	}
+
+	function showLiftGateOption() {
+		hideDiv('liftGateDiv');
+		$!form.showLiftGateJavascript
+	}
+
+</script>
+
+<form name="ucOptions" method="post" action="/checkout/optionsSave.do?merchantId=$formatHelper.urlEncode($form.merchantId)">
+	#parse('/snippets/common/storefront_template_spec_version.vm')
+	<input type="hidden" name="showGiftCertificateCode" value="$i18n.escape($!form.showGiftCertificateCode)"/>
+	<input type="hidden" name="showPaymentPreference" value="$i18n.escape($!form.showPaymentPreference)"/>
+	<input type="hidden" name="customerProfileCreditCardOid" value="$i18n.escape($!form.customerProfileCreditCardOid)" id="customerProfileCreditCardOid"/>
+
+	#parse("/snippets/errors.vm")
+	#parse("/snippets/info_messages.vm")
+
+	#if($form.showShippingPreference)
+		<div class="row">
+			<div class="columns small-16">
+				<h2>$i18n.write("checkout.options.shippingPreferencesHeader","SHIPPING METHODS")</h2>
+			</div>
+
+			<div class="columns small-16 medium-8">
+
+				<input type="hidden" name="noMethods" value="$i18n.escape($!form.noMethods)"/>
+
+				<div class="label-move">
+					<span>$i18n.write("checkout.options.chooseShippingSpeed","Choose Shipping Speed")</span>
+				</div>
+
+				<ul class="option-group payment-options">
+					#foreach($shippingMethodEntry in $form.shippingMethods)
+						<li #if($form.shippingMethod == $shippingMethodEntry.name)class="active"#{end} onclick="showMethodOptions()">
+							<input type="radio" name="shippingMethod" value="$!shippingMethodEntry.name" #if($form.shippingMethod == $shippingMethodEntry.name)checked='checked'#{end} />
+							<label>
+								<strong>
+									$i18n.escape($shippingMethodEntry.displayName)
+									<em>
+										#if("$!shippingMethodEntry.comment" != "")
+											($i18n.escape($shippingMethodEntry.comment))&nbsp;
+										#end ##if-comment
+
+										#if($form.showEstimatedDelivery && "$!shippingMethodEntry.estimatedDelivery" != "")
+											 - $i18n.write("checkout.options.delivered","delivered") $i18n.escape($!shippingMethodEntry.estimatedDelivery)
+										#end ## showEstimateDelivery and shipping method has estimate
+									</em>
+								</strong>
+
+								<span class="option-note price js-format-number js-price" data-cost="$shippingMethodEntry.cost">$shippingMethodEntry.cost</span>
+							</label>
+						</li>
+					#end ## foreach shippingMethods
+				</ul>
+			</div>
+
+			<input type="hidden" name="showSpecialInstructions" value="$i18n.escape($!form.showSpecialInstructions)"/>
+			#if($form.showSpecialInstructions)
+				<div class="columns small-16 medium-8">
+					<label class="label-move">
+						<span>
+							$i18n.write("checkout.options.specialInstructionsField","Special instructions about delivery")
+
+							#if("$!form.specialInstructionsLength" != "")
+								($i18n.write("checkout.options.specialInstructionsMaxLength","Max Length") $i18n.escape($!form.specialInstructionsLength))
+							#end
+						</span>
+						<textarea name="specialInstructions">$i18n.escape($!form.specialInstructions)</textarea>
+					</label>
+				</div>
+			#end ## if-showSpecialInstructions
+
+			<div class="columns small-16 medium-8">
+				<div id="shippingAccountNumberDiv" class="ucFormLabel" style="display:none; visibility:hidden;">
+					<label class="label-move">
+						If you would like to bill the shipping to your <span id="shippingName1">TBD</span><br/>account,
+						enter the account number below.<br/><br/>
+
+						<span id="shippingName2">TBD</span>
+						Account Number
+						<input type='text'
+								 name="shipping3rdPartyAccountNumber"
+								 value="$i18n.escape($!form.shipping3rdPartyAccountNumber)"
+								 size="12"
+								 maxlength="20"
+								 class="ucFormField"/>
+					</label>
+				</div>
+
+				<div id="liftGateDiv" style="display:none; visibility:hidden;">
+					<label>
+						If the delivery location is not equipped with a loading dock, please select the lift gate option
+						below.<br/><br/>
+						<input type="checkbox"
+									 name="liftGate"
+									 #if($form.liftGate)checked='checked'#{end}/> Lift Gate Required
+					</label>
+				</div>
+			</div>
+				<script type="text/javascript">
+					showMethodOptions();
+				</script>
+
+			#if($form.showPackingSolution)
+				<div class="columns small-16 medium-16">
+					<span class="logged-in-merchant">
+						Logged in UltraCart merchant:
+						<a target="_blank" href="/cgi-bin/UCPackingSolution?merchantId=$form.merchantId">View packing solution.</a>
+						<small class="small">(Not visible to customers)</small>
+					</span>
+				</div>
+			#end ## if-showPackingSolution
+
+		</div>
+
+
+	#end ## if-showShippingPreference
+
+	#if($form.showTaxCounty)
+		#parse('/snippets/hr.vm')
+		<div class="row">
+			<div class="columns small-16 medium-8">
+				#if($form.taxCounties.size() == 0)
+					<input type='hidden' name='taxCounty' value="$i18n.escape($!form.taxCounty)"/>
+				#else ## taxCounties has some values in it
+					<label class="label-move">
+						<h2>$i18n.write("checkout.options.taxCountyHeader","TAX COUNTY")</h2>
+						<select name="taxCounty" class="ucFormField">
+							#foreach($taxCounty in $form.taxCounties)
+								<option #if($taxCounty == $form.taxCounty) selected='selected'#{end}>$i18n.escape($taxCounty)</option>
+							#end
+						</select>
+					</label>
+				#end ## if-taxCounties.size()
+			</div>
+		</div>
+	#end ## if-showTaxCounty
+
+	#if($form.showGiftCertificateCode)
+		#parse('/snippets/hr.vm')
+		<div class="row">
+			<div class="columns small-16 medium-8">
+					<label class="label-move">
+						<h2>$i18n.write("checkout.options.giftCertificateHeader","GIFT CERTIFICATE (OPTIONAL)")</h2>
+						<input type='text'
+									 name="giftCertificateCode"
+									 class="ucFormField"
+									 size="20"
+									 value="$i18n.escape($!form.giftCertificateCode)"
+									 maxlength="25"/>
+						<small>
+							#if($form.showPaymentPreference)
+								$i18n.write("checkout.options.giftCertificateInstructions","Enter your gift certificate code here.  We will subtract it from your total.")
+							#end ## if-showPaymentPreference
+						</small>
+					</label>
+			</div>
+		</div>
+
+	#end ## if-showGiftCertificateCode
+
+
+	#if($form.showPaymentPreference)
+		#if($form.showShippingPreference)
+			#parse('/snippets/hr.vm')
+		#end
+
+		<script type='text/javascript'>
+			function updateCustomerProfileCardOid(oid) {
+				if (oid) {
+					document.getElementById('customerProfileCreditCardOid').value = oid;
+					console.log(oid);
+				} else {
+					document.getElementById('customerProfileCreditCardOid').value = '';
+				}
+			}
+		</script>
+
+		<div class="row">
+			<div class="columns small-16 medium-8">
+				<h2>$i18n.write("checkout.options.paymentPreferenceHeader","PAYMENT PREFERENCE")</h2>
+				#set( $preference = 'Credit Card' )
+				#if ($form.paymentPreference)
+					#set( $preference = $form.paymentPreference )
+				#end
+
+				<ul class="option-group payment-options">
+				    #set($foundActive = false)
+					#foreach($paymentPreference in $form.paymentPreferences)
+					    #set($paymentPreferenceClass = "")
+					    #if($paymentPreference.value == $preference && !$foundActive)
+					      #set($paymentPreferenceClass = "active")
+					      #set($foundActive = true)
+					    #{end}
+
+						<li class="$paymentPreferenceClass">
+							<input type="radio" name="paymentPreference" value="$paymentPreference.value" #if($paymentPreference.value == $preference && !$paymentPreference.customerProfileCreditCardOid)checked#{end} onclick="updateCustomerProfileCardOid('$!paymentPreference.customerProfileCreditCardOid')"/>
+							<label>
+								#if($paymentPreference.existingCardImage || $paymentPreference.existingCardText)
+									<img src="$paymentPreference.existingCardImage" alt="card image" />
+									<span class="half-margin-left">$paymentPreference.existingCardText</span>
+								#else
+									$paymentPreference.html
+								#end
+							</label>
+						</li>
+						#if ($paymentPreference.value == $preference)
+						  <script type="text/javascript">
+						  	updateCustomerProfileCardOid('$!paymentPreference.customerProfileCreditCardOid')
+						  </script>
+						#end
+					#end ##foreach-paymentPreference
+				</ul>
+			</div>
+		</div>
+	#else ## if-showPaymentPreference == false
+		<input type="hidden" name="paymentPreference" value="$i18n.escape($!form.paymentPreference)"/>
+	#end ## if-showPaymentPreference
+
+	#if($form.showAdvertisingSourceSelectThenFreeForm || $form.showAdvertisingSourceDropDown || $form.showAdvertisingSourceFreeForm)
+		#if($form.showShippingPreference)
+			#parse('/snippets/hr.vm')
+		#end
+		#parse('/snippets/mpc_cart_advertising_sources.vm')
+	#end ## if-showAdvertising*
+
+
+	#if($form.showReferralCode)
+		#parse('/snippets/hr.vm')
+		<div class="row">
+			<div class="columns small-16 medium-8">
+				<h2>
+					$i18n.escape($!form.referralCodeDescription)
+					($i18n.write("checkout.options.optionalHeader","OPTIONAL"))
+				</h2>
+
+				<label class="label-move">
+					<input type="text" name="referralCode" class="no-margin-bottom" value="$i18n.escape($!form.referralCode)" />
+				</label>
+			</div>
+		</div>
+	#end ## if-showReferralCode
+
+
+	#parse('/snippets/button.continue.vm')
+</form>
+
+
+#parse('system://3.0/snippets/cart_exit_pop.vm')
+
+
+#parse('/snippets/bottom.vm')

@@ -1,0 +1,28 @@
+##
+## UltraCart - Mr Teas Template
+## http://www.ultracart.com/
+##
+## Copyright (c) 2015 BPS Info Solutions Inc.
+## License located here:
+## http://www.ultracart.com/storefront/license/
+##
+## Designed by Level 2 Design, LLC http://www.level2d.com/
+##
+
+#* @vtlvariable name="i18n" type="com.bpsinfo.storefront.tobjects.I18nWriter" *#
+#* @vtlvariable name="formSupport" type="com.bpsinfo.storefront.tobjects.FormSupport" *#
+
+#if($formSupport.infoMessages.size() > 0)
+<div class="container">
+	#foreach($msg in $formSupport.infoMessages)
+      
+		<div class="row no-margin-top">
+			<div class="columns small-full">
+				<div class="alert info">
+					<div class="message">$!msg</div>
+				</div>
+			</div>
+		</div>
+	#end
+</div>
+#end

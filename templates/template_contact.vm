@@ -1,0 +1,74 @@
+##
+## UltraCart - Mr Teas Template
+## http://www.ultracart.com/
+##
+## Copyright (c) 2015 BPS Info Solutions Inc.
+## License located here:
+## http://www.ultracart.com/storefront/license/
+##
+## Designed by Level 2 Design, LLC http://www.level2d.com/
+##
+
+## uc:contains-velocity="true"
+## uc:page-type="static"
+## uc:page-attribute-string="subtitle"
+## uc:page-attribute-html="content"
+
+## uc:menu-used="header"
+## uc:menu-used="help"
+## uc:menu-used="footer"
+## uc:menu-used="account"
+<style>
+  #system .row {
+    margin: 0 auto; 
+  }
+</style>
+#parse("/snippets/checkout_only_redirect.vm")
+#parse("/snippets/top.vm")
+
+	
+  <div class="row">
+    <div class="columns small-16">
+      #if($group.getAttribute("subtitle") && $group.getAttribute("subtitle") != '')
+        <h2>$group.getAttribute("subtitle")</h2>
+      #end
+
+      <div class="page-content">
+        #if($group.getAttribute("content") && $group.getAttribute("content") != '')
+          $group.getAttribute("content")
+        #end
+      </div>
+
+      <form action="$baseUrl/cgi-bin/UCEmailForm" method="POST" id="contact-form" class="validate half-margin-top">
+        <input type="hidden" name="merchantId" value="$merchantID">
+        <input type="hidden" name="email" value="customerservice">
+        <!--
+          the 'customerservice' value above tells the server to send the email
+          to whoever is configured as the customer service representative
+        -->
+        <input type="hidden" name="subject" value="Contact Us">
+        <input type="hidden" name="redirectUrl" value="/contact/thanks">
+        <input type="hidden" name="fieldNames" value="name,replyTo,content">
+        #parse('/snippets/common/storefront_template_spec_version.vm')
+
+        <label for="contact-name" class="label-move">
+          <span>Name</span>
+          <input type="text" name="name" id="contact-name" required max-length="60">
+        </label>
+
+        <label for="contact-email" class="label-move">
+          <span>E-mail</span>
+					<input type="email" name="replyTo" id="contact-email" required="" max-length="60" aria-required="true">
+        </label>
+
+        <label for="contact-content" class="label-move">
+          <span>Message</span>
+					<textarea name="content" id="contact-content" required="" aria-required="true" aria-invalid="true"></textarea>
+        </label>
+
+        <button type="submit" name="submit" id="contact-submit" class="right inactive" disabled>Send</button>
+      </form>
+    </div>
+  </div>
+
+#parse("/snippets/bottom.vm")

@@ -1,0 +1,1093 @@
+##
+## UltraCart - Mr Teas Template
+## http://www.ultracart.com/
+##
+## Copyright (c) 2015 BPS Info Solutions Inc.
+## License located here:
+## http://www.ultracart.com/storefront/license/
+##
+## Designed by Level 2 Design, LLC http://www.level2d.com/
+##
+
+## uc:contains-velocity="true"
+## uc:page-type="item"
+## uc:item-multimedia-default-used="true"
+## uc:theme-attribute-boolean="Show Options"
+
+## uc:site-attribute-string="facebookAccount"
+## uc:site-attribute-string="twitterAccount"
+## uc:site-attribute-string="pinterestAccount"
+## uc:site-attribute-boolean="shareFacebook"
+## uc:site-attribute-boolean="shareTwitter"
+## uc:site-attribute-boolean="sharePinterest"
+
+## uc:theme-attribute-boolean="Information Only Theme"
+
+#parse("/snippets/checkout_only_redirect.vm")
+
+#set($bodyClass = "product-page")
+#set($outOfStock = false)
+#if($item.isInventoryTracked())
+  #if($item.getAvailableQuantity() && $item.getAvailableQuantity() < 1)
+      #set($outOfStock = true)
+  #end
+#end
+
+#parse("/snippets/google_base_offer_id.vm")
+
+#parse("/snippets/top.vm")
+                                                                       
+<div class="row mt" style="margin-top: 20px;">
+<div class="columns small-16">
+<img src="${baseUrl}/assets/imgs/bb.jpg" border="0" usemap="#Map"><p></p>
+<map name="Map">
+<area shape="rect" coords="697,9,927,48" href="#"></map>
+</div>
+</div>
+
+
+<div class="row no-margin">
+  <div class="columns small-16" style="margin-top: -20px;">
+    ##parse("/snippets/breadcrumbs.vm")
+  </div>
+</div>
+<div class="row" style="margin-top:15px;">
+  <div class="columns small-16 medium-6">
+    <div class="product-list-images viewer">
+      <ul>
+        #if($item.getMultimedia("Image") && $item.getMultimedia("Image").size() > 0)
+
+          #foreach($img in $item.getMultimedia("Image"))
+
+            #if(!$img.isExcludeFromGallery() && $formatHelper.notNull($img.getCode()) != 'featured')
+              <li class="#if($outOfStock)out-of-stock#{end} product-image" #if($velocityCount > 1) style="display:none;" #end >
+                <a href="$img.getViewSsl()">
+                  <strong>$formatHelper.notNull($img.getDescription())</strong>
+                  <span class="link">View</span>
+                  <img src="$baseThumbnailUrl${img.getThumbnail(100, 100, false)}" data-large="$baseThumbnailUrl$img.getThumbnail(360, 360, false)" width="100" height="100" alt="$formatHelper.notNull($img.getDescription())" />
+                  #if($outOfStock)
+                    <sub>
+                      <em>Out of stock</em>
+                    </sub>
+                  #end
+                </a>
+              </li>
+            #end
+          #end
+        #else
+          <li #if($outOfStock)class="out-of-stock product-image" #{end}>
+            <strong>$item.getTitle()</strong>
+            <span class="link">View</span>
+            <img src="$baseThemeUrl$theme.attr('Item No Image Available Image URL')" data-large="$baseThemeUrl$theme.attr('Item No Image Available Image URL')" width="100" height="133" alt="$item.getTitle()" />
+            #if($outOfStock)
+              <sub>
+                <em>Out of stock</em>
+              </sub>
+            #end
+          </li>
+        #end
+      </ul>
+    </div>
+    
+  </div>
+
+  <article class="product-item columns small-16 medium-9 medium-push-1">
+    <h1 style="font-size: 30px;line-height: 30px;">$item.getDescriptionNoEscape()</h1>
+
+    <div class="row">
+      <div class="columns small-8 small-half-margin-bottom medium-half-margin-bottom large-no-margin-bottom">
+        #if($item.getMAPLocalized(false))
+          <span class="price uc-variation-cost-${item.getMerchantItemID()}">$item.getMAPLocalized(false)</span>
+        #elseif($item.getSaleCost())
+             <span class="#if(!$item.getSaleCost())no-sale#end sale price uc-variation-sale-cost-${item.getMerchantItemID()}" style="font-size: 40px;font-family: 'proxima_nova_rgbold';
+ color: #41b800 !important;">$item.getSaleCostLocalized()</span>&nbsp;&nbsp;<span style="color: #FBA000;
+   font-size: 14px;font-family: 'latoregular';font-weight: bold;">Free Shipping</span>
+        
+        <span style="color: #c4c4c4 !important;font-size: 18px;font-family: 'proxima_nova_rgbold';">Before:</span>&nbsp;&nbsp;<span class="#if($item.getSaleCost())has-sale#end price uc-variation-cost-${item.getMerchantItemID()}" style="color: #c4c4c4 !important;
+    font-size: 18px;font-family: 'proxima_nova_rgbold';"><del><strike>$item.getRegularCostLocalized()</strike></del></span>&nbsp;&nbsp;&nbsp;
+           
+        #else
+            <span class="price uc-variation-cost-${item.getMerchantItemID()}" style="font-size: 40px;font-family: 'proxima_nova_rgbold';
+ color: #41b800 !important;">$item.getCostLocalized()</span>&nbsp;&nbsp;<span style="color: #FBA000;
+   font-size: 14px;font-family: 'latoregular';font-weight: bold;">Free Shipping</span>
+        #end
+        </div>
+        <div class="columns small-16 medium-16 large-8 large-text-right">
+       
+
+        </div>
+    </div>
+   
+     
+   
+    <!-- #if ($item.getExtendedDescription().length() > 300)
+      <p style="color: #767676;">$formatHelper.excerptXhtml($formatHelper.removeHtml($item.getExtendedDescriptionNoEscape()), 320)</p>
+      <br>
+      ## <a href="#panel-product-description" id="item-read-more">Read More</a>
+     
+    #else
+      $formatHelper.removeHtml($item.getExtendedDescriptionNoEscape())
+    #end -->
+    #if($theme.attr("Information Only Theme", "false") != "true")
+      <form method="POST" action="$checkoutUrlHttps" id="add-cart-form">
+        <input type="hidden" name="merchantId" value="${merchantID}"/>
+        <input type="hidden" name="ADD" value="${item.getMerchantItemID()}"/>
+
+        #if($theme.attr('Show Options') == 'true')
+
+          #foreach ($itemOption in $item.getOptions())
+
+            <div class="label-group">
+              #if($itemOption.getType() == "dropdown")
+                <label for="option-select$velocityCount">$itemOption.getLabel()</label>
+                  <input type="hidden" name="OptionName$velocityCount" value="$formatHelper.escapeHtml($itemOption.getName())" />
+                  <select id="option-select$velocityCount" name="OptionValue$velocityCount">
+                    #foreach ($dropDownValue in $itemOption.getDropDownValues())
+                      <option value="$formatHelper.escapeHtml($dropDownValue)">$formatHelper.escapeHtml($dropDownValue)</option>
+                    #end
+                  </select>
+
+              #end
+              #if($itemOption.getType() == "single")
+                <label for="option-single$velocityCount">$itemOption.getLabel()</label>
+                  <input type="hidden" name="OptionName$velocityCount" value="$formatHelper.escapeHtml($itemOption.getName())" />
+                  <input id="option-single$velocityCount" type="text" name="OptionValue$velocityCount"  />
+
+              #end
+              #if($itemOption.getType() == "multiline")
+                <label for="option-multiline$velocityCount">$itemOption.getLabel()</label>
+                  <input type="hidden" name="OptionName$velocityCount" value="$formatHelper.escapeHtml($itemOption.getName())" />
+                  <textarea id="option-multiline$velocityCount" type="text" name="OptionValue$velocityCount"></textarea>
+
+              #end
+              #if($itemOption.getType() == "radio")
+                <label>$itemOption.getLabel()</label>
+                <br>
+                <ul class='option-group'>
+                  #foreach($radioValues in $itemOption.getValues())
+                    <li>
+                      <label for="option-radio$velocityCount">
+                      <input type="hidden" name="OptionName$velocityCount" value="$formatHelper.escapeHtml($itemOption.getName())" />
+                      <input type="radio" name="OptionValue$velocityCount" value="$formatHelper.escapeHtml($radioValues.value)"  />$formatHelper.escapeHtml($radioValues.value)</label>
+                    </li>
+                  #end
+
+                </ul>
+              #end
+              #if($itemOption.getType() == "file attachment")
+                <label for="option-file$velocityCount">$itemOption.getLabel()</label>
+                  <input id="option-file$velocityCount" type="file" name="$formatHelper.escapeHtml($itemOption.getName())"  />
+
+              #end
+            </div>
+          #end
+
+        #end
+        <h5 style="font-size: 18px;font-weight: unset;line-height: 27px !important;" class="variationtext">»  <b> Supports A Healthy Nervous System</b></h5>
+        <h5 style="font-size: 18px;font-weight: unset;line-height: 27px !important;" class="variationtext">»   <b>Powerful Adaptogenic Properties</b></h5>
+        <h5 style="font-size: 18px;font-weight: unset;line-height: 27px !important;" class="variationtext">»  <b> Support Adrenal Health</b></h5>
+        <p style="text-align:center;margin-top: 0px;"> 
+
+        <!-- Variation Form -->
+        #set($hasVariations = $item.getVariations().size() > 0)
+        #if($hasVariations)
+
+            #foreach($variation in $item.getVariations())
+              ## <div>
+                <label class="label-group"><span>${variation.getName()}</span>
+                  <input type='hidden' name="VariationName${velocityCount}" value="${variation.getName()}"/></label>
+        <div class="row">
+          <div class="col-md-3" style="display:none !important;">
+           <img src="${baseUrl}/themes/MrTeas/assets/imgs/3greatways.jpg"/>
+          </div>
+          <div class="col-md-7" style="padding-right: 0px;padding-left: 0px;margin-right:-60px; display:none !important;">
+                  #foreach ($value in ${variation.getValues()})
+            			#if($value == "Buy 2 Get 1 Free –  $33.76")
+            				<div style="font-size:16px;line-height:18px; font-family: 'proxima_nova_ltsemibold';color:#fd8d00;width:100%;margin-bottom:10px;" class="variationtext">        <input type="radio" name="VariationValue1" value="$value" style="margin-right:10px;"/>$value </div>
+            			#else
+            				<div style="font-size:16px;line-height:18px; font-family: 'proxima_nova_ltsemibold';color:#000;width:100%;margin-bottom:10px;" class="variationtext">        <input type="radio" name="VariationValue1" value="$value" style="margin-right:10px;"/>$value </span></div>
+            			#end
+      
+                  #end    
+        </div>
+        <div class="col-md-2" style="padding-left:0px;">
+          <label for="item-quantity" class="label-group" style="margin-top:-13px;margin-bottom:0px;">
+                  
+                  <input id="item-quantity" type="number" name="Quantity" value="1" min="1" style="margin-bottom:7px;"/>
+                </label>
+          <img style="display:none !important;" src="https://s3.amazonaws.com/ultracartsff/BRINU/4921/themes/MrTeas/assets/imgs/best.png"/>
+          </div></div>
+      
+              ## </div>
+            #end
+
+        #end
+        ## <div class="columns small-16">
+          <div class="row">
+              ## <div class="label-group">
+              ## </div>
+            <div class="col-md-2">
+                
+            </div>
+            <div class="col-md-8 half-margin-top">
+              <input type="image" src="https://s3.amazonaws.com/ultracartsff/BRINU/4921/themes/MrTeas/assets/imgs/buy_now.jpg" style="width: 100%;"/>
+              ## <button type="submit" class="postfix item-qty-btn half-margin-top" #if($outOfStock) disabled #{end} title="Submit">ADD TO CART</button>
+              <small>
+                #if($item.isInventoryTracked() && $hasVariations == false)
+                  #if($item.getAvailableQuantity() && $item.getAvailableQuantity() < 1)
+                    Out of stock
+                  #end
+                #end
+              </small>
+            </div><div class="col-md-2">
+                
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-2">
+              <!--SKU: $item.getMerchantItemID()-->
+            </div>
+            <div class="col-md-8" style="text-align:center;">
+              <a id="wishlist-btn" data-reveal-id="#{if}($cart.isLoggedIn())wishlist-modal#{else}wishlist-not-loggedin#{end}">Add to wishlist</a>
+              <div id="wishlist-not-loggedin" class="reveal-modal" data-reveal aria-labelledby="Not Logged In" aria-hidden="true" role="dialog">
+                <h2 id="modalTitle">You must be logged in to access the wishlist feature.</h2>
+                <a href="${myAccountUrlHttps}&OVERRIDECONTINUESHOPPINGURL=$baseUrl">Login or Register</a>
+              </div>
+              <div id="wishlist-modal" class="reveal-modal" data-reveal aria-labelledby="Add To Wishlist" aria-hidden="true" role="dialog">
+                <h2 id="modalTitle">Add $item.getTitle() to your wishlist</h2>
+                <form action="#" method="post">
+                  <input type="hidden" name="itemId" id="wishlist-itemId" value="$item.getMerchantItemID()" />
+                  <label class="label-move">
+                    <span>Priority</span>
+                    <select name="priority" id="wishlist-priority">
+                      <option value="1">Lowest</option>
+                      <option value="2">Low</option>
+                      <option value="3" selected>Medium</option>
+                      <option value="4">High</option>
+                      <option value="5">Highest</option>
+                    </select>
+                  </label>
+                  <label class="label-move">
+                    <span>Comments</span>
+                    <textarea name="comments" id="wishlist-comments">
+                    </textarea>
+                  </label>
+                  <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+                  <button id="js-add-to-wishlist" title="Add To Wishlist" >Add To Wishlist</button>
+                </form>
+              </div>
+              <div id="wishlist-added-modal" class="reveal-modal" data-reveal aria-labelledby="Successfully Added To Wishlist" aria-hidden="true" role="dialog">
+                <h2 id="wishlistAddedTitle">Wishlist Updated</h2>
+                <p>$item.getTitle() has been added successfully to your wishlist.</p>
+                <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+              </div>
+            </div>
+            <div class="col-md-2">
+              
+            </div>
+          </div>
+        ## </div>
+      </form>
+      <hr class="small-pad">
+        <h6 class="tc" style="font-size:18px; margin-bottom:15px; color:#008efe;font-weight:bold;text-align:center;">CUSTOMER RATING</h6>
+         #if($item.isReviewable())
+          #if (!$item.hasApprovedReview())
+            <a href="#panel-product-review" id="item-show-reviews" class="review-stars" style="text-align: center;
+    width: 100%;float: left;">
+              No Reviews
+              ## <span class='icon-star-0-4'></span>
+              ## <span class='icon-star-0-4'></span>
+              ## <span class='icon-star-0-4'></span>
+              ## <span class='icon-star-0-4'></span>
+              ## <span class='icon-star-0-4'></span>
+            </a>
+
+          #else
+            <a href="#panel-product-review" id="item-show-reviews" class="review-stars" style="text-align: center;
+    width: 100%;float: left;">
+              $item.getReviewOverallAsHtml([
+                "<span class='icon-star-0-4'></span>",
+                "<span class='icon-star-1-4'></span>",
+                "<span class='icon-star-2-4'></span>",
+                "<span class='icon-star-3-4'></span>",
+                "<span class='icon-star-4-4'></span>"
+              ]) ($item.getReviews().size() Reviews)
+            </a>
+          #end
+        #end
+       
+    #end
+    <!--<ul class="social-buttons inline">
+      ## $item.getDescriptionNoEscape()
+      #if($site.attr('facebookAccount', '') != '' && $site.attr('shareFacebook') == 'true')
+        <li class="facebook" data-url="$baseUrl$requestURI" data-text="$formatHelper.removeNewLines($formatHelper.removeHtml($item.getExtendedDescriptionNoEscape()))" data-title="$formatHelper.trimIfTooLong($formatHelper.singleLine($item.getTitle()), 250)">
+        </li>
+      #end
+      #if($site.attr('twitterAccount', '') != '' && $site.attr('shareTwitter') == 'true')
+        <li class="twitter" data-url="$baseUrl$requestURI" data-text="$formatHelper.excerpt($formatHelper.removeNewLines($formatHelper.removeHtml($item.getExtendedDescriptionNoEscape())), 115)" data-title="$formatHelper.trimIfTooLong($formatHelper.singleLine($item.getTitle()), 250)">
+        </li>
+      #end
+      #if($site.attr('pinterestAccount', '') != '' && $site.attr('sharePinterest') == 'true')
+        <li class="pinterest" data-url="$baseUrl$requestURI" data-text="$formatHelper.removeNewLines($formatHelper.removeHtml($item.getTitle()))" data-title="$formatHelper.trimIfTooLong($formatHelper.singleLine($item.getTitle()), 250)">
+        </li>
+      #end
+    </ul> -->
+  </article>
+  <div class="columns small-16">
+    <dl class="tabs" data-tab>
+       #set($firstTabActive = "active")
+      
+      #if ($item.getExtendedDescription().length() > 300)
+        <dd class="$firstTabActive">
+          <a href="#panel-product-description" id="product-description-tab" title="View this">
+            <span class="show-for-medium-up1">DESCRIPTION</span>
+          </a>
+        </dd>
+        #set($firstTabActive = "")
+      #end
+      #if($item.isReviewable())
+        <dd class="$firstTabActive">
+          <a href="#panel-product-reviews" id="product-reviews-tab" title="View this">
+            <span class="show-for-medium-up1">REVIEWS </span> 
+          </a>
+        </dd>
+        #set($firstTabActive = "")
+      #end
+      <dd class="$firstTabActive">
+          <a href="#panel-product-faq" id="product-faq-tab" title="View this">
+            <span class="show-for-medium-up1">FAQ</span>
+          </a>
+        </dd>
+        #set($firstTabActive = "")
+       <dd class="$firstTabActive">
+          <a href="#panel-product-video" id="product-video-tab" title="View this">
+            <span class="show-for-medium-up1">VIDEO</span>
+          </a>
+        </dd>
+        #set($firstTabActive = "")
+      
+    </dl>
+  </div>
+  <div class="tabs-content columns small-16" style="border: 1px solid #c2c2c2;width: 97.9%;margin-right: 10px;border-top: none;">
+   #set($firstTabActive = "active")
+ 
+    #if ($item.getExtendedDescription().length() > 300)
+      <section class="content $firstTabActive" id="panel-product-description">
+        <article>
+          <h1>$item.getDescriptionNoEscape()</h1>
+          <div class="half-margin-top">$item.getExtendedDescriptionNoEscape()</div>
+        </article>
+      </section>
+      #set($firstTabActive = "")
+    #end
+    #if($item.isReviewable())
+      #parse("/snippets/review.vm")
+    #end
+     <section class="content $firstTabActive" id="panel-product-faq">
+        #if($item.getMerchantItemID() ==  '5-htp-supplement')
+       <h1>FAQ</h1>
+       <h2>5-HTP SUPPLEMENT</h2>
+       #end
+        #if($item.getMerchantItemID() ==  'acetyl-carnitine-sup')
+       <h1>FAQ</h1>
+       <h2>ACETYL CARNITINE SUPPLEMENT</h2>
+       #end
+	    #if($item.getMerchantItemID() ==  'alpha-lipoic-acid-su')
+       <h1>FAQ</h1>
+       
+<p><b>Q: What makes Alpha Lipoic Acid distinct from other antioxidants?</b><br/>
+<b>A:</b> Alpha Lipoic Acid's solubility in both fats and water is what makes it distinct from other antioxidants in the body. Why is its solubility an important consideration? If we consider other antioxidants such as Vitamins C and E, they can only work in water and fatty acids respectively due to their selective solubility. On the other hand, Alpha Lipoic Acid can work all throughout the body, even in tiny blood vessels, thereby assuring that the body is safe from oxidative damage.</p>
+
+
+<p><b>Q: Why do I need to take Alpha Lipoic Acid supplements?</b><br/>
+<b>A:</b> Although you can derive certain levels of Alpha Lipoic Acid from food, regular levels of the fatty acid is important to maintain your body's supply of it. As the preceding paragraph has already mentioned, an adequate amount of the acid is vital in protecting your body from damage. You may further want to consider taking the product if you suffer from Type 2 Diabetes or a weight loss problem. Researchers have noted that individuals who have high levels of Alpha Lipoic Acid in their blood have lower blood sugar levels and at a lower risk for obesity.</p>
+
+<p><b>Q: Is Alpha Lipoic Acid safe?</b><br/>
+<b>A:</b> This Alpha Lipoic Acid product has the seal of the Food and Drug Administration (FDA), so we can guarantee that it does not contain any harmful chemical or toxic metal. Moreover, BRI Nutrition only manufactures their products in state-of-the-art facilities, using highly advanced scientific technology, so we can assure you of the quality of every capsule you take.</p>
+
+
+<p><b>Q: What are the possible medical interactions of Alpha Lipoic Acid?</b><br/>
+<b>A:</b> Individuals who have problems with their liver or kidneys should consult their doctors first before taking the supplement. Those who also have problems with their thyroid or have a thianine deficiency should also consult with their physicians first. The same applies for pregnant and lactating mothers, as no research has been conducted that can determine if Alpha Lipoic Acid is safe for children, particularly the unborn.. Lastly, patients who are taking medications for diabetes should also consult their doctor prior to taking the supplement to ensure that their blood sugar levels do not drop below the normal range.</p>
+       #end
+	   
+	    #if($item.getMerchantItemID() ==  'ashwagandha-suppleme')
+       <h1>FAQS</h1>
+      
+<p><b>Q.How does ashwagandha work to relieve stress?</b><br/>
+<b>A.</b> Scientists note that stress results to the increase in the body lipids’ rate of peroxidation and a decrease in the body’s level of antioxidants. To combat the damage that such oxidation brings, the body needs a rich source of antioxidants. Ashwagandha’s high level of antioxidants can effectively fight off the results of stress by decreasing the levels of cortisol and blood pressure in the body.</p>
+
+<p><b>Q. Are there studies that prove the efficacy of Ashwagandha in addressing degenerative diseases?</b><br/>
+<b>A.</b> Although conclusive evidence on the efficacy of Ashwagandha is yet to be announced, several studies have already shown promising results on the herb’s potency against degenerative disease. For example, a study on a standardized model for Parkinson’s disease reveals that ashwagandha can reverse the degenerative effects of the disease by inhibiting acetylcholinesterase, the enzyme which breaks down the brain’s main messengers.</p>
+
+<p><b>Q. How can ashwagandha prevent cancer?</b><br/>
+<b>A.</b> Ashwagandha can prevent cancer by preventing cancer cells from reproducing and creating blood vessels where they can reproduce without restraint. Those who already have cancer and are undergoing chemotherapy sessions also find that regular doses of ashwagandha can increase the number of white blood cells in their system. Such increase in white blood cells therefore protects the person from infection—a medical problem that is most likely for those whose immune systems have been weakened by constant exposure to radiation.</p>
+       #end
+        #if($item.getMerchantItemID() ==  'caralluma-fimbriata')
+       <h1>FAQ</h1>
+       
+<p><b>Q. What is Caralluma Fimbriata?</b><br/>
+<b>A.</b> Caralluma fimbriata, is an edible cactus found in India shown to suppress hunger, enhance physical endurance, burn fat, and improve muscle tone. Has been used for centuries to help tribes survive famine, drought, food shortage, and long hunting trips. Commonly referred to as ‘famine food’ for its unique ability to stave off hunger! Traditionally, Indian tribes chewed chunks of caralluma to keep from being hungry during a long hunt</p>
+
+<p><b>Q. How does Caralluma work? How do you lose weight with Caralluma?</b><br/>
+<b>A.</b> Caralluma Fimbriata contains important phytochemicals that may block the enzymes responsible for breaking down and producing fatty acids in the body. When these enzymes are blocked, they can’t form fat, which in turn makes the body go to its fat stores for energy.</p>
+
+<p><b>Q. What are the side effects of Caralluma?</b><br/>
+<b>A.</b> Caralluma seems to be safe for most people when 500 mg of the extract is taken twice daily for up to 60 days. The long-term safety is not known. Caralluma might cause some mild side effects such as stomach upset, intestinal gas, constipation, and stomach pain. These side effects usually go away after a week of use.</p>
+
+<p><b>Q. What is the recommended dose for Caralluma? How much Caralluma do I take? What dosage does Dr Oz recommend?</b><br/>
+<b>A.</b> Take 50mg 2 times a day. Once before breakfast and once before dinner.</p>
+
+<p><b>Q.What do I look for when I buy Caralluma? What brand of Caralluma do I buy?</b><br/>
+<b>A.</b> When purchasing Caralluma make sure to look for 10 to 1 extract (10:1), which means it takes 10 pounds of cactus to create 1 pound of pure potent powder. Make sure you buy pure vegetarian capsules with no binders, fillers, or “other” ingredients.</p>
+
+<p><b>Q. How fast does Caralluma work? Does Caralluma work right away? How long does Caralluma take to work?</b><br/>
+<b>A.</b> Give Caralluma or any other supplement at least 24 hours to get in your system. If you do not experience any changes in appetite within 2 weeks, this supplement may not be right for you. It may not work for everyone.</p>
+
+<p><b>Q. How long can I take Caralluma? How long is it safe to take Caralluma?</b><br/>
+<b>A.</b> Taking Caralluma or any other dietary supplement is not recommended for long term use. Most of these supplements have been tested on individuals for 60 days to 6 months. The long term effects of this or any other dietary supplement is not known because they are not usually tested for long periods of time.</p>
+
+<p><b>Q. Is Caralluma safe to take for weight loss?</b><br/>
+<b>A.</b> Based on centuries of use Caralluma is considered safe if you follow the recommended dose on the bottle. Do not take more than recommended. More does not mean it will work better or faster! Please follow the directions and speak to your doctor before taking this or any other dietary supplement.</p>
+
+<p><b>Q. Has Caralluma worked for anyone? Does Caralluma really work?</b><br/>
+<b>A.</b> Caralluma Fimbriata was found to significantly suppress appetite, reduce waist circumference and increase weight loss in adults who took the supplement over a 4 week period. On average, the participants lost 7.5 pounds and 2 inches off of their waist circumference.</p>
+       #end
+	    #if($item.getMerchantItemID() ==  'best-coq10-supplemen')
+       <h1>FAQ</h1>
+      
+<p><b>Q. If the body synthesizes CoQ10, why do we need it for supplementation?</b><br/>
+<b>A.</b> Though we need CoQ10 for basic cell function, the body can’t always generate optimum amounts that make an effective antioxidant. CoQ10 levels tend to decrease as we age and may be low in people diagnosed with cancer, certain genetic disorders, heart conditions, diabetes, HIV/AIDS, and Parkinson’s disease. Some prescription drugs also tend to decrease levels of CoQ10 in our body.</p>
+
+<p><b>Q. What are antioxidants and how do they work?</b><br/>
+<b>A.</b> Notice that over time if fish is left unattended, it becomes rancid. An apple slice will turn to brown if left on the table for too long. A cut on your skin will get inflamed if not treated. All of these circumstances are the effects of oxidation. It occurs in all cells by nature, including the cells found in our body. As oxygen interacts with cells of any type, oxidation occurs. In turn produces a type of change in those cells. This chance does not necessarily mean bad, but in some cases it causes cells to die or to be replaced by new ones. Antioxidants are substances that block the action of oxidation by inhibiting contact of such cells to unnecessary amounts of oxygen. Some restrict the counter effects of oxidation even though it has come in contact with such cells.</p>
+
+<p><b>Q. How can CoQ10 protect the body against free radicals?</b><br/>
+<b>A.</b> Antioxidants counteract free radicals by either providing the extra electron needed to make the pair that will neutralize the free radical or by breaking down the free radical molecule to render it harmless.</p>
+
+<p><b>Q. Are there any side effects to taking too much CoQ10?</b><br/>
+<b>A.</b> In the mass population of consumers, most can tolerate high CoQ10 levels. Though some might experience side effects such as nausea, vomiting, appetite suppression and stomachache, these symptoms tend to alleviate through time.</p>
+
+<p><b>Q. How are free radicals related to ageing? How can CoQ10 slow down ageing?</b><br/>
+<b>A.</b> Through the free radical theory of aging (FRTA), which states that our body ages because of accumulated damage done by free radicals. CoQ10 has shown to be an effective antioxidant that battles the effects of free radicals thus in turn slows ageing.</p>
+
+<p><b>Q. Are free radicals avoidable? Can I escape to an environmentally safe area if little to no signs of free radicals?</b><br/>
+<b>A.</b> No, free radicals are a common factor we face every day. Even if you do find a place where free radicals are non-existent in the atmosphere and the food you intake, free radicals are also processed internally by our body. Thus experiencing free radicals are inevitable, and thus ageing is unavoidable. Ageing can only be slowed down through the help of antioxidants that protect us against free radicals.</p>
+
+<p><b>Q. How are free radicals created internally?</b><br/>
+<b>A.</b> The principal source is from the energy production process within our cells. Of all the oxygen we inhale, 98% we inhale goes to energy production thus the effects of such results is that a small amount of oxygen we did not use losses its electrons creating free radicals.</p>
+       #end
+        #if($item.getMerchantItemID() ==  'forskolin-supplement')
+       <h1>FAQ</h1>
+     
+<p><b>Q. How Does Forskolin Burn Belly Fat?</b><br/>
+<b>A.</b> Taking a Forskolin supplement can help to break down adipose tissue (belly fat), which will release fatty acids that can cause a process called thermogenesis to occur. Thermogenesis is a process whereby the internal body temperature increases along with your metabolic rate. This results in extra calories and fat being burnt</p>
+
+<p><b>Q. Is Forskolin Proven to Burn Fat?</b><br/>
+<b>A.</b> In a 2005 study undertaken at the Department of Health Sport and Exercise Sciences, Applied Physiology Laboratory at the University of Kansas as team of researchers looked at how Forskolin would affect obese and overweight men. When compared with a placebo those who took the supplement containing Forskolin lost more fat while the researchers noted increases in testosterone levels and lean body mass (muscle). Increased muscle mass will also help your weight loss efforts as we all know that muscle burns more calories than fat even while you rest.</p>
+
+<p><b>Q. Will Forskolin Cause Any Side Effects?</b><br/>
+<b>A.</b> Although safe to use there is a little concern that it could interfere with the treatment of various cardiovascular disease, as it can cause low blood pressure. Also it is recommended that you avoid using a Forskolin supplement if you are pregnant or breastfeeding.</p>
+
+<p><b>Q. What is the suggested dosage for taking Forskolin?</b><br/>
+<b>A.</b> Take 250 mg in the morning. Be sure to get the right dosing by looking at the label. It must read that it is standardized to 20% forskolin. Anything less will have a reduced impact on fat burning.</p>
+
+<p><b>Q. Is Forskolin recommended for everyone to intake?</b><br/>
+<b>A.</b> Oral ingestion of forskolin for a 12-week period was shown to favorably alter body composition while concurrently increasing bone mass and serum free testosterone levels in overweight and obese men. The results indicate that forskolin is a possible therapeutic agent for the management and treatment of obesity.</p>
+
+<p><b>Q. How Long Will It Take For Me To See Results?</b><br/>
+<b>A.</b> The intake of Forskolin dietary supplement is not recommended for pregnant or nursing mothers, children under 18 years old, and people with known medical conditions. Consult your physician first before taking any supplements to make sure you are fit to do so. Also, do not exceed prescribed dose.</p>
+       #end
+	    #if($item.getMerchantItemID() ==  'fucoxanthin')
+       <h1>FAQ</h1>
+       <p><b>Q. How Does Fucoxanthin Aid in Weight Loss?</b><br/>
+<b>A.</b> Scientists are still researching as to how Fucoxanthin exactly works to promote weight loss in the body, but current findings seem to attribute this characteristic to the way it reacts with the protein UCP1 which is responsible for burning the body’s abdominal fat. It also promotes the production of DHA, bringing benefits to the individual’s nervous and cardiovascular health.</p>
+
+<p>Other health benefits of fucoxanthin intake include blood sugar and cholesterol regulation as well as liver detoxification, although additional research on this aspect is still ongoing.</p>
+
+<p><b>Q.Is Fucoxanthin Proven Effective?</b><br/>
+
+<b>A.</b> A study conducted last 2010 showed that fucoxanthin supplementation of obese mice significantly improved their lipid metabolism as well as significantly reduced their body weight as compared to the control group.  An earlier study conducted in 2007 on yet another group of obese mice also showed that the dietary combination of both fucoxanthin and fish oil promotes weight loss and regulates glucose levels.</p>
+
+<p>Several human studies for fucoxanthin have also been conducted. One such study consisted of testing the effects of fucoxanthin supplementation for weight loss on volunteers for a span of 16 weeks. At the end of the time frame the researchers found out that those who took supplementation lost on an average, 15 pounds off their bodies, as compared to the control group who only lost on an average, 3 pounds. Further studies showed that this is because fucoxanthin can make white adipose fat behave in a manner similar to brown fat, burning fats to produce energy in the process.</p>
+
+<p>Experts are also considering fucoxanthin’s anti-cancerous effects. An experiment conducted to test the effects of supplementation on prostate cancer showed that fucoxanthin is able to significantly reduce the growth of prostate cancer cells. Additional studies also added to the evidence for fucoxanthin’s capability for reducing viability of human colon cancer cells. Further studies on this aspect of fucoxanthin is still ongoing.</p>
+
+<p><b>Q. Will Fucoxanthin Cause Any Side Effects?</b><br/>
+
+<b>A.</b> Supplements derived from brown seaweed contain more iodine than the usual amount that humans need so it is most likely to affect thyroid function. However, since this supplement does not contain more than 25% extract of brown seaweed, it is still relatively safe for consumption and to date there have been no reports of adverse effects. But before taking this supplement, it would be best to consult your doctor first.</p>
+
+<p>For pregnant and breastfeeding mothers, however, caution is necessary. Please do not take this supplement or any other supplement for that matter, without the consent and/or recommendation of your primary healthcare provider.</p>
+
+<p><b>Q. What is the suggested dosage for taking Fucoxanthin?</b><br/>
+
+<b>A.</b> The recommended dosage for pure Fucoxanthin extracts is 2.4-2.8 mg a day. However, with regard to this supplement, one capsule a day after meals will already do.</p>
+
+<p><b>Q. How Long Will It Take For Me To See Results?</b><br/>
+
+<b>A.</b> Results would be noticeable after 4-6 weeks of regular use along with exercise and proper diet.</p>
+       #end
+        #if($item.getMerchantItemID() ==  'garlic-supplements')
+       <h1>FAQ</h1>
+      <p><b>Q. How can garlic prevent or compensate for anemia?</b><br/>
+<b>A.</b> As stated in the description, diallyl sulfides help produce ferroportin. Ferroportin is a protein that transports iron across the cell membrane of enterocytes thus forming a passageway that allows stored iron to leave cells and become available for use in circumstances like anemia.</p>
+
+<p><b>Q. How does it protect us against inflammation?</b><br/>
+<b>A.</b> On the anti-inflammatory side of the benefits garlic has, 1,2-vinyldithiin and thiacremonone are compounds indicate to be one of the reasons for the alleviation of inflammation. Both compounds appear to work by the inhibiting activity of inflammatory messenger molecules. Thiacremonone inhibits the inflammatory transcription factor called NFkappa B. Though still unclear to as what 1,2-vinyldithiin does to contribute to the effect of anti-inflammation, it is still a vital component against inflammation.</p>
+
+<p><b>Q. How does hydrogen sulfide help improve cardiovascular-related disorders?</b><br/>
+<b>A.</b> H2S controls our blood pressure by triggering expansion or dilation of our blood vessels. When the space inside our blood vessels dilates, our blood pressure decreases and thus allowing larger diameter of space available for blood to flow through.</p>
+
+<p><b>Q. What is atherosclerosis?</b><br/>
+<b>A.</b> According to Web MD, Atherosclerosis is the hardening and narrowing of the arteries putting blood flow at risk. It is the usual cause of heart attacks, strokes, and peripheral vascular disease that is collectively called cardiovascular diseases.</p>
+
+<p><b>Q. How can garlic prevent atherosclerosis?</b><br/>
+<b>A. </b>Garlic can prevent blood vessels from becoming blocked. This cardiovascular protection associated with one precise disulfide in the garlic called ajoene. Ajoene has frequently been shown to have anti-clotting characteristics. It prevents platelets from becoming too adhesive or sticky, and regulates the amount of adhesiveness in check, thus lowering the risk of forming clots within the arteries.</p>
+
+<p><b>Q. How can garlic prevent cancer?</b><br/>
+<b>A. </b>The allyl sulfides found in garlic plays an important key role in the prevention of cancer. These compounds can initiate molecules called Nrf2 (nuclear erythroid factor). Nrf2 molecules in turn move into the cell nucleus where it will activate a variety of metabolic activities. When cells distinguish cells that have become too impaired or compromised to continue functioning and interacting with other cells, it will start to break up itself and recycle its parts. Cancer cells you see are non-functional cells that continue to replicate and thus cause problems for the body. Nrf2 prevents further replication of these cancer cells by triggering it to undergo apoptosis or cell death.</p>
+       #end
+	    #if($item.getMerchantItemID() ==  'klamath-blue-green')
+       <h1>FAQ</h1>
+       <p><b>Q. Where is the algae harvested?</b><br/>
+
+<b>A.</b> Directly from the Upper Klamath Lake in Klamath Falls, Oregon</p>
+
+<p><b>Q. How is the algae harvested?</b><br/>
+
+<b>A.</b> The algae is harvested by a barge which scoops the algae from the lake. The algae then proceed to the onboard collection tank where a process of filtration and dewatering occurs. The algae then goes to an isolated refrigerated stir tank that cools the algae for 35 degrees Fahrenheit. The algae is then put through micro-filtration and purification processes and is immediately flash frozen and stored in the frozen state until the product is needed and released to be low temperature dried and made into products.</p>
+
+<p><b>Q. When is the best time to take the algae?</b><br/>
+
+<b>A.</b> The suggested time is first thing in the morning on an empty stomach, even before coffee. You may split them up and take half in the morning and half in the afternoon. It is not recommended to take the algae at night unless you want to stay up for some reason (students, those who work at night, etc.)</p>
+
+<p><b>Q. How much of the algae will my body absorb?</b><br/>
+
+<b>A.</b> Klamath Blue Green contains up to 70% protein, more than any other whole food, in the shape and form that the body need to use it. No change is required- over 98% of the nutrients can be used directly by the body in the same form, the same organic compounds the algae provides.</p>
+
+<p><b>Q. When is the algae harvested?</b><br/>
+
+<b>A.</b> In the summertime, when the algae is in full bloom, generally from June to November.</p>
+
+<p><b>Q. What are the benefits?</b><br/>
+
+<b>A. </b>A whole food, Klamath Blue Green Algae is rich in Beta-Carotene, B-12, Chlorophyll, Essential and Non-Essential Amino Acids and all the Trace Minerals that your body needs for cell regeneration. It also has the nutritional balance to assist the immune system and enhance better brain and emotional functions.</p>
+
+<p><b>Q. Can I take too much algae?</b><br/>
+
+<b>A.</b> The algae is considered a whole food. Due to the dense nutrient content of Klamath Blue Green Algae, occasionally someone may experience over-stimulation or slight gastric upset. If this occurs, dosage should be reduced to one capsule until the body adjusts to the algae. After becoming familiar with the algae and it's effects, you may want to increase or decrease the dosage.</p>
+
+<p><b>Q. What is the suggested dosage for taking the algae?</b><br/>
+
+<b>A.</b> The suggested adult dosage is to begin  taking one capsule/tablet per day for the first week; two capsules/tablets per day for the second week; three capsules/tablets per day for the third week ; and finally four capsules/tablets per day which provides 2 grams of algae per day. You may want to adjust your dosage based on how your body interacts with the algae.</p>
+       #end
+        #if($item.getMerchantItemID() ==  'l-carnitine-suppleme')
+       <h1>FAQ</h1>
+       <p><b>Q1. What is L-carnitine?</b><br/>
+L-Carnitine is a type of compound consisting of both methionine and lysine. Researchers first discovered L-carnitine or levocarnitine in meat, thus the name that contains the Latin word for flesh, which is 'carnus'. In the human body, carnitine plays a major role in the oxidation of fats on a cellular level. How does it work? L-carnitine acts as the fatty acid transporter of the cell to the mitochondria, where such fatty acids undergo a process that would convert them to energy that the body can use. Thus, L-carnitine helps prevent weight problems as well as keeps our heart and liver free from visceral fat.</p>
+
+<p><b>Q2. Why do I need L-carnitine supplements?</b><br/>
+The human body, specifically the liver and kidneys, naturally produce L-carnitine. However, those who have problems with those organs may find that their bodies can no longer produce an adequate amount of the compound. If you are among those have low carnitine levels in the body, then you need to take L-carnitine supplements.</p>
+
+<p><b>Q3. What will happen if I do not have enough L-carnitine in my body?</b><br/>
+As the answer to the first question has stated, L-carnitine plays an important role in the oxidation or burning of fats in the body. If you do not have an adequate supply of the compound then, your body will accumulate fatty acids and you would eventually become overweight or obese. Visceral fats may also accumulate around your heart and liver, or buildup as plaques in your arteries and lead to many medical complications. Also, since your body cannot burn enough fats, you will easily tire out even when you have not engaged in a particularly strenuous activity.</p>
+       #end
+	    #if($item.getMerchantItemID() ==  'cranberry-supplement')
+       <h1>FAQ</h1>
+       <p><b>Q. Are cranberries a cure for Urinary Tract Infection?</b><br/>
+<b>A.</b>No. Research shows that cranberries have little or no effect at all on patients with UTI. Research, however, supports the claim that cranberries prevent UTI-causing bacteria from attaching to the urinary tract. In a research conducted among aged females, intake of cranberry extracts resulted in a reduced number of bacteria in the bladder as compared to those who only took placebos. Another study conducted on young females who have experienced cases of UTI show that intake of the supplement led to a reduced number of UTI cases.</p>
+
+<p><b>Q. How about cranberry for ulcers?</b><br/>
+<b>A.</b>Two recent studies conducted to find out whether or not cranberries can cure stomach ulcers show the possibility of such. In those studies, researchers observed the effect of cranberry on the bacteria Helicobacter pylori, the bacteria causing stomach ulcers. The experiment showed that cranberry prevented the bacteria from attaching to the stomach walls, leading to the conclusion that cranberry supplementation may help in the prevention of stomach ulcers. More research in this regard, however, is needed.</p>
+
+<p><b>Q. What are other medical uses for cranberry?</b><br/>
+Researchers are currently looking into the medical uses of cranberry for the following medical conditions:</p>
+
+<ul><li><b>High cholesterol:</b> Results from a recent preliminary study on the effect of cranberry juice on cholesterol levels show a promising use for the fruit.</li>
+<li><b>Cancer:</b> While researchers are still looking for more data to support the claim that cranberries can help cure cancer, several test tube and animal studies indicate the strong possibility of such.</li>
+<li><b>Virus:</b> Additional research is needed to support initial findings on the ability of cranberry to fight off virus.</li></ul>
+<p><b>Q. I have kidney stones, is this cranberry supplement safe for me?</b><br/>
+<b>A.</b> Cranberry contains quite a high level of oxalate, which may increase kidney stone formation in some individuals. Do consult a medical professional before deciding to take this supplement.</p>
+       #end
+        #if($item.getMerchantItemID() ==  'l-theanine')
+       <h1>FAQ</h1>
+       <p><b>Q1. What is Theanine?</b><br/>
+Basically, Theanine is a type of amino acid that our body needs. As an amino acid, this substance serves as an essential building block of protein. However, since our bodies cannot produce Theanine, we need to take theanine from other sources such as the mushroom Boletus badius and the plant Camellia sinensis.</p>
+
+<p><b>Q2. What is Camellia sinensis?</b><br/>
+Camellia sinensis is the famous ingredient for green tea. While green tea is already becoming popular in Western countries, it is most popular in East Asia where it comes from. The Camellia sinensis plant is an evergreen shrub that can grow as high as 9 meters. Its dark green and alternating oval leaves contain Theanine, which is why it is beneficial for individuals to drink green tea.</p>
+
+<p><b>Q3. What is Boletus badius?</b><br/>
+Boletus badius is another excellent source of Theanine, apart from the tea plant Camellia sinensis. Native to America, Boletus badius is a mushroom with a reddish brown hue and a yellowish flesh that turns a light blue and sometimes green hue when you bruise it. The mushroom, which can range from 4cm-12cm in length, usually appears in abundance during the late summer and autumn season in the United States.</p>
+
+<p><b>Q4. How does Theanine work in our body?</b><br/>
+Scientists have noted that the chemical structure of Theanine is almost similar to that of our body's neurotransmitter, glutamate. As such, Theanine works to improve the transmission of nerve impulses within the brain to promote excellent body function including memory retention and learning.</p>
+
+<p><b>Q5. Why take Theanine supplementation?</b><br/>
+Not everyone is an avid drinker of green tea, so such individuals can benefit from taking capsules that contain Theanine instead. The medical benefits of taking Theanine include relief from anxiety or stress without drowsiness, immune system boost, good cardiovascular health, and cancer prevention.</p>
+       #end
+	    #if($item.getMerchantItemID() ==  'l-tryptophan-supplem')
+       <h1>FAQ</h1>
+       <h2>L-TRYPTOPHAN SUPPLEMENT - 60 COUNT</h2>
+       #end
+        #if($item.getMerchantItemID() ==  'l-tyrosine-supplemen')
+       <h1>FAQ</h1>
+       <h2>L-TYROSINE SUPPLEMENT</h2>
+       #end
+	    #if($item.getMerchantItemID() ==  'lysine')
+       <h1>FAQ</h1>
+       <p><b>Q. Can the body naturally produce lysine?</b><br/>
+<b>A.</b> No. Our bodies are not able to produce lysine which is why we need to consume foods that contain this essential amino acid. Why is lysine important? It is important because as an amino acid, lysine is needed for the making of our body’s protein. Not only that, lysine also helps our bodies absorb calcium, an element crucial to keeping our skeletal structure intact and functional.</p>
+
+<p><b>Q. Aside from protein synthesis and calcium absorption, what else does lysine do?</b><br/>
+<b>A.</b> Lysine also helps in the synthesis of yet another important substance—carnitine. Carnitine is the nutrient that converts the body’s fats into energy and helps lower cholesterol. Lysine is also an essential substance that ensures proper physical growth.</p>
+
+<p><b>Q. What happens if we lack lysine?</b><br/>
+<b>A.</b> Majority of individuals now, except for athletes and those who do not eat beans, get sufficient lysine in their diet. However, those who lack lysine in their bodies find themselves constantly nauseous or dizzy, and research shows that they are most prone to fatigue, anemia, agitation, slow growth, loss of appetite, bloodshot eyes, and reproductive disorders.</p>
+
+<p><b>Q. What foods are rich in lysine?</b><br/>
+<b>A.</b> Foods that are rich in protein are automatically rich in lysine. The list for lysine-rich foods will therefore include cheese, red meat, pork, poultry, cod, sardines, nuts, eggs, tofu, spirulina, and dairy products. For vegans, great sources of lysine include legumes such as peas, beans, and lentils.</p>
+
+<p><b>Q. Is lysine a cure for the Herpes Simplex Virus?</b><br/>
+<b>A.</b> Several studies conducted on this matter show that regular consumption of lysine helps prevent the outbreak of genital herpes and cold sores. How? Lysine blocks arginine from replicating the herpes simplex virus, making lysine more effective for prevention rather than for cure.</p>
+
+<p><b>Q. How does lysine help prevent osteoporosis?</b><br/>
+<b>A.</b> As lysine promotes calcium absorption in the body, lysine may help reduce one’s risk for experiencing bone loss or osteoporosis. In fact, bone-building cells are most active when lysine works along with another amino acid, L-arginine. Collagen production also increases with high levels of lysine and L-arginine in the body.</p>
+
+<p><b>Q. What precautions should be taken when considering this supplement?</b><br/>
+<b>A.</b> Individuals who suffer from renal or liver diseases should take the advice of their healthcare professionals before taking lysine supplementation as a high level of lysine in the body may lead to the formation of gallstones. Pregnant and nursing mothers should likewise seek professional medical advice before deciding to take this supplement.</p>
+       #end
+        #if($item.getMerchantItemID() ==  'magnesium-citrate-su')
+       <h1>FAQ</h1>
+       <h2>MAGNESIUM CITRATE SUPPLEMENT</h2>
+       #end
+	    #if($item.getMerchantItemID() ==  'phytoceramides')
+       <h1>FAQ</h1>
+       <p><b>Q. How do phytoceramides work for my skin?</b><br/>
+
+<b>A.</b> Science proves that ceramides are an essential component of the skin. Each of the four layers of the epidermis contains a measure of the substance, not only to retain the skin’s moisture but also to help reduce infection. A reduced amount of ceramides leads to the appearance of fine lines and wrinkles. Since the body naturally loses ceramides as it ages, Phytoceramides work to replace the loss and stimulate the body to produce collagen and elastin for the skin. It also works to lock in the moisture so the skin would have a youthful glow. Ceramides also address the problem of skin pigmentation, so regular intake of plant-derived ceramides would help clarify the skin and rid it of age spots.</p>
+
+<p><b>Q. How fast will I see the results?</b><br/>
+
+<b>A.</b> The best part about taking plant-derived ceramides is that the results come as fast as 4-6 weeks after continuous intake. Now you can take decades off your skin appearance with just a 350mg Phytoceramide capsule a day in a month or so!</p>
+
+<p><b>Q. Is it safe?</b><br/>
+
+<b>A.</b> Yes. Unlike bovine-derived animal ceramides that carry with them the risk of viral infections, plant-derived ceramides are relatively safe and are FDA approved in the USA.</p>
+
+<p>In fact, Japanese women have been using this substance for a many years prior to gaining FDA approval and no adverse effects from consumption have been reported to date.</p>
+
+<p>BRI’s Phytoceramide is 100% organic and does not contain traces of soy, wheat, gluten, flour or dairy which are components identified to cause mild side effects on the body such as bloating, nausea, and constipation. These allergenic can also cause some serious allergic reactions such as rash and itching in some people.</p>
+
+<p>BRI Nutrition is currently using gelatin capsules for their all-natural food supplements.Gelatin is very SAFE for most people in minimal amounts and is even safe when consumed in the larger amounts if used mainly as medicine.</p>
+
+<p>Gelatin may have an unpleasant aftertaste, and can have some very mild adverse effects on the body such as bloating, belching, feeling of heaviness in the stomach, and heartburn for those who are highly sensitive to traces of gelatin in certain medications.</p>
+
+<p>But, overall gelatin capsules are very safe for use in food supplements. BRI is switching to vegetable capsules in a month’s time, so customers who may have sensitivity to gelatin capsules can still enjoy the many benefits that Phytoceramide offers without the risk of running some allergies while taking the supplement.</p>
+
+<p><b>Q. What is the recommended dosage of this supplement?</b><br/>
+
+<b>A.</b> Phytoceramides should be taken once a day only. Excessive intake of the supplement does not mean faster results, it may actually cause harm to one’s health when taken in excessive amounts.</p>
+
+<p><b>Q. How does it work?</b><br/>
+
+<b>A.</b> As we become older, our body produces less ceramides. Ceramides are the fatty molecules or lipids that our body produces to keep us looking youthful. The decrease of ceramides in our system results to wrinkly, rough, and old-looking skin. Phytoceramides, in the other hand, are considered as the equivalent of our ceramides in plants. Intake of phytoceramides helps replenish the loss of ceramides in our body. Thus, this restores the youthful look and glow of our skin.</p>
+
+<p><b>Q. Can anyone intake this dietary Phytoceramides?</b><br/>
+
+<b>A.</b> The intake of Phytoceramides is not recommended for pregnant or nursing mothers, children under 18 years old, and people with known medical conditions. Consult your physician first before taking any supplements to make sure you are fit to do so. Also, do not exceed prescribed dose.</p>
+       #end
+        #if($item.getMerchantItemID() ==  'resveratrol-suppleme')
+       <h1>FAQ</h1>
+       <p><b>Q. Is Resveratrol Safe?</b><br/>
+<b>A.</b> Resveratrol is very safe. In fact there have been no reported problems with people taking resveratrol, eating peanuts, blueberries, cranberries, japanese knotweed or drinking grape juice or wine.</p>
+
+<p>Well, there have been problems with people drinking wine and eating peanuts, but those are unrelated to the resveratrol content.</p>
+
+<p>Like other antioxidants, resveratrol is a great addition to your daily nutrition. Consider a resveratrol supplement, a handful of nuts, a glass of wine or some fresh blueberries.</p>
+
+<p><b>Q. How Long Will it Take For Me To See Results?</b><br/>
+<b>A.</b> Oral ingestion of forskolin for a 12-week period was shown to favorably alter body composition while concurrently increasing bone mass and serum free testosterone levels in overweight and obese men. The results indicate that forskolin is a therapeutic agent for the management and treatment of obesity.</p>
+
+<p><b>Q. How Much Resveratrol Should I Take?</b><br/>
+<b>A.</b> As in all supplements, you should read the directions on the packaging - or consult a physician.</p>
+
+<p>Otherwise, resveratrol is very safe. In fact there have been no reported problems with people taking resveratrol, eating peanuts, blueberries, cranberries, japanese knotweed or drinking grape juice or wine.</p>
+
+<p>Well, there have been problems with people drinking wine and eating peanuts, but those are unrelated tot he resveratrol content.</p>
+
+<p>Most supplements have around 250 mg of resveratrol. You can find 500 mg ones if you look hard.</p>
+
+<p>If you are taking a resveratrol powder supplement, make sure that it's sold in individual servings. (OPC Factor is the only one I know that does this - but I'm sure there are others).</p>
+
+<p>Resveratrol is an antioxidant and will oxidize once in the presence of oxygen. If you get a tub of resveratrol powder, it will be much less viable after each time you open the jug. That means a 250 mg scoop will contain much less than that once you get down to the last few scoops.</p> 
+
+<p><b>Q. What is the function of an antioxidant?</b><br/>
+<b>A.</b> An antioxidant, like resveratrol, is any molecule that is stable with or without all its necessary electrons. A free radical, on the other hand, is a molecule that is unstable when it loses an electron.</p>
+
+<p>The purpose of an antioxidant is to donate one of its electrons to the unstable free radicals. Once it has done that, both molecules are stable.</p>
+
+<p>An unstable free radical causes damage to nearby healthy cells when it "bounces" around looking for an electron to steal. A damaged healthy cell is the cause of aging, illness and disease.</p>
+
+<p>Antioxidant, therefore, are nature's solution to that problem.</p>
+<p><b>Q.Is Red Wine a Good Antioxidant?</b><br/>
+<b>A.</b> Red Wine CONTAINS great antioxidants, but is not itself an antioxidant. Resveratrol, OPC's polyphenols - they're all in red wine. Because red wine is sealed off by the cork, it's a better antioxidant vehicle than most because the antioxidants aren't oxidize prior to uncorking the bottle.</p>
+
+<p><b>Q. Can anyone intake this dietary supplement?</b><br/>
+<b>A.</b> The intake of Resveratrol dietary supplement is not recommended for pregnant or nursing mothers, children under 18 years old, and people with known medical conditions. Consult your physician first before taking any supplements to make sure you are fit to do so. Also, do not exceed prescribed dose.</p>
+       #end
+	    #if($item.getMerchantItemID() ==  'tribulus-supplement')
+       <h1>FAQ</h1>
+       <p><b>Q. How does it work?</b><br/>
+<b>A.</b> Tribulus terrestris contains active compounds called steroidal saponins. These saponins come in two types—spirostanol and furostanol glycosides, primarily found in its leaves. Both of these compounds play an essential role in the health effects of this herb.</p>
+
+<p><b>Q. What is the recommended dosage of this supplement?</b><br/>
+<b>A.</b> Take a capsule of BRI Nutrition Tribulus Terrestris a day with meals.</p>
+
+<p><b>Q. Is this safe for me?</b><br/>
+<b>A.</b> If you are pregnant and/or lactating, you should not take this supplement. If you have a hormone-dependent condition such as prostrate or breast cancer, you are also strongly discouraged from taking this herb.</p>
+       #end
+        #if($item.getMerchantItemID() ==  'selenium-supplement')
+       <h1>FAQ</h1>
+      <p><b>Q. How effective is selenium?</b><br/>
+<b>A.</b> While scientific data on its effects on the body remain controversial, it is a scientific fact that there is a link between low levels of selenium and chronic illnesses such as Crohn’s disease. Crohn’s disease is a medical condition characterized by chronic inflammation of the gastrointestinal tract. Increased risk of the medical condition, rheumatoid arthritis is also associated with low levels of selenium in the bloodstream. Other illnesses linked with low levels of selenium in the body are asthma, HIV, and cancer. Taking selenium supplements may help augment such deficiencies and improve the overall health condition of the individual.</p>
+
+<p><b>Q. What food is rich in dietary selenium?</b><br/>
+<b>A.</b> Good dietary sources of this mineral are as follows: garlic, butter, sunflower seeds, whole grain, brewer’s yeast and wheat germ, Brazil nuts, and fish (tuna, mackerel, halibut, herring, flounder, and smelts). Selenium content of plants is dependent on the selenium content of the soil. It should be noted though, that food processing takes away the benefits of the food’s selenium content.</p>
+
+<p><b>Q. What precautions should I take when considering selenium supplementation?</b><br/>
+<b>A.</b> Before you take supplementation, it is good for you to remember that the body only needs a minimal amount of selenium for improved body functions. Before you take any selenium supplement, make sure to consult first with your doctor. High doses of selenium taken over a long period can prove toxic and can lead to side effects such as skin rash, fingernail loss, and irritability. It can also increase your risk of high cholesterol and diabetes. Those who suffer from hypothyroidism are strongly advised to talk with their medical professional before taking this supplement.</p>
+
+<p><b>Q. What medications may have effects on the selenium level of my body?</b><br/>
+Taking any of these drugs and chemicals may lower your body’s level of selenium:</p>
+
+<ul><li>Corticosteroid</li>
+<li>Cisplatin</li>
+<li>Valproic acid</li>
+<li>Clozapine</li>
+<li>Gold salts</li></ul>
+<p>Taking selenium with these sedatives will compound the drugs’ effects on the body:</p>
+
+<ul><li>Phenobarbital</li>
+<li>Secobarbital</li>
+<li>Mephobarbital</li>
+<li>Butabarbital</li></ul>
+<p>Selenium intake may increase an individual’s risk of bleeding when taken with these drugs:</p>
+
+<ul><li>Warfarin</li>
+<li>Aspirin</li>
+<li>Heparin</li>
+<li>clopidogrel</li></ul>
+<p>Selenium supplementation may lower the efficacy of these medications:</p>
+
+<ul><li>Chemotherapy</li>
+<li>Cholesterol-lowering medication</li>
+<li>Birth control pills</li></ul>
+       #end
+	    #if($item.getMerchantItemID() ==  'spirulina-nutrition')
+       <h1>FAQ</h1>
+       <p><b>Q. What is the ideal dose of Spirulina which should be taken daily?</b><br/>
+
+<b>A.</b> We advise a daily dose of 4 capsules. However, some people might already benefit from 2 to 3 capsules per day, while others will need 6 tablets or more. Generally speaking, when someone is very physically active or is working under great pressure, his or her body will need more nutrients, so the dose of Spirulina should be increased. Other examples when it is recommended to increase the dose is during or after illness or before or after an operation. It is not possible to take an overdose.</p>
+
+<p><b>Q. Are there any side effects when taking Spirulina?</b><br/>
+
+<b>A.</b> No. Spirulina is not medication, but a nutrient. Just as you do not experience any side effects from eating fresh fruit and vegetables, you will not experience any side effects when using Spirulina. At first, some people can experience a rash, mild nausea, stomach pains or headaches from Spirulina. This is common in people whose metabolism is not working properly and in people who are taking, or have taken, many medicines. However, these reactions are a positive sign and are linked to the powerful cleansing power of Spirulina (the soaking off to toxic and waste products in the body). If this is the case, you can stop taking the capsules for a few days, or temporarily lower the dose, which causes the cleansing process more gradually. Afterward, the dose can be slowly  increased again. Normally, these reactions will disappear by themselves after a few days.</p>
+
+<p><b>Q. Does Spirulina help with weight loss?</b><br/>
+
+<b>A.</b> Spirulina is not a weight loss product, but it offers an excellent natural support in the struggle against putting on weight. Most weight loss products focus on eating less. But by eating less, you will also get less nutrients. Marcus Rohrer Spirulina makes sure that the body receives enough nutrients. Spirulina can help control and maintain your weight without artificial cures. You will receive natural nutrients in concentrated form without excess calories, which will keep you healthier and make you feel less hungry. Losing weight without feeling tired or listless is much easier to keep up! Take Spirulina half an hour before your meal, so your body will get the necessary nutrients. Because Spirulina is easily digestible, these building materials will be quickly transported to the blood. The brain's hunger center will then receive a message via the blood that all nutrients are present, which makes your feeling of hunger disappear. The advantage is that Spirulina is 100% natural, without any harmful substances. Spirulina is also filled with iron, which is lacking in many low-calorie diets.</p>
+
+<p><b>Q. Is Spirulina gluten free?</b><br/>
+
+<b>A.</b> Yes. Gluten is a substance found in wheat and therefore also in wheat products (such as bread and cake). Some people, and more and more children, are allergic to gluten. Spirulina, however, does not contain gluten. People who have coeliac disease (a bowel disorder) react very strongly to gluten. Because Spirulina is gluten-free, they can use it without any problems.</p>
+
+<p><b>Q. Can Spirulina also be used by children?</b><br/>
+
+<b>A.</b> Yes. Spirulina is a good source of nutrients for the development of a healthy child. Children often refuse to eat vegetables. Spirulina will provide their bodies with the right vitamins and minerals which they are lacking at that moment. Spirulina can be given from birth.</p>
+
+<p><b>Q. Is it safe to take Spirulina during pregnancy?</b><br/>
+
+<b>A.</b> Yes. As Spirulina has a high nutritional value, it is nutritional for both the mother and her unborn child. In addition, It provides the mother with extra proteins, such as iron, without the extra fat and carbohydrates. You do not have to worry about a vitamin A overdose, as Marcus Rohrer Spirulina contains the provitamin A beta-carotene. Beta-carotene is transformed by the body into vitamin A, as soon as the body recognizes there is any insufficiency. If the body has sufficient vitamin A, the beta-carotene is simply excreted. This is how it is different from vitamin A, of which a surplus can be stored in the liver which can cause an overdose.</p>
+
+<p>NB: Although Spirulina was recommended by physicians, as well as by obstetricians, we always recommend discussing the use of Spirulina with your obstetrician/family physician. We are not informed on anyone's medical history. In addition, a pregnancy is something delicate.</p>
+
+<p><b>Q. Why am I still feeling fatigued after having taken Spirulina for 4 weeks?</b><br/>
+
+<b>A.</b> We advise a daily dose of 4 capsules. However, some people might already benefit from 2 to 3 capsules per day, while others will need 6 capsules or more. Generally speaking, when someone is very physically active or is working under great pressure, his or her body will need more nutrients, so the dose of Spirulina should be increased. Other examples when it is recommended to increase the dose is during or after illness or before or after an operation. You can gradually increase the dose, which promotes and speeds up recovery. You may need to increase the dose a little before you get the desired effect. It is not possible, though, to take an overdose.</p>
+       #end
+        #if($item.getMerchantItemID() ==  'testosterone-booster')
+       <h1>FAQ</h1>
+       <p><b>Q. How much and when should I take it?</b><br/>
+<b>A.</b> Although I originally recommended on the bottle to take all 3 at night before bed, I have since then had tons of feedback and a better result myself. I recommend that you take 3 capsules a day and spread them out throughout the day. I take one in the morning, one in the afternoon and one before bedtime.</p>
+
+<p><b>Q. How old should I be before beginning to take testosterone boosting products?</b><br/>
+<b>A.</b> It is generally recommended that you be at least 25 years old before beginning any testosterone boosting products. Natural testosterone levels are already naturally very high until the age of 25 at which point they begin to drop steadily each year. So the older you are the more likely that these products should work well for you.</p>
+
+<p><b>Q. Are test boosters just for weight lifters or can athletes benefit from them as well?</b><br/>
+<b>A.</b> Testosterone boosters can be of use to athletes just as much as weightlifters. Testosterone increases strength, speed, and muscle mass. These benefits are an asset in any sport of choice.</p>
+
+<p><b>Q. Can testosterone boosters be taken with other supplements such as creatine, BCAAs, or beta-alanine?</b><br/>
+<b>A.</b> Absolutely! There are no interactions between any testosterone boosters and other muscle building supplements. Muscle builders such as creatine, BCAAs, and beta-alanine work great when taken with natural test boosters and there is no reason you would need to stop taking them.</p>
+
+<p><b>Q.What are the ingredients of BRI Nutrition Testosterone?</b><br/>
+<b>A.</b> The Testosterone from BRI contains essential components that naturally aid your body’s testosterone-producing hormone. All the ingredients found in the supplement are 100% all-natural and guaranteed safe for consumption. The supplement contains a large amount of Tribulus – a flowering plant that is widely known to be abundant in the warm and tropical areas of Europe, Australia, Southern Asia, and Africa. According to the American Dietetic Association, Tribulus is known to aid strength gain and lean muscle mass. Also, it has been recommended for its component that causes an increase of testosterone levels of male.</p>
+
+<p><b>Q. What are the specific benefits of Testosterone?</b><br/>
+<b>A.</b> When BRI Nutrition Testosterone is consumed while you are living an active lifestyle, it will help you gain more from your regular workout by helping gain muscle mass and decrease body fat at the same time. It also increases your sex drive and helps men become more aroused than usual. More importantly, it helps improve cognitive ability, aids in mood enhancement, and get a better sleeping pattern. All these contribute to making a person feel better about himself and stress out less.</p>
+       #end
+	    #if($item.getMerchantItemID() ==  'triphala')
+       <h1>FAQ</h1>
+      <p><b>Q. What is Triphala?</b><br/>
+<b>A.</b> “Tri” means three, and “phala” means fruit. Triphala is a formula of three potent super fruits that have a wide range of activity: Amalaki, Haritaki and Bibhitaki. As it was formulated thousands of years ago and is the most popular formula of all, it is most likely the most sought out and appreciated herbal formula in the world, ever.</p>
+
+<p><b>Q. How does Triphala compare with other superfruits?</b><br/>
+<b>A.</b> One main measure of a superfruit is its ability to support healthy antioxidant function. One of the scales to measure this is called the TEAC score. It is a linear scale with fruits like blueberries scoring about 10 and raspberries scoring about 15. However, the Triphala fruits are literally off the charts, with Haritaki coming in at an astounding 679! Nothing really comes close. </p>
+
+<p><b>Q. When should I take Triphala?</b><br/>
+<b>A.</b> To optimize its ability to support natural healthy detoxing take it right before bed. To optimize it ability to act as a strengthening tonic, take it first thing in the morning. </p>
+
+<p><b>Q. Can you use Triphala daily?</b><br/>
+<b>A.</b> Yes, Triphala is designed to be balanced in many ways. It is balanced across all types of individual constitutions, so any person with any constitution can use it. It is also balanced between being a detoxing cleanse and a strengthening tonic, so you can use it daily because it supports deep natural homeostasis.</p>
+
+<p><b>Q. How does triphala help your digestion?</b><br/>
+<b>A.</b> Triphala helps gastrointestinal motility. In order for your food to properly digest, the muscles of your stomach must contract and relax well. When this doesn’t occur, you may suffer from digestive disorders, such as irritable bowel syndrome. It has been shown that triphala functions as well as prescribed medicines to help with gastric emptying without any negative side effects. In this sense, you can use triphala as a colon cleanser, as it helps to break down and release waste from your system.</p>
+
+<p><b>Q. What are Triphala's antibacterial properties?</b><br/>
+<b>A.</b> Triphala helps to eradicate a variety of bacteria associated with gastritis, ulcers and stomach cancer. It has also been shown to inhibit the growth of Streptococcus, and is an effective wound healer. To protect your mouth from cavities and excessive plaque, make a mouth rinse with triphala. Buy it in a finely powdered form, and prepare it by boiling one part of triphala with 16 parts water.</p>
+
+<p><b>Q. Does triphala have antioxidant properties?</b><br/>
+<b>A.</b> Triphala has very high antioxidant levels. The amla fruit is extremely high in vitamin C in the form of ascorbic acid, and it is rich in flavonoids and polyphenols that contribute to its reputation as a superfood. Adding this anitoxidant powerhouse to your diet can help you stay healthy, remove toxins and balance your cholesterol levels.</p>
+
+<p><b>Q. Does triphala promote healthy pH levels?</b><br/>
+<b>A.</b> Triphala is an excellent alkalizing supplement, as all three of the fruits are alkalizing in nature. Balancing acid and alkaline levels in your body is extremely important, as today’s modern environment and food options tend to create too much acidity in the body. High acidity can lead to the development of a degenerative disease, such as cancer. In particular, amla helps your body to maintain a healthy balance between aggressive and protective digestive factors, which works to keep the acid levels in check.</p>
+       #end
+        #if($item.getMerchantItemID() ==  'yohimbine')
+       <h1>FAQ</h1>
+       <h2>YOHIMBINE</h2>
+       #end
+	   
+	   
+    </section>
+    
+    <section class="content $firstTabActive" id="panel-product-video">
+      #if($item.getMerchantItemID() ==  '5-htp-supplement')
+     <h1>Video</h1>
+       <img src="https://s3.amazonaws.com/ultracartsff/BRINU/4921/themes/MrTeas/assets/imgs/VIDEO.jpg"/>
+      #end
+      #if($item.getMerchantItemID() ==  'acetyl-carnitine-sup')
+     <h1>Video</h1>
+       <img src="https://s3.amazonaws.com/ultracartsff/BRINU/4921/themes/MrTeas/assets/imgs/VIDEO.jpg"/>
+      #end
+	  #if($item.getMerchantItemID() ==  'alpha-lipoic-acid-su')
+     <h1>Video</h1>
+       <img src="https://s3.amazonaws.com/ultracartsff/BRINU/4921/themes/MrTeas/assets/imgs/VIDEO.jpg"/>
+      #end
+	    #if($item.getMerchantItemID() ==  'ashwagandha-suppleme')
+     <h1>Video</h1>
+       <img src="https://s3.amazonaws.com/ultracartsff/BRINU/4921/themes/MrTeas/assets/imgs/VIDEO.jpg"/>
+      #end
+      #if($item.getMerchantItemID() ==  'caralluma-fimbriata')
+    <iframe width="310px" height="225" src="//www.youtube.com/embed/QhoPzQKEYVA?rel=0&amp;controls=0&amp;showinfo=0" frameborder="0" allowfullscreen=""></iframe>
+      #end
+	  #if($item.getMerchantItemID() ==  'best-coq10-supplemen')
+     <h1>Video</h1>
+       <img src="https://s3.amazonaws.com/ultracartsff/BRINU/4921/themes/MrTeas/assets/imgs/VIDEO.jpg"/>
+      #end
+	  #if($item.getMerchantItemID() ==  'forskolin-supplement')
+    <iframe width="300" height="225" src="//www.youtube.com/embed/pKsDxyCAuqM?rel=0&amp;controls=0&amp;showinfo=0" frameborder="0" allowfullscreen=""></iframe>
+      #end
+      #if($item.getMerchantItemID() ==  'fucoxanthin')
+     <h1>Video</h1>
+       <img src="https://s3.amazonaws.com/ultracartsff/BRINU/4921/themes/MrTeas/assets/imgs/VIDEO.jpg"/>
+      #end
+	  #if($item.getMerchantItemID() ==  'garlic-supplements')
+     <h1>Video</h1>
+       <img src="https://s3.amazonaws.com/ultracartsff/BRINU/4921/themes/MrTeas/assets/imgs/VIDEO.jpg"/>
+      #end
+	    #if($item.getMerchantItemID() ==  'klamath-blue-green')
+    <iframe width="300" height="225" src="//www.youtube.com/embed/SbiEy6GevbY?rel=0&amp;controls=0&amp;showinfo=0" frameborder="0" allowfullscreen=""></iframe>
+      #end
+      #if($item.getMerchantItemID() ==  'l-carnitine-suppleme')
+     <h1>Video</h1>
+       <img src="https://s3.amazonaws.com/ultracartsff/BRINU/4921/themes/MrTeas/assets/imgs/VIDEO.jpg"/>
+      #end
+	  #if($item.getMerchantItemID() ==  'cranberry-supplement')
+     <h1>Video</h1>
+       <img src="https://s3.amazonaws.com/ultracartsff/BRINU/4921/themes/MrTeas/assets/imgs/VIDEO.jpg"/>
+      #end
+	  #if($item.getMerchantItemID() ==  'l-theanine')
+     <h1>Video</h1>
+       <img src="https://s3.amazonaws.com/ultracartsff/BRINU/4921/themes/MrTeas/assets/imgs/VIDEO.jpg"/>
+      #end
+      #if($item.getMerchantItemID() ==  'l-tryptophan-supplem')
+     <h1>Video</h1>
+       <img src="https://s3.amazonaws.com/ultracartsff/BRINU/4921/themes/MrTeas/assets/imgs/VIDEO.jpg"/>
+      #end
+	  #if($item.getMerchantItemID() ==  'l-tyrosine-supplemen')
+     <h1>Video</h1>
+       <img src="https://s3.amazonaws.com/ultracartsff/BRINU/4921/themes/MrTeas/assets/imgs/VIDEO.jpg"/>
+      #end
+	    #if($item.getMerchantItemID() ==  'lysine')
+     <h1>Video</h1>
+       <img src="https://s3.amazonaws.com/ultracartsff/BRINU/4921/themes/MrTeas/assets/imgs/VIDEO.jpg"/>
+      #end
+      #if($item.getMerchantItemID() ==  'magnesium-citrate-su')
+     <h1>Video</h1>
+       <img src="https://s3.amazonaws.com/ultracartsff/BRINU/4921/themes/MrTeas/assets/imgs/VIDEO.jpg"/>
+      #end
+	  #if($item.getMerchantItemID() ==  'phytoceramides')
+     <h1>Video</h1>
+       <iframe width="300" height="225" src="//www.youtube.com/embed/sh6Yzi1QLGU?rel=0&amp;controls=0&amp;showinfo=0" frameborder="0" allowfullscreen=""></iframe>
+      #end
+	  #if($item.getMerchantItemID() ==  'resveratrol-suppleme')
+     <h1>Video</h1>
+       <img src="https://s3.amazonaws.com/ultracartsff/BRINU/4921/themes/MrTeas/assets/imgs/VIDEO.jpg"/>
+      #end
+      #if($item.getMerchantItemID() ==  'tribulus-supplement')
+     <h1>Video</h1>
+       <img src="https://s3.amazonaws.com/ultracartsff/BRINU/4921/themes/MrTeas/assets/imgs/VIDEO.jpg"/>
+      #end
+	  #if($item.getMerchantItemID() ==  'selenium-supplement')
+     <h1>Video</h1>
+       <img src="https://s3.amazonaws.com/ultracartsff/BRINU/4921/themes/MrTeas/assets/imgs/VIDEO.jpg"/>
+      #end
+	    #if($item.getMerchantItemID() ==  'spirulina-nutrition')
+     <h1>Video</h1>
+       <img src="https://s3.amazonaws.com/ultracartsff/BRINU/4921/themes/MrTeas/assets/imgs/VIDEO.jpg"/>
+      #end
+      #if($item.getMerchantItemID() ==  'testosterone-booster')
+    <iframe width="300" height="225" src="//www.youtube.com/embed/j1Wp__p5IA4?rel=0&amp;controls=0&amp;showinfo=0" frameborder="0" allowfullscreen=""></iframe>
+      #end
+	  #if($item.getMerchantItemID() ==  'triphala')
+    <iframe width="300" height="225" src="//www.youtube.com/embed/xDbpcSw3bXU?rel=0&amp;controls=0&amp;showinfo=0" frameborder="0" allowfullscreen=""></iframe>
+      #end
+	    #if($item.getMerchantItemID() ==  'yohimbine')
+     <h1>Video</h1>
+       <img src="https://s3.amazonaws.com/ultracartsff/BRINU/4921/themes/MrTeas/assets/imgs/VIDEO.jpg"/>
+      #end
+    </section>
+    
+  </div>
+</div>
+#if($item.getRelatedItems() && $item.getRelatedItems().size() > 0)
+<div class="row">
+  <div class="columns small-full">
+   <div class="bor1">
+<h3 class="gre2">YOU MAY ALSO LIKE </h3>
+<div class="gre2" style="color:#ababab; font-size:14px;font-weight:none !important; margin:0px; padding-top:0px; padding-bottom:0px;">We found some products that you might also be interested in.</div>
+
+</div>
+    <div class="product-list-images small gallery">
+
+      <ul>
+          #foreach($item in $item.getRelatedItems())
+            #if($item.getSaleCost())
+              #set($saleClass = "sale")
+            #else
+              #set($saleClass = "")
+            #end
+
+            #if($item.isInventoryTracked())
+              #if($item.getAvailableQuantity() && $item.getAvailableQuantity() < 1)
+                #set($stockClass = "out-of-stock")
+              #else
+                #set($stockClass = "")
+              #end
+            #else
+              #set($stockClass = "")
+            #end
+            <li data-equalizer-watch class="$saleClass $stockClass" style="border:none;">
+              <a href="${baseUrl}${item.getPath()}" title="$item.getTitle()" class="product-photo">
+                <strong>${item.getTitle()}</strong>
+                <span class="link">View</span>
+                #if($item.getDefaultMultimedia('Image'))
+                  <img src="$baseThumbnailUrl$item.getDefaultMultimedia('Image').getThumbnail(220, 220)" class="UC-default-item-multimedia" width="220" height="220" alt="$item.getTitle()" />
+                #else
+                  <img src="$baseThemeUrl$theme.attr('Item No Image Available Image URL')" width="220" height="220" alt="$item.getTitle()" />
+                #end
+                #if($item.getSaleCost())
+                  <sub>
+                    <em>Sale!</em>
+                  </sub>
+                #end
+
+                #if($item.isInventoryTracked())
+                  #if($item.getAvailableQuantity() && $item.getAvailableQuantity() < 1)
+                    <sub>
+                      <em>Out of stock</em>
+                    </sub>
+                  #end
+                #end
+              </a>
+              <div class="product-info">
+               <p style="width: 100%;text-align: Center;font-size: 20px;padding-bottom: 10px;"> <a href="${baseUrl}${item.getPath()}" title="" class="product-title">${item.getTitle()}</a></p>
+               <!-- #if($item.isReviewable())
+                  #if (!$item.hasApprovedReview())
+                    <div class="review-stars">
+                      No Reviews
+                      ## <span class='icon-star-0-4'></span>
+                      ## <span class='icon-star-0-4'></span>
+                      ## <span class='icon-star-0-4'></span>
+                      ## <span class='icon-star-0-4'></span>
+                      ## <span class='icon-star-0-4'></span>
+                    </div>
+
+                  #else
+                    <div class="review-stars">
+                      $item.getReviewOverallAsHtml([
+                        "<span class='icon-star-0-4'></span>",
+                        "<span class='icon-star-1-4'></span>",
+                        "<span class='icon-star-2-4'></span>",
+                        "<span class='icon-star-3-4'></span>",
+                        "<span class='icon-star-4-4'></span>"
+                      ])
+                    </div>
+                  #end
+                #end
+                <p class="product-description">$formatHelper.excerpt($formatHelper.removeHtml(${item.getExtendedDescriptionNoEscape()}), 130)</p>
+                #if($item.getMAPLocalized(false))
+                  <span class="price">$item.getMAPLocalized(false)</span>
+                #elseif($item.getSaleCost())
+                  <span class="price"><strike>$item.getRegularCostLocalized()</strike></span>
+                  <span class="price sale">$item.getSaleCostLocalized()</span>
+                #else
+                  <span class="price">$item.getCostLocalized()</span>
+                #end -->
+              </div>
+            </li>
+          #end
+
+      </ul>
+    </div>
+  </div>
+</div>
+#end
+<div class="row" style="margin-top:0px;">
+  <p style="text-align:Center;margin-top: 15px;margin-bottom: 15px;"><img src="https://s3.amazonaws.com/ultracartsff/BRINU/4921/themes/MrTeas/assets/imgs/seal.jpg" >
+</p>
+</div>
+<div class="row" style="margin-top: 15px;">
+<div class="col-md-4" >
+<p><img src="https://s3.amazonaws.com/ultracartsff/BRINU/4921/themes/MrTeas/assets/imgs/ad1.jpg" >
+</p></div>
+<div class="col-md-4" >
+<img src="https://s3.amazonaws.com/ultracartsff/BRINU/4921/themes/MrTeas/assets/imgs/ad2.jpg" >
+</div>
+  <div class="col-md-4" >
+<img src="https://s3.amazonaws.com/ultracartsff/BRINU/4921/themes/MrTeas/assets/imgs/ad3.jpg" >
+</div>
+</div>
+
+<section class="color">
+
+<div class="row" style="margin-top: 20px;">
+<div class="col-md-6">
+<p><img src="https://s3.amazonaws.com/ultracartsff/BRINU/4921/themes/MrTeas/assets/imgs/bigadd.jpg">
+</p></div>
+<div class="col-md-6">
+<a href="#"><img src="https://s3.amazonaws.com/ultracartsff/BRINU/4921/themes/MrTeas/assets/imgs/bigadd2.jpg" ></a><p></p>
+</div>
+</div>
+
+</section>
+#parse("/snippets/bottom.vm")

@@ -1,0 +1,197 @@
+##
+## UltraCart - Mr Teas Template
+## http://www.ultracart.com/
+##
+## Copyright (c) 2015 BPS Info Solutions Inc.
+## License located here:
+## http://www.ultracart.com/storefront/license/
+##
+## Designed by Level 2 Design, LLC http://www.level2d.com/
+##
+
+#* @vtlvariable name="merchantId" type="java.lang.String" *#
+#* @vtlvariable name="header" type="java.lang.String" *#
+#* @vtlvariable name="footer" type="java.lang.String" *#
+#* @vtlvariable name="enableCaseManagement" type="boolean" *#
+#* @vtlvariable name="i18n" type="com.bpsinfo.storefront.tobjects.I18nWriter" *#
+
+#set( $bodyClass = "myaccount-wishlist" )
+#set( $pageTitle = "My Account Wishlist" )
+
+#parse("/snippets/top.vm")
+
+<div class='nav-bar'>
+  <div class="row">
+    <div class="columns small-16">
+      <a href="/myaccount/index.do?merchantId=$!{merchantId}">$i18n.write('myaccount.breadcrumb.myAccount','My Account')</a> &gt; <span class='disabled-looking'>$i18n.write('myaccount.breadcrumb.myWishlist','My Wishlist')</span>
+    </div>
+  </div>
+  <div class="row">
+    <div class="columns small-16">
+      <h1>$i18n.write('myaccount.wishlistHeader','My Wishlist')</h1>
+      <p>$i18n.write('myaccount.wishlistMessage','Review and manage your wishlist.')</p>
+    </div>
+  </div>
+  <div class="row">
+    <nav role="navigation" class="columns small-16">
+      <div class='wishlistNavigationWrapper'>
+        <div class="wishlistNavigationTable row collapse">
+          <div class="columns small-8 wishlistNavigationTableSortCell">
+            <label>
+              <span>$i18n.write('myaccount.wishlist.sortByLabel','Sort wishlist by:')</span>
+              <select id="sortBySelect">
+                <option value="date_desc">Date Added (most recent first)</option>
+                <option value="date_asc">Date Added (earliest first)</option>
+                <option value="priority_desc">Priority (high to low)</option>
+                <option value="priority_asc">Priority (low to high)</option>
+                <option value="price_desc">Price (high to low)</option>
+                <option value="price_asc">Price (low to high)</option>
+              </select>
+            </label>
+            <button id="sortWishlistButton" class="button">$i18n.write('myaccount.wishlist.sortByButton','Go')</button>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </div>
+</div>
+
+
+<script type="text/javascript">
+  var merchantId = '$!merchantId';
+</script>
+
+<!--[if lt IE 9]>
+<script type='text/javascript' src="/myaccount/js/html5shiv-printshiv.js" media="all"></script>
+<![endif]-->
+
+<script type="text/javascript" src="/myaccount/js/moment.js"></script>
+<script type="text/javascript" src="/myaccount/js/handlebars-v3.0.3.js"></script>
+<script type="text/javascript" src="/myaccount/js/underscore_1.4.4.js"></script>
+<script type="text/javascript" src="/myaccount/js/backbone_1.0.js"></script>
+<script type="text/javascript" src="/myaccount/js/myaccount_rest_1.4.js"></script>
+<script type="text/javascript" src="/myaccount/js/myaccount.js"></script>
+<script type="text/javascript" src="/myaccount/wishlist.js"></script>
+
+
+<script type="text/template" id="wishlist-template">
+  {{\#if loading}}
+  $i18n.write('myaccount.wishlist.pleaseWait','Please wait. We are loading your wishlist now.')<br>
+  <img src='/myaccount/images/jquery.smallhbar.indicator.gif'/>
+  {{else}}
+
+  <section>
+
+    <header class='wishlist-header row half-margin-bottom'>
+      <nav role="navigation">
+        {{\#if showPagination}}
+          <div class="columns small-16 medium-8 wishlistPaginationTableSearchCell">
+            <strong>{{totalRecords}}</strong> wishlist records. Showing items
+            {{firstRecordOnPage}}-{{lastRecordOnPage}}
+          </div>
+          <div class="columns small-16 medium-8 wishlistPaginationTableSearchCell">
+            {{\#if showGotoPage}}
+              {{\#if showPrevious}}<a class="wishlistNavCell" href="#">Previous</a> &lt;&lt; {{/if}}
+                <strong>Page {{pageNumber}} of {{totalPages}}</strong>
+              {{\#if showNext}} &gt;&gt; <a class="wishlistNavCell" href="#">Next</a>{{/if}}
+            {{/if}}
+          </div>
+        {{/if}}
+      </nav>
+    </header>
+
+
+    <div id="wishlist-items">
+      {{#each wishlistItems}}
+        <div id="wl_{{wishlistOid}}" class="row half-margin-bottom">
+          <div class="columns small-4 medium-2">
+            {{\#if item.defaultThumbnailSsl}}<img src="/thumbs/{{item.defaultThumbnailSsl}}">{{/if}}
+          </div>
+
+          <div class="columns small-12 medium-4">
+            <h4>{{item.description}}</h4>
+            <sub>{{item.itemId}}</sub>
+            <div class="row">
+              <div class="columns small-16">
+                <span>Added: {{addDateFormatted}}</span>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="columns small-16">
+                <span class="priorityDisplay">Priority: {{priorityFormatted}}</span>
+                <select class="priorityEdit" style="display:none">
+                  <option value="1">Lowest</option>
+                  <option value="2">Low</option>
+                  <option value="3">Medium</option>
+                  <option value="4">High</option>
+                  <option value="5">Highest</option>
+                </select>
+              </div>
+            </div>
+            <div class="row">
+              <div class="columns small-16 half-margin-bottom">
+                <a class="editWishlistItemButton" data-oid="{{wishlistOid}}">Edit</a>
+                ##<input class="editWishlistItemButton half-margin button tiny secondary" type="button" data-oid="{{wishlistOid}}" value="Edit">
+              </div>
+            </div>
+          </div>
+          <div class="columns small-16 medium-6" style="min-height: 1px;">
+            {{\#if comments}}
+              <div class="commentsDisplay panel text-center small-half-margin-bottom" style="padding:20px">
+                <em>"{{comments}}"</em>
+              </div>
+            {{/if}}
+            <textarea class="commentsEdit" style="display:none"></textarea>
+          </div>
+          <div class="columns small-16 medium-4">
+            <div class="row collapse">
+              <div class="columns small-6 medium-16">
+                <input class="addWishlistItemToCartButton button tiny" type="button" data-oid="{{wishlistOid}}" value="Add to Cart">
+              </div>
+
+              <div class="columns small-8 medium-16">
+                <input class="updateWishlistItemButton button tiny" type="button" data-oid="{{wishlistOid}}" value="Save" style="display:none">
+                <input class="cancelWishlistItemButton button tiny secondary" type="button" data-oid="{{wishlistOid}}" value="Cancel" style="display:none">
+              </div>
+
+              <div class="columns small-2 medium-16">
+                <a class="deleteWishlistItemButton" data-oid="{{wishlistOid}}">Delete</a>
+              </div>
+            </div>
+          </div>
+          <div class="clear"></div>
+        </div>
+      {{/each}}
+    </div>
+
+
+
+    <footer class='wishlist-footer row'>
+      <nav role="navigation">
+        {{\#if showPagination}}
+          <div class="columns small-16 medium-8 wishlistPaginationTableFilterCell">
+              {{\#if showGotoPage}}
+              {{\#if showPrevious}}<a class="wishlistNavCell" href="#">Previous</a> &lt;&lt; {{/if}}
+              <strong>Page {{pageNumber}} of {{totalPages}}</strong>
+              {{\#if showNext}} &gt;&gt; <a class="wishlistNavCell" href="#">Next</a>{{/if}}
+              {{/if}}
+          </div>
+        {{/if}}
+      </nav>
+    </footer>
+
+
+  </section>
+  {{/if}}
+</script>
+
+
+
+<div class="wrap content row">
+  <main role='main' id='wishlist' class="columns small-16">
+  </main>
+
+</div>
+
+#parse("/snippets/bottom.vm")

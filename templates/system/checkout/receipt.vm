@@ -1,0 +1,241 @@
+##
+## UltraCart - Mr Teas Template
+## http://www.ultracart.com/
+##
+## Copyright (c) 2015 BPS Info Solutions Inc.
+## License located here:
+## http://www.ultracart.com/storefront/license/
+##
+## Designed by Level 2 Design, LLC http://www.level2d.com/
+##
+
+#* @vtlvariable name="formatHelper" type="com.bpsinfo.ultracart.catalog.tobjects.FormatHelper" *#
+#* @vtlvariable name="i18n" type="com.bpsinfo.storefront.tobjects.I18nWriter" *#
+#* @vtlvariable name="form" type="com.bpsinfo.ultracart.checkout.ui.ReceiptForm" *#
+
+#set( $bodyClass = 'receipt' )
+#set( $pageTitle = $i18n.write("checkout.receipt.pageTitle", "Receipt") )
+#parse('/snippets/top.vm')
+#parse('/snippets/breadcrumbs.vm')
+
+#if($form.paymentMethod == 'Quote Request')
+	#set( $title = $i18n.write("checkout.receipt.thankYouForYourQuotationRequest", "Thank you for your quotation request.") )
+#else
+	#set( $title = $i18n.write("checkout.receipt.thankYouForOrdering","Thank you for ordering.") )
+#end
+
+#parse('/snippets/title.vm')
+
+<link href="$baseThemeUrl/assets/css/receipt.css" rel="stylesheet">
+
+#if(("$!form.merchantId" == 'VIC' || "$!form.merchantId" == "RAWWF") && $form.paymentMethod == 'Credit Card' && $form.currentStage == 'AR' && $form.needsShipping)
+	<div align="center" class="ucColorSubHeader" id="ucPaymentPendingVerification">
+		Your order will ship pending payment verification.
+	</div>
+<br />
+#end
+
+#if("$!form.paymentMethod" == "SafetyPay")
+	<table>
+		<tr>
+			<td class="ucColorSubHeader">SAFETYPAY PAYMENT</td>
+		</tr>
+		<tr>
+			<td colspan="3">
+				<img src="/checkout/images/spacer.gif" width="100%" height="10" border="0" alt=''/>
+			</td>
+		</tr>
+		<tr>
+			<td class="ucDefault">
+				<iframe src="/checkout/cardinalCommerceSafetyPayHandoffLoad.do" width="700" height="300" frameborder="0">
+					Frames are currently disabled or not supported by your browser.
+					Please click <a href="/checkout/cardinalCommerceSafetyPayHandoffLoad.do">here</a> to continue processing your transaction with SafetyPay.
+				</iframe>
+			</td>
+		</tr>
+	</table>
+	<p>&nbsp;
+#end ## if-paymentMethod == SafetyPay
+
+#if("$!form.merchantId" != "UM")
+	#if("$!form.paymentMethod" == "Check")
+	<table>
+		<tr>
+			<td class="ucColorSubHeader">$i18n.write("checkout.receipt.checkPaymentHeader","CHECK PAYMENT")</td>
+		</tr>
+		<tr>
+			<td colspan="3"><img src="/checkout/images/spacer.gif" width="100%" height="10" border="0" alt='' /></td>
+		</tr>
+		<tr>
+			<td class="ucDefault">
+				$i18n.write("checkout.receipt.checkMailTo","Please print this order and mail along with your check to"):<br /><br />
+				#foreach($addressLine in $form.checkMailingAddress)
+					$i18n.escape($addressLine)<br />
+				#end
+				<br /><br />
+				$i18n.write("checkout.receipt.checkMakePayableTo","Make check payable to"):<br /><br />
+				$i18n.escape($!form.checkPayableTo)
+			</td>
+		</tr>
+	</table>
+	<p>&nbsp;
+#end ## if payment method == Check
+#end ## if merchant is not UM
+
+#if($form.paymentMethod == 'Money Order')
+	<table>
+		<tr>
+			<td class="ucColorSubHeader">$i18n.write("checkout.receipt.moneyOrderPaymentHeader","MONEY ORDER PAYMENT")</td>
+		</tr>
+		<tr>
+			<td colspan="3"><img src="/checkout/images/spacer.gif" width="100%" height="10" border="0" alt='' /></td>
+		</tr>
+		<tr>
+			<td class="ucDefault">
+				$i18n.write("checkout.receipt.moneyOrderMailTo","Please print this order and mail along with your money order to"):<br />
+				#foreach($addressLine in $form.checkMailingAddress)
+					$i18n.escape($addressLine)<br />
+				#end
+			</td>
+		</tr>
+	</table>
+	<p>&nbsp;
+#end ## if-paymentMethod == 'Money Order'
+
+#if($form.paymentMethod == 'Wire Transfer')
+	<table>
+		<tr>
+			<td class="ucColorSubHeader">$i18n.write("checkout.receipt.wireInstructionsHeader","WIRE INSTRUCTIONS")</td>
+		</tr>
+		<tr>
+			<td colspan="3"><img src="/checkout/images/spacer.gif" width="100%" height="10" border="0" alt='' /></td>
+		</tr>
+		<tr>
+			<td class="ucDefault">
+				$i18n.write("checkout.receipt.sendWireTransferTo","Please submit your wire transfer to"):<br /><br />
+
+				$i18n.newlineToBreaks($i18n.escape($form.wireTransferBankAddress))<br /><br />
+
+				#if("$!form.wireTransferIntermediateRoutingNumber" != ""))
+					$i18n.write("checkout.receipt.intermediaryRoutingNumber","Intermediary Routing Number"):
+					$i18n.escape($!form.wireTransferIntermediateRoutingNumber)<br /><br />
+					#end ## if intermediate routing number
+
+				$i18n.write("checkout.receipt.routingNumber","Routing Number"): $i18n.escape($!form.wireTransferRoutingNumber)<br /><br />
+				$i18n.write("checkout.receipt.accountNumber","Account Number"): $i18n.escape($!form.wireTransferAccountNumber)<br /><br />
+			</td>
+		</tr>
+	</table>
+	<p>&nbsp;
+#end ## if-paymentMethod == 'Wire Transfer'
+
+#if($form.paymentMethod == 'PayPal' && !$form.payPalExpressCheckout)
+	<table>
+		<tr>
+			<td class="ucColorSubHeader">PAYPAL TRANSACTION<br />Your order will not ship until we receive payment confirmation from PayPal</td>
+		</tr>
+		<tr>
+			<td colspan="3"><img src="/checkout/images/spacer.gif" width="100%" height="10" border="0" alt='' /></td>
+		</tr>
+		<tr>
+			<td class="ucDefault">
+				<table border="0" cellspacing="2" cellpadding="2">
+					<tbody>
+						<tr>
+							<td class="ucDefault" style="vertical-align: top;">
+								To complete this order, click the PayPal icon to the right.<br />
+								You will be directed to the PayPal system where you can either login to your account or,<br />
+								for non-PayPal members, pay by credit card.<br />
+								<br />
+								If for some reason you are not able to complete the transaction, you should immediately<br />
+								contact the customer service number listed at the bottom of the receipt (below).<br />
+							</td>
+							<td style="vertical-align: top;">
+									<!-- Begin PayPal Button -->
+									<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+									#parse('/snippets/common/storefront_template_spec_version.vm')
+									<input type="hidden" name="cmd" value="_xclick">
+									<input type="hidden" name="mrb" value="R-53138495GX541274U">
+									<input type="hidden" name="pal" value="SJ6T3YSLVJGWS">
+									<input type="hidden" name="bn" value="ultracart">
+									<input type="hidden" name="business" value="$!form.merchantPayPalEmail">
+									<input type="hidden" name="item_name" value="$!form.orderId">
+									<input type="hidden" name="item_number" value="$!form.orderId">
+									<input type="hidden" name="quantity" value="1">
+									<input type="hidden" name="invoice" value="$!form.orderId">
+									<input type="hidden" name="amount" value="$!form.total">
+									<input type="hidden" name="currency_code" value="$!form.payPalCurrencyCode">
+									<input type="hidden" name="shipping" value="0.00">
+									<input type="hidden" name="tax" value="0.00">
+									<input type="hidden" name="return"
+									value="$!form.payPalReturnUrl">
+									<input type="hidden" name="cancel_return"
+									value="$!form.payPalCancelUrl">
+									<input type="hidden" name="notify_url" value="$!form.payPalNotifyUrl">
+									<input type="hidden" name="no_note" value="1">
+									<input type="hidden" name="rm" value="2">
+									<input type="hidden" name="no_shipping" value="1">
+									<input type="image" border="0" name="submit" src="/checkout/images/paypal.gif" alt="Pay for order">
+									</form>
+									<!-- End PayPal Button -->
+							 </td>
+						</tr>
+					</tbody>
+				</table>
+			</td>
+		</tr>
+	</table>
+	<p>&nbsp;
+#end ## #if $form.paymentMethod == 'PayPal' && !$form.payPalExpressCheckout)
+
+#if("$!form.digitalDownloadInstructions" != "")
+	<div class="row">
+		<div class="columns small-16">
+			<h2>$i18n.write("checkout.receipt.digitalContentDownloadInstructionsHeader","DIGITAL CONTENT DOWNLOAD INSTRUCTIONS")</h2>
+		</div>
+
+		<div class="columns small-16">
+			$!form.digitalDownloadInstructions
+		</div>
+	</div>
+#end ## if-digitalDownloadInstructions
+
+<div class="row">
+	<div class="columns small-16">
+		<h2>
+			#if($form.paymentMethod == 'Quote Request')
+				$i18n.write("checkout.receipt.quotationRequestHeader","QUOTATION REQUEST")
+			#else
+				$i18n.write("checkout.receipt.receiptHeader","RECEIPT")
+			#end ##if-paymentMethod == Quote Request
+		</h2>
+
+		#if ($form.htmlOrder)
+			<div class='ucOrderHtmlContainer'>$!form.htmlOrder</div>
+		#else
+			<pre class='ucOrderContainer'>$!form.preformattedOrder</pre>
+		#end
+	</div>
+</div>
+<!-- Google Code for sale Conversion Page -->
+<script type="text/javascript">
+/ <![CDATA[ /
+var google_conversion_id = 994262981;
+var google_conversion_language = "en";
+var google_conversion_format = "3";
+var google_conversion_color = "ffffff";
+var google_conversion_label = "13LWCKvFuwQQxf-M2gM";
+var google_conversion_value = 1.00;
+var google_conversion_currency = "USD";
+var google_remarketing_only = false;
+/ ]]> /
+</script>
+<script type="text/javascript" src="//www.googleadservices.com/pagead/conversion.js">
+</script>
+<noscript>
+<div style="display:inline;">
+<img height="1" width="1" style="border-style:none;" alt="" src="//www.googleadservices.com/pagead/conversion/994262981/?value=1.00&amp;currency_code=USD&amp;label=13LWCKvFuwQQxf-M2gM&amp;guid=ON&amp;script=0"/>
+</div>
+</noscript>
+#parse('/snippets/button.continueShopping.vm')
+#parse('/snippets/bottom.vm')

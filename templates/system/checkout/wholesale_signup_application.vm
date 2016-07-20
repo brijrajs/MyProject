@@ -1,0 +1,248 @@
+#* @vtlvariable name="formatHelper" type="com.bpsinfo.ultracart.catalog.tobjects.FormatHelper" *#
+#* @vtlvariable name="i18n" type="com.bpsinfo.storefront.tobjects.I18nWriter" *#
+#* @vtlvariable name="form" type="com.bpsinfo.ultracart.checkout.ui.WholesaleSignupForm" *#
+
+
+#set($bodyClass = 'wholesale-signup')
+#set( $pageTitle = $i18n.write("checkout.wholesaleSignup.pageTitle", "Wholesale Signup") )
+#parse('/snippets/top.vm')
+
+#parse('/snippets/errors.vm')
+#parse('/snippets/info_messages.vm')
+
+<form action="/checkout/wholesaleSignupSave.do" enctype="multipart/form-data" class="row" method='post'>
+  <input type='hidden' name="merchantId" value="$i18n.escape($!form.merchantId)"/>
+  <input type='hidden' name="showAgreement" value="$i18n.escape($!form.showAgreement)"/>
+  <input type='hidden' name="collectTaxId" value="$i18n.escape($!form.collectTaxId)"/>
+  <input type='hidden' name="collectWebsiteUrl" value="$i18n.escape($!form.collectWebsiteUrl)"/>
+  <input type='hidden' name="requireWebsiteUrl" value="$i18n.escape($!form.requireWebsiteUrl)"/>
+  <input type='hidden' name="collectReferralSource" value="$i18n.escape($!form.collectReferralSource)"/>
+  <input type='hidden' name="requireReferralSource" value="$i18n.escape($!form.requireReferralSource)"/>
+  <input type='hidden' name="collectCertificateOfResale" value="$i18n.escape($!form.collectCertificateOfResale)"/>
+  <input type='hidden' name="requireCertificateOfResale" value="$i18n.escape($!form.requireCertificateOfResale)"/>
+  <input type='hidden' name="collectDesiredPricingTier" value="$i18n.escape($!form.collectDesiredPricingTier)"/>
+  #parse('/snippets/common/storefront_template_spec_version.vm')
+
+  #parse('/snippets/common/cs_token.vm')
+
+  <div class="columns small-16">
+    <h1>Wholesale Registration</h1>
+  </div>
+
+  <div class="columns small-16 medium-8 half-margin-top">
+    <h2>$i18n.write("checkout.wholesaleSignup.wholesaleApplicationHeader","WHOLESALE APPLICATION")</h2>
+    <div class="columns medium-8">
+      <label for="firstName" class="label-move">
+        <span>$i18n.write("checkout.wholesaleSignup.firstNameField","First Name")*</span>
+        <input type="text" name="firstName" id="firstName" value="$i18n.escape($form.firstName)" required maxlength="30" />
+      </label>
+    </div>
+    <div class="columns medium-8">
+      <label for="lastName" class="label-move">
+        <span>$i18n.write("checkout.wholesaleSignup.lastNameField","Last Name")*</span>
+        <input type="text" name="lastName" id="lastName" value="$i18n.escape($form.lastName)" required maxlength="30" />
+      </label>
+    </div>
+    <div class="columns">
+      <label for="company" class="label-move">
+        <span>$i18n.write("checkout.wholesaleSignup.companyField","Company")#if($form.requireCompany)*#{end}</span>
+        <input type="text" name="company" id="company" value="$i18n.escape($form.company)" #if($form.requireCompany) required #{end} maxlength="30" />
+      </label>
+    </div>
+    <div class="columns">
+      <label for="address1" class="label-move">
+        <span>$i18n.write("checkout.wholesaleSignup.address1Field","Address 1")*</span>
+        <input type="text" name="address1" id="address1" value="$i18n.escape($form.address1)" required maxlength="30" />
+      </label>
+    </div>
+    <div class="columns">
+      <label for="address2" class="label-move">
+        <span>$i18n.write("checkout.wholesaleSignup.address2Field","Address 2")</span>
+        <input type="text" name="address2" id="address2" value="$i18n.escape($form.address2)" maxlength="30" />
+      </label>
+    </div>
+    <div class="columns">
+      <label for="city" class="label-move">
+        <span>$i18n.write("checkout.wholesaleSignup.cityField","City")*</span>
+        <input type="text" name="city" id="city" value="$i18n.escape($form.city)" required maxlength="35" />
+      </label>
+    </div>
+    <div class="columns medium-8">
+      <label class="label-move">
+        <span>$i18n.write("checkout.wholesaleSignup.stateProvinceRegionField","State/Province/Region")*</span>
+        <input type="text" name="state" id="state" value="$i18n.escape($form.state)" required maxlength="35" />
+      </label>
+    </div>
+    <div class="columns medium-8">
+      <label for="postalCode" class="label-move">
+        <span>$i18n.write("checkout.wholesaleSignup.zipPostalCodeField","Zip/Postal Code")*</span>
+        <input type="text" name="postalCode" id="postalCode" value="$i18n.escape($form.postalCode)" required maxlength="20" />
+      </label>
+    </div>
+    <div class="columns">
+      <label for="country">
+        <span>$i18n.write("checkout.wholesaleSignup.countryField","Country")*</span>
+        <select name="country" id="country" required>
+          #foreach($country in $form.countries)
+            <option #if($form.country && $country == $form.country)selected#{end}>$i18n.escape($country)</option>
+          #end
+        </select>
+      </label>
+    </div>
+    <div class="columns medium-8">
+      <label for="dayPhone" class="label-move">
+        <span>$i18n.write("checkout.wholesaleSignup.daytimePhone","Daytime Phone")*</span>
+        <input type="text" name="dayPhone" id="dayPhone" value="$i18n.escape($form.dayPhone)"  required maxlength="25" />
+      </label>
+    </div>
+    <div class="columns medium-8">
+      <label for="eveningPhone" class="label-move">
+        <span>$i18n.write("checkout.wholesaleSignup.eveningPhoneField","Evening Phone")</span>
+        <input type="text" name="eveningPhone" id="eveningPhone" value="$i18n.escape($form.eveningPhone)" maxlength="25" />
+      </label>
+    </div>
+    <div class="columns #if($form.collectTaxId)medium-8#{end}">
+      <label for="fax" class="label-move">
+        <span>Fax#if($form.requireFax)*#{end}</span>
+        <input type="text" name="fax" id="fax" value="$i18n.escape($form.fax)" #if($form.requireFax)required#{end} maxlength="25" />
+      </label>
+    </div>
+    #if($form.collectTaxId)
+      <div class="columns medium-8">
+         <label for="taxId" class="label-move">
+          <span id="ucTaxIdSSNId">$i18n.write("checkout.wholesaleSignup.taxIdSsnField","Tax ID/SSN")*</span>
+          <input type="text" name="taxId" id="taxId" value="$i18n.escape($form.taxId)" required maxlength="15" />
+        </label>
+      </div>
+    #end ## if-collectTaxId
+    #if($form.collectWebsiteUrl)
+      <div class="columns">
+        <label for="websiteUrl" class="label-move">
+          <span>$i18n.write("checkout.wholesaleSignup.websiteUrlField","Website URL")#if($form.requireWebsiteUrl)*#{end}</span>
+          <input type="text" name="websiteUrl" id="websiteUrl" value="$i18n.escape($form.websiteUrl)" #if($form.requireWebsiteUrl)required#{end} maxlength="150" />
+        </label>
+      </div>
+    #end ##if-collectWebsiteUrl
+    #if($form.collectReferralSource)
+      <div class="columns">
+        <label for="referralSource" class="label-move">
+          <span>$i18n.write("checkout.wholesaleSignup.referralSourceField","Where did you hear about us?")#if($form.requireReferralSource)*#{end}</span>
+          <input type="text" name="referralSource" id="referralSource" value="$i18n.escape($form.referralSource)" #if($form.requireReferralSource)required#{end} maxlength="150" />
+        </label>
+      </div>
+    #end ##if-collectReferralSource
+  </div>
+
+  <div class="columns small-16 medium-8 half-margin-top">
+    <h2>$i18n.write("checkout.wholesaleSignup.loginInformationHeader","LOGIN INFORMATION")</h2>
+
+    <div class="columns">
+      <label for="email" class="label-move">
+        <span>$i18n.write("checkout.wholesaleSignup.emailField","Email")*</span>
+        <input type="text" name="email" id="email" value="$i18n.escape($form.email)" required maxlength="50" />
+      </label>
+    </div>
+    <div class="columns">
+      <label for="password" class="label-move">
+        <span>$i18n.write("checkout.wholesaleSignup.passwordField","Password")*</span>
+        <input type="text" name="password" id="password" value="$i18n.escape($form.password)" required maxlength="32" />
+      </label>
+    </div>
+    <div class="columns">
+      <label for="confirmPassword" class="label-move">
+        <span>$i18n.write("checkout.wholesaleSignup.confirmPasswordField","Confirm Password")*</span>
+        <input type="text" name="confirmPassword" id="confirmPassword" value="$i18n.escape($form.confirmPassword)" required maxlength="32" />
+      </label>
+    </div>
+
+    #if($form.showSinglePricingTier && $form.pricingTiers.size() >= 1)
+      <div class="columns">
+        <h3>$i18n.write("checkout.wholesaleSignup.desiredPricingLevelHeader","DESIRED PRICING LEVEL")</h3>
+
+        <label for="desiredPricingTierOid">
+          <span>$i18n.write("checkout.wholesaleSignup.desiredPricingLevelInstructions","")</span>
+          #foreach($pricingTier in $form.pricingTiers)
+            #if($form.desiredPricingTierOid == $pricingTier.pricingTierOid)
+              <input type='radio'
+                     name="desiredPricingTierOid"
+                     id="desiredPricingTierOid"
+                     value="$pricingTier.pricingTierOid"
+                     checked='checked'/> $i18n.escape($pricingTier.name)
+            #{end}
+          #end ##foreach pricing tier
+        </label>
+      </div>
+    #end ## if showSinglePricingTier and there at least one pricing tier
+
+    #if(!$form.showSinglePricingTier)
+      #if($form.pricingTiers.size() == 1)
+        <input type='hidden' name="desiredPricingTierOid" value="$!form.desiredPricingTierOid"/>
+      #end
+
+      #if($form.pricingTiers.size() > 0)
+        <h3>$i18n.write("checkout.wholesaleSignup.desiredPricingLevelHeader","DESIRED PRICING LEVEL")</h3>
+        <div class="columns">
+          <label for="desiredPricingTierOid">
+            <span>$i18n.write("checkout.wholesaleSignup.desiredPricingLevelInstructions","")</span>
+            #foreach($pricingTier in $form.pricingTiers)
+                <input type='radio'
+                       name="desiredPricingTierOid"
+                       id="desiredPricingTierOid"
+                       value="$pricingTier.pricingTierOid"
+                       #if($form.desiredPricingTierOid == $pricingTier.pricingTierOid)checked='checked'#{end}/> $i18n.escape($pricingTier.name)
+                <br/>
+            #end ##foreach pricing tier
+          </label>
+        </div>
+      #end ##if-pricingTiers size is greater than or equal to 2
+    #end ##if-showSinglePricingTier == false
+  </div>
+  <div class="columns small-16">
+    <div class="columns half-margin-bottom">
+      <label for="businessNotes" class="label-move">
+        <span>$i18n.write("checkout.wholesaleSignup.businessNotesField","Please describe your business")</span>
+        <textarea name="businessNotes" id="businessNotes" class="no-margin-bottom">$i18n.escape($!form.businessNotes)</textarea>
+        <small>eg. Where our products will be sold, and any other pertinent information to your application.</small>
+      </label>
+    </div>
+    #if($form.collectCertificateOfResale)
+      <div class="columns half-margin-bottom">
+        <h3>$i18n.write("checkout.wholesaleSignup.certificateOfResaleHeader","CERTIFICATE OF RESALE")</h3>
+
+        <label for="certificateOfResale">
+          <span id="ucCertificateOfResaleInstructionsId">
+            #if($form.requireCertificateOfResale)
+              $i18n.write("checkout.wholesaleSignup.certificateOfResaleInstructionsRequired","Please upload your electronic certificate of resale using the field below.")
+            #else
+              $i18n.write("checkout.wholesaleSignup.certificateOfResaleInstructions","If you have an electronic certificate of resale, please upload it using the field below.")
+            #end
+          </span>
+          <input type="file" name="certificateOfResale" id="certificateOfResale" #if($form.requireCertificateOfResale)required#{end} />
+        </label>
+      </div>
+    #end ##if-collectCertificateOfResale
+
+    #if($form.showAgreement)
+      <div class="columns half-margin-bottom">
+        <h3>$i18n.write("checkout.wholesaleSignup.agreementHeader","AGREEMENT")</h3>
+
+        #if($form.wholesaleAgreementHtml)
+            <div>$!form.wholesaleAgreement</div>
+        #else ##agreement is plain text
+          <textarea name="wholesaleAgreement" class="ucWholesaleAgreement no-margin-bottom" readonly="true">$i18n.escape($!form.wholesaleAgreement)</textarea>
+        #end ##if-wholesaleAgreement is html
+          <input type='checkbox' name="agreed" value='true' #if($form.agreed)checked='checked'#{end}/>
+          <span>$i18n.write("checkout.wholesaleSignup.readTermsField","I have read, understand, and agree to the above agreement.")*</span>
+        </div>
+    #end ##if-showAgreement
+
+    <button type="submit" name="memberSubmit" alt="Submit" class="right">Submit</button>
+  </div>
+
+</form>
+
+
+
+
+
+#parse('/snippets/bottom.vm')

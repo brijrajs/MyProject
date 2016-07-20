@@ -1,0 +1,88 @@
+##
+## UltraCart - Mr Teas Template
+## http://www.ultracart.com/
+##
+## Copyright (c) 2015 BPS Info Solutions Inc.
+## License located here:
+## http://www.ultracart.com/storefront/license/
+##
+## Designed by Level 2 Design, LLC http://www.level2d.com/
+##
+
+#* @vtlvariable name="formatHelper" type="com.bpsinfo.ultracart.catalog.tobjects.FormatHelper" *#
+#* @vtlvariable name="i18n" type="com.bpsinfo.storefront.tobjects.I18nWriter" *#
+#* @vtlvariable name="form" type="com.bpsinfo.ultracart.affiliate.ui.partner.AffiliatePartnerLedgerForm" *#
+
+#set( $pageGroup = 'affiliate' )
+#set( $bodyClass = 'affiliate partner-ledger' )
+#set( $pageTitle = 'Affiliate Partner Payment Information' )
+#parse('/snippets/top.vm')
+
+#set( $title = 'Transaction Information')
+#parse('/snippets/title.vm')
+
+<div class="row">
+	<div class="columns small-16">
+		<table class="ledger_table">
+			<tr>
+				<td>Transaction Date</td>
+				<td>$!form.paymentDate</td>
+			</tr>
+			<tr>
+				<td>Amount</td>
+				<td>$!form.paymentAmountFormatted</td>
+			</tr>
+			<tr>
+				<td>Balance</td>
+				<td>$!form.balanceFormatted</td>
+			</tr>
+			<tr>
+				<td>Status</td>
+				<td>$!form.status</td>
+			</tr>
+		</table>
+	</div>
+</div>
+
+#if($form.hasPaymentInformation)
+
+	<div class="row">
+		<div class="columns small-16">
+			<table class="report">
+				<thead>
+					<th width="140" data-name="date" data-searchable="1" data-orderable="1">Transaction Date</th>
+					<th width="140" data-name="amount" data-searchable="1" data-orderable="1">Amount</th>
+					<th width="140" data-name="paymentOid" data-searchable="1" data-orderable="1">Payment Info</th>
+				</thead>
+
+				<tbody>
+
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+	## #foreach($record in $form.ledgerRecords)
+	## 	<tr>
+	## 		<td>$record.date</td>
+	## 		<td>$record.amount</td>
+	## 		<td><a href="/affiliate/partner/paymentLoad.do?paymentOid=${record.paymentOid}&merchantId=$!{merchantId}">Payment Info</a></td>
+	## 	</tr>
+	## #end
+
+	<script type="text/javascript">
+		window.reportData = $form.paymentInformationJson;
+	</script>
+
+#else
+	<div class="row">
+		<div class="columns small-16">
+			<p>No payment information found.</p>
+		</div>
+	</div>
+#end ## if hasPaymentInformation
+#set( $showBackButton = true )
+#set( $hideButton = true )
+#parse('/snippets/affiliate/button.vm')
+
+#parse('/snippets/bottom.vm')

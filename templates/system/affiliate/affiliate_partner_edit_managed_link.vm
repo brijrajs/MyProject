@@ -1,0 +1,190 @@
+##
+## UltraCart - Mr Teas Template
+## http://www.ultracart.com/
+##
+## Copyright (c) 2015 BPS Info Solutions Inc.
+## License located here:
+## http://www.ultracart.com/storefront/license/
+##
+## Designed by Level 2 Design, LLC http://www.level2d.com/
+##
+
+#* @vtlvariable name="merchantId" type="java.lang.String" *#
+#* @vtlvariable name="formatHelper" type="com.bpsinfo.ultracart.catalog.tobjects.FormatHelper" *#
+#* @vtlvariable name="i18n" type="com.bpsinfo.storefront.tobjects.I18nWriter" *#
+#* @vtlvariable name="form" type="com.bpsinfo.ultracart.affiliate.ui.partner.EditManagedLinkForm" *#
+
+
+#set( $pageGroup = 'affiliate' )
+#set( $bodyClass = 'affiliate edit-managed-links' )
+#set( $pageTitle = 'Edit Managed Link - Affiliate Partner' )
+#parse('/snippets/top.vm')
+
+#set( $title = 'Edit Link' )
+#parse('/snippets/title.vm')
+
+<form action="/affiliate/partner/editManagedLinkSave.do" name="editLinkForm" method="post">
+	<input type="hidden" name="affiliateLinkOid" value="$!form.affiliateLinkOid"/>
+	<input type="hidden" name="affiliateProgramManagedLinkOid" value="$!form.affiliateProgramManagedLinkOid"/>
+	<input type="hidden" name="allowCustomLandingUrl" value="$!form.allowCustomLandingUrl"/>
+	<input type="hidden" name="type" id="typeId" class="js-type-id" value="$i18n.escape($!form.type)"/>
+    #parse('/snippets/common/storefront_template_spec_version.vm')
+
+	#parse('/snippets/errors.vm')
+	#parse('/snippets/info_messages.vm')
+
+	<div class="row">
+		<div class="columns small-8">
+			<p>
+				What would you like to name this link?  Your naming scheme will help you organize your links and edit them later.
+			</p>
+
+			<div class="clearfix"></div>
+
+			<label class="label-group">
+				<span>Name</span>
+				<input type="text" name="name" value="$i18n.escape($form.name)" class="ucDefault"/>
+			</label>
+
+			#if($form.allowCustomLandingUrl)
+				<div class="clearfix"></div>
+				<p>
+					By default we will take the user to
+					<a target="_blank" href="$!{form.targetUrl}">$i18n.escape($!form.targetUrlName)</a>.
+					You can optionally set a different landing page to send the customer to.
+				</p>
+				<label class="label-group">
+					<span>Custom Landing Page(optional)</span>
+					<input type="text" name="customLandingUrl" value="$i18n.escape($form.customLandingUrl)" maxlength="250"/>
+				</label>
+			#end ## if allowsCustomLandingUrl
+
+
+			#if($form.showCustomHtml)
+				<div class="clearfix"></div>
+
+				<p>
+					This merchant has given you the ability to include a snippet of HTML on their receipt.
+					This is useful for tracking conversions with 3rd party advertising systems like Google Adwords.
+					If you would like to use this feature, enter your html snippet below.
+				</p>
+
+				<label class="label-group">
+					<textarea name="customHtml">$i18n.escape($!form.customHtml)</textarea>
+				</label>
+			#end ##if-showCustomHtml
+
+			#if($form.showConversionCodeSection)
+				<div class="clearfix"></div>
+
+				<p>
+					If you would like PPC conversion code to render on the receipt you can specify your account ID below.
+					This setting can be applied globally under the
+					<a href="/affiliate/partner/updateInformationLoad.do">Update Information</a> link off the main menu.
+					If you specify it here it will override your global setting under Update Information.
+				</p>
+
+				#if($form.showGoogle)
+					<label class="label-group">
+						<span>Google Conversion ID</span>
+						<input type="text" name="googleConversionId" value="$i18n.escape($form.googleConversionId)" maxlength="30"/>
+					</label>
+					<small>(Optional - <a href="/affiliate/partner/findGoogle.jsp" class="js-help">help finding this number</a>)</small>
+				#end ##if-showGoogleConversionId
+
+
+				#if($form.showYahoo)
+					<label class="label-group">
+						<span>Yahoo Search Marketing Account ID</span>
+						<input type="text" name="ysmAccountId" value="$i18n.escape($form.ysmAccountId)" maxlength="30"/>
+					</label>
+					<small>(Optional - <a href="/affiliate/partner/findYahoo.jsp" class="js-help">help finding this number</a>)</small>
+				#end ##if-showYsmAccountId
+			#end ##if-showConversionCodeSection
+		</div>
+
+		<div class="columns small-8">
+			<div class="link-container js-link-container js-image-container">
+				<label class="label-group">
+					<span>Select the image you would like to use in your link</span>
+				</label>
+
+				<div class="clearfix"></div>
+
+				<ul class="option-group link-type">
+					#foreach($imageCreative in $form.imageCreatives)
+						<li>
+							<input type="radio" name="selectedImageCreativeOid" value="$imageCreative.creativeOid" #if($form.selectedImageCreativeOid == $imageCreative.creativeOid)checked#{end}/>
+							<label>
+								<img src="/affiliate/displayImage.jsp?oid=$!{imageCreative.creativeOid}" alt="" />
+							</label>
+						</li>
+					#end ## foreach image creative
+				</ul>
+			</div>
+
+			<div class="link-container js-link-container js-text-container">
+				<label class="label-group">
+					<span>Select the text you would like to use in your link</span>
+				</label>
+
+				<div class="clearfix"></div>
+
+				<ul class="option-group link-type">
+					#foreach($textCreative in $form.textCreatives)
+						<li>
+							<input type="radio" name="selectedTextCreativeOid" value="$textCreative.creativeOid" #if($form.selectedTextCreativeOid == $textCreative.creativeOid)checked#{end}/>
+							<label>
+								<strong>$i18n.escape($textCreative.text)</strong>
+							</label>
+						</li>
+					#end ##foreach creatives
+				</ul>
+			</div>
+
+			<div class="link-container js-link-container js-invisible-container" data-size="$form.invisibleLinkCreatives.size()">
+				<label class="label-group">
+					<span>
+						What URL will you be referring traffic from?  For example if you specify http://www.mysite.com, any traffic that
+						starts with that URL sent to our landing pages will be credited to your affiliate account
+					</span>
+				</label>
+
+				<input type="text" name="invisibleUrl" value="$i18n.escape($form.invisibleUrl)" />
+			</div>
+
+			<div class="link-container js-link-container js-invisible-more-container">
+				<label class="label-group">
+					<span>
+						Select the URL that you would like to send traffic to
+					</span>
+				</label>
+
+				<div class="clearfix"></div>
+
+				<ul class="option-group link-type">
+					#foreach($invisible in $form.invisibleLinkCreatives)
+						<li>
+							<input type="radio"
+								name="selectedInvisibleLinkCreativeOid"
+								value='$invisible.creativeOid'
+								#if($form.selectedInvisibleLinkCreativeOid == $invisible.creativeOid)checked#{end}/>
+							<label>
+								<strong>$i18n.escape($invisible.url)</strong>
+							</label>
+						</li>
+					#end ## foreach invisibleLinkCreatives
+				</ul>
+			</div>
+		</div>
+	</div>
+
+	#set( $showBackButton = true )
+	#set( $showManageLinksButton = true )
+	#set( $button = 'Save' )
+	#parse('/snippets/affiliate/button.vm')
+
+	#parse('/snippets/common/cs_token.vm')
+</form>
+
+#parse('/snippets/bottom.vm')

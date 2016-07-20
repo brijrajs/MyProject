@@ -1,0 +1,278 @@
+##
+## UltraCart - Mr Teas Template
+## http://www.ultracart.com/
+##
+## Copyright (c) 2015 BPS Info Solutions Inc.
+## License located here:
+## http://www.ultracart.com/storefront/license/
+##
+## Designed by Level 2 Design, LLC http://www.level2d.com/
+##
+
+## uc:contains-velocity="true"
+## uc:page-type="item"
+## uc:item-multimedia-default-used="true"
+## uc:theme-attribute-boolean="Show Options"
+
+## uc:site-attribute-string="facebookAccount"
+## uc:site-attribute-string="twitterAccount"
+## uc:site-attribute-string="pinterestAccount"
+## uc:site-attribute-boolean="shareFacebook"
+## uc:site-attribute-boolean="shareTwitter"
+## uc:site-attribute-boolean="sharePinterest"
+
+## uc:theme-attribute-boolean="Information Only Theme"
+
+#parse("/snippets/checkout_only_redirect.vm")
+
+#set($bodyClass = "product-page")
+#set($outOfStock = false)
+#if($item.isInventoryTracked())
+  #if($item.getAvailableQuantity() && $item.getAvailableQuantity() < 1)
+      #set($outOfStock = true)
+  #end
+#end
+
+#parse("/snippets/google_base_offer_id.vm")
+
+#parse("/snippets/top.vm")
+<div class="container single-product">
+	<div class="row">
+    	<div class="col-sm-6 col-md-6">
+        
+            <div class="product-list-images viewer">
+      <ul>
+        #if($item.getMultimedia("Image") && $item.getMultimedia("Image").size() > 0)
+
+          #foreach($img in $item.getMultimedia("Image"))
+
+            #if(!$img.isExcludeFromGallery() && $formatHelper.notNull($img.getCode()) != 'featured')
+              #if($img.getThumbnail(100, 100, false, $PNGThumbnails) && $img.getThumbnail(360, 360, false, $PNGThumbnails)) ## if this check fails, the thumbnail creation probably failed.
+                <li class="#if($outOfStock)out-of-stock#{end} product-image" #if($velocityCount > 1) style="display:none;" #end >
+                  <a href="$img.getViewSsl()">
+                    <strong>$formatHelper.notNull($img.getDescription())</strong>
+                    <span class="link">View</span>
+                      <img src="${baseThumbnailUrl}${img.getThumbnail(100, 100, false, $PNGThumbnails)}" data-large="${baseThumbnailUrl}${img.getThumbnail(360, 360, false, $PNGThumbnails)}" width="100" height="100" alt="$formatHelper.notNull($img.getDescription())" />
+                    #if($outOfStock)
+                      <sub>
+                        <em>Out of stock</em>
+                      </sub>
+                    #end
+                  </a>
+                </li>
+              #end
+            #end
+          #end
+        #else
+          <li #if($outOfStock)class="out-of-stock product-image" #{end}>
+            <strong>$item.getTitle()</strong>
+            <span class="link">View</span>
+            <img src="${baseThemeUrl}${theme.attr('Item No Image Available Image URL')}" data-large="${baseThemeUrl}${theme.attr('Item No Image Available Image URL')}" width="100" height="133" alt="$item.getTitle()" />
+            #if($outOfStock)
+              <sub>
+                <em>Out of stock</em>
+              </sub>
+            #end
+          </li>
+        #end
+      </ul>
+    </div>
+                   
+        </div><!-- End left side -->
+        
+    	<div class="col-sm-6 col-md-6">
+        	<div class="s-product-title">$item.getDescriptionNoEscape()</div>
+            <div class="s-price"><span>$item.getRegularCostLocalized()</span><img src="${baseUrl}/themes/MrTeas/assets/imgs/frees-shipping.png" alt=""></div>
+            <div class="clearfix"></div>
+            <div class="s-old-price">Before : $item.getRegularCostLocalized()</div>
+            <div class="s-desc">
+              #if($item.getMerchantItemID() ==  'Digestive_Enzymes')
+            »   One of The Strongest Digestive Enzyme Formulas On The Market EXTRA STRENGH!<br>
+            »   Fast Relief for Occasional Gas, Bloating &amp; Indigestion<br>
+            »   No More Feeling Bloated, Gassy and fat<br>
+            »   Ideal for High-protein Diets
+              #end
+              #if($item.getMerchantItemID() ==  'Digestive_Enzymes_Pr')
+            »   Provides Enzymes and Good Bacteria Promoting The Absorption of Nutrients<br>
+            »   Supports a Healthy Digestive Tract<br>
+            »   Supports healthy immune System<br>
+            »   Made in the USA in a FDA certified facility
+              #end
+              
+              #if($item.getMerchantItemID() ==  'Omega-3-Krill-Oil-50')
+              #end 
+              #if($item.getMerchantItemID() ==  'AdvancedProbiotic')
+            »   Help you keep a healthy balance of intestinal microflora<br>
+            »   Support your immune system<br>
+            »   Aids in Food Digestion<br>
+            »   Made in the USA in a FDA certified facility
+              #end
+            </div>
+            
+            
+            #set($hasVariations = $item.getVariations().size() > 0)
+            #if($hasVariations)
+            <form method="POST" action="$checkoutUrlHttps" id="add-cart-form">
+               <input type="hidden" name="merchantId" value="${merchantID}"/>
+               <input type="hidden" name="ADD" value="${item.getMerchantItemID()}"/>
+             
+               <div class="ways"><img class="img-responsive" src="${baseUrl}/themes/MrTeas/assets/imgs/3ways.png" alt=""></div>
+               #foreach($variation in $item.getVariations())
+                  <input type='hidden' name="VariationName${velocityCount}" value="${variation.getName()}"/>
+                  #foreach ($value in ${variation.getValues()})                    
+                    <div style="font-size:18px;line-height:18px; font-family: 'proxima_nova_ltsemibold';color:#000;width:100%;float:left;margin-bottom:10px;">        
+                    <input type="radio" name="VariationValue1" value="$value" style="margin-right:10px;" #if ($velocityCount == 1) checked #end/>$value </div>
+                  #end
+
+              	  <div style="clear:both;"></div>
+               #end
+           
+             <div class="row">
+                ## <div class="label-group">
+                ## </div>
+                <div class="columns small-4">
+                    <label for="item-quantity" class="label-group" style="margin:0px;">
+                      <input id="item-quantity" type="number" name="Quantity" value="1" min="1" />
+                    </label>
+                </div>
+                <div class="columns small-8 medium-9 half-margin-top">
+                  <input type="image" src="${baseUrl}/themes/MrTeas/assets/imgs/buy-btn.png" />
+                  ## <button type="submit" class="postfix item-qty-btn half-margin-top" #if($outOfStock) disabled #{end} title="Submit">ADD TO CART</button>
+                  <small>
+                    #if($item.isInventoryTracked() && $hasVariations == false)
+                      #if($item.getAvailableQuantity() && $item.getAvailableQuantity() < 1)
+                        Out of stock
+                      #end
+                    #end
+                  </small>
+                </div>
+              </div>
+            </form>
+            
+          	#else
+
+            <form method="POST" action="$checkoutUrlHttps" id="add-cart-form">
+               <input type="hidden" name="merchantId" value="${merchantID}"/>
+               <input type="hidden" name="ADD" value="${item.getMerchantItemID()}"/>
+             
+               <div class="row">
+                  ## <div class="label-group">
+                  ## </div>
+                  <div class="columns small-4">
+                    <label for="item-quantity" class="label-group" style="margin:0px;">
+                      <input id="item-quantity" type="number" name="Quantity" value="1" min="1" />
+                    </label>
+                  </div>
+                  <div class="columns small-8 medium-9 half-margin-top">
+                    <input type="image" src="${baseUrl}/themes/MrTeas/assets/imgs/buy-btn.png" />
+                    ## <button type="submit" class="postfix item-qty-btn half-margin-top" #if($outOfStock) disabled #{end} title="Submit">ADD TO CART</button>
+                    <small>
+                      #if($item.isInventoryTracked() && $hasVariations == false)
+                        #if($item.getAvailableQuantity() && $item.getAvailableQuantity() < 1)
+                          Out of stock
+                        #end
+                      #end
+                    </small>
+                  </div>
+                </div>
+            </form>
+
+            #end  ## if not variations
+          
+
+            
+            <div class="reviews">
+            	
+                #if($item.isReviewable())
+                    <div>Customer Reviews</div>
+                <div class="s-rating">
+                    
+                #if (!$item.hasApprovedReview())
+                  <a href="#panel-product-review" id="item-show-reviews" class="review-stars">
+                        No Reviews
+                       ## <span class='icon-star-0-4'></span>
+                       ## <span class='icon-star-0-4'></span>
+                       ## <span class='icon-star-0-4'></span>
+                       ## <span class='icon-star-0-4'></span>
+                       ## <span class='icon-star-0-4'></span>
+                  </a>
+                  
+                #else
+                  <a href="#panel-product-review" id="item-show-reviews" class="review-stars">
+                     $item.getReviewOverallAsHtml([
+                        "<span class='icon-star-0-4'></span>",
+                        "<span class='icon-star-1-4'></span>",
+                        "<span class='icon-star-2-4'></span>",
+                        "<span class='icon-star-3-4'></span>",
+                        "<span class='icon-star-4-4'></span>"
+                     ]) ($item.getReviews().size() Reviews)
+                  </a>
+             
+                #end   
+                </div>
+                #end
+                 <div class="clearfix"></div>
+                 #if ($item.hasApprovedReview())
+                   <a class="read-review" href="https://$checkoutHostName$item.getReviewUrl()">Read $item.getReviews().size() Review(s)</a>
+                 #end
+                 #if ($item.isReviewable())
+                 <a class="write-review" href="https://$checkoutHostName$item.getReviewUrl()">Write a Review</a>
+                 #end
+                <div>
+			<img src="${baseUrl}/themes/MrTeas/assets/imgs/hasslefreereturns.png" alt="hasslefreereturns">
+			<img src="${baseUrl}/themes/MrTeas/assets/imgs/fastshipping.png" alt="fastshipping">
+			<img src="${baseUrl}/themes/MrTeas/assets/imgs/satisfactionguaranteed.png" alt="satisfactionguaranteed">
+		</div>
+                
+                
+                
+            </div><!-- End Reviews -->
+            
+        </div><!-- End right collumn -->
+    </div><!-- End row -->
+    
+    <div class="row">
+        <div class="col-md-12">
+            <div class="clearfix"><br></div>
+            <!--Horizontal Tab-->
+            <div id="parentHorizontalTab" style="display: block; width: 100%; margin: 0px;">
+                <ul class="resp-tabs-list hor_1">
+                    <li class="resp-tab-item hor_1 resp-tab-active" id="hor_1_tab" aria-controls="hor_1_tab_item-0" role="tab" style="border-color: rgb(193, 193, 193); ">Description</li>
+                    <li class="resp-tab-item hor_1" id="hor_2_tab" aria-controls="hor_1_tab_item-1" role="tab" style="border-color: rgb(193, 193, 193); ">Ingredients</li>
+                    <li class="resp-tab-item hor_1" id="hor_3_tab" aria-controls="hor_1_tab_item-2" role="tab" style="border-color: rgb(193, 193, 193); ">Faq</li>
+                    <li class="resp-tab-item hor_1" id="hor_4_tab" aria-controls="hor_1_tab_item-3" role="tab" style="border-color: rgb(193, 193, 193); ">Reviews</li>
+                    <li class="resp-tab-item hor_1" id="hor_5_tab" aria-controls="hor_1_tab_item-4" role="tab" style="border-color: rgb(193, 193, 193); ">Videos</li>
+                </ul>
+                <div class="resp-tabs-container hor_1" style="border-color: rgb(193, 193, 193);">
+                    <h2 class="resp-accordion hor_1" role="tab" aria-controls="hor_1_tab_item-0" style="border-color: rgb(193, 193, 193); background: none rgb(235, 235, 235);"><span class="resp-arrow"></span>Description</h2><div id="descrip" class="resp-tab-content hor_1 resp-tab-content-active" aria-labelledby="hor_1_tab_item-0">
+                        
+                          $item.getExtendedDescriptionNoEscape()
+                        
+                    </div><!-- End tab 1 -->
+                    <h2 class="resp-accordion hor_1" role="tab" aria-controls="hor_1_tab_item-1" style="border-color: rgb(193, 193, 193); background-color: rgb(235, 235, 235);"><span class="resp-arrow"></span>Ingredients</h2><div id="ingred" class="resp-tab-content hor_1" aria-labelledby="hor_1_tab_item-1">
+                        <p>Tab 2 Container</p>
+                    </div>
+                    <h2 class="resp-accordion hor_1" role="tab" aria-controls="hor_1_tab_item-2" style="border-color: rgb(193, 193, 193); background-color: white;"><span class="resp-arrow"></span>Guarantee</h2><div class="resp-tab-content hor_1" id="guarantee" aria-labelledby="hor_1_tab_item-2" >
+                        <p>Tab 3 Container</p>
+                    </div>
+                    <h2 class="resp-accordion hor_1" role="tab" aria-controls="hor_1_tab_item-3" style="border-color: rgb(193, 193, 193); background-color: white;"><span class="resp-arrow"></span>Reviews</h2><div class="resp-tab-content hor_1" id="reviwess" aria-labelledby="hor_1_tab_item-2" >
+                        <p>
+                      
+                      #if($item.isReviewable())
+                         #parse("/snippets/review.vm")
+                      #else
+                          <span style="color:red;">Not Riviewable</span>
+                      #end
+                     </p>
+                    </div>
+                    <h2 class="resp-accordion hor_1" role="tab" aria-controls="hor_1_tab_item-4" style="border-color: rgb(193, 193, 193); background-color: white;"><span class="resp-arrow"></span>Videos</h2><div class="resp-tab-content hor_1" id="videos" aria-labelledby="hor_1_tab_item-2" >
+                        <p>abc</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div><!-- end row -->
+    
+<!-- bottom -->
+#parse("/snippets/bottom.vm")

@@ -1,0 +1,44 @@
+##
+## UltraCart - Mr Teas Template
+## http://www.ultracart.com/
+##
+## Copyright (c) 2015 BPS Info Solutions Inc.
+## License located here:
+## http://www.ultracart.com/storefront/license/
+##
+## Designed by Level 2 Design, LLC http://www.level2d.com/
+##
+
+#* @vtlvariable name="formatHelper" type="com.bpsinfo.ultracart.catalog.tobjects.FormatHelper" *#
+#* @vtlvariable name="i18n" type="com.bpsinfo.storefront.tobjects.I18nWriter" *#
+#* @vtlvariable name="form" type="com.bpsinfo.ultracart.affiliate.ui.AffiliateSignupForm" *#
+
+#set( $pageGroup = 'affiliate' )
+#set( $bodyClass = 'affiliate sign-up-success' )
+#set( $pageTitle = $i18n.write("affiliate.signup.title","Affiliate Signup") )
+#parse('/snippets/top.vm')
+
+#set( $title = $pageTitle )
+#parse('/snippets/title.vm')
+
+#parse('/snippets/errors.vm')
+#parse('/snippets/info_messages.vm')
+
+<div class="row">
+	<div class="columns small-16">
+		<h2>$i18n.write("affiliate.signupComplete.header","APPLICATION COMPLETE")</h2>
+	</div>
+
+	<div class="columns small-16">
+		<p>
+			$i18n.write("affiliate.signupComplete.message","Your application has been received.  Upon approval, you will receive a link to our affiliate manager application.  If you have any questions, please do not hesitate to contact us.")
+		</p>
+	</div>
+</div>
+
+<form action="$!form.continueUrl" method="get">
+    #parse('/snippets/common/storefront_template_spec_version.vm')
+	#parse('/snippets/button.continue.vm')
+</form>
+
+#parse('/snippets/bottom.vm')

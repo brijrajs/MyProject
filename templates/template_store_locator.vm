@@ -1,0 +1,49 @@
+##
+## UltraCart - Mr Teas Template
+## http://www.ultracart.com/
+##
+## Copyright (c) 2015 BPS Info Solutions Inc.
+## License located here:
+## http://www.ultracart.com/storefront/license/
+##
+## Designed by Level 2 Design, LLC http://www.level2d.com/
+##
+
+## uc:contains-velocity="true"
+## uc:page-type="static"
+## uc:page-attribute-string="subtitle"
+## uc:page-attribute-html="content"
+
+## uc:menu-used="header"
+## uc:menu-used="help"
+## uc:menu-used="footer"
+## uc:menu-used="account"
+
+#parse("/snippets/checkout_only_redirect.vm")
+
+#set($bodyClass = "store-locator")
+#set($pageGroup = "store-locator")
+
+#parse("/snippets/top.vm")
+
+	<div class="row no-margin">
+    <div class="columns small-16">
+      #parse("/snippets/breadcrumbs.vm")
+    </div>
+  </div>
+  <div class="row">
+    <div class="columns small-16">
+      #if($group.getAttribute("subtitle") && $group.getAttribute("subtitle") != '')
+        <h2>$group.getAttribute("subtitle")</h2>
+      #end
+
+      <div class="page-content">
+
+        #parse("/snippets/store_locator.vm")
+
+      </div>
+
+    </div>
+  </div>
+
+#parse("/snippets/bottom.vm")

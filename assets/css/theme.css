@@ -1,0 +1,1019 @@
+##
+## UltraCart - Mr Teas Template
+## http://www.ultracart.com/
+##
+## Copyright (c) 2015 BPS Info Solutions Inc.
+## License located here:
+## http://www.ultracart.com/storefront/license/
+##
+## Designed by Level 2 Design, LLC http://www.level2d.com/
+##
+## uc:contains-velocity="true"
+## uc:theme-attribute-color="Theme Color 01"
+## uc:theme-attribute-color="Theme Color 02"
+## uc:theme-attribute-color="Theme Color 03"
+## uc:theme-attribute-color="Theme Color 04"
+## uc:theme-attribute-color="Theme Color 05"
+## uc:theme-attribute-color="Theme Color 06"
+## uc:theme-attribute-color="Theme Color 07"
+## uc:theme-attribute-color="Theme Color 08"
+## uc:theme-attribute-color="Theme Color 09"
+## uc:theme-attribute-color="Theme Color 10"
+## uc:theme-attribute-color="Primary Background Color"
+## uc:theme-attribute-color="Secondary Background Color"
+## uc:theme-attribute-color="Primary Font Color"
+## uc:theme-attribute-color="Secondary Font Color"
+## uc:theme-attribute-color="Primary Input Background Color"
+## uc:theme-attribute-color="Primary Input Border Color"
+## uc:theme-attribute-color="Primary Input Font Color"
+## uc:theme-attribute-color="Primary Headers Font Color"
+## uc:theme-attribute-color="Primary Headers Border Color"
+## uc:theme-attribute-color="Secondary Headers Font Color"
+## uc:theme-attribute-color="Primary Border Color"
+## uc:theme-attribute-color="Primary Link Font Color"
+## uc:theme-attribute-color="Primary Link Hover Font Color"
+## uc:theme-attribute-color="Primary Button Background Color"
+## uc:theme-attribute-color="Primary Button Hover Background Color"
+## uc:theme-attribute-color="Primary Button Border Color"
+## uc:theme-attribute-color="Primary Button Hover Border Color"
+## uc:theme-attribute-color="Primary Button Font Color"
+## uc:theme-attribute-color="Primary Button Hover Font Color"
+## uc:theme-attribute-color="Secondary Button Background Color"
+## uc:theme-attribute-color="Secondary Button Hover Background Color"
+## uc:theme-attribute-color="Secondary Button Border Color"
+## uc:theme-attribute-color="Secondary Button Hover Border Color"
+## uc:theme-attribute-color="Secondary Button Font Color"
+## uc:theme-attribute-color="Secondary Button Hover Font Color"
+## uc:theme-attribute-color="Disabled Button Background Color"
+## uc:theme-attribute-color="Disabled Button Border Color"
+## uc:theme-attribute-color="Disabled Button Font Color"
+## uc:theme-attribute-color="Primary Header Background Color"
+## uc:theme-attribute-color="Primary Header Logo Font Color"
+## uc:theme-attribute-color="Primary Header Logo Border Color"
+## uc:theme-attribute-color="Primary Header Nav Font Color"
+## uc:theme-attribute-color="Primary Header Nav Hover Font Color"
+## uc:theme-attribute-color="Primary Header Sub Nav Background Color"
+## uc:theme-attribute-color="Primary Header Sub Nav Font Color"
+## uc:theme-attribute-color="Primary Header Sub Nav Hover Font Color"
+## uc:theme-attribute-color="Secondary Header Background Color"
+## uc:theme-attribute-color="Secondary Header Icons Color"
+## uc:theme-attribute-color="Secondary Header Hover Icons Color"
+## uc:theme-attribute-color="Secondary Header Promo Font Color"
+## uc:theme-attribute-color="Secondary Header Cart Summary Background Color"
+## uc:theme-attribute-color="Secondary Header Cart Summary Font Color"
+## uc:theme-attribute-color="Footer Background Color"
+## uc:theme-attribute-color="Footer Font Color"
+## uc:theme-attribute-color="Footer Border Color"
+## uc:theme-attribute-color="Footer Link Font Color"
+## uc:theme-attribute-color="Footer Link Hover Font Color"
+## uc:theme-attribute-color="Footer Logo Font Color"
+## uc:theme-attribute-color="Footer Logo Border Color"
+## uc:theme-attribute-color="Mobile Nav Background Color"
+## uc:theme-attribute-color="Mobile Nav Font Color"
+## uc:theme-attribute-color="Mobile Nav Border Color"
+## uc:theme-attribute-color="Mobile Search Icon Color"
+## uc:theme-attribute-color="Mobile Search Icon Background Color"
+## uc:theme-attribute-color="Item View Link Button Background Color"
+## uc:theme-attribute-color="Item View Link Button Font Color"
+## uc:theme-attribute-color="Item Sale Banner Background Color"
+## uc:theme-attribute-color="Item Sale Banner Font Color"
+## uc:theme-attribute-color="Item Sale Price Font Color"
+## uc:theme-attribute-color="Item Out Of Stock Banner Background Color"
+## uc:theme-attribute-color="Item Out Of Stock Banner Font Color"
+## uc:theme-attribute-color="Item Review Star Color"
+## uc:theme-attribute-color="System Yes Color"
+## uc:theme-attribute-color="System No Color"
+## uc:theme-attribute-color="Home Slider Font Color"
+## uc:theme-attribute-color="Home Slider Dot Border Color"
+## uc:theme-attribute-color="Home Slider Dot Hover Border Color"
+## uc:theme-attribute-color="Home Slider Dot Hover Fill Color"
+## uc:theme-attribute-color="Home Slider Dot Active Border Color"
+## uc:theme-attribute-color="Home Slider Dot Active Fill Color"
+/* General Universal Styles */
+## uc:theme-content-guide-selector="Theme Color 04"
+## uc:theme-content-guide-selector="Primary Font Color"
+body,
+.product-info,
+.price {
+	color: ${theme.attr("Primary Font Color", ${theme.attr("Theme Color 04")})};
+}
+## uc:theme-content-guide-selector="Theme Color 05"
+## uc:theme-content-guide-selector="Mobile Nav Background Color"
+body {
+	background-color: ${theme.attr("Mobile Nav Background Color", ${theme.attr("Theme Color 05")})};
+}
+## uc:theme-content-guide-selector="Theme Color 02"
+## uc:theme-content-guide-selector="Primary Input Border Color"
+## uc:theme-content-guide-selector="Theme Color 01"
+## uc:theme-content-guide-selector="Primary Input Background Color"
+## uc:theme-content-guide-selector="Theme Color 04"
+## uc:theme-content-guide-selector="Primary Input Font Color"
+select,
+input {
+	color: ${theme.attr("Primary Input Font Color", ${theme.attr("Theme Color 04")})};
+	background-color: ${theme.attr("Primary Input Background Color", ${theme.attr("Theme Color 01")})};
+	border-color: ${theme.attr("Primary Input Border Color", ${theme.attr("Theme Color 02")})};
+}
+## uc:theme-content-guide-selector="Theme Color 02"
+## uc:theme-content-guide-selector="Primary Input Border Color"
+## uc:theme-content-guide-selector="Theme Color 01"
+## uc:theme-content-guide-selector="Primary Input Background Color"
+## uc:theme-content-guide-selector="Theme Color 04"
+## uc:theme-content-guide-selector="Primary Input Font Color"
+input[type="text"],
+input[type="password"],
+input[type="date"],
+input[type="datetime"],
+input[type="datetime-local"],
+input[type="month"],
+input[type="week"],
+input[type="email"],
+input[type="number"],
+input[type="search"],
+input[type="tel"],
+input[type="time"],
+input[type="url"],
+input[type="color"],
+textarea {
+	color: ${theme.attr("Primary Input Font Color", ${theme.attr("Theme Color 04")})};
+	background-color: ${theme.attr("Primary Input Background Color", ${theme.attr("Theme Color 01")})};
+	border-color: ${theme.attr("Primary Input Border Color", ${theme.attr("Theme Color 02")})};
+}
+## uc:theme-content-guide-selector="Theme Color 02"
+## uc:theme-content-guide-selector="Primary Input Border Color"
+## uc:theme-content-guide-selector="Theme Color 01"
+## uc:theme-content-guide-selector="Primary Input Background Color"
+## uc:theme-content-guide-selector="Theme Color 04"
+## uc:theme-content-guide-selector="Primary Input Font Color"
+input[type="text"][disabled],
+input[type="text"][readonly],
+fieldset[disabled] input[type="text"],
+input[type="password"][disabled],
+input[type="password"][readonly],
+fieldset[disabled] input[type="password"],
+input[type="date"][disabled], input[type="date"][readonly],
+fieldset[disabled] input[type="date"],
+input[type="datetime"][disabled],
+input[type="datetime"][readonly],
+fieldset[disabled] input[type="datetime"],
+input[type="datetime-local"][disabled],
+input[type="datetime-local"][readonly],
+fieldset[disabled] input[type="datetime-local"],
+input[type="month"][disabled],
+input[type="month"][readonly],
+fieldset[disabled] input[type="month"],
+input[type="week"][disabled],
+input[type="week"][readonly],
+fieldset[disabled] input[type="week"],
+input[type="email"][disabled],
+input[type="email"][readonly],
+fieldset[disabled] input[type="email"],
+input[type="number"][disabled],
+input[type="number"][readonly],
+fieldset[disabled] input[type="number"],
+input[type="search"][disabled],
+input[type="search"][readonly],
+fieldset[disabled] input[type="search"],
+input[type="tel"][disabled],
+input[type="tel"][readonly],
+fieldset[disabled] input[type="tel"],
+input[type="time"][disabled],
+input[type="time"][readonly],
+fieldset[disabled] input[type="time"],
+input[type="url"][disabled],
+input[type="url"][readonly],
+fieldset[disabled] input[type="url"],
+input[type="color"][disabled],
+input[type="color"][readonly],
+fieldset[disabled] input[type="color"],
+textarea[disabled],
+textarea[readonly],
+fieldset[disabled] textarea {
+	color: ${theme.attr("Primary Input Font Color", ${theme.attr("Theme Color 04")})};
+	background-color: ${theme.attr("Primary Input Background Color", ${theme.attr("Theme Color 01")})};
+	border-color: ${theme.attr("Primary Input Border Color", ${theme.attr("Theme Color 02")})};
+}
+## uc:theme-content-guide-selector="Theme Color 06"
+## uc:theme-content-guide-selector="Primary Link Font Color"
+.breadcrumb a {
+	color: ${theme.attr("Primary Link Font Color", ${theme.attr("Theme Color 06")})};
+}
+## uc:theme-content-guide-selector="Theme Color 04"
+## uc:theme-content-guide-selector="Secondary Font Color"
+.small,
+small {
+	color: ${theme.attr("Secondary Font Color", ${theme.attr("Theme Color 04")})};
+}
+## uc:theme-content-guide-selector="Theme Color 01"
+## uc:theme-content-guide-selector="Primary Background Color"
+#galaxy,
+.title span,
+.cart-summary h2 {
+	background-color: ${theme.attr("Primary Background Color", ${theme.attr("Theme Color 01")})};
+}
+## uc:theme-content-guide-selector="Theme Color 03"
+## uc:theme-content-guide-selector="Primary Header Background Color"
+#main-header {
+	background-color: ${theme.attr("Primary Header Background Color", ${theme.attr("Theme Color 03")})};
+}
+## uc:theme-content-guide-selector="Theme Color 05"
+## uc:theme-content-guide-selector="Primary Header Logo Border Color"
+## uc:theme-content-guide-selector="Theme Color 05"
+## uc:theme-content-guide-selector="Primary Header Logo Font Color"
+#main-header .company-logo span {
+	color: ${theme.attr("Primary Header Logo Font Color", ${theme.attr("Theme Color 05")})};
+	border-color: ${theme.attr("Primary Header Logo Border Color", ${theme.attr("Theme Color 05")})};
+}
+## uc:theme-content-guide-selector="Theme Color 03"
+## uc:theme-content-guide-selector="Primary Border Color"
+## uc:theme-content-guide-selector="Theme Color 03"
+## uc:theme-content-guide-selector="Primary Border Color"
+## uc:theme-content-guide-selector="Theme Color 03"
+## uc:theme-content-guide-selector="Primary Border Color"
+hr {
+	border-color: ${theme.attr("Primary Border Color", ${theme.attr("Theme Color 03")})};
+	color: ${theme.attr("Primary Border Color", ${theme.attr("Theme Color 03")})};
+	background-color: ${theme.attr("Primary Border Color", ${theme.attr("Theme Color 03")})};
+}
+## uc:theme-content-guide-selector="Theme Color 02"
+## uc:theme-content-guide-selector="Primary Headers Border Color"
+## uc:theme-content-guide-selector="Theme Color 05"
+## uc:theme-content-guide-selector="Primary Headers Font Color"
+h1 {
+	color: ${theme.attr("Primary Headers Font Color", ${theme.attr("Theme Color 05")})};
+	border-bottom-color: ${theme.attr("Primary Headers Border Color", ${theme.attr("Theme Color 02")})};
+}
+## uc:theme-content-guide-selector="Theme Color 05"
+## uc:theme-content-guide-selector="Secondary Headers Font Color"
+h2,
+.panel-title,
+.title,
+.product-info .product-title,
+.cart h2,
+h3,
+h4 {
+	color: ${theme.attr("Secondary Headers Font Color", ${theme.attr("Theme Color 05")})};
+}
+## uc:theme-content-guide-selector="Theme Color 02"
+## uc:theme-content-guide-selector="Primary Headers Border Color"
+## uc:theme-content-guide-selector="Theme Color 05"
+## uc:theme-content-guide-selector="Primary Headers Font Color"
+body.catalog.sidebar aside h2 {
+	color: ${theme.attr("Primary Headers Font Color", ${theme.attr("Theme Color 05")})};
+	border-bottom-color: ${theme.attr("Primary Headers Border Color", ${theme.attr("Theme Color 02")})};
+}
+## uc:theme-content-guide-selector="Theme Color 03"
+## uc:theme-content-guide-selector="Primary Border Color"
+## uc:theme-content-guide-selector="Theme Color 03"
+## uc:theme-content-guide-selector="Primary Border Color"
+## uc:theme-content-guide-selector="Theme Color 03"
+## uc:theme-content-guide-selector="Primary Border Color"
+.cart-summary .total::before {
+	border-color: ${theme.attr("Primary Border Color", ${theme.attr("Theme Color 03")})};
+	color: ${theme.attr("Primary Border Color", ${theme.attr("Theme Color 03")})};
+	background-color: ${theme.attr("Primary Border Color", ${theme.attr("Theme Color 03")})};
+}
+## uc:theme-content-guide-selector="Theme Color 03"
+## uc:theme-content-guide-selector="Primary Border Color"
+## uc:theme-content-guide-selector="Theme Color 02"
+## uc:theme-content-guide-selector="Secondary Background Color"
+.cart h2,
+.cart-summary {
+	background-color: ${theme.attr("Secondary Background Color", ${theme.attr("Theme Color 02")})};
+	border-color: ${theme.attr("Primary Border Color", ${theme.attr("Theme Color 03")})};
+}
+## uc:theme-content-guide-selector="Theme Color 03"
+## uc:theme-content-guide-selector="Primary Border Color"
+.title:before {
+	background-color: ${theme.attr("Primary Border Color", ${theme.attr("Theme Color 03")})};
+}
+## uc:theme-content-guide-selector="Theme Color 03"
+## uc:theme-content-guide-selector="Primary Border Color"
+.title span,
+.option-group li {
+	border-color: ${theme.attr("Primary Border Color", ${theme.attr("Theme Color 03")})};
+}
+## uc:theme-content-guide-selector="Theme Color 04"
+## uc:theme-content-guide-selector="Mobile Nav Border Color"
+#main-nav li ul {
+	border-bottom-color: ${theme.attr("Mobile Nav Border Color", ${theme.attr("Theme Color 04")})};
+}
+## uc:theme-content-guide-selector="Theme Color 04"
+## uc:theme-content-guide-selector="Mobile Nav Border Color"
+## uc:theme-content-guide-selector="Theme Color 01"
+## uc:theme-content-guide-selector="Mobile Nav Font Color"
+#main-nav a,
+#main-nav li:hover > a {
+    color: ${theme.attr("Mobile Nav Font Color", ${theme.attr("Theme Color 01")})};
+    border-bottom-color: ${theme.attr("Mobile Nav Border Color", ${theme.attr("Theme Color 04")})};
+}
+## uc:theme-content-guide-selector="Theme Color 01"
+## uc:theme-content-guide-selector="Primary Header Sub Nav Font Color"
+#main-nav li ul a {
+	color: ${theme.attr("Primary Header Sub Nav Font Color", ${theme.attr("Theme Color 01")})};
+}
+## uc:theme-content-guide-selector="Theme Color 06"
+## uc:theme-content-guide-selector="Primary Header Sub Nav Hover Font Color"
+#main-nav li ul a:hover {
+	color: ${theme.attr("Primary Header Sub Nav Hover Font Color", ${theme.attr("Theme Color 06")})};
+}
+## uc:theme-content-guide-selector="Theme Color 04"
+## uc:theme-content-guide-selector="Secondary Header Icons Color"
+#main-header .menu-cart,
+#main-header .icon-menu {
+	color: ${theme.attr("Secondary Header Icons Color", ${theme.attr("Theme Color 04")})};
+}
+## uc:theme-content-guide-selector="Theme Color 05"
+## uc:theme-content-guide-selector="Secondary Header Background Color"
+#main-header .secondary-masthead {
+	background-color: ${theme.attr("Secondary Header Background Color", ${theme.attr("Theme Color 05")})};
+}
+## uc:theme-content-guide-selector="Theme Color 04"
+## uc:theme-content-guide-selector="Secondary Header Icons Color"
+#main-header .social-links.small a,
+#main-header .account-link a {
+	color: ${theme.attr("Secondary Header Icons Color", ${theme.attr("Theme Color 04")})};
+}
+## uc:theme-content-guide-selector="Theme Color 06"
+## uc:theme-content-guide-selector="Secondary Header Hover Icons Color"
+#main-header .social-links.small a:hover,
+#main-header .account-link a:hover {
+	color: ${theme.attr("Secondary Header Hover Icons Color", ${theme.attr("Theme Color 06")})};
+}
+## uc:theme-content-guide-selector="Theme Color 04"
+## uc:theme-content-guide-selector="Secondary Header Promo Font Color"
+#main-header .header-message {
+	color: ${theme.attr("Secondary Header Promo Font Color", ${theme.attr("Theme Color 04")})};
+}
+## uc:theme-content-guide-selector="Theme Color 04"
+## uc:theme-content-guide-selector="Secondary Header Cart Summary Background Color"
+#main-header .header-cart {
+	background-color: ${theme.attr("Secondary Header Cart Summary Background Color", ${theme.attr("Theme Color 04")})};
+}
+## uc:theme-content-guide-selector="Theme Color 01"
+## uc:theme-content-guide-selector="Secondary Header Cart Summary Font Color"
+#main-header .header-cart-summary {
+	color: ${theme.attr("Secondary Header Cart Summary Font Color", ${theme.attr("Theme Color 01")})};
+}
+## uc:theme-content-guide-selector="Theme Color 03"
+## uc:theme-content-guide-selector="Mobile Search Icon Background Color"
+#main-header .header-search a {
+	background-color: ${theme.attr("Mobile Search Icon Background Color", ${theme.attr("Theme Color 03")})};
+}
+## uc:theme-content-guide-selector="Theme Color 01"
+## uc:theme-content-guide-selector="Mobile Search Icon Color"
+#main-header .header-search a:before {
+	color: ${theme.attr("Mobile Search Icon Color", ${theme.attr("Theme Color 01")})};
+}
+## uc:theme-content-guide-selector="Theme Color 06"
+## uc:theme-content-guide-selector="Primary Header Nav Hover Font Color"
+#main-header .header-search a:hover:before {
+	color: ${theme.attr("Primary Header Nav Hover Font Color", ${theme.attr("Theme Color 06")})};
+}
+.featured-products-gallery h1,
+.featured-products-gallery,
+body.catalog.sidebar aside h2,
+body.catalog.sidebar aside,
+.featured-products-gallery h2 {
+	color: ${theme.attr("Home Slider Font Color", ${theme.attr("Theme Color 01")})};
+}
+## uc:theme-content-guide-selector="Theme Color 01"
+## uc:theme-content-guide-selector="Home Slider Dot Border Color"
+.featured-products-gallery .slick-dots button {
+	border: 1px solid color: ${theme.attr("Home Slider Dot Border Color", ${theme.attr("Theme Color 01")})};
+}
+## uc:theme-content-guide-selector="Theme Color 02"
+## uc:theme-content-guide-selector="Home Slider Dot Hover Border Color"
+## uc:theme-content-guide-selector="Theme Color 02"
+## uc:theme-content-guide-selector="Home Slider Dot Hover Fill Color"
+.slick-dots li button:hover,
+.slick-dots li button:focus {
+	background-color: ${theme.attr("Home Slider Dot Hover Fill Color", ${theme.attr("Theme Color 02")})};
+	border-color: ${theme.attr("Home Slider Dot Hover Border Color", ${theme.attr("Theme Color 02")})};
+}
+## uc:theme-content-guide-selector="Theme Color 02"
+## uc:theme-content-guide-selector="Home Slider Dot Active Border Color"
+## uc:theme-content-guide-selector="Theme Color 02"
+## uc:theme-content-guide-selector="Home Slider Dot Active Fill Color"
+.slick-dots li.slick-active button {
+	background-color: ${theme.attr("Home Slider Dot Active Fill Color", ${theme.attr("Theme Color 02")})};
+	border-color: ${theme.attr("Home Slider Dot Active Border Color", ${theme.attr("Theme Color 02")})};
+}
+## uc:theme-content-guide-selector="Theme Color 06"
+## uc:theme-content-guide-selector="Primary Link Font Color"
+a {
+	color: ${theme.attr("Primary Link Font Color", ${theme.attr("Theme Color 06")})};
+}
+## uc:theme-content-guide-selector="Theme Color 07"
+## uc:theme-content-guide-selector="Primary Link Hover Font Color"
+a:hover {
+	color: ${theme.attr("Primary Link Hover Font Color", ${theme.attr("Theme Color 07")})};
+}
+## uc:theme-content-guide-selector="Theme Color 01"
+## uc:theme-content-guide-selector="Primary Button Font Color"
+## uc:theme-content-guide-selector="Theme Color 06"
+## uc:theme-content-guide-selector="Primary Button Background Color"
+.paging li.page.current {
+	background-color: ${theme.attr("Primary Button Background Color", ${theme.attr("Theme Color 06")})};
+	color: ${theme.attr("Primary Button Font Color", ${theme.attr("Theme Color 01")})};
+}
+## uc:theme-content-guide-selector="Theme Color 01"
+## uc:theme-content-guide-selector="Primary Button Hover Font Color"
+## uc:theme-content-guide-selector="Theme Color 07"
+## uc:theme-content-guide-selector="Primary Button Hover Background Color"
+.paging li.page.current:hover {
+	background-color: ${theme.attr("Primary Button Hover Background Color", ${theme.attr("Theme Color 07")})};
+	color: ${theme.attr("Primary Button Hover Font Color", ${theme.attr("Theme Color 01")})};
+}
+## uc:theme-content-guide-selector="Theme Color 01"
+## uc:theme-content-guide-selector="Primary Button Font Color"
+## uc:theme-content-guide-selector="Theme Color 06"
+## uc:theme-content-guide-selector="Primary Button border Color"
+## uc:theme-content-guide-selector="Theme Color 06"
+## uc:theme-content-guide-selector="Primary Button Background Color"
+button,
+.button,
+button.primary,
+.button.primary {
+	background-color: $theme.attr("Primary Button Background Color");
+	color: $theme.attr("Primary Button Font Color");
+}
+button.secondary,
+.button.secondary {
+	background-color: #6CADCE;
+	## border-color: $theme.attr("Secondary Button Background Color");
+	color: $theme.attr("Secondary Button Font Color");
+}
+## uc:theme-content-guide-selector="Theme Color 01"
+## uc:theme-content-guide-selector="Secondary Button Hover Font Color"
+## uc:theme-content-guide-selector="Theme Color 08"
+## uc:theme-content-guide-selector="Secondary Button Hover Border Color"
+## uc:theme-content-guide-selector="Theme Color 08"
+## uc:theme-content-guide-selector="Secondary Button Hover Background Color"
+button.secondary:hover,
+.button.secondary:hover {
+	background-color: #619DBB;
+	## background-color: $theme.attr("Secondary Button Hover Background Color");
+	border-color: $theme.attr("Secondary Button Background Color");
+	color: $theme.attr("Secondary Button Font Color");
+}
+## uc:theme-content-guide-selector="Theme Color 03"
+## uc:theme-content-guide-selector="Disabled Button Font Color"
+## uc:theme-content-guide-selector="Theme Color 03"
+## uc:theme-content-guide-selector="Disabled Button Border Color"
+## uc:theme-content-guide-selector="Theme Color 02"
+## uc:theme-content-guide-selector="Disabled Button Background Color"
+button:disabled,
+.button:disabled {
+	background-color: ${theme.attr("Disabled Button Background Color", ${theme.attr("Theme Color 02")})};
+	border-color: ${theme.attr("Disabled Button Border Color", ${theme.attr("Theme Color 03")})};
+	color: ${theme.attr("Disabled Button Font Color", ${theme.attr("Theme Color 03")})};
+}
+## uc:theme-content-guide-selector="Theme Color 03"
+## uc:theme-content-guide-selector="Disabled Button Font Color"
+## uc:theme-content-guide-selector="Theme Color 03"
+## uc:theme-content-guide-selector="Disabled Button Border Color"
+## uc:theme-content-guide-selector="Theme Color 02"
+## uc:theme-content-guide-selector="Disabled Button Background Color"
+button:disabled:hover,
+.button:disabled:hover {
+	background-color: ${theme.attr("Disabled Button Background Color", ${theme.attr("Theme Color 02")})};
+	border-color: ${theme.attr("Disabled Button Border Color", ${theme.attr("Theme Color 03")})};
+	color: ${theme.attr("Disabled Button Font Color", ${theme.attr("Theme Color 03")})};
+}
+## uc:theme-content-guide-selector="Theme Color 03"
+## uc:theme-content-guide-selector="Primary Border Color"
+.panel {
+	border-color: ${theme.attr("Primary Border Color", ${theme.attr("Theme Color 03")})};
+}
+## uc:theme-content-guide-selector="Theme Color 02"
+## uc:theme-content-guide-selector="Secondary Background Color"
+.panel.active,
+.panel:hover {
+	background: ${theme.attr("Secondary Background Color", ${theme.attr("Theme Color 02")})};
+}
+## uc:theme-content-guide-selector="Theme Color 06"
+## uc:theme-content-guide-selector="Primary Link Font Color"
+.product-list-images .product-info .product-title:hover {
+	color: ${theme.attr("Primary Link Font Color", ${theme.attr("Theme Color 06")})};
+}
+button:hover,
+button:focus,
+.button:hover,
+.button:focus,
+.button:hover,
+button.primary:hover,
+.button.primary:hover {
+	background-color: $theme.attr("Primary Button Hover Background Color");
+	color: $theme.attr("Primary Button Hover Font Color");
+}
+#main-footer {
+	background-color: ${theme.attr("Footer Background Color", ${theme.attr("Theme Color 05")})};
+	color: ${theme.attr("Footer Font Color", ${theme.attr("Theme Color 04")})};
+}
+## uc:theme-content-guide-selector="Theme Color 01"
+## uc:theme-content-guide-selector="Footer Link Font Color"
+#main-footer a {
+	color: ${theme.attr("Footer Link Font Color", ${theme.attr("Theme Color 01")})};
+}
+## uc:theme-content-guide-selector="Theme Color 01"
+## uc:theme-content-guide-selector="Footer Link Font Color"
+#main-footer address a {
+	color: ${theme.attr("Footer Link Font Color", ${theme.attr("Theme Color 01")})};
+}
+## uc:theme-content-guide-selector="Theme Color 06"
+## uc:theme-content-guide-selector="Footer Link Hover Font Color"
+#main-footer a:hover,
+#main-footer .subfooter .credits em a:hover  {
+	color: ${theme.attr("Footer Link Hover Font Color", ${theme.attr("Theme Color 06")})};
+}
+## uc:theme-content-guide-selector="Theme Color 04"
+## uc:theme-content-guide-selector="Footer Border Color"
+## uc:theme-content-guide-selector="Theme Color 04"
+## uc:theme-content-guide-selector="Footer Font Color"
+#main-footer h1,
+#main-footer body.catalog.sidebar aside h2,
+body.catalog.sidebar aside #main-footer h2 {
+	color: ${theme.attr("Footer Font Color", ${theme.attr("Theme Color 04")})};
+	border-bottom: 1px solid ${theme.attr("Footer Border Color", ${theme.attr("Theme Color 04")})};
+}
+## uc:theme-content-guide-selector="Theme Color 04"
+## uc:theme-content-guide-selector="Footer Border Color"
+## uc:theme-content-guide-selector="Theme Color 04"
+## uc:theme-content-guide-selector="Footer Border Color"
+#main-footer .subfooter {
+	border-top: 1px solid ${theme.attr("Footer Border Color", ${theme.attr("Theme Color 04")})};
+	border-bottom: 1px solid ${theme.attr("Footer Border Color", ${theme.attr("Theme Color 04")})};
+}
+## uc:theme-content-guide-selector="Theme Color 04"
+## uc:theme-content-guide-selector="Footer Font Color"
+#main-footer address {
+	color: ${theme.attr("Footer Font Color", ${theme.attr("Theme Color 04")})};
+}
+## uc:theme-content-guide-selector="Theme Color 04"
+## uc:theme-content-guide-selector="Footer Font Color"
+#main-footer .subfooter .credits em {
+	color: ${theme.attr("Footer Font Color", ${theme.attr("Theme Color 04")})};
+}
+## uc:theme-content-guide-selector="Theme Color 01"
+## uc:theme-content-guide-selector="Footer Logo Border Color"
+## uc:theme-content-guide-selector="Theme Color 01"
+## uc:theme-content-guide-selector="Footer Logo Font Color"
+#main-footer .subfooter .store-title {
+	color: ${theme.attr("Footer Logo Font Color", ${theme.attr("Theme Color 01")})};
+	border: 1px solid ${theme.attr("Footer Logo Border Color", ${theme.attr("Theme Color 01")})};
+}
+## uc:theme-content-guide-selector="Theme Color 01"
+## uc:theme-content-guide-selector="Footer Link Font Color"
+#main-footer .subfooter .credits em a {
+	color: ${theme.attr("Footer Link Font Color", ${theme.attr("Theme Color 01")})};
+}
+/* Gallery Arrows and Elements
+----------------------------------------------------------------------------------------------------------------------*/
+## uc:theme-content-guide-selector="Theme Color 03"
+## uc:theme-content-guide-selector="Primary Border Color"
+## uc:theme-content-guide-selector="Theme Color 01"
+## uc:theme-content-guide-selector="Primary Background Color"
+.slick-prev,
+.slick-next,
+.slick-dots li button {
+	background: ${theme.attr("Primary Background Color", ${theme.attr("Theme Color 01")})};
+	border: 1px solid ${theme.attr("Primary Border Color", ${theme.attr("Theme Color 03")})};
+}
+## uc:theme-content-guide-selector="Theme Color 03"
+## uc:theme-content-guide-selector="Primary Border Color"
+## uc:theme-content-guide-selector="Theme Color 02"
+## uc:theme-content-guide-selector="Secondary Background Color"
+.product-list-images.viewer ul.slick-dots .slick-active button {
+	background-color: ${theme.attr("Secondary Background Color", ${theme.attr("Theme Color 02")})};
+	border-color: ${theme.attr("Primary Border Color", ${theme.attr("Theme Color 03")})};
+}
+## uc:theme-content-guide-selector="Theme Color 03"
+## uc:theme-content-guide-selector="Primary Border Color"
+## uc:theme-content-guide-selector="Theme Color 02"
+## uc:theme-content-guide-selector="Secondary Background Color"
+.slick-prev:hover,
+.slick-prev:focus,
+.slick-next:hover,
+.slick-next:focus {
+	background: ${theme.attr("Secondary Background Color", ${theme.attr("Theme Color 02")})};
+	border-color: ${theme.attr("Primary Border Color", ${theme.attr("Theme Color 03")})};
+}
+## uc:theme-content-guide-selector="Theme Color 04"
+## uc:theme-content-guide-selector="Primary Font Color"
+.slick-prev:before,
+.slick-next:before {
+	color: ${theme.attr("Primary Font Color", ${theme.attr("Theme Color 04")})};
+}
+## uc:theme-content-guide-selector="Theme Color 03"
+## uc:theme-content-guide-selector="Primary Border Color"
+.slick-slide.slick-center {
+	box-shadow: 0 0 0 1px ${theme.attr("Primary Border Color", ${theme.attr("Theme Color 03")})};;
+}
+/* Product Description and Review Tabs
+----------------------------------------------------------------------------------------------------------------------*/
+## uc:theme-content-guide-selector="Theme Color 03"
+## uc:theme-content-guide-selector="Primary Border Color"
+.tabs {
+	border-bottom: 1px solid ${theme.attr("Primary Border Color", ${theme.attr("Theme Color 03")})};
+}
+## uc:theme-content-guide-selector="Theme Color 01"
+## uc:theme-content-guide-selector="Primary Background Color"
+## uc:theme-content-guide-selector="Theme Color 01"
+## uc:theme-content-guide-selector="Primary Background Color"
+.tabs dd.active > a {
+	background: ${theme.attr("Primary Background Color", ${theme.attr("Theme Color 01")})};
+	border-bottom: 1px solid ${theme.attr("Primary Background Color", ${theme.attr("Theme Color 01")})};
+}
+## uc:theme-content-guide-selector="Theme Color 04"
+## uc:theme-content-guide-selector="Primary Font Color"
+.tabs dd.active a,
+.tabs .tab-title.active a {
+	color: ${theme.attr("Primary Font Color", ${theme.attr("Theme Color 04")})};
+}
+## uc:theme-content-guide-selector="Theme Color 04"
+## uc:theme-content-guide-selector="Primary Font Color"
+## uc:theme-content-guide-selector="Theme Color 02"
+## uc:theme-content-guide-selector="Secondary Background Color"
+## uc:theme-content-guide-selector="Theme Color 03"
+## uc:theme-content-guide-selector="Primary Border Color"
+.tabs dd > a {
+	border-color: ${theme.attr("Primary Border Color", ${theme.attr("Theme Color 03")})};
+	background-color: ${theme.attr("Secondary Background Color", ${theme.attr("Theme Color 02")})};
+	color: ${theme.attr("Primary Font Color", ${theme.attr("Theme Color 04")})};
+}
+## uc:theme-content-guide-selector="Theme Color 03"
+## uc:theme-content-guide-selector="Primary Border Color"
+.tabs dd:first-child > a {
+	border-left: 1px solid ${theme.attr("Primary Border Color", ${theme.attr("Theme Color 03")})};
+}
+## uc:theme-content-guide-selector="Theme Color 06"
+## uc:theme-content-guide-selector="Primary Button Background Color"
+## uc:theme-content-guide-selector="Theme Color 01"
+## uc:theme-content-guide-selector="Primary Background Color"
+.tabs dd > a:hover {
+	color: ${theme.attr("Primary Background Color", ${theme.attr("Theme Color 01")})};
+	background-color: ${theme.attr("Primary Button Background Color", ${theme.attr("Theme Color 06")})};
+}
+## uc:theme-content-guide-selector="Theme Color 01"
+## uc:theme-content-guide-selector="Primary Background Color"
+.tabs dd.active > a:hover {
+	color: ${theme.attr("Primary Background Color", ${theme.attr("Theme Color 01")})};
+}
+## uc:theme-content-guide-selector="Theme Color 03"
+## uc:theme-content-guide-selector="Secondary Font Color"
+body.product-page .row.collapse.product-review time {
+	color: ${theme.attr("Secondary Font Color", ${theme.attr("Theme Color 03")})};
+}
+## uc:theme-content-guide-selector="Theme Color 03"
+## uc:theme-content-guide-selector="Primary Border Color"
+body.product-page .row.collapse.product-review {
+	border-color: ${theme.attr("Primary Border Color", ${theme.attr("Theme Color 03")})};
+}
+## uc:theme-content-guide-selector="Theme Color 02"
+## uc:theme-content-guide-selector="Secondary Background Color"
+body.product-page .row.collapse.product-review:nth-child(odd) {
+	background-color: ${theme.attr("Secondary Background Color", ${theme.attr("Theme Color 02")})};
+}
+## uc:theme-content-guide-selector="Theme Color 03"
+## uc:theme-content-guide-selector="Primary Border Color"
+## uc:theme-content-guide-selector="Theme Color 03"
+## uc:theme-content-guide-selector="Primary Border Color"
+body.product-page .row.collapse.product-review .review-user {
+	border-top-color: ${theme.attr("Primary Border Color", ${theme.attr("Theme Color 03")})};
+	border-bottom-color: ${theme.attr("Primary Border Color", ${theme.attr("Theme Color 03")})};
+}
+## uc:theme-content-guide-selector="Theme Color 04"
+## uc:theme-content-guide-selector="Primary Font Color"
+.review-user .author {
+	color: ${theme.attr("Primary Font Color", ${theme.attr("Theme Color 04")})};
+}
+## uc:theme-content-guide-selector="Theme Color 03"
+## uc:theme-content-guide-selector="Primary Border Color"
+## uc:theme-content-guide-selector="Theme Color 04"
+## uc:theme-content-guide-selector="Primary Font Color"
+.social-buttons a {
+	color: ${theme.attr("Primary Font Color", ${theme.attr("Theme Color 04")})};
+	border-color: ${theme.attr("Primary Border Color", ${theme.attr("Theme Color 03")})};
+}
+## uc:theme-content-guide-selector="Theme Color 02"
+## uc:theme-content-guide-selector="Secondary Background Color"
+## uc:theme-content-guide-selector="Theme Color 04"
+## uc:theme-content-guide-selector="Primary Font Color"
+.social-buttons a:hover {
+	color: ${theme.attr("Primary Font Color", ${theme.attr("Theme Color 04")})};
+	background-color: ${theme.attr("Secondary Background Color", ${theme.attr("Theme Color 02")})};
+}
+/* Review Stars
+----------------------------------------------------------------------------------------------------------------------*/
+## uc:theme-content-guide-selector="Item Review Star Color"
+.review-stars span {
+	color: $theme.attr("Item Review Star Color");
+}
+/* UltraCart System Colors
+----------------------------------------------------------------------------------------------------------------------*/
+## uc:theme-content-guide-selector="System Yes Color"
+button.success, .button.success {
+	background-color: $theme.attr("System Yes Color");
+}
+## uc:theme-content-guide-selector="System Yes Hover Color"
+button.success, .button.success:hover {
+	background-color: $theme.attr("System Yes Hover Color");
+}
+## uc:theme-content-guide-selector="System No Color"
+button.error, .button.error {
+	background-color: $theme.attr("System No Color");
+}
+## uc:theme-content-guide-selector="System No Hover Color"
+button.error, .button.error:hover {
+	background-color: $theme.attr("System No Hover Color");
+}
+/* Product Color Settings
+----------------------------------------------------------------------------------------------------------------------*/
+## uc:theme-content-guide-selector="Theme Color 06"
+## uc:theme-content-guide-selector="Item View Link Button Background Color"
+## uc:theme-content-guide-selector="Theme Color 01"
+## uc:theme-content-guide-selector="Item View Link Button Font Color"
+.product-list-images .link {
+	color: ${theme.attr("Item View Link Button Font Color", ${theme.attr("Theme Color 01")})};
+	background-color:  ${theme.attr("Item View Link Button Background Color", ${theme.attr("Theme Color 06")})};
+}
+## uc:theme-content-guide-selector="Theme Color 01"
+## uc:theme-content-guide-selector="Item Sale Banner Font Color"
+## uc:theme-content-guide-selector="Theme Color 10"
+## uc:theme-content-guide-selector="Item Sale Banner Background Color"
+.product-list-images .sale sub {
+	background-color: ${theme.attr("Item Sale Banner Background Color", ${theme.attr("Theme Color 10")})};
+	color: ${theme.attr("Item Sale Banner Font Color", ${theme.attr("Theme Color 01")})};
+}
+## uc:theme-content-guide-selector="Theme Color 10"
+## uc:theme-content-guide-selector="Item Sale Banner Background Color"
+.product-list-images .sale sub:after,
+.product-list-images .sale sub:before{
+	background-color: ${theme.attr("Item Sale Banner Background Color", ${theme.attr("Theme Color 10")})};
+}
+## uc:theme-content-guide-selector="Theme Color 10"
+## uc:theme-content-guide-selector="Item Sale Price Font Color"
+.price.sale {
+	color: ${theme.attr("Item Sale Price Font Color", ${theme.attr("Theme Color 10")})};
+}
+## uc:theme-content-guide-selector="Theme Color 01"
+## uc:theme-content-guide-selector="Item Out Of Stock Banner Font Color"
+.product-list-images .out-of-stock sub {
+	color: ${theme.attr("Item Out Of Stock Banner Font Color", ${theme.attr("Theme Color 01")})};
+}
+## uc:theme-content-guide-selector="Theme Color 04"
+## uc:theme-content-guide-selector="Item Out Of Stock Banner Background Color"
+.product-list-images .out-of-stock sub:after,
+.product-list-images .out-of-stock sub:before {
+	background-color: ${theme.attr("Item Out Of Stock Banner Background Color", ${theme.attr("Theme Color 04")})};
+}
+## uc:theme-content-guide-selector="Theme Color 01"
+## uc:theme-content-guide-selector="Primary Background Color"
+.product-list-images .out-of-stock:before {
+	background-color: ${theme.attr("Primary Background Color", ${theme.attr("Theme Color 01")})};
+}
+## uc:theme-content-guide-selector="Theme Color 01"
+## uc:theme-content-guide-selector="Primary Background Color"
+.product-list-images .out-of-stock sub {
+	background-color: transparent;
+	color: ${theme.attr("Primary Background Color", ${theme.attr("Theme Color 01")})};
+}
+/* Cart Styles
+----------------------------------------------------------------------------------------------------------------------*/
+## uc:theme-content-guide-selector="Theme Color 03"
+## uc:theme-content-guide-selector="Primary Border Color"
+.product-panel {
+	border-color: ${theme.attr("Primary Border Color", ${theme.attr("Theme Color 03")})};
+}
+## uc:theme-content-guide-selector="Theme Color 04"
+## uc:theme-content-guide-selector="Primary Font Color"
+.product-panel .product-info .product-title a,
+.product-panel .product-total .product-pricetag {
+	color: ${theme.attr("Primary Font Color", ${theme.attr("Theme Color 04")})};
+}
+## uc:theme-content-guide-selector="Theme Color 04"
+## uc:theme-content-guide-selector="Secondary Font Color"
+.product-panel .product-info .product-id {
+	color: ${theme.attr("Secondary Font Color", ${theme.attr("Theme Color 04")})};
+}
+## uc:theme-content-guide-selector="Theme Color 03"
+## uc:theme-content-guide-selector="Primary Border Color"
+.product-panel .product-options {
+	border-top-color: ${theme.attr("Primary Border Color", ${theme.attr("Theme Color 03")})};
+}
+## uc:theme-content-guide-selector="Theme Color 03"
+## uc:theme-content-guide-selector="Primary Border Color"
+.cart-footer .cart-footer-left,
+.cart-footer .cart-footer-right {
+	border-color: ${theme.attr("Primary Border Color", ${theme.attr("Theme Color 03")})};
+}
+## uc:theme-content-guide-selector="Theme Color 02"
+## uc:theme-content-guide-selector="Secondary Background Color"
+.cart-footer .cart-footer-right {
+	background-color: ${theme.attr("Secondary Background Color", ${theme.attr("Theme Color 02")})};
+}
+button.grey-dark, .button.grey-dark {
+}
+.tabs dd.active > a
+{
+  border-top: 1px solid #c2c2c2 !important;
+    border-bottom: 1px solid #FFFFFF !important;
+    border-left: 1px solid #c2c2c2 !important;
+    border-right: 1px solid #c2c2c2 !important;
+}
+.tabs dd>a
+{
+  border:none !important;
+  color:#000 !important;
+  padding:12px 12px;
+  background:none !important;
+}
+label,
+.label-move span,
+.label-group > label,
+.label-group > span {
+	color: ${theme.attr("Primary Font Color", ${theme.attr("Theme Color 04")})};
+}
+## uc:theme-content-guide-selector="Theme Color 01"
+## uc:theme-content-guide-selector="Primary Input Background Color"
+.picker__input[type="text"][readonly],
+.picker__input[type="date"][readonly] {
+	background-color: ${theme.attr("Primary Input Background Color", ${theme.attr("Theme Color 01")})};
+}
+## uc:theme-content-guide-selector="Theme Color 06"
+## uc:theme-content-guide-selector="Primary Link Font Color"
+.calendar-picker:after {
+	color: ${theme.attr("Primary Link Font Color", ${theme.attr("Theme Color 06")})};
+}
+/* Cart Styles - Review Order
+----------------------------------------------------------------------------------------------------------------------*/
+## uc:theme-content-guide-selector="Theme Color 03"
+## uc:theme-content-guide-selector="Primary Border Color"
+## uc:theme-content-guide-selector="Theme Color 04"
+## uc:theme-content-guide-selector="Secondary Font Color"
+.scrollbox {
+	color: ${theme.attr("Secondary Font Color", ${theme.attr("Theme Color 04")})};
+	border-color: ${theme.attr("Primary Border Color", ${theme.attr("Theme Color 03")})};
+}
+## uc:theme-content-guide-selector="Theme Color 06"
+## uc:theme-content-guide-selector="Primary Link Font Color"
+.has-tip {
+	color: ${theme.attr("Primary Link Font Color", ${theme.attr("Theme Color 06")})};
+}
+## uc:theme-content-guide-selector="Theme Color 03"
+## uc:theme-content-guide-selector="Primary Border Color"
+table,
+table td {
+	border-color: ${theme.attr("Primary Border Color", ${theme.attr("Theme Color 03")})};
+}
+## uc:theme-content-guide-selector="Theme Color 03"
+## uc:theme-content-guide-selector="Primary Border Color"
+## uc:theme-content-guide-selector="Theme Color 02"
+## uc:theme-content-guide-selector="Secondary Background Color"
+table th{
+	background-color: ${theme.attr("Secondary Background Color", ${theme.attr("Theme Color 02")})};
+	border-color: ${theme.attr("Primary Border Color", ${theme.attr("Theme Color 03")})};
+}
+## uc:theme-content-guide-selector="Theme Color 03"
+## uc:theme-content-guide-selector="Primary Border Color"
+## uc:theme-content-guide-selector="Theme Color 02"
+## uc:theme-content-guide-selector="Secondary Background Color"
+.cart-footer .cart-breakdown {
+	background-color: ${theme.attr("Secondary Background Color", ${theme.attr("Theme Color 02")})};
+	border-bottom-color: ${theme.attr("Primary Border Color", ${theme.attr("Theme Color 03")})};
+}
+/* Cart Styles - Reciept
+----------------------------------------------------------------------------------------------------------------------*/
+## uc:theme-content-guide-selector="Theme Color 03"
+## uc:theme-content-guide-selector="Primary Border Color"
+.order {
+	border-color: ${theme.attr("Primary Border Color", ${theme.attr("Theme Color 03")})};
+}
+## uc:theme-content-guide-selector="Theme Color 05"
+## uc:theme-content-guide-selector="Primary Headers Font Color"
+div.order-id .label,
+div.creation-date .label,
+div.billto-header, div.shipto-header,
+.shipping-method span.shipping-method-label.label,
+.tax-county .tax-county-label,
+.gift-label.label,
+.gift-email-label.label,
+.section-header,
+.return-policy-header,
+.customer-service-header
+ {
+	color: ${theme.attr("Primary Headers Font Color", ${theme.attr("Theme Color 05")})} !important;
+}
+## uc:theme-content-guide-selector="Theme Color 03"
+## uc:theme-content-guide-selector="Primary Border Color"
+div.before-customer, div.customer-info,
+.item-header,
+div.items .order-item {
+	border-bottom-color: ${theme.attr("Primary Border Color", ${theme.attr("Theme Color 03")})} !important;
+}
+## uc:theme-content-guide-selector="Theme Color 03"
+## uc:theme-content-guide-selector="Primary Border Color"
+.item-section,
+.return-policy-container,
+.customer-service-info,
+.gift-msg-section,
+.cart-summary dl {
+	border-top-color: ${theme.attr("Primary Border Color", ${theme.attr("Theme Color 03")})}!important;
+}
+## uc:theme-content-guide-selector="Theme Color 06"
+## uc:theme-content-guide-selector="Primary Link Font Color"
+.cart-summary .total {
+	color: ${theme.attr("Primary Link Font Color", ${theme.attr("Theme Color 06")})} !important;
+}
+/* My Account - Review Product
+----------------------------------------------------------------------------------------------------------------------*/
+## uc:theme-content-guide-selector="Secondary Background Color"
+table tr:nth-child(even) {
+	background-color: #fff !important;
+}
+/* Small screens */
+@media only screen { } /* Define mobile styles */
+@media only screen and (max-width: 40em) { } /* max-width 640px, mobile-only styles, use when QAing mobile issues */
+/* Medium screens */
+@media only screen and (min-width: 40.063em) {
+	## uc:theme-content-guide-selector="Theme Color 04"
+	## uc:theme-content-guide-selector="Secondary Header Icons Color"
+	#main-header .header-search a:before {
+			color: ${theme.attr("Secondary Header Icons Color", ${theme.attr("Theme Color 04")})};
+		}
+	## uc:theme-content-guide-selector="Theme Color 02"
+	## uc:theme-content-guide-selector="Primary Background Color"
+	#main-header .menu-cart {
+		background-color: ${theme.attr("Primary Background Color", ${theme.attr("Theme Color 02")})};
+	}
+	## uc:theme-content-guide-selector="Theme Color 04"
+	## uc:theme-content-guide-selector="Secondary Header Cart Summary Background Color"
+	#main-header .menu-cart:before {
+		color:  ${theme.attr("Secondary Header Cart Summary Background Color", ${theme.attr("Theme Color 04")})};
+	}
+	#main-header .header-search a {
+		background-color: transparent;
+	}
+	/* Cart Styles */
+	## uc:theme-content-guide-selector="Theme Color 04"
+	## uc:theme-content-guide-selector="Primary Font Color"
+	## uc:theme-content-guide-selector="Theme Color 03"
+	## uc:theme-content-guide-selector="Primary Border Color"
+	## uc:theme-content-guide-selector="Theme Color 02"
+	## uc:theme-content-guide-selector="Secondary Background Color"
+	.cart h2,
+	.product-panel .product-total .product-qty label,
+	.product-panel .product-total .product-pricetag-label {
+		background-color: ${theme.attr("Secondary Background Color", ${theme.attr("Theme Color 02")})};
+		border-bottom-color: ${theme.attr("Primary Border Color", ${theme.attr("Theme Color 03")})};
+		color: ${theme.attr("Primary Font Color", ${theme.attr("Theme Color 04")})};
+	}
+	## uc:theme-content-guide-selector="Theme Color 03"
+	## uc:theme-content-guide-selector="Primary Border Color"
+	.product-panel .product-total .product-qty label,
+	.product-panel .product-total .product-pricetag-label {
+		border-top-color: ${theme.attr("Primary Border Color", ${theme.attr("Theme Color 03")})};
+	}
+	## uc:theme-content-guide-selector="Theme Color 03"
+	## uc:theme-content-guide-selector="Primary Border Color"
+	.product-panel .product-total .product-qty,
+	.product-panel .product-total .product-pricetag {
+		border-left-color: ${theme.attr("Primary Border Color", ${theme.attr("Theme Color 03")})};
+	}
+} /* min-width 641px, medium screens */
+@media only screen and (min-width: 40.063em) and (max-width: 64em) {
+} /* min-width 641px and max-width 1024px, use when QAing tablet-only issues */
+/* Large screens */
+@media only screen and (min-width: 64.063em) {
+	## uc:theme-content-guide-selector="Theme Color 04"
+	## uc:theme-content-guide-selector="Primary Header Nav Font Color"
+	#main-nav a,
+	#main-nav > li.active > a {
+    color: ${theme.attr("Primary Header Nav Font Color", ${theme.attr("Theme Color 04")})};
+	}
+	## uc:theme-content-guide-selector="Theme Color 04"
+	## uc:theme-content-guide-selector="Primary Header Nav Font Color"
+	#main-nav li.has-subnav:after {
+		color: ${theme.attr("Primary Header Nav Font Color", ${theme.attr("Theme Color 04")})};
+	}
+	## uc:theme-content-guide-selector="Theme Color 03"
+	## uc:theme-content-guide-selector="Primary Header Sub Nav Font Color"
+	## uc:theme-content-guide-selector="Theme Color 04"
+	## uc:theme-content-guide-selector="Primary Header Sub Nav Background Color"
+	#main-nav li ul {
+		background: ${theme.attr("Primary Header Sub Nav Background Color", ${theme.attr("Theme Color 04")})};
+		border-bottom-color: ${theme.attr("Primary Header Sub Nav Font Color", ${theme.attr("Theme Color 03")})};
+	}
+	## uc:theme-content-guide-selector="Theme Color 05"
+	## uc:theme-content-guide-selector="Secondary Header Background Color"
+	#main-nav li ul li.has-subnav ul {
+		border-right-color: ${theme.attr("Secondary Header Background Color", ${theme.attr("Theme Color 05")})};
+	}
+} /* min-width 1025px, large screens */
+@media only screen and (min-width: 64.063em) and (max-width: 90em) { } /* min-width 1025px and max-width 1440px, use when QAing large screen-only issues */
+/* XLarge screens */
+@media only screen and (min-width: 90.063em) { } /* min-width 1441px, xlarge screens */
+@media only screen and (min-width: 90.063em) and (max-width: 120em) { } /* min-width 1441px and max-width 1920px, use when QAing xlarge screen-only issues */
+/* XXLarge screens */
+@media only screen and (min-width: 120.063em) { } /* min-width 1921px, xxlarge screens */

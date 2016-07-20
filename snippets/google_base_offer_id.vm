@@ -1,0 +1,22 @@
+##
+## UltraCart - Mr Teas Template
+## http://www.ultracart.com/
+##
+## Copyright (c) 2015 BPS Info Solutions Inc.
+## License located here:
+## http://www.ultracart.com/storefront/license/
+##
+## Designed by Level 2 Design, LLC http://www.level2d.com/
+##
+
+## uc:display-items="true"
+
+#if ($item)
+  #set($googleBaseOfferId = $item.getMerchantItemID())
+#else
+  #foreach($item in $group.getItems())
+    #set($googleBaseOfferId = $item.getMerchantItemID())
+
+    #break
+  #end
+#end

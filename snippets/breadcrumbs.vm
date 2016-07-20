@@ -1,0 +1,56 @@
+##
+## UltraCart - Mr Teas Template
+## http://www.ultracart.com/
+##
+## Copyright (c) 2015 BPS Info Solutions Inc.
+## License located here:
+## http://www.ultracart.com/storefront/license/
+##
+## Designed by Level 2 Design, LLC http://www.level2d.com/
+##
+
+## uc:theme-attribute-boolean="Checkout Only Theme"
+
+<!-- breadcrumb -->
+#if($theme.attr("Checkout Only Theme", "false") != "true")
+	<div class="row no-margin-top">
+		<div class="columns small-16 medium-13">
+			<div class="breadcrumb">
+				<ul>
+				#if ($requestURI && $requestURI.contains("/checkout/"))
+					<li><a href="/">Home</a></li>
+					<li>Checkout</li>
+				#else
+					#foreach($crumb in $breadcrumbHelper.getBreadcrumbTrail($group))
+						#if($crumb.path != $group.path && $crumb.path != "/products/" && $crumb.path != "/info/")
+							<li>
+						  		<a href="$baseUrl$crumb.path">$crumb.title</a>
+							</li>
+						#end
+					#end
+
+					#if(!$item)
+						#if($group.getTitle().length() > 35)
+							<li>$formatHelper.excerpt($group.title, 35)&hellip;</li>
+						#else
+							<li>$group.title</li>
+						#end
+
+					#else
+						<li>
+							<a href="$baseUrl$group.path">$group.title</a>
+						</li>
+
+						#if($item.getTitle().length() > 35)
+							<li>$formatHelper.excerpt($item.description, 35)&hellip;</li>
+						#else
+							<li>$item.description</li>
+						#end
+					#end
+				#end
+				</ul>
+			</div>
+		</div>
+	</div>
+#end
+<!-- /breadcrumb -->

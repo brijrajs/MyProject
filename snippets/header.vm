@@ -1,0 +1,146 @@
+##
+## UltraCart - Mr Teas Template
+## http://www.ultracart.com/
+##
+## Copyright (c) 2015 BPS Info Solutions Inc.
+## License located here:
+## http://www.ultracart.com/storefront/license/
+##
+## Designed by Level 2 Design, LLC http://www.level2d.com/
+##
+## uc:site-attribute-string="title"
+## uc:site-attribute-string="logo"
+## uc:site-attribute-string="facebookAccount"
+## uc:site-attribute-string="twitterAccount"
+## uc:site-attribute-string="pinterestAccount"
+## uc:site-attribute-string="instagramAccount"
+## uc:theme-attribute-string="Promo Text"
+## uc:theme-attribute-string="Checkout Only Theme Logo URL"
+## uc:theme-attribute-boolean="Checkout Only Theme"
+## uc:theme-attribute-boolean="Information Only Theme"
+
+<!-- UC Template _header -->
+
+<div class="topbar">
+	<div class="container">
+    	<div class="row">
+        	<div class="col-xs-12 col-sm-6 col-md-6 top-links">
+                Welcome! 
+                <span><a href="${baseUrl}//myaccount/index.do?merchantId=HEA12">Log In</a> or <a href="${baseUrl}/myaccount/index.do?merchantId=HEA12">Register</a></span> | 
+                <a href="#">My Account</a> | <a href="#">My Orders</a>
+            </div>
+        	<div class="col-xs-12 col-sm-6 col-md-6 top-icons">
+            	Stay Connected :
+                <a href="$site.attr('facebookAccount')"><img src="${baseUrl}/themes/MrTeas/assets/imgs/social-fb.png" alt="" /></a>
+                <a href="$site.attr('twitterAccount')"><img src="${baseUrl}/themes/MrTeas/assets/imgs/social-twitter.png" alt="" /></a>
+                <a href="$site.attr('pinterestAccount')"><img src="${baseUrl}/themes/MrTeas/assets/imgs/social-pin.png" alt="" /></a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End top bar -->
+				
+
+<header>
+	<div class="container">
+    	<div class="row">
+        	<div class="col-xs-12 col-sm-12 col-md-3 text-center">
+                #set($logoURL = '/')
+      			#if($theme.attr("Checkout Only Theme", "false") == "true")
+        		#if($theme.attr("Checkout Only Theme Logo URL", "") != "")
+          		#set($logoURL = $theme.attr("Checkout Only Theme Logo URL"))
+        		#end
+     		    #end
+                 <a class="company-logo" href="$logoURL" title="Go to the homepage">
+        			#if($site.attr('logo') && $site.attr('logo') != "")
+       			    <img class="logo" src="${baseUrl}/${site.attr('logo')}" alt="$site.attr('title')" />
+       			    #else
+         		    <span>$site.attr('title')</span>
+      			    #end
+     			</a>
+            	
+             </div>
+            <div class="col-xs-12 col-sm-12 col-md-9">
+            	<ul class="header-links">
+                	<li class="" style="margin-left:0px;">
+                    	 <a class="olark-chat" href="javascript:void(0);" onclick="olark('api.box.expand')"><img src="${baseUrl}/themes/MrTeas/assets/imgs/header-icon1.png" alt="" />
+                        <div>Click Here For<strong>LIVE CHAT</strong></div></a>
+                    </li>
+                	<li class="" >
+                    	<img src="${baseUrl}/themes/MrTeas/assets/imgs/header-icon2.png" alt="" />
+                        <div>Natural Vitamins and Supplements<strong><span>Order NOW:</span>1-877-990-8411</strong></div>
+                    </li>
+                	<li class="">
+                    	<a href="$checkoutUrlHttps" class="$jsDisabledCartLink"><img src="${baseUrl}/themes/MrTeas/assets/imgs/header-icon3.png" alt="" /> </a>
+                        #if($cart)
+                        <div>Shopping cart <a href="#">$cart.getItemUnitCount() items -  <span>$cart.getSubTotalLocalized()</span></a></div>
+                        #else
+                        <div>Shopping cart <a href="#">0 item(s) - $0.00 </a></div>
+                        #end
+                        
+                    </li>
+                </ul>
+            </div>
+        </div><!-- End row --><!-- End logo row -->
+        
+        <div class="menubar  hidden-xs">
+            <div class="row">
+                <div class="col-xs-12 col-md-9">
+                    <ul class="menu">
+                        <li><a class="menuitem" href="http://healthlabsnutra.com">Home</a></li>
+        				<li><a class="active menuitem" href="${baseUrl}/shop">Shop</a></li>
+                        <li><a class="menuitem" href="${baseUrl}/wholesale">Wholesale</a></li>
+                        <li><a class="menuitem" href="http://healthlabsnutra.com/blog">Blog</a></li>
+        				<li><a class="menuitem" href="${baseUrl}/about">About Us</a></li>
+        				<li><a class="menuitem" href="${baseUrl}/contact">Contact Us</a></li>
+                    </ul>
+                </div><!-- End Menu -->
+               
+                <div class="col-xs-12 col-md-3 hidden-sm">
+                    <div class="header-search">
+          <div class="header-search-field">
+            <div class="search">
+              <form action="${baseUrl}/cgi-bin/UCSearch" method="get" id="search-form">
+                <input type="hidden" name="SUBMITDATA" value="SUBMITDATA"/>
+                <input type="hidden" name="MERCHANTID" value="$merchantID"/>
+                <input type="hidden" value="$checkoutHostName" name="catalogHost"/>
+                <input type="hidden" value="LESSTHAN" name="PRICECRITERIA"/>
+                <input type="hidden" name="PRICE"/>
+                <input type="hidden" name="MERCHANTITEMID"/>
+                <input type="hidden" name="ManufacturerName"/>
+                <input type="hidden" name="ManufacturerSKU"/>
+                <input type="hidden" value="NORMAL" name="SORTBY"/>
+                <button style="background: url(${baseUrl}/themes/MrTeas_0_32/assets/imgs/search-icon.png) no-repeat 0 0;" type="submit"></button>
+                <input type="text" name="description" id="search-text" placeholder="Search" />
+              </form>
+             </div><!-- /search -->
+            <!-- <input type="text" placeholder="Search" /> -->
+          </div>
+          
+        </div>
+                </div><!-- End search bar -->
+            </div><!-- End menu row -->
+            <!-- Site Overlay -->
+                <div class="site-overlay"></div>
+         
+        </div><!-- End menu bar -->
+               <div class="visible-xs" style="height:43px;">
+                <div style="width:100%;position:initial;" class="menu-btn visible-xs">&#9776; Menu</div>  
+                 
+                </div>    
+              <!-- Mobile Menu -->
+                        <div class="mobile-menu" style="display:none;">
+                    		<ul>
+                        		<li><a class="active" href="${baseUrl}">Home</a></li>
+                        		<li><a href="${baseUrl}/shop">Shop</a></li>
+                                <li><a href="${baseUrl}/wholesale">Wholesale</a></li>
+                                <li><a href="http://healthlabsnutra.com/blog">Blog</a></li>
+                        		<li><a href="${baseUrl}/about">About Us</a></li>
+                        		<li><a href="${baseUrl}/contact">Contact Us</a></li>
+                    		</ul>
+                		</div>
+
+                
+                <!-- End mobile menu -->
+    </div><!-- End Container -->
+</header><!-- End header -->

@@ -1,0 +1,14 @@
+##
+## UltraCart - Mr Teas Template
+## http://www.ultracart.com/
+##
+## Copyright (c) 2015 BPS Info Solutions Inc.
+## License located here:
+## http://www.ultracart.com/storefront/license/
+##
+## Designed by Level 2 Design, LLC http://www.level2d.com/
+##
+
+<div id="reveal-paypal-processing" class="reveal-modal text-center" data-reveal aria-labelledby="Transferring to Paypal" aria-hidden="true" role="dialog">
+	<h2 id="wishlistAddedTitle">Transferring to Paypal...</h2>
+</div>

@@ -1,0 +1,56 @@
+## digital_delivery
+## Subject: The subject line for this email is contained in the Languages sections under the key email.digital_delivery.subject for multi-lingual support.
+
+## Testing: Previewing an email template will use the latest order id in your store.  You may specify an order id by adding it to the following line:
+## uc:test-order-id="DEMO-12345"
+
+
+## $creationDate
+## $customerFirstName
+## $customerName
+## $customerServiceEmail
+## $customerShipToName
+## $expiration
+## $giftMessage
+## $htmlDivOrder
+## $htmlTableOrder
+## $link
+## $merchantName
+## $order
+## $orderId
+## $phone
+## $returnPolicy
+## $textOrder
+
+## $orderHelper
+##      $orderHelper.hasActivationCodes("ITEM_A")  <== returns true if the order has activation codes for the given item
+##      $orderHelper.getActivationCodes("ITEM_A")  <== returns the activation codes for an item
+##      $orderHelper.hasCoupon("5_OFF") <== returns true if the order has this coupon
+##      $orderHelper.purchased("ITEM_A,ITEM_B") <== returns true if one of the items is in the order.
+##      $orderHelper.notPurchased("ITEM_A,ITEM_B") <== returns true if one of the items is NOT in the order.
+##      $orderHelper.gift() <== returns true if the order is a gift
+##
+## $storeFront
+##      $storeFront.getFileUrl("/images/image1.gif")    <== this will return the full url to the file
+##      $storeFront.getStyle("/css/email.css")  <== this will load the css file and embed it within <style> tags in your email.
+## $i18n
+##      $i18n.write("key.path", "Default Value")
+##      $i18n.write("key.path", "Default Value", true) <== 3rd variable is to perform html escape. set to true to perform escaping
+
+Thank you for your recent order!  To access the digital items you purchased,
+please visit the unique internet address shown below.  If your e-mail client does
+not allow you to click on the link, simply copy & paste the address into your internet
+browser. The address for your digital items is:
+
+$link
+
+
+It is important to note that this page will expire on $expiration,
+so please complete your downloads before this time.
+
+If you have any questions, please do not hesitate to contact us $customerServiceEmail
+
+
+
+
+$textOrder

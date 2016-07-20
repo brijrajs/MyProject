@@ -1,0 +1,31 @@
+##
+## UltraCart - Mr Teas Template
+## http://www.ultracart.com/
+##
+## Copyright (c) 2015 BPS Info Solutions Inc.
+## License located here:
+## http://www.ultracart.com/storefront/license/
+##
+## Designed by Level 2 Design, LLC http://www.level2d.com/
+##
+
+<div class="row">
+	<div class="columns small-16">
+		<label class="label-group">
+			<input type="checkbox" name="acceptReturnPolicy" #if($form.acceptReturnPolicy)checked#{end}/>
+			<span>
+				$i18n.write("checkout.review.acceptTermsStart","I accept the terms of the")
+				$i18n.escape($!form.returnPolicyDescription)
+				$i18n.write("checkout.review.acceptTermsEnd","below").
+			</span>
+		</label>
+
+		#if("$!form.returnPolicyDescription" != "")
+			$!form.returnPolicyDescription
+		#else
+			<h2>$i18n.write("checkout.review.returnPolicyHeader","RETURN POLICY")</h2>
+		#end ## if-returnPolicyDescription is present
+		<pre class="scrollbox">$!form.returnPolicy</pre>
+
+	</div>
+</div>

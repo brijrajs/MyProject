@@ -1,0 +1,132 @@
+##
+## UltraCart - Mr Teas Template
+## http://www.ultracart.com/
+##
+## Copyright (c) 2015 BPS Info Solutions Inc.
+## License located here:
+## http://www.ultracart.com/storefront/license/
+##
+## Designed by Level 2 Design, LLC http://www.level2d.com/
+##
+
+## uc:contains-velocity="true"
+## uc:page-type="group"
+## uc:display-items="true"
+## uc:pagination="true"
+## uc:display-subgroups="true"
+## uc:child-page-multimedia-default-used="true"
+
+## uc:page-attribute-string="subtitle"
+
+## uc:menu-used="header"
+## uc:menu-used="footer"
+## uc:menu-used="help"
+## uc:menu-used="account"
+
+#parse("/snippets/checkout_only_redirect.vm")
+#parse("/snippets/google_base_offer_id.vm")
+
+#parse("/snippets/top.vm")
+<div class="row mt" style="margin-top: 20px;">
+<div class="columns small-16">
+<img src="${baseUrl}/assets/imgs/bb.jpg" border="0" usemap="#Map">
+<map name="Map">
+<area shape="rect" coords="697,9,927,48" href="#"></map>
+  </div>
+</div>
+
+	<div class="row no-margin">
+    <div class="columns small-16">
+      ##parse("/snippets/breadcrumbs.vm")
+    </div>
+  </div>
+  <div class="row" style="margin-top:0px;">
+    <div class="columns small-16">
+      <h1 class="catalog-title">
+        #if($group.getAttribute("subtitle") && $group.getAttribute("subtitle") != '')
+          $group.getAttribute("subtitle")
+        #else
+          $group.Title
+        #end
+      </h1>
+    </div>
+  </div>
+  <div class="row" style="margin-top:10px;">
+    <section class="columns small-16 medium-16 catalog-container">
+      #if($group.getChildren().size() > 0)
+
+        #parse("/snippets/subgroup_list.vm")
+
+        #if($group.getItemCount() > 0)
+          <div class="row">
+            <div class="columns small-16">
+              <div class="title"><span>Items</span>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            #parse('/snippets/group_item_sort.vm')
+          </div>
+
+          #parse("/snippets/group_item_list.vm")
+        #else
+          <div class="row">
+            <p>No items are assigned to this page.</p>
+          </div>
+        #end
+      #else
+        #if($group.getItemCount() > 0)
+          <header class="row">
+
+            #parse('/snippets/group_item_sort.vm')
+
+            <div class="columns medium-9">
+
+              #parse("/snippets/pagination.vm")
+
+            </div>
+          </header>
+          #parse("/snippets/group_item_list_wholesale.vm")
+        #else
+          <div class="row">
+            <p>No items are assigned to this page.</a>
+          </div>
+        #end
+      #end
+      <div class="columns small-16">
+
+        #parse("/snippets/pagination.vm")
+
+      </div>
+    </section>
+  </div>
+
+<div class="row" style="margin-top:0px;">
+  <p style="text-align:Center;margin-top: 15px;margin-bottom: 15px;"><img src="https://s3.amazonaws.com/ultracartsff/BRINU/4921/themes/MrTeas/assets/imgs/seal.jpg" >
+</p>
+</div>
+<div class="row" style="margin-top: 15px;">
+<div class="col-md-4" >
+<p><img src="https://s3.amazonaws.com/ultracartsff/BRINU/4921/themes/MrTeas/assets/imgs/ad1.jpg" >
+</p></div>
+<div class="col-md-4" >
+<img src="https://s3.amazonaws.com/ultracartsff/BRINU/4921/themes/MrTeas/assets/imgs/ad2.jpg" >
+</div>
+  <div class="col-md-4" >
+<img src="https://s3.amazonaws.com/ultracartsff/BRINU/4921/themes/MrTeas/assets/imgs/ad3.jpg" >
+</div>
+</div>
+
+<section class="color">
+
+<div class="row" style="margin-top: 20px;">
+<div class="col-md-6">
+<p><img src="https://s3.amazonaws.com/ultracartsff/BRINU/4921/themes/MrTeas/assets/imgs/bigadd.jpg">
+</p></div>
+<div class="col-md-6">
+<a href="#"><img src="https://s3.amazonaws.com/ultracartsff/BRINU/4921/themes/MrTeas/assets/imgs/bigadd2.jpg" ></a><p></p>
+</div>
+</div>
+
+</section>
+#parse("/snippets/bottom.vm")

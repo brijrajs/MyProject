@@ -1,0 +1,45 @@
+##
+## UltraCart - Mr Teas Template
+## http://www.ultracart.com/
+##
+## Copyright (c) 2015 BPS Info Solutions Inc.
+## License located here:
+## http://www.ultracart.com/storefront/license/
+##
+## Designed by Level 2 Design, LLC http://www.level2d.com/
+##
+
+#* @vtlvariable name="merchantId" type="java.lang.String" *#
+#* @vtlvariable name="formatHelper" type="com.bpsinfo.ultracart.catalog.tobjects.FormatHelper" *#
+#* @vtlvariable name="i18n" type="com.bpsinfo.storefront.tobjects.I18nWriter" *#
+#* @vtlvariable name="form" type="com.bpsinfo.ultracart.affiliate.ui.partner.AffiliatePartnerIndexForm" *#
+
+#set( $pageGroup = 'affiliate' )
+#set( $bodyClass = 'affiliate index-pending' )
+#set( $pageTitle = 'Affiliate Partner' )
+#parse('/snippets/top.vm')
+
+#set( $title = $pageTitle )
+#parse('/snippets/title.vm')
+
+<div class="row">
+	<div class="columns small-16">
+		<p>Your affiliate application is under review.  We will email you once your application has been approved.</p>
+	</div>
+	<div class="columns small-16">
+		<a href="/affiliate/partner/logoutLoad.do?merchantId=$!merchantId" class="button">Log Out</a>
+	</div>
+</div>
+
+#if($form.allowPassiveBranding)
+	<div class="row">
+		<div class="columns small-16 text-center">
+			<p>
+				<a target="_blank" href="http://secure.ultracart.com/cgi-bin/UCAdTracker?BpsAdvertisingSourceId=pb+ultracart">
+					<img src="/checkout/uc-powered.png" border='0' alt="Powered by ultracart.com"/>
+				</a>
+			</p>
+		</div>
+	</div>
+#end
+#parse('/snippets/bottom.vm')

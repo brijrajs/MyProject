@@ -1,0 +1,22 @@
+##
+## UltraCart - Mr Teas Template
+## http://www.ultracart.com/
+##
+## Copyright (c) 2015 BPS Info Solutions Inc.
+## License located here:
+## http://www.ultracart.com/storefront/license/
+##
+## Designed by Level 2 Design, LLC http://www.level2d.com/
+##
+
+<div class="row">
+	<div class="columns small-16 medium-8">
+
+		<h2>$i18n.write("checkout.quoteReview.specialInstructionsHeader","Special Instructions")</h2>
+
+		<div class="ucSpecialInstructionText">
+			<pre>$i18n.escape($!form.specialInstructions)</pre>
+		</div>
+
+	</div>
+</div>

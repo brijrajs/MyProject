@@ -1,0 +1,98 @@
+##
+## UltraCart - Mr Teas Template
+## http://www.ultracart.com/
+##
+## Copyright (c) 2015 BPS Info Solutions Inc.
+## License located here:
+## http://www.ultracart.com/storefront/license/
+##
+## Designed by Level 2 Design, LLC http://www.level2d.com/
+##
+
+<section class="content $firstTabActive" id="panel-product-reviews">
+
+  #if (!$item.hasApprovedReview())
+    <h3 id="reviews">$item.getTitle() - Reviews</h3>
+    <a href="https://$checkoutHostName$item.getReviewUrl()" class="button primary right small">
+      <i class="fa fa-pencil"></i>Write a Review
+    </a>
+    <div class="write_first_review_button">
+      <p>There are currently no reviews for <i>$item.getTitle()</i>, but you can be the first!</p>
+    </div>
+  #else
+    #set($reviewSummary = $item.getReviewSummary())
+    <h3 class="left" id="reviews">$item.getTitle() - Reviews</h3>
+    <a href="https://${checkoutHostName}${item.getReviewUrl()}" class="button primary right small">
+      <i class="fa fa-pencil"></i>Write a Review
+    </a>
+
+    #foreach($review in $item.getReviews())
+      <div class="row product-review">
+
+        <article>
+          <div class="star-rating review-stars">
+            $review.getOverallAsHtml([
+              "<span class='icon-star-0-4'></span>",
+              "<span class='icon-star-1-4'></span>",
+              "<span class='icon-star-2-4'></span>",
+              "<span class='icon-star-3-4'></span>",
+              "<span class='icon-star-4-4'></span>"
+            ])
+            <time datetime="$review.getDate()">$review.getDate()</time>
+          </div>
+          
+          <h3 class="columns small-16 no-padding">$review.getTitle()</h3>
+          <div class="columns small-16 medium-8 large-5 detailed-rating">
+          #if ($review.getRatings().size() > 0)
+            #foreach ($rating in $review.getRatings())
+            <div class="row">
+              <div class="columns small-8">
+                <h4>$rating.getName()</h4>
+              </div>
+              <div class="columns small-8">
+                <div>
+                  $rating.getScoreAsHtml([
+                    "<span class='icon-star-0-4'></span>",
+                    "<span class='icon-star-1-4'></span>",
+                    "<span class='icon-star-2-4'></span>",
+                    "<span class='icon-star-3-4'></span>",
+                    "<span class='icon-star-4-4'></span>"
+                  ])
+                </div>
+              </div>
+            </div>
+            #end
+          #end
+          </div>
+          <div class="columns small-16 medium-10 large-11 no-padding">
+            <p>$review.getReview()</p>
+          </div>
+          <div class="review-user columns small-16 no-padding-left no-padding-right">
+            <span class="author">
+              <span class="icon-account"></span>
+              $review.getReviewerNickname() - <i>$review.getReviewerLocation()</i>
+            </span>
+
+            #if($review.getReviewerQuestions())
+              <dl class="row collapse">
+                #foreach($qa in $review.getReviewerQuestions())
+                  <dd class="columns small-8 medium-5">$qa.getQuestion()</dd>
+                  <dt class="columns small-8 medium-11">$qa.getAnswer()</dt>
+                #end
+              </dl>
+            #end
+
+          </div>
+          <div class="review-helpful columns small-16">
+            Was this review helpful?
+            <a class="button small success half-margin-left" href="$review.getHelpfulYesUrl()" data-href="$review.getHelpfulYesUrl()">Yes <span>($review.getHelpfulYesVotes())</span></a>
+            <a class="button small error" href="$review.getHelpfulNoUrl()" data-href="$review.getHelpfulNoUrl()">No <span>($review.getHelpfulNoVotes())</span></a>
+          </div>
+        </article>
+
+      </div>
+    #end
+
+  #end
+</section>
+#set($firstTabActive = "")

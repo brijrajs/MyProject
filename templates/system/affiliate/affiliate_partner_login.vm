@@ -1,0 +1,66 @@
+##
+## UltraCart - Mr Teas Template
+## http://www.ultracart.com/
+##
+## Copyright (c) 2015 BPS Info Solutions Inc.
+## License located here:
+## http://www.ultracart.com/storefront/license/
+##
+## Designed by Level 2 Design, LLC http://www.level2d.com/
+##
+
+#* @vtlvariable name="formatHelper" type="com.bpsinfo.ultracart.catalog.tobjects.FormatHelper" *#
+#* @vtlvariable name="i18n" type="com.bpsinfo.storefront.tobjects.I18nWriter" *#
+#* @vtlvariable name="form" type="com.bpsinfo.ultracart.affiliate.ui.partner.AffiliatePartnerLoginForm" *#
+
+#set( $pageGroup = 'affiliate' )
+#set( $bodyClass = 'affiliate login' )
+#set( $pageTitle = 'Affiliate Login' )
+#parse('/snippets/top.vm')
+
+#set( $title = $pageTitle )
+#parse('/snippets/title.vm')
+
+<form class="validate" method="post" action="/affiliate/partner/loginSave.do">
+	<input type=hidden name="target" value="$i18n.escape($!form.target)"/>
+	<input type=hidden name="programOid" value="$!form.programOid"/>
+	<input type=hidden name="themeCode" value="$i18n.escape($!form.themeCode)"/>
+	<input type=hidden name="merchantId" value="$i18n.escape($!form.merchantId)"/>
+    #parse('/snippets/common/storefront_template_spec_version.vm')
+	#parse('/snippets/errors.vm')
+	#parse('/snippets/info_messages.vm')
+
+	<div class="row">
+		<div class="columns small-16 login">
+			<h2>Login Required</h2>
+
+			<p>
+				The page you have requested requires you to log in.
+				Please enter your login information below.
+				If you have forgotten your password, you may reset it by
+				<a href="/affiliate/partner/lostPasswordLoad.do?programOid=$!{form.programOid}&merchantId=${formatHelper.urlEncode($!form.merchantId)}">clicking here</a>.
+			</p>
+		</div>
+
+		<div class="clearfix"></div>
+
+		<div class="columns small-16 medium-8">
+			<label class="label-move">
+				<span>E-Mail Address</span>
+				<input type="text" name="username" required value="$i18n.escape($form.affiliateId)" required maxlength="30" />
+			</label>
+
+			<label class="label-move">
+				<span>Password*</span>
+				<input type="password" name="password" required value="$i18n.escape($form.password)" class="inspectletIgnore" required maxlength="32" />
+			</label>
+
+			<div class="footer-buttons text-right">
+				<button type="submit" class="button inactive no-margin" disabled title="Login">Login</button>
+			</div>
+		</div>
+	</div>
+	#parse('/snippets/common/cs_token.vm')
+</form>
+
+#parse('/snippets/bottom.vm')

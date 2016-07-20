@@ -1,0 +1,30 @@
+##
+## UltraCart - Mr Teas Template
+## http://www.ultracart.com/
+##
+## Copyright (c) 2015 BPS Info Solutions Inc.
+## License located here:
+## http://www.ultracart.com/storefront/license/
+##
+## Designed by Level 2 Design, LLC http://www.level2d.com/
+##
+
+## uc:contains-velocity="true"
+
+#parse("/snippets/top.vm")
+
+  <div class="row no-margin">
+    <div class="columns small-16">
+      #parse("/snippets/breadcrumbs.vm")
+    </div>
+  </div>
+  <div class="row">
+    <div class="columns small-16">
+        <h2>404 Page Not found</h2>
+
+      	<p>Sorry we could not find the page you were looking for.</p>
+
+    </div>
+  </div>
+
+#parse("/snippets/bottom.vm")

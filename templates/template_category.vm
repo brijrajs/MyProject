@@ -1,0 +1,228 @@
+##
+## UltraCart - Mr Teas Template
+## http://www.ultracart.com/
+##
+## Copyright (c) 2015 BPS Info Solutions Inc.
+## License located here:
+## http://www.ultracart.com/storefront/license/
+##
+## Designed by Level 2 Design, LLC http://www.level2d.com/
+##
+
+## uc:contains-velocity="true"
+## uc:page-type="group"
+## uc:page-attribute-string="subtitle"
+## uc:page-attribute-html="content"
+## uc:display-items="true"
+## uc:item-multimedia-default-used="true"
+
+## uc:theme-attribute-string="Item No Image Available Image URL"
+
+## uc:menu-used="header"
+## uc:menu-used="help"
+## uc:menu-used="account"
+
+
+#parse("/snippets/checkout_only_redirect.vm")
+
+#set($bodyClass = "home")
+
+#parse("/snippets/google_base_offer_id.vm")
+#parse("/snippets/top.vm")
+
+<style>
+ .left, .right{
+   margin:0px !important; 
+  }
+</style>
+
+<div class="container" style="padding-top:20px;"><!-- Main container -->
+	<div class="row"><!-- Main row -->
+    	<div class="col-xs-12 col-sm-4 col-md-3">
+        	<div class="categories">
+            	<div class="green-heading">Categories</div>
+                <ul>
+                	<li><a href="${baseUrl}/storewidesale">Store Wide Sale</a></li>
+                	<li><a href="${baseUrl}/digestiveenzymes">Digestive Enzymes</a></li>
+                	<li><a href="${baseUrl}/probiotics">Probiotics</a></li>
+                	<li><a href="${baseUrl}/KrillOil">Krill Oil</a></li>
+                    <li><a href="${baseUrl}/GeneralHealth">General Health</a></li>
+                    <li><a href="${baseUrl}/MensHealth">Men's Health</a></li>
+                    <li><a href="${baseUrl}/WomensHealth">Women's Health</a></li>
+                	<li><a href="${baseUrl}/Omega3">Omega 3</a></li>
+                	<li><a href="${baseUrl}/COq10">COq10</a></li>
+                    
+                	
+                </ul>
+            </div><!-- End categories -->
+            
+            <div class="side-img"><img class="img-responsive" src="${baseUrl}/themes/MrTeas/assets/imgs/img-ad1.jpg" alt="" /></div>
+            <div class="side-img"><img class="img-responsive" src="${baseUrl}/themes/MrTeas/assets/imgs/img-ad2.jpg" alt="" /></div>
+            
+        </div><!-- End sidebar / col-md-3 -->
+        
+        
+        
+        
+        <div class="col-xs-12 col-sm-8 col-md-9">
+              <div class="gray-heading">Products</div>
+              <div class="row products">
+               #set($groupItems = $group.getItems())
+ 				 	## $formatHelper.sortByAttribute($groupItems, "sort_order", false)
+  					## $formatHelper.removeItemsWithoutCost($groupItems)
+  					##$formatHelper.removeOutOfStockItems($groupItems)
+          	   #if($groupItems.size() > 0)
+          			#foreach($item in $groupItems)
+          				<div class="col-sm-6 col-md-4"><!-- Start Product -->
+                			<div class="product">
+                        		<div class="product-img"><img src="${baseThumbnailUrl}${item.getDefaultMultimedia('Image').getThumbnail(220, 220, true, $PNGThumbnails)}" alt="" /></div>
+                        		<div class="product-desc">$item.getTitle()</div>
+                        		<div class="product-price">USD  $item.getCostLocalized()</div>
+                        		<div class="product-rating">
+                            		<img src="${baseUrl}/themes/MrTeas/assets/imgs/star.png" alt="" />
+                            		<img src="${baseUrl}/themes/MrTeas/assets/imgs/star.png" alt="" />
+                            		<img src="${baseUrl}/themes/MrTeas/assets/imgs/star.png" alt="" />
+                            		<img src="${baseUrl}/themes/MrTeas/assets/imgs/star.png" alt="" />
+                            		<img src="${baseUrl}/themes/MrTeas/assets/imgs/star.png" alt="" />
+                        		</div>
+                        		<div class="product-btn"><a href="${item.getPath()}"><img src="${baseUrl}/themes/MrTeas/assets/imgs/ad-btn.png" alt="" /></a></div>
+                    		</div><!-- End Product -->
+                		</div><!-- End product collumn -->
+                    #end
+               #else
+                   No products in this category!!
+          	   #end
+              
+          	  </div>
+          
+        </div><!-- main content area / col-md-9 -->
+    </div><!-- End row -->
+</div><!-- End Container -->
+
+
+
+
+<!-- Testimonials -->
+<div class="container">
+	<div class="testimonial-outer">
+    	<div class="heading">What people Are SAYING</div>
+        <div class="item">
+            <ul id="testimonials" class="content-slider">
+            
+                <li>
+                    <div class="testimonial-img"><img src="${baseUrl}/themes/MrTeas/assets/imgs/testimonial-img-1.png" alt="" /></div>
+                    <!-- Testimonial product image -->
+                    <div class="peoples-info">
+                        <p>“Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, 
+                        lorem quis bibendum auctor, nisi elit consequat ipsum, nec sagittis sem nibh id elit. 
+                        Duis sed odio sit amet nibh vulputate cursus a sit amet” </p>
+                        <!-- Comments -->
+                        <div>
+                            <div class="person"><img src="${baseUrl}/themes/MrTeas/assets/imgs/person-1.png" alt="" /></div>
+                            <div class="person-info">
+                                <span>MICHAEL CLARK</span>
+                                <p>Louisiana,CA</p>
+                                <ul>
+                                    <li><img src="${baseUrl}/themes/MrTeas/assets/imgs/star.png" alt="star" /></li>
+                                    <li><img src="${baseUrl}/themes/MrTeas/assets/imgs/star.png" alt="star" /></li>
+                                    <li><img src="${baseUrl}/themes/MrTeas/assets/imgs/star.png" alt="star" /></li>
+                                    <li><img src="${baseUrl}/themes/MrTeas/assets/imgs/star.png" alt="star" /></li>
+                                    <li><img src="${baseUrl}/themes/MrTeas/assets/imgs/star.png" alt="star" /></li>
+                                </ul><!-- Star rating -->
+                            </div><!-- person info -->
+                        </div><!-- text side   Name, city, rating -->
+                    </div><!-- Peoples info -->
+                </li><!-- End single Testimonial -->
+    
+    
+                <li>
+                    <div class="testimonial-img"><img src="${baseUrl}/themes/MrTeas/assets/imgs/testimonial-img-2.png" alt="" /></div>
+                    <!-- Testimonial product image -->
+                    <div class="peoples-info">
+                        <p>“Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, 
+                        lorem quis bibendum auctor, nisi elit consequat ipsum, nec sagittis sem nibh id elit. 
+                        Duis sed odio sit amet nibh vulputate cursus a sit amet” </p>
+                        <!-- Comments -->
+                        <div>
+                            <div class="person"><img src="${baseUrl}/themes/MrTeas/assets/imgs/person-2.png" alt="" /></div>
+                            <div class="person-info">
+                                <span>MICHAEL CLARK</span>
+                                <p>Louisiana,CA</p>
+                                <ul>
+                                    <li><img src="${baseUrl}/themes/MrTeas/assets/imgs/star.png" alt="star" /></li>
+                                    <li><img src="${baseUrl}/themes/MrTeas/assets/imgs/star.png" alt="star" /></li>
+                                    <li><img src="${baseUrl}/themes/MrTeas/assets/imgs/star.png" alt="star" /></li>
+                                    <li><img src="${baseUrl}/themes/MrTeas/assets/imgs/star.png" alt="star" /></li>
+                                    <li><img src="${baseUrl}/themes/MrTeas/assets/imgs/star.png" alt="star" /></li>
+                                </ul><!-- Star rating -->
+                            </div><!-- person info -->
+                        </div><!-- text side   Name, city, rating -->
+                    </div><!-- Peoples info -->
+                </li><!-- End single Testimonial -->
+    
+    
+                <li>
+                    <div class="testimonial-img"><img src="${baseUrl}/themes/MrTeas/assets/imgs/testimonial-img-3.png" alt="" /></div>
+                    <!-- Testimonial product image -->
+                    <div class="peoples-info">
+                        <p>“Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, 
+                        lorem quis bibendum auctor, nisi elit consequat ipsum, nec sagittis sem nibh id elit. 
+                        Duis sed odio sit amet nibh vulputate cursus a sit amet” </p>
+                        <!-- Comments -->
+                        <div>
+                            <div class="person"><img src="${baseUrl}/themes/MrTeas/assets/imgs/person-3.png" alt="" /></div>
+                            <div class="person-info">
+                                <span>MICHAEL CLARK</span>
+                                <p>Louisiana,CA</p>
+                                <ul>
+                                    <li><img src="${baseUrl}/themes/MrTeas/assets/imgs/star.png" alt="star" /></li>
+                                    <li><img src="${baseUrl}/themes/MrTeas/assets/imgs/star.png" alt="star" /></li>
+                                    <li><img src="${baseUrl}/themes/MrTeas/assets/imgs/star.png" alt="star" /></li>
+                                    <li><img src="${baseUrl}/themes/MrTeas/assets/imgs/star.png" alt="star" /></li>
+                                    <li><img src="${baseUrl}/themes/MrTeas/assets/imgs/star.png" alt="star" /></li>
+                                </ul><!-- Star rating -->
+                            </div><!-- person info -->
+                        </div><!-- text side   Name, city, rating -->
+                    </div><!-- Peoples info -->
+                </li><!-- End single Testimonial -->
+    
+    
+                <li>
+                    <div class="testimonial-img"><img src="${baseUrl}/themes/MrTeas/assets/imgs/testimonial-img-1.png" alt="" /></div>
+                    <!-- Testimonial product image -->
+                    <div class="peoples-info">
+                        <p>“Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, 
+                        lorem quis bibendum auctor, nisi elit consequat ipsum, nec sagittis sem nibh id elit. 
+                        Duis sed odio sit amet nibh vulputate cursus a sit amet” </p>
+                        <!-- Comments -->
+                        <div>
+                            <div class="person"><img src="${baseUrl}/themes/MrTeas/assets/imgs/person-1.png" alt="" /></div>
+                            <div class="person-info">
+                                <span>MICHAEL CLARK</span>
+                                <p>Louisiana,CA</p>
+                                <ul>
+                                    <li><img src="${baseUrl}/themes/MrTeas/assets/imgs/star.png" alt="star" /></li>
+                                    <li><img src="${baseUrl}/themes/MrTeas/assets/imgs/star.png" alt="star" /></li>
+                                    <li><img src="${baseUrl}/themes/MrTeas/assets/imgs/star.png" alt="star" /></li>
+                                    <li><img src="${baseUrl}/themes/MrTeas/assets/imgs/star.png" alt="star" /></li>
+                                    <li><img src="${baseUrl}/themes/MrTeas/assets/imgs/star.png" alt="star" /></li>
+                                </ul><!-- Star rating -->
+                            </div><!-- person info -->
+                        </div><!-- text side   Name, city, rating -->
+                    </div><!-- Peoples info -->
+                </li><!-- End single Testimonial -->
+                
+            </ul>
+        </div><!-- End Item -->
+    </div><!-- End Testimonial outer -->
+</div><!-- End container -->
+<!-- End Testimonials -->
+
+	
+
+  
+ 
+  ## Uncomment the block of code below to have a popup video autoplay on your home page
+  ##  #parse("/snippets/home_lightbox_video.vm")
+
+#parse("/snippets/bottom.vm")

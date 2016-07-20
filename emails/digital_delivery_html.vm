@@ -1,0 +1,130 @@
+## digital_delivery
+## Subject: The subject line for this email is contained in the Languages sections under the key email.digital_delivery.subject for multi-lingual support.
+
+## Testing: Previewing an email template will use the latest order id in your store.  You may specify an order id by adding it to the following line:
+## uc:test-order-id="DEMO-12345"
+
+
+## $creationDate
+## $customerFirstName
+## $customerName
+## $customerServiceEmail
+## $customerShipToName
+## $expiration
+## $giftMessage
+## $htmlDivOrder
+## $htmlTableOrder
+## $link
+## $merchantName
+## $order
+## $orderId
+## $phone
+## $returnPolicy
+## $textOrder
+
+## $orderHelper
+##      $orderHelper.hasActivationCodes("ITEM_A")  <== returns true if the order has activation codes for the given item
+##      $orderHelper.getActivationCodes("ITEM_A")  <== returns the activation codes for an item
+##      $orderHelper.hasCoupon("5_OFF") <== returns true if the order has this coupon
+##      $orderHelper.purchased("ITEM_A,ITEM_B") <== returns true if one of the items is in the order.
+##      $orderHelper.notPurchased("ITEM_A,ITEM_B") <== returns true if one of the items is NOT in the order.
+##      $orderHelper.gift() <== returns true if the order is a gift
+##
+## $storeFront
+##      $storeFront.getFileUrl("/images/image1.gif")    <== this will return the full url to the file
+##      $storeFront.getStyle("/css/email.css")  <== this will load the css file and embed it within <style> tags in your email.
+## $i18n
+##      $i18n.write("key.path", "Default Value")
+##      $i18n.write("key.path", "Default Value", true) <== 3rd variable is to perform html escape. set to true to perform escaping
+
+<!DOCTYPE html>
+<html>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+$storeFront.getStyle("assets/css/emails.css")
+
+<body leftmargin="0" marginwidth="0" topmargin="0" marginheight="0" offset="0">
+	<center>
+		<!-- // Begin Template Preheader \\ -->
+
+		<table width="100%" cellpadding="0" cellspacing="0" border="0" id="backgroundTable" style="background:#eaeaea; font-family: sans-serif; color:#666; margin:0; padding:0;">
+			<tr>
+				<td align="center">
+					<!--[if !mso]><!--><table align="center" bgcolor="#eaeaea" cellpadding="0" cellspacing="0"  style=" max-width:600px!important; width:100%;"><!--<![endif]-->
+					<!--[if gte mso 9]><table  align="center" bgcolor="#eaeaea" cellpadding="0" cellspacing="0" width="600" ><![endif]-->
+						<tr>
+							<td valign="top" align="center">
+								<table class="parentContainer" cellpadding="0" cellspacing="0" border="0" align="center">
+
+									<!--20px of Space -->
+									<tr>
+										<td height="20" colspan="3"></td>
+									</tr>
+									<!--20px of Space -->
+
+
+									<tr>
+										<td height="100" colspan="3" class="email-header">
+											<a href="$baseUrl">
+												<img style="max-width: 240px;" src="/$site.attr('logo')" />
+											</a>
+										</td>
+									</tr>
+
+									<tr>
+										<td valign="top" class="section-container">
+											<strong>Dear $customerName,</strong><br /><br />
+
+											Thank you for your recent order!  To access the digital items you purchased,
+											please visit the unique internet address shown below.  If your e-mail client does not allow you to click on the link, simply copy & paste the address into your internet browser. The address for your digital items is:<br /><br />
+
+											<a href="$link">Digital Item URL</a><br /><br />
+
+											It is important to note that this page will expire on $expiration,
+											so please complete your downloads before this time.<br /><br />
+
+											If you have any questions, please do not hesitate to contact us $customerServiceEmail
+										</td>
+									</tr>
+
+									<tr>
+										<td height="1" colspan="3"></td>
+									</tr>
+
+									<tr>
+										<td valign="top">
+											$htmlEmailOrder
+										</td>
+									</tr>
+
+									<tr>
+										<td height="1" colspan="3"></td>
+									</tr>
+
+									<tr>
+										<td valign="top" class="section-container storeInfo">
+											<div class="merchantName">$merchantName</div>
+											<div class="merchantEmail"><a href="mailto:$customerServiceEmail">$customerServiceEmail</a></div>
+											<div class="merchantPhone">$phone</div>
+										</td>
+									</tr>
+
+									<!--20px of Space -->
+									<tr>
+										<td height="20" colspan="3">
+
+										</td>
+									</tr>
+									<!--20px of Space -->
+							</table>
+						</tr>
+					</table>
+ 				</td>
+ 			</tr>
+ 		</table>
+	</center>
+</body>
+</html>
+

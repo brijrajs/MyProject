@@ -1,0 +1,57 @@
+##
+## UltraCart - Mr Teas Template
+## http://www.ultracart.com/
+##
+## Copyright (c) 2015 BPS Info Solutions Inc.
+## License located here:
+## http://www.ultracart.com/storefront/license/
+##
+## Designed by Level 2 Design, LLC http://www.level2d.com/
+##
+
+## uc:contains-velocity="true"
+## uc:page-type="group"
+## uc:pagination="true"
+## uc:display-items="true"
+## uc:page-attribute-string="subtitle"
+## uc:child-page-multimedia-default-used="true"
+
+
+#parse("/snippets/checkout_only_redirect.vm")
+#parse("/snippets/google_base_offer_id.vm")
+
+#parse("/snippets/top.vm")
+
+	<div class="row no-margin">
+    <div class="columns small-16">
+      #parse("/snippets/breadcrumbs.vm")
+    </div>
+  </div>
+  <div class="row">
+    <div class="columns small-16">
+      <h1>
+        #if($group.getAttribute("subtitle") && $group.getAttribute("subtitle") != '')
+          $group.getAttribute("subtitle")
+        #else
+          $group.Title
+        #end
+      </h1>
+    </div>
+  </div>
+  <div class="row">
+    <section class="columns small-16 catalog-container">
+      #if($group.getItemCount() > 0)
+        #parse("/snippets/group_item_list.vm")
+      #else
+        <div class="row">
+          <p>No items are assigned to this page.</p>
+        </div>
+      #end
+    </section>
+
+    ## <div class="columns medium-4 medium-push-12">
+    ##   #parse("/snippets/breadcrumbs.vm")
+    ## </div>
+  </div>
+
+#parse("/snippets/bottom.vm")

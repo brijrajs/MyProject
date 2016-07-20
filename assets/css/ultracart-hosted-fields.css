@@ -1,0 +1,33 @@
+##
+## UltraCart - Mr Teas Template
+## http://www.ultracart.com/
+##
+## Copyright (c) 2015 BPS Info Solutions Inc.
+## License located here:
+## http://www.ultracart.com/storefront/license/
+##
+## Designed by Level 2 Design, LLC http://www.level2d.com/
+##
+
+## uc:contains-velocity="true"
+
+## uc:theme-attribute-color="Primary Font Color"
+## uc:theme-attribute-color="Secondary Background Color"
+
+/*
+The hosted fields script should be capable of capturing your computed styles from your stylesheet
+However, one limitation is that it cannot capture styles for alternate states (:focus, :hover, :active, etc.).
+For this we we pass in this stylesheet to handle any further customization.
+*/
+
+/* We use !important to override the inline styles that are dynamically set in the iframe, based on your computed styles */
+input:focus {
+	outline: 0 !important;
+	border: 1px solid $theme.attr("Primary Font Color") !important;
+	box-shadow: 0 0 0 transparent !important;
+	/*  since it's impractical to use sass for a file like this, we'll just set the background-color to #f8f8f8,
+		which should be the same as lighten($theme.attr("Secondary Background Color"), 5%) when
+		$theme.attr("Secondary Background Color") is #ebebeb
+	 */
+	background-color: #f8f8f8 !important;
+}

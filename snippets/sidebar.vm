@@ -1,0 +1,104 @@
+##
+## UltraCart - Mr Teas Template
+## http://www.ultracart.com/
+##
+## Copyright (c) 2015 BPS Info Solutions Inc.
+## License located here:
+## http://www.ultracart.com/storefront/license/
+##
+## Designed by Level 2 Design, LLC http://www.level2d.com/
+##
+
+## <aside class="columns small-16 medium-4 medium-pull-12 sidebar">
+<div class="columns small-16 medium-4">
+  ## <nav class="context-nav m">
+  ##   <ul class="menu-sidebar">
+  ##     #set($menuObj = $menuManager.getMenu("sidebar"))
+  ##     #foreach($menuItem in $menuObj.getMenuItems())
+  ##       <li> <a href="$menuItem.getURL()" title="$menuItem.getDescription()">$menuItem.getDescription()</a>
+  ##         #set($subMenuItems = $menuItem.getChildMenuItems())
+  ##         #if($subMenuItems.size() > 0)
+  ##           <ul>
+  ##             #foreach($subMenuItem in $subMenuItems)
+  ##               <li>
+  ##                 <a href="$subMenuItem.getURL()" title="$subMenuItem.getDescription()">$subMenuItem.getDescription()</a>
+  ##               </li>
+  ##             #end
+  ##           </ul>
+  ##         #end
+  ##       </li>
+  ##     #end
+  ##   </ul>
+
+  ## </nav>
+  <aside class="sidebar-moved">
+    <h2>Items on sale</h2>
+    <div class="product-list-images thumb two-up">
+      #set($saleGroup =  $group.getGroup('/sale/'))
+
+      #if($saleGroup)  ## maybe the group should be called by a theme-level attribute, so it's more flexible.
+
+        #set($saleItems = $saleGroup.getItems())
+        $formatHelper.sortByAttribute($saleItems, 'sort_order', false)
+        ## $formatHelper.removeOutOfStockItems($saleItems)
+
+        #if($saleItems.size() > 0)
+          <ul>
+            #foreach($item in $saleItems)
+              #if($item.getSaleCost())
+                #set($saleClass = "sale")
+              #else
+                #set($saleClass = "")
+              #end
+
+              #if($item.isInventoryTracked())
+                #if($item.getAvailableQuantity() && $item.getAvailableQuantity() < 1)
+                  #set($stockClass = "out-of-stock")
+                #else
+                  #set($stockClass = "")
+                #end
+              #else
+                #set($stockClass = "")
+              #end
+
+              <li data-equalizer-watch class="$saleClass $stockClass">
+                <a href="${baseUrl}${item.getPath()}" title="View $item.getTitle()" class="product-photo">
+                  <strong>${item.getTitle()}</strong>
+                  <span class="link">View</span>
+                  #if($item.getDefaultMultimedia('Image') && $item.getDefaultMultimedia('Image').getThumbnail(220, 293, false, $PNGThumbnails))
+                    <img src="${baseThumbnailUrl}${item.getDefaultMultimedia('Image').getThumbnail(220, 293, false, $PNGThumbnails)}" width="220" height="293" alt="$item.getTitle()" />
+                  #else
+                    <img src="${baseThemeUrl}${theme.attr('Item No Image Available Image URL')}" class="UC-default-item-multimedia" width="220" height="293" alt="$item.getTitle()" />
+                  #end
+                  #if($item.getSaleCost())
+                    <sub>
+                      <em>Sale!</em>
+                    </sub>
+                  #end
+                  #if($item.isInventoryTracked())
+                    #if($item.getAvailableQuantity() && $item.getAvailableQuantity() < 1)
+                      <sub>
+                        <em>Out of stock</em>
+                      </sub>
+                    #end
+                  #end
+                </a>
+                <div class="product-info">
+                  <a href="${baseUrl}${item.getPath()}" title="" class="product-title">$formatHelper.excerpt(${item.getTitle()}, 135)</a>
+                  #if($item.getSaleCost())
+                    <span class="price"><strike>$item.getRegularCostLocalized()</strike></span>
+                    <span class="price sale">$item.getSaleCostLocalized()</span>
+                  #else
+                    <span class="price">$item.getCostLocalized()</span>
+                  #end
+                </div>
+              </li>
+            #end
+          </ul>
+        #end
+
+      #end
+
+    </div>
+  </aside>
+</div>

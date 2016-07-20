@@ -1,0 +1,136 @@
+##
+## UltraCart - Mr Teas Template
+## http://www.ultracart.com/
+##
+## Copyright (c) 2015 BPS Info Solutions Inc.
+## License located here:
+## http://www.ultracart.com/storefront/license/
+##
+## Designed by Level 2 Design, LLC http://www.level2d.com/
+##
+
+#* @vtlvariable name="formatHelper" type="com.bpsinfo.ultracart.catalog.tobjects.FormatHelper" *#
+#* @vtlvariable name="i18n" type="com.bpsinfo.storefront.tobjects.I18nWriter" *#
+#* @vtlvariable name="form" type="com.bpsinfo.ultracart.checkout.ui.ReviewForm" *#
+<div class="row">
+	<div class="columns small-16">
+		<h2>$i18n.write("checkout.review.creditCardHeader","CREDIT CARD PAYMENT")</h2>
+	</div>
+
+	<div class="clearfix"></div>
+
+	<div class="columns small-16 medium-16">
+		#if($form.usingStoredCreditCard)
+			<p>$i18n.write("checkout.review.usingStoredCreditCard","Your order will be processed using your credit card ending in") $i18n.escape($!form.storedCreditCardMask).</p>
+		#else ##if-usingStoredCreditCard == false
+
+			<div class="row no-padding-left no-padding-right">
+				<div class="columns small-16 medium-8">
+					<label class="label-move">
+						<span>$i18n.write("checkout.review.creditCardNumber","Credit Card #")*</span>
+						<input type='text'
+							name="creditCardNumber"
+							value="$i18n.escape($!form.creditCardNumber)"
+							id="creditCardNumber"
+							maxlength="20"/>
+					</label>
+				</div>
+
+				<div class="columns small-16 medium-8">
+					<label class="label-move">
+						<span>$i18n.write("checkout.review.creditCardType","Credit Card Type")*</span>
+						<select data-placeholder="Choose your card type" id="creditCardType" name="creditCardType" class="ucFormField" >
+							#foreach($ccType in $form.creditCardTypes)
+								## this is all in one line to avoid whitespace being added by velocity
+								<option value="$ccType.value" #if(${formatHelper.equalsIgnoreCase($ccType.value, $form.creditCardType)})selected#{end}>#if($ccType.value == "")Credit Card Type#else${ccType.description}#end</option>
+							#end
+						</select>
+					</label>
+				</div>
+			</div>
+
+			<div class="row no-padding-left no-padding-right">
+				<div class="columns small-16 medium-8">
+					<span>$i18n.write("checkout.review.creditCardExpirationDate","Expiration Date")*</span>
+					<div class="row no-padding-left no-padding-right">
+						<div class="columns small-8">
+							<label class="label-move">
+								<select data-placeholder="Month" name="creditCardExpMonth" id="creditCardExpMonth" class="ucFormField">
+									#foreach($expMonth in $form.creditCardExpMonths)
+										<option value="$expMonth.value" #if(${formatHelper.equalsIgnoreCase($expMonth.value, $form.creditCardExpMonth)})selected#{end} >
+											#if ($expMonth.value == "")
+												Month
+											 #else
+												$expMonth.description
+											#end
+										</option>
+									#end
+								</select>
+							</label>
+						</div>
+
+						<div class="columns small-8">
+							<label class="label-move">
+								<select data-placeholder="Year" name="creditCardExpYear" id="creditCardExpYear" class="ucFormField">
+									#foreach($expYear in $form.creditCardExpYears)
+										<option value="$expYear.value" #if(${formatHelper.equalsIgnoreCase($expYear.value, $form.creditCardExpYear)})selected#{end}>
+											#if ($expYear.value == "")
+												Year
+											 #else
+												$expYear.description
+											#end
+										</option>
+									#end
+								</select>
+							</label>
+						</div>
+					</div>
+				</div>
+
+				#if($form.showCreditCardVerificationNumber)
+					<div class="columns small-16 medium-8">
+						<div class="row no-padding-left no-padding-right">
+							<div class="columns small-8 medium-8">
+								<label class="label-move">
+									<span>$i18n.write("checkout.review.creditCardVerificationNumber","Card Verification #")*</span>
+									<input type="text"
+										name="creditCardVerificationNumber"
+										value="$i18n.escape($!form.creditCardVerificationNumber)"
+										id="creditCardVerificationNumber"
+										maxlength="4"/>
+								</label>
+							</div>
+							<div class="columns small-8 medium-8 large-half-margin-top small-half-margin-bottom medium-half-margin-top">
+								<span class="has-tip">
+									<span class="tip small-tip-left">$i18n.write("checkout.review.creditCardHelpFindingNumberTip","3 or 4 digit code usually located on the back of the card.")</span>
+									$i18n.write("checkout.review.creditCardHelpFindingNumber","help finding this number")
+								</span>
+							</div>
+						</div>
+					</div>
+				#end ##if-showCreditCardVerificationNumber
+			</div>
+
+			#if($form.showStoreCreditCard)
+				<label class="">
+					<input type="checkbox" name="storeCreditCard" #if($form.storeCreditCard)checked#{end}/>
+					$i18n.write("checkout.review.storeCreditCard","Store my credit card securely for future reuse.")
+				</label>
+			#end ##if-showStoredCreditCard
+		#end ##if-usingStoredCreditCard
+	</div>
+
+	#if($form.showCardinalCommercePayerAuthentication)
+		<div class="columns small-16 medium-8">
+			<p>$i18n.write("checkout.review.cardinalCommercePreAuthenticationMessage","Your card may be eligible or enrolled in Verified by Visa, MasterCard SecureCode or JCB J/Secure payer authentication programs. After clicking the 'Finalize Order' button, your Card Issuer may prompt you for your payer authentication password to complete your purchase.")</p>
+
+			<a href="/checkout/3ds/mcs_learn_more.htm" target="view" onClick="window.open('/checkout/3ds/mcs_learn_more.htm','view','height=450,width=550');">
+				<img src="/checkout/images/mcsc_learn_more.gif" alt="MasterCard SecureCode" border="0"/>
+			</a>
+
+			<a href="/checkout/3ds/vbv_learn_more.htm" target="view" onClick="window.open('/checkout/3ds/vbv_learn_more.htm','view','height=450,width=550');">
+				<img src="/checkout/images/vbv_learn_more.gif" alt="Verified by Visa" border="0">
+			</a>
+		</div>
+	#end ##if-showCardinalCommercePayerAuthentication
+</div>

@@ -1,0 +1,114 @@
+##
+## UltraCart - Mr Teas Template
+## http://www.ultracart.com/
+##
+## Copyright (c) 2015 BPS Info Solutions Inc.
+## License located here:
+## http://www.ultracart.com/storefront/license/
+##
+## Designed by Level 2 Design, LLC http://www.level2d.com/
+##
+
+#* @vtlvariable name="merchantId" type="java.lang.String" *#
+#* @vtlvariable name="header" type="java.lang.String" *#
+#* @vtlvariable name="footer" type="java.lang.String" *#
+#* @vtlvariable name="i18n" type="com.bpsinfo.storefront.tobjects.I18nWriter" *#
+
+
+#set( $bodyClass = "myaccount-shipping" )
+#set( $pageTitle = "My Account Shipping" )
+
+#parse("/snippets/top.vm")
+
+<script type="text/javascript">
+  var merchantId = '$!merchantId';
+</script>
+<!--[if lt IE 9]>
+<script type='text/javascript' src="/myaccount/js/html5shiv-printshiv.js" media="all"></script>
+<![endif]-->
+
+<script type="text/javascript" src="/myaccount/js/moment.js"></script>
+<script type="text/javascript" src="/myaccount/js/handlebars-v3.0.3.js"></script>
+<script type="text/javascript" src="/myaccount/js/underscore_1.4.4.js"></script>
+<script type="text/javascript" src="/myaccount/js/backbone_1.0.js"></script>
+<script type="text/javascript" src="/myaccount/js/myaccount_rest_1.3.js"></script>
+<script type="text/javascript" src="/myaccount/js/myaccount.js"></script>
+<script type="text/javascript" src="/myaccount/shipping.js"></script>
+
+
+<script type="text/template" id="addresses-template">
+  {{\#if loading}}
+  $i18n.write('myaccount.shippingAddresses.pleaseWait','Please wait. We are loading your addresses now.')<br>
+  <img src='/myaccount/images/jquery.smallhbar.indicator.gif'/>
+  {{else}}
+
+  <section>
+
+    <header class='shipping-header'>
+      <nav role="navigation">
+        <input type="button" class="addButton button primary small" value="$i18n.write('myaccount.shippingAddresses.addNewAddressButton','Add New Address')"/>
+      </nav>
+    </header>
+
+
+    <div id="addresses">
+      <!-- individual addresses will render here.  -->
+    </div>
+    <div style='clear:both'></div>
+
+    <footer class='shipping-footer'>
+      <nav role="navigation">
+        <input type="button" class="addButton button primary small" value="$i18n.write('myaccount.shippingAddresses.addNewAddressButton','Add New Address')"/>
+      </nav>
+    </footer>
+
+
+  </section>
+  {{/if}}
+</script>
+
+<script type="text/template" id="address-template">
+  <!-- the backbone view will wrap this content in an <article class="address"></article> tag -->
+  <div class='address row'>
+    <ul class='address-fields'>
+      <li>{{position}}. <strong>{{firstName}} {{lastName}}</strong></li>
+
+      {{\#if title}}<li>{{title}}</li>{{/if}}
+      {{\#if company}}<li>{{company}}</li>{{/if}}
+      {{\#if address1}}<li>{{address1}}</li>{{/if}}
+      {{\#if address2}}<li>{{address2}}</li>{{/if}}
+      <li>{{city}}, {{state}} {{postalCode}}</li>
+      <li>{{country}}</li>
+      {{\#if dayPhone}}<li>Day Phone: {{dayPhone}}</li>{{/if}}
+      {{\#if eveningPhone}}<li>Evening Phone: {{eveningPhone}}</li>{{/if}}
+    </ul>
+    <div class="address-actions">
+      <input type="button" class="addressButton editButton button primary small" value="$i18n.write('myaccount.shippingAddresses.editButton','Edit')"/>
+      <input type="button" class="addressButton deleteButton button secondary small" value="$i18n.write('myaccount.shippingAddresses.deleteButton','Delete')"/>
+    </div>
+
+  </div>
+</script>
+
+
+<div class="row half-margin-top">
+  <div class="columns small-16 medium-13">
+    <a href="/myaccount/index.do?merchantId=$!{merchantId}">$i18n.write('myaccount.breadcrumb.myAccount','My Account')</a> &gt; <span class='disabled-looking'>$i18n.write('myaccount.breadcrumb.shippingAddresses','Shipping Addresses')</span>
+  </div>
+</div>
+
+<div class="row">
+  <div class="columns small-16">
+    <h1>$i18n.write('myaccount.shippingHeader','Shipping Addresses')</h1>
+    <p>$i18n.write('myaccount.shippingMessage','Use the form below to add, remove or edit your shipping addresses.')</p>
+  </div>
+</div>
+
+<main role='main' class="row">
+  <div id="addresses" class="columns small-16">
+
+  </div>
+</main>
+<div style='clear:both'></div>>
+
+#parse("/snippets/bottom.vm")

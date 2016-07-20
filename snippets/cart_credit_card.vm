@@ -1,0 +1,165 @@
+##
+## UltraCart - Mr Teas Template
+## http://www.ultracart.com/
+##
+## Copyright (c) 2015 BPS Info Solutions Inc.
+## License located here:
+## http://www.ultracart.com/storefront/license/
+##
+## Designed by Level 2 Design, LLC http://www.level2d.com/
+##
+
+#* @vtlvariable name="i18n" type="com.bpsinfo.storefront.tobjects.I18nWriter" *#
+#* @vtlvariable name="creditCardPart" type="com.bpsinfo.storefront.tobjects.CreditCardPart" *#
+#* @vtlvariable name="formatHelper" type="com.bpsinfo.ultracart.catalog.tobjects.FormatHelper" *#
+
+<script>
+function whatscvv() {
+         //alert('test');
+         $("#cvvq").toggleClass("hide");
+    }
+</script>
+#if($creditCardPart.usingStoredCard)
+<div class="row">
+	<div class="columns small-16">
+		##<h2>$i18n.write("checkout.single.creditCardPaymentHeader","Payment")</h2>
+	</div>
+
+	<div class="columns small-16">
+		<span class="stored-number">$!creditCardPart.storedCardMaskedNumber</span>
+		<span class="stored-exp">$!creditCardPart.storedCardExp</span>
+
+		<div class="ucFormLabel ucCreditCardStoredChange">
+			<div class="ucChangeButton">
+				<input type='image' name="change" src="/checkout/images/spacer.gif" border="0" alt="Change"
+							 class="ucChangeButtonOverlay" onclick="return showRegularCreditCardForm()"/>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+	function showRegularCreditCardForm() {
+		// Change this to false
+		document.getElementById('usingStoredCardId').value = 'false';
+		hideDiv('ucCreditCardStoredCardTableId');
+		showDiv('ucCreditCardFormTableId');
+		return false;
+	}
+    
+    
+</script>
+#end ##if-usingStoredCard
+
+<div class="row js-credit-card-form" #if($creditCardPart.usingStoredCard)style="visibility:hidden; display:none;"#{end}>
+	
+    <div class="columns small-16 medium-16">
+      <label>$i18n.write("checkout.single.creditCardType","Credit Card Type")*</label>
+		
+			<select data-placeholder="Choose your card type" name="creditCardType" id="creditCardType" required >
+				#foreach($ccType in $creditCardPart.creditCardTypes)
+					## this is all in one line to avoid whitespace being added by velocity
+					<option value="$ccType.value" #if(${formatHelper.equalsIgnoreCase($ccType.value, $form.creditCardType)})selected#{end}>#if($ccType.value == "")Credit Card Type#else${ccType.description}#end</option>
+				#end
+			</select>
+		
+	</div>
+
+	<div class="columns small-16 medium-16">
+      <label>$i18n.write("checkout.single.creditCardNumber","Credit Card #")*</label>
+			<input type="text" placeholder="" value="$i18n.escape($!creditCardPart.creditCardNumber)" name="creditCardNumber" id="creditCardNumber" maxlength="20" required />
+		
+	</div>
+
+	
+	<div class="clearfix"></div>
+
+	## <div class="columns small-16 medium-8">
+	## 	<label class="label-move">
+	## 		<span>$i18n.write("checkout.single.creditCardExpirationDate","Expiration")*</span>
+	## 		<div class="row no-padding-left no-padding-right">
+	## 			<div class="columns small-8">
+	## 				<select data-placeholder="Month" name="creditCardExpMonth" id="creditCardExpMonth" required >
+	## 					#foreach($expMonth in $creditCardPart.creditCardExpMonths)
+	## 						<option value="$expMonth.value" #if(${formatHelper.equalsIgnoreCase($expMonth.value, $form.creditCardExpMonth)})selected#{end} >
+	## 							#if ($expMonth.value == "")
+	## 								Month
+	## 							 #else
+	## 								$expMonth.description
+	## 							#end
+	## 						</option>
+	## 					#end
+	## 				</select>
+	## 			</div>
+
+	## 			<div class="columns small-8">
+	## 				<select data-placeholder="Year" name="creditCardExpYear" id="creditCardExpYear">
+
+	## 					#foreach($expYear in $creditCardPart.creditCardExpYears)
+	## 						<option value="$expYear.value" #if(${formatHelper.equalsIgnoreCase($expYear.value, $form.creditCardExpYear)})selected#{end}>
+	## 							#if ($expYear.value == "")
+	## 								Year
+	## 							 #else
+	## 								$expYear.description
+	## 							#end
+	## 						</option>
+	## 					#end
+	## 				</select>
+	## 			</div>
+	## 		</div>
+	## 	</label>
+	## </div>
+	<div class="columns small-16 medium-16">
+		<label>$i18n.write("checkout.review.creditCardExpirationDate","Expiration Date")*</label>
+                 
+                      <select data-placeholder="Month" name="creditCardExpMonth" id="creditCardExpMonth" class="ucFormField small-input">
+                          #foreach($expMonth in $form.creditCardExpMonths)
+                              <option value="$expMonth.value" #if(${formatHelper.equalsIgnoreCase($expMonth.value, $form.creditCardExpMonth)})selected#{end} >
+                                  #if ($expMonth.value == "")
+                                      Month
+                                   #else
+                                      $expMonth.description
+                                  #end
+                              </option>
+                          #end
+                      </select>
+                   
+       
+                   
+                      <select  data-placeholder="Year" name="creditCardExpYear" id="creditCardExpYear" class="ucFormField small-input">
+                          #foreach($expYear in $form.creditCardExpYears)
+                              <option  value="$expYear.value" #if(${formatHelper.equalsIgnoreCase($expYear.value, $form.creditCardExpYear)})selected#{end}>
+                                  #if ($expYear.value == "")
+                                      Year
+                                   #else
+                                      $expYear.description
+                                  #end
+                              </option>
+                          #end
+                      </select>
+      			   
+		</div>
+    #if($creditCardPart.showCreditCardVerificationNumber)
+		<div class="columns small-16 medium-16">
+			    <label>* Security Code : <a href="javascript:whatscvv()">What this?</a></label>
+          <div id="cvvq" class="hide" style="position: absolute;left: 90%;top: -150%;z-index: 9000000;"><img src="https://store.healthlabsnutra.com/themes/MrTeas_0_32/assets/imgs/cvvInfo.png" /></div>
+                <input type="text" value="$i18n.escape($!creditCardPart.creditCardVerificationNumber)" name="creditCardVerificationNumber" id="creditCardVerificationNumber" maxlength="4" required />
+        </div>	
+	#end
+    
+	#if($creditCardPart.showCardinalCommercePayerAuthentication)
+		<div class="columns small-16 medium-16">
+			<p>$i18n.write("checkout.single.cardinalCommercePreAuthenticationMessage","Your card may be eligible or enrolled in Verified by Visa, MasterCard SecureCode or JCB J/Secure payer authentication programs. After clicking the 'Finalize Order' button, your Card Issuer may prompt you for your payer authentication password to complete your purchase.")</p>
+
+			<a href="/checkout/3ds/mcs_learn_more.htm" target="view" onClick="window.open('/checkout/3ds/mcs_learn_more.htm','view','height=450,width=550');">
+				<img src="/checkout/images/mcsc_learn_more.gif" alt="MasterCard SecureCode" border="0"/>
+			</a>
+			<a href="/checkout/3ds/vbv_learn_more.htm" target="view" onClick="window.open('/checkout/3ds/vbv_learn_more.htm','view','height=450,width=550');">
+				<img src="/checkout/images/vbv_learn_more.gif" alt="Verified by Visa" border="0">
+			</a>
+		</div>
+	#end ##if-showCardinalCommercePayerAuthentication
+</div>
+<!-- <label class="hidden-sm hidden-xs">&nbsp;&nbsp;</label>
+<input type="checkbox" name="" value="">
+<span>Keep my payment method on file for <br>easy checkout on future orders.</span> -->

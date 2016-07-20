@@ -1,0 +1,128 @@
+##
+## UltraCart - Mr Teas Template
+## http://www.ultracart.com/
+##
+## Copyright (c) 2015 BPS Info Solutions Inc.
+## License located here:
+## http://www.ultracart.com/storefront/license/
+##
+## Designed by Level 2 Design, LLC http://www.level2d.com/
+##
+
+#* @vtlvariable name="merchantId" type="java.lang.String" *#
+#* @vtlvariable name="header" type="java.lang.String" *#
+#* @vtlvariable name="footer" type="java.lang.String" *#
+#* @vtlvariable name="i18n" type="com.bpsinfo.storefront.tobjects.I18nWriter" *#
+
+#set( $bodyClass = "myaccount-payment" )
+#set( $pageTitle = "My Account Payment" )
+#set( $handlebarsForm = "true" )
+
+#parse("/snippets/top.vm")
+
+<script type="text/javascript">
+  var merchantId = '$!merchantId';
+</script>
+<!--[if lt IE 9]>
+<script type='text/javascript' src="/myaccount/js/html5shiv-printshiv.js" media="all"></script>
+<![endif]-->
+
+<script type="text/javascript" src="/myaccount/js/moment.js"></script>
+<script type="text/javascript" src="/myaccount/js/handlebars-v3.0.3.js"></script>
+<script type="text/javascript" src="/myaccount/js/underscore_1.4.4.js"></script>
+<script type="text/javascript" src="/myaccount/js/myaccount_rest_1.3.js"></script>
+<script type="text/javascript" src="/myaccount/js/myaccount.js"></script>
+<script type="text/javascript" src="/myaccount/payment.js"></script>
+<script type="text/javascript" src="/checkout/checkout-hosted-fields-1.0.js"></script>
+
+
+<script type="text/template" id="payment-template">
+  <!-- the backbone view will wrap this content in an <article class="payment"></article> tag -->
+
+  <div class='payment-edit-table'>
+
+  <form id='form-edit-payment' action="#" method="post" class="validate">
+      #parse('/snippets/common/cs_token.vm')
+      <div class="columns small-16">
+        <label class='label-move'>
+          <span>$i18n.write('myaccount.editCreditCard.cardTypeLabel','Card Type')</span>
+          <select id="cardType" name="cardType" value="{{cardType}}" required>
+            <option disabled='disabled'>- Please select a card type -</option>
+            {{{types}}}
+          </select>
+          <input type="hidden" id="id" value="{{id}}"/>
+          <input type="hidden" id="merchantId" value="{{merchantId}}"/>
+          <input type="hidden" id="customerProfileId" value="{{customerProfileId}}"/>
+        </label>
+      </div>
+
+      <div class="columns small-16">
+        <label class='label-move'>
+          <span>$i18n.write('myaccount.editCreditCard.cardNumberLabel','Card Number')</span>
+          <input type="text" name="cardNumber" id="cardNumber" placeholder="Card Number" class="no-margin-bottom inspectletIgnore" value="{{cardNumber}}" size="30" maxlength="30"/>
+          <input type="hidden" id="creditCardNumberToken" value=""/>
+        </label>
+          <small>$i18n.write('myaccount.editCreditCard.cardNumberNote','You do not need to re-enter your card number to make other changes.')</small>
+
+      </div>
+
+
+      <div class="columns small-8 medium-8">
+        <label class='label-move'>
+          <span>$i18n.write('myaccount.editCreditCard.editCreditCard.expirationMonthLabel','Expiration Month')</span>
+          <select id="cardExpMonth" name="cardExpMonth" value="{{cardExpMonth}}" required>
+            {{{months}}}
+          </select>
+        </label>
+      </div>
+      <div class="columns small-8 medium-8">
+        <label class='label-move'>
+          <span>$i18n.write('myaccount.editCreditCard.editCreditCard.expirationYearLabel','Expiration Year')</span>
+          <select id="cardExpYear" name="cardExpYear" required>
+            {{{years}}}
+          </select>
+        </label>
+      </div>
+
+      <div class="columns small-12 text-right half-margin-top">
+        <button type="submit" id="saveButton" class="button invalid" disabled>
+          $i18n.write('myaccount.editCreditCard.saveButton','Save Changes')
+        </button>
+        <button id="cancelButton" class="button secondary">$i18n.write('myaccount.editCreditCard.cancelButton','Cancel')</button>
+      </div>
+
+    </form>
+  </div>
+
+
+  <div style='clear:both'></div>
+
+
+</script>
+
+<div class="row half-margin-top">
+  <div class="columns small-16 medium-13">
+    <a href="/myaccount/index.do?merchantId=$!{merchantId}">$i18n.write('myaccount.breadcrumb.myAccount','My Account')</a> &gt; <a href="/myaccount/payments.do?merchantId=$!{merchantId}">$i18n.write('myaccount.breadcrumb.payments','Payments')</a> &gt; <span class='disabled-looking'>$i18n.write('myaccount.breadcrumb.editCreditCard','Edit Credit Card')</span>
+  </div>
+</div>
+
+<div class="row">
+  <div class="columns small-16">
+    <h1>$i18n.write('myaccount.paymentHeader','Edit Credit Card')</h1>
+    <p>$i18n.write('myaccount.paymentMessage','Use the form below to edit your paymant method.')</p>
+    <div class="myaccount-notifications">
+      <div class="alert info text-left no-margin-top no-margin-bottom"></div>
+      <div class="alert success text-left no-margin-top no-margin-bottom"></div>
+      <div class="alert warning text-left no-margin-top no-margin-bottom"></div>
+      <div class="alert error text-left no-margin-top no-margin-bottom"></div>
+    </div>
+  </div>
+</div>
+
+<main role='main' class="row">
+  <div id="payment" class="columns small-16">
+
+  </div>
+</main>
+
+#parse("/snippets/bottom.vm")

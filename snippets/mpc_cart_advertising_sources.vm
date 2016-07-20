@@ -1,0 +1,136 @@
+##
+## UltraCart - Mr Teas Template
+## http://www.ultracart.com/
+##
+## Copyright (c) 2015 BPS Info Solutions Inc.
+## License located here:
+## http://www.ultracart.com/storefront/license/
+##
+## Designed by Level 2 Design, LLC http://www.level2d.com/
+##
+
+<div class="row">
+	<div class="columns small-16 medium-8">
+		<h2>$i18n.write("checkout.options.advertisingSourceHeader","WHERE DID YOU HEAR ABOUT US?") #if($form.advertisingSourceRequired)*#{end}</h2>
+
+
+		#if($form.showAdvertisingSourceSelectThenFreeForm)
+			<script type="text/javascript">
+				function updateHiddenAdvertisingSourceOther(v) {
+					document.getElementById('advertisingSourceOtherId').value = v;
+				}
+
+				function selectAdvertisingSourceOther(index) {
+					var radios = document.getElementsByClassName('advertisingSourceRadio');
+					if (radios) {
+						for (var i = 0; i < radios.length; i++) {
+
+							var elem = document.getElementById("advertisingSourceOtherId" + i);
+							var input = document.getElementById("advertisingSourceOtherId" + i + "Text");
+
+							if (elem != null) {
+								if (i == index) {
+
+									elem.style.visibility = 'visible';
+									elem.style.display = 'block';
+									if (input != null) {
+										input.focus();
+										input.select();
+									}
+
+								} else {
+
+									elem.style.visibility = 'hidden';
+									elem.style.display = 'none';
+
+								}
+							}
+
+						}
+					}
+				}
+			</script>
+
+			<input type="hidden" name="advertisingSourceOther" id="advertisingSourceOtherId" value="$i18n.escape($!form.advertisingSourceOther)"/>
+
+
+			<ul class="option-group advertising-source-options">
+				#foreach($advertisingSource in $form.advertisingSources)
+					<li>
+						<input type="radio" id="advertisingSource${foreach.index}" name="advertisingSource" value="$i18n.escape($advertisingSource)" class="advertisingSourceRadio" #if($form.advertisingSource == $advertisingSource)checked#{end} onclick="selectAdvertisingSourceOther($foreach.index)"/>
+						<label for="advertisingSource${foreach.index}">
+							$i18n.escape($advertisingSource)
+
+						</label>
+						<br>
+						<input type="text" name="advertisingSourceOtherId${foreach.index}"
+							id="advertisingSourceOtherId${foreach.index}Text"
+							#if($form.advertisingSource == $advertisingSource)
+								value="$i18n.escape($!form.advertisingSourceOther)"
+								style="visibility:visible;display:block;"
+							#else
+								placeholder="Please Specify"
+							#end
+							maxlength="50"
+							onclick="this.select();"
+							onblur="updateHiddenAdvertisingSourceOther(this.value)"  />
+					</li>
+				#end ##foreach-advertisingSource
+			</ul>
+		#end ## if-showAdvertisingSourceSelectThenFreeForm
+
+		#if($form.showAdvertisingSourceDropDown)
+
+			<script type="text/javascript">
+				function hideElement(element) {
+					if (element.style)
+						element.style.visibility = 'hidden';
+				}
+				function showElement(element) {
+					if (element.style)
+						element.style.visibility = 'visible';
+				}
+
+				function asChanged(dd) {
+					if (dd.selectedIndex == (dd.options.length - 1) && dd.options[dd.selectedIndex].value == "Other") {
+						showDiv('otherBox');
+						document.ucOptions.advertisingSourceOther.disabled = false;
+						showElement(document.ucOptions.advertisingSourceOther);
+					}
+					else {
+						hideDiv('otherBox');
+						document.ucOptions.advertisingSourceOther.disabled = true;
+						hideElement(document.ucOptions.advertisingSourceOther);
+					}
+				}
+
+			</script>
+
+			<ul class="option-group advertising-source-options">
+				#foreach($advertisingSource in $form.advertisingSources)
+					#if($advertisingSource != '')
+						<li>
+							<input type="radio" id="advertisingSource${foreach.count}" name="advertisingSource" value="$i18n.escape($advertisingSource)" #if($advertisingSource == $form.advertisingSource)checked#{end} />
+							<label for="advertisingSource${foreach.count}">
+								<strong>$i18n.escape($advertisingSource)</strong>
+							</label>
+
+							#if($i18n.escape($advertisingSource) == 'Other')
+								<br>
+								<input type="text" placeholder="$i18n.write("checkout.options.advertisingSourceField","Please specify the other place you heard about us")" name="advertisingSourceOther" class="no-margin-bottom" value="$i18n.escape($!form.advertisingSourceOther)" />
+							#end
+						</li>
+					#end
+				#end
+			</ul>
+		#end ##if-showAdvertisingSourceDropDown
+
+
+		#if($form.showAdvertisingSourceFreeForm)
+			<label class="label-move">
+				<input type="text" class="no-margin-bottom" name="advertisingSource" value="$i18n.escape($!form.advertisingSourceOther)" />
+				## <input type="text" class="no-margin-bottom" name="advertisingSourceOther" value="$i18n.escape($!form.advertisingSourceOther)" />
+			</label>
+		#end ##if-showAdvertisingSourceFreeForm
+	</div>
+</div>

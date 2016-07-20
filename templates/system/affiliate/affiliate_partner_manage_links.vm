@@ -1,0 +1,82 @@
+##
+## UltraCart - Mr Teas Template
+## http://www.ultracart.com/
+##
+## Copyright (c) 2015 BPS Info Solutions Inc.
+## License located here:
+## http://www.ultracart.com/storefront/license/
+##
+## Designed by Level 2 Design, LLC http://www.level2d.com/
+##
+
+#* @vtlvariable name="formatHelper" type="com.bpsinfo.ultracart.catalog.tobjects.FormatHelper" *#
+#* @vtlvariable name="i18n" type="com.bpsinfo.storefront.tobjects.I18nWriter" *#
+#* @vtlvariable name="form" type="com.bpsinfo.ultracart.affiliate.ui.partner.ManageLinksForm" *#
+
+#set( $pageGroup = 'affiliate' )
+#set( $bodyClass = 'affiliate manage-links' )
+#set( $pageTitle = 'Affiliate Partner - Manage Links' )
+#parse('/snippets/top.vm')
+
+#set( $title = 'Manage Links' )
+#parse('/snippets/title.vm')
+
+<form action="/affiliate/partner/manageLinksSave.do" method="post">
+    #parse('/snippets/common/storefront_template_spec_version.vm')
+	#parse('/snippets/errors.vm')
+	#parse('/snippets/info_messages.vm')
+
+	<div class="row">
+		<div class="columns small-16">
+			<button type="submit" name="newLink">New Link</button>
+		</div>
+
+		<div class="columns small-16">
+			#if($form.links.size() == 0)
+				<p>To create your first link, click on the <strong>new</strong> button above.</p>
+			#else ## there are links to show.
+			<table>
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>Status</th>
+						<th></th>
+					</tr>
+				</thead>
+
+				<tbody>
+					#foreach($link in $form.links)
+						<tr>
+							<td>
+								$i18n.escape($!link.name)
+								<input type="hidden" name="links[${foreach.index}].affiliateLinkOid" value="$!link.affiliateLinkOid"/>
+							</td>
+
+							<td>
+								$!link.approval
+							</td>
+
+							<td>
+								#if($link.showButtons)
+									<button type="submit" name="links[${foreach.index}].edit" value="edit" class="button">Edit</button>
+									<button type="submit" name="links[${foreach.index}].view" value="view" class="button">View</button>
+									<button type="submit" name="links[${foreach.index}].delete" value="view" class="button error js-link-delete">Delete</button>
+								#end ##if link.showButtons
+							</td>
+						</tr>
+					#end ## foreach link
+				</tbody>
+			</table>
+		#end ##if there are any links
+		</div>
+	</div>
+
+	#set( $showBackButton = true )
+	#set( $hideButton = true )
+	#parse('/snippets/affiliate/button.vm')
+
+	#parse('/snippets/common/cs_token.vm')
+
+</form>
+
+#parse('/snippets/bottom.vm')

@@ -1,0 +1,50 @@
+#* @vtlvariable name="formatHelper" type="com.bpsinfo.ultracart.catalog.tobjects.FormatHelper" *#
+#* @vtlvariable name="i18n" type="com.bpsinfo.storefront.tobjects.I18nWriter" *#
+#* @vtlvariable name="form" type="com.bpsinfo.ultracart.checkout.ui.QuoteReviewForm" *#
+
+## TODO: Still an issue in small/medium states that causes the price summary section to get to big, and several values get hidden
+#set( $bodyClass = 'quotation' )
+#set( $pageTitle = $i18n.write("checkout.quoteReview.pageTitle", "Quotation") )
+#parse('/snippets/top.vm')
+
+<form name="ucQuoteReview"
+      id="ucQuoteReview"
+      action="/checkout/quoteReviewSave.do?merchantId=$formatHelper.urlEncode($form.merchantId)"
+      method='post'
+      autocomplete="OFF">
+  #parse('/snippets/common/storefront_template_spec_version.vm')
+
+  <input type='hidden' name="merchantId" value="$i18n.escape($!form.merchantId)"/>
+  <input type='hidden' name="quoteId" value="$i18n.escape($!form.quoteId)"/>
+
+  #set( $title = "$i18n.write('checkout.quoteReview.quotationHeader','QUOTATION') - $i18n.escape($!form.merchantId)" )
+  #parse('/snippets/title.vm')
+
+  <div class="row">
+    <div class="columns small-16">
+      #parse('/snippets/errors.vm')
+      #parse('/snippets/info_messages.vm')
+    </div>
+  </div>
+
+  #parse('/snippets/quote_review_items.vm')
+
+  ## #parse('/snippets/quote_review_addresses.vm')
+  
+  #parse('/snippets/quote_review_payment_preferences.vm')
+
+  <!-- Gift Message -->
+  #if("$!form.giftMessage" != "")
+    #parse('/snippets/quote_review_gift.vm')
+  #end ## if there was a gift message
+
+  #if("$!form.specialInstructions" != "")
+    #parse('/snippets/quote_review_special_instructions.vm')
+  #end ##if there are specialInstructions
+
+
+  #parse('/snippets/button.continue.vm')
+</form>
+
+
+#parse('/snippets/bottom.vm')

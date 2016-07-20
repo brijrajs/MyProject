@@ -1,0 +1,28 @@
+#set( $bodyClass = 'session-timeout' )
+#parse('/snippets/top.vm')
+
+#set( $title = "Shopping Session Expired" )
+#parse('/snippets/title.vm')
+
+<div class="row">
+	<div class="columns small-16">
+		<p>
+			Your shopping session appears to have timed out due to inactivity
+			or you have completed an order and then attempted to use the back button.
+		</p>
+
+		<p>
+			If you clicked the finalize order button already, <strong>Please check your email for a receipt
+			within the next 5 minutes before returning to our site and attempting to place a new
+			order.</strong> You may accidentally place a duplicate order if you do not check first. If you
+			would like to modify your order after placing it, please contact customer service.
+		</p>
+
+		<p>
+			Please return to our website and create a new cart or contact customer
+			service to change a placed order.
+		</p>
+	</div>
+</div>
+
+#parse('/snippets/bottom.vm')

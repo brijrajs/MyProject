@@ -1,0 +1,804 @@
+##
+## UltraCart - Mr Teas Template
+## http://www.ultracart.com/
+##
+## Copyright (c) 2015 BPS Info Solutions Inc.
+## License located here:
+## http://www.ultracart.com/storefront/license/
+##
+## Designed by Level 2 Design, LLC http://www.level2d.com/
+##
+
+#* @vtlvariable name="formatHelper" type="com.bpsinfo.ultracart.catalog.tobjects.FormatHelper" *#
+#* @vtlvariable name="i18n" type="com.bpsinfo.storefront.tobjects.I18nWriter" *#
+#* @vtlvariable name="form" type="com.bpsinfo.ultracart.checkout.ui.ReviewForm" *#
+
+#set( $placesApi = 'true' )
+#set( $pageGroup = 'multi-page-checkout' )
+#set( $bodyClass = 'multi-page-checkout review' )
+#set( $pageTitle = $i18n.write("checkout.review.pageTitle", "Review Order") )
+#parse('/snippets/top.vm')
+
+#parse('/snippets/breadcrumbs.vm')
+
+
+#set( $title = $i18n.write("checkout.review.orderHeader","ORDER") )
+#parse('/snippets/title.vm')
+
+
+<script type="text/javascript">
+	var stateOptionalCountries = ${form.stateOptionalCountriesJson};
+	var ultraCartHostedFieldsCssUrls = ['${baseUrl}/assets/css/ultracart-hosted-fields.css', 'https://fonts.googleapis.com/css?family=Lato:300,400,700,900,300italic,400italic,700italic|Cabin:400,500,700,400italic,500italic,700italic|Bitter:400,700,400italic'];
+</script>
+
+## the following snippet relies on the window.ultraCartHostedFieldsCssUrls array defined above.
+#parse('/snippets/cart_review_hosted_fields.vm')
+
+
+<form name="ucReview" id="ucReview" method="post" autocomplete="OFF"
+	action="/checkout/reviewSave.do?merchantId=$formatHelper.urlEncode($form.merchantId)">
+	#parse('/snippets/common/storefront_template_spec_version.vm')
+
+	<input type="hidden" name="showAcceptReturnPolicy" value="$i18n.escape($!form.showAcceptReturnPolicy)"/>
+	<input type="hidden" name="showAcceptCheckoutTerms" value="$i18n.escape($!form.showAcceptCheckoutTerms)"/>
+	##<input type="hidden" name="showBilling" value="$i18n.escape($!form.showBilling)"/>
+	<input type="hidden" name="buysafeBondChange" value="$i18n.escape($!form.buysafeBondChange)" id="ucBuysafeBondChangeId"/>
+
+	<input type="hidden" name="storedCreditCardMask" value="$i18n.escape($!form.storedCreditCardMask)"/>
+	<input type="hidden" name="usingStoredCreditCard" value="$i18n.escape($!form.usingStoredCreditCard)"/>
+	<input type="hidden" name="showStoreCreditCard" value="$i18n.escape($!form.showStoreCreditCard)"/>
+	<input type="hidden" name="collectECheckCheckNumber" value="$i18n.escape($!form.collectECheckCheckNumber)"/>
+
+	#if($form.gatewayTokenization)
+		<input type="hidden" name="gatewayTokenization" value="$i18n.escape($!form.gatewayTokenization)"/>
+		<input type="hidden" name="creditCardToken" id="creditCardToken" value="$i18n.escape($!form.creditCardToken)"/>
+	#end ##if-gatewayTokenization
+
+
+	#parse("/snippets/errors.vm")
+	#parse("/snippets/info_messages.vm")
+
+	#if($form.paymentPreference == 'Amazon')
+		<script type='text/javascript' src='${form.amazonWidgetUrl}?sellerId=${formatHelper.urlEncode($form.amazonMerchantId)}'></script>
+	#end
+
+	<!-- cart -->
+	<div class="row">
+		<div class="columns small-16">
+			<table class="tablesaw tablesaw-stack no-margin-bottom" data-mode="stack">
+				<thead>
+					<tr>
+						<th class="col_item">$i18n.write("checkout.review.itemIdHeader","Item")</th>
+						<th class="col_description">$i18n.write("checkout.review.descriptionHeader","Description")</th>
+
+						#if($form.showOptions)
+							<th class="col_options">$i18n.write("checkout.review.optionsHeader","Options")</th>
+						#end ## if-showOptions
+
+						<th class="col_qty">$i18n.write("checkout.review.quantityHeader","Qty")</th>
+						<th class="col_amount">$i18n.write("checkout.review.amountHeader","Amount")</th>
+
+						#if($form.showAutoOrderFrequency)
+							<th class="col_auto">
+								$i18n.write("checkout.review.autoOrderHeader","Auto Order")
+							</th>
+						#end
+					</tr>
+				</thead>
+
+				<tbody>
+					## =========================================================================
+					## =========================================================================
+					#foreach($item in $form.items)
+						<tr>
+							<!-- ========================== Item# / SKU ========================== -->
+							<td class="col_item">$i18n.escape($!item.itemId)</td>
+
+							<!-- ========================== Description ================================ -->
+							<td valign="top" class="col_description">
+								<span>$!item.description</span>
+							</td>
+
+							#if($form.showOptions)
+								<!-- ========================== Options ================================ -->
+								<td class="col_options">
+									<dl>
+										#foreach($option in $item.options)
+											<dt>${i18n.escape($!option.name)}</dt>
+											<dd>${i18n.escape($!option.value)}</dd>
+										#end ## foreach option in item
+									</dl>
+								</td>
+							#end ## if-showOptions
+
+							<!-- ========================== Quantity ============================= -->
+							<td class="col_qty" valign="top" >$i18n.escape($!item.quantity)</td>
+
+							<!-- ========================== Amount ================================ -->
+							<td class="col_amount" valign="top" class="ucReviewItemAmountCell">
+								<span>$!item.amount</span>
+								#if($item.discount != "0.00")
+									<br/>
+									<span> - $!item.discount</span>
+								#end ## if-discount is not zero
+							</td>
+
+							#if($form.showAutoOrderFrequency)
+								<td valign="top" align="center">
+									<span>
+										$i18n.escape($item.autoOrderFrequency)
+									</span>
+								</td>
+							#end ## if-showAutoOrderFrequency
+						</tr>
+					#end ## foreach item in items
+					## =========================================================================
+					## =========================================================================
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<!-- /cart -->
+
+	<!-- cart-footer -->
+	<div class="row cart-footer no-margin-top">
+		<div class="equalizer-small-suspend equalizer-medium-suspend columns small-16" data-equalizer>
+			<div class="cart-footer-left small-only-text-center medium-text-right" data-equalizer-watch>
+				#if($form.showAddress == 'shipping')
+					<!-- shipping only -->
+					<div class="shipping-info text-left">
+						<strong>$i18n.write("checkout.review.shippingInfoHeader","Shipping Info")</strong><br>
+
+						#if($form.paymentPreference == 'Amazon')
+							<div id="readOnlyAddressBookWidgetDiv"></div>
+							<script>
+								new OffAmazonPayments.Widgets.AddressBook({
+									sellerId: '${formatHelper.escapeJavascript($form.getAmazonMerchantId())}',
+									amazonOrderReferenceId: '${formatHelper.escapeJavascript($form.getAmazonOrderReferenceId())}',
+									displayMode: "Read",
+									design: {
+										size : {width:'290px', height:'185px'}
+									},
+									onError: function(error) {
+										// your error handling code
+									}
+								}).bind("readOnlyAddressBookWidgetDiv");
+							</script>
+
+							<span class="ucReviewAddressText">
+								<br>
+								<br>
+								$!form.shippingMethod $!form.shipping3rdPartyAccountNumber $!form.liftGate
+								#if("$!form.shipOnDate" != "")
+									<br>$i18n.write("checkout.review.shipOnDateField","Ship on date")
+									: $i18n.escape($!form.shipOnDate)
+								#end ##if-shipOnDate is not empty
+
+								#if("$!form.deliveryDate" != "")
+									<br>$i18n.write("checkout.review.deliveryDateField","Delivery date")
+									: $i18n.escape($!form.deliveryDate)
+								#end ##if-deliveryDate is not empty
+							</span>
+						#else ## if-paymentPreference == Amazon
+							<span class="ucReviewAddressText">
+								#foreach($si in $form.shippingInfo)
+									$i18n.escape($si)<br>
+								#end
+								<br>
+								<br>
+								$!form.shippingMethod $!form.shipping3rdPartyAccountNumber $!form.liftGate
+								#if("$!form.shipOnDate" != "")
+									<br>$i18n.write("checkout.review.shipOnDateField","Ship on date")
+									: $i18n.escape($!form.shipOnDate)
+								#end ##if-shipOnDate is not empty
+								#if("$!form.deliveryDate" != "")
+									<br>$i18n.write("checkout.review.deliveryDateField","Delivery date")
+									: $i18n.escape($!form.deliveryDate)
+								#end ##if-deliveryDate is not empty
+							</span>
+						#end ## else-paymentPreference
+
+
+						#if(!$form.hideEditLink)
+							#set( $editLink = '/checkout/shippingLoad.do')
+							#if($form.payPalExpressCheckout)
+								#set( $editLink = '/checkout/payPalExpressCheckoutLoad.do')
+							#end ## if-payPalExpressCheckout
+
+							<small>
+								<a href="$editLink">$i18n.write("checkout.review.editLink","Edit")</a>
+							</small>
+						#end ## if-hideEditLink is false
+					</div>
+					<!-- /shipping only -->
+				#end ##if-showAddress == 'shipping'
+
+				#if($form.showAddress == 'billing')
+					<!-- billing only -->
+					<div class="billing-info text-left">
+						<strong>$i18n.write("checkout.review.billingInfoHeader","Billing Info")</strong><br>
+						<span class="ucReviewAddressText">
+							#foreach($bi in $form.billingInfo)
+								$i18n.escape($bi)<br>
+							#end ##foreach billingInfo record
+							<br>
+							<br>
+						</span>
+
+						#if(!$form.payPalExpressCheckout)
+							#if(!$form.hideEditLink)
+								<small>
+									<a href="/checkout/billingLoad.do">
+										$i18n.write("checkout.review.editLink","Edit")
+									</a>
+								</small>
+							#end ##if-hideEditLink == false
+						#end ## if-payPalExpressCheckout
+					</div>
+					<!-- /billing only -->
+				#end ##if-showAddress == billing
+
+				#if($form.showAddress == 'both')
+					<!-- both billing and shipping -->
+					<div class="row">
+						<div class="columns small-16 medium-8">
+							<div class="shipping-info text-left">
+								<strong>$i18n.write("checkout.review.shippingInfoHeader","Shipping Info")</strong>
+								<span class="ucReviewAddressText">
+									#foreach($si in $form.shippingInfo)
+										$i18n.escape($si)<br>
+									#end
+									<br>
+									<br>
+									$i18n.escape($!form.shippingMethod)
+								</span>
+
+								#if(!$form.hideEditLink)
+									<small>
+										<a href="/checkout/shippingLoad.do">$i18n.write("checkout.review.editLink","Edit")</a>
+									</small>
+								#end ##if-hideEditLink == false
+							</div>
+						</div>
+						<div class="columns small-16 medium-8">
+							<div class="billing-info text-left">
+								<div class="clearfix"></div>
+								<strong>$i18n.write("checkout.review.billingInfoHeader","Billing Info")</strong>
+								<span class="ucReviewAddressText">
+									#foreach($bi in $form.billingInfo)
+										$i18n.escape($bi)<br>
+									#end ##foreach billingInfo record
+									<br>
+									<br>
+								</span>
+
+								#if(!$form.hideEditLink)
+									<small>
+										<a href="/checkout/billingLoad.do">
+											$i18n.write("checkout.review.editLink","Edit")
+										</a>
+									</small>
+								#end ##if-hideEditLink == false
+							</div>
+						</div>
+					</div>
+					<!-- both billing and shipping -->
+				#end ##if-showAddress == both
+			</div>
+
+			<div class="cart-footer-right" data-equalizer-watch>
+				<div class="cart-breakdown">
+					##$i18n.write("checkout.review.summaryHeader","Summary")
+					#foreach($summaryLine in $form.summaryLineItems)
+						#set($tdClass = "ucShoppingCartText")
+						#if($summaryLine.discount)
+							#set($tdClass = "ucShoppingCartDiscountText")
+						#end
+
+						<div class="$tdClass breakdown-item row">
+							<div class="label columns small-12">
+							#if ($summaryLine.name && $summaryLine.name.contains("buysafe.com"))
+								<!-- buysafe -->
+								#if($form.buysafeBondAvailable)
+									#if($form.buysafeBondWanted)
+										#set( $buysafeImg =  "../assets/imgs/buysafe-yes.png" )
+									#else
+										#set( $buysafeImg =  "../assets/imgs/buysafe-no.png" )
+									#end
+									<div class="row">
+										    	<div class="buysafe-container columns small-16">
+										    		<div class="buysafe">
+												    	<img src="../assets/imgs/buysafe-logo.gif" >
+												    	<img src="$buysafeImg" id="buysafe-yes-no" data-active="$!form.buysafeBondWanted" data-no-src="../assets/imgs/buysafe-no.png" data-yes-src="../assets/imgs/buysafe-yes.png" >
+											    		#if(!$form.buysafeBondWanted && !$form.buysafeBondFree)
+															<a class="buysafe-learn-more" href="$form.buysafeCartDisplayUrl" target="_blank">$form.buysafeCartDisplayText</a>
+														#else
+												    		<p>Your Purchase is Guarenteed with BuySafe</p>
+														#end
+										    		</div>
+										    	</div>
+									</div>
+								#end ##if-buysafeBondAvailable
+								<!-- /buysafe -->
+
+							#else
+							$summaryLine.name:
+							#end
+							</div>
+							<div class="value columns small-4">
+								#if ($summaryLine.name && $summaryLine.name.contains("buysafe.com"))
+									#if($form.buysafeBondWanted && "$!form.buysafeBondCost" != "" && !$form.buysafeBondFree)
+							    		<div class="buysafe-info"><span class="buysafe-cost">${formatHelper.escapeHtml($form.formattedBuysafeBondCost)}</span></div>
+									#elseif ("$!form.buysafeBondCost" != "" && !$form.buysafeBondFree)
+										<div class="buysafe-info"><span class="buysafe-cost">${formatHelper.escapeHtml($form.formattedBuysafeBondCost)}</span></div>
+									#else
+										<div class="buysafe-info">Free!</div>
+									#end
+								#else
+									$summaryLine.amount
+								#end
+							</div>
+						</div>
+					#end ##foreach summaryLine
+					<div class="clear"></div>
+				</div>
+
+				<div class="cart-total">
+					<div class="total breakdown-item">
+						<dt class="label">$i18n.write("checkout.review.totalField","TOTAL")</dt>
+						<dd class="value">$!form.total</dd>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- cart-footer -->
+
+	<!-- Gift Message -->
+	#if("$!form.giftMessage" != "")
+		<div class="row">
+			<div class="columns small-16">
+				<h2>$i18n.write("checkout.review.giftMessageHeader","Gift Message")</h2>
+				<p>$i18n.newlineToBreaks($i18n.escape($!form.giftMessage))</p>
+			</div>
+		</div>
+	#end ##if-giftMessage
+	<!-- End gift message -->
+
+	#if("$!form.specialInstructions" != "")
+		<div class="row">
+			<div class="columns small-16">
+				<h2>$i18n.write("checkout.review.specialInstructionsHeader","Special Instructions")</h2>
+				<pre>$i18n.newlineToBreaks($i18n.escape($!form.specialInstructions))</pre>
+			</div>
+		</div>
+	#end ## if-specialInstructions
+
+
+
+
+	#if($form.addressBook.size() > 0) ## if form.addressBook has entries
+	<script type="text/javascript">
+		function ucUseAddress(address) {
+			document.ucReview.firstName.value = address['firstName'] || '';
+			document.ucReview.lastName.value = address['lastName'] || '';
+			#if($form.showTitle)
+				document.ucReview.title.value = address['title'] || '';
+			#end
+			document.ucReview.company.value = address['company'] || '';
+			document.ucReview.address1.value = address['address1'] || '';
+			document.ucReview.address2.value = address['address2'] || '';
+			document.ucReview.city.value = address['city'] || '';
+			document.ucReview.state.value = address['state'] || '';
+			document.ucReview.zip.value = address['postalCode'] || '';
+			document.ucReview.dayPhone.value = address['dayPhone'] || '';
+			document.ucReview.eveningPhone.value = address['eveningPhone'] || '';
+
+			var country = document.ucReview.country;
+			if (country) {
+				var countryVal = address['country'] || '';
+				if (country.nodeName.toLowerCase() == 'input') {
+					document.ucReview.country.value = countryVal;
+				} else if (country.nodeName.toLowerCase() == 'select') {
+
+					document.ucReview.country.selectedIndex = -1;
+					for (i = 0; i < document.ucReview.country.options.length; i++) {
+						if (document.ucReview.country.options[i].text == countryVal) {
+							document.ucReview.country.selectedIndex = i;
+							break;
+						}
+					}
+
+				}
+			}
+			return false;
+		}
+	</script>
+	<div class="row shipping-panels" data-equalizer>
+		<div class="columns small-16">
+			<h2>$i18n.write("checkout.review.addressBookHeader","ADDRESS BOOK")</h2>
+
+			<div class="row">
+				#foreach($address in $form.addressBook)
+					<div class="columns small-16 medium-8 large-4 address">
+						<div class="panel" data-equalizer-watch>
+							#if("$!address.company" != "")
+								$i18n.escape($!{address.company})<br>
+							#end
+							$i18n.escape($!{address.firstName}) $i18n.escape($!{address.lastName})<br/>
+							$i18n.escape($!{address.address1})<br>
+							#if("$!address.address2" != "")
+								$i18n.escape($!{address.address2})<br>
+							#end
+							$i18n.escape($!{address.city}) $i18n.escape($!{address.state}) $i18n.escape($!{address.postalCode})
+							<br>
+							$i18n.escape($!{address.country})
+							<br>
+							<script type="text/javascript">
+								function useAddress${foreach.count}() {
+									var address = null;  // this looks redundant, but it keeps the editors from howling about uninitialized values.
+									address = $address.toJson();
+									return ucUseAddress(address);
+								}
+							</script>
+							<button name="useThisAddress" onclick="return useAddress${foreach.count}();" class="ucUseThisAddressButtonOverlay">Use This Address</button>
+						</div>
+					</div>
+				#end ##foreach-row in address book
+			</div>
+		</div>
+	</div>
+	#end ## if form.addressBook has entries
+
+
+	<!-- billing -->
+	#if($form.showBilling)
+		#parse('/snippets/mpc_review_billing.vm')
+	#end ##if-showBilling
+	<!-- /billing -->
+
+
+	<input type="hidden" name="collectPaymentInfo" value="$i18n.escape($form.collectPaymentInfo)"/>
+	#if($form.collectPaymentInfo)
+
+		#if($form.paymentPreference == 'Amazon')
+			#parse('/snippets/hr.vm')
+			<div class="row">
+				<div class="columns small-16">
+					<h2>$i18n.write("checkout.review.amazonHeader","AMAZON PAYMENT")</h2>
+				</div>
+
+				<div class="columns small-16">
+					<div id="walletWidgetDiv"></div>
+
+					<script>
+						new OffAmazonPayments.Widgets.Wallet({
+							sellerId: '${formatHelper.escapeJavascript($form.getAmazonMerchantId())}',
+							amazonOrderReferenceId: '${formatHelper.escapeJavascript($form.getAmazonOrderReferenceId())}',
+							// amazonOrderReferenceId obtained from Button widget
+							design: {
+								size : {width:'400px', height:'260px'}
+							},
+							onPaymentSelect: function(orderReference) {
+								// Replace this code with the action that you want to perform
+								// after the payment method is selected.
+							},
+							onError: function(error) {
+								// your error handling code
+							}
+						}).bind("walletWidgetDiv");
+					</script>
+				</div>
+			</div>
+		#end ##if-form-paymentPreference Amazon
+
+		#if($form.paymentPreference == 'Credit Card')
+			#parse('/snippets/hr.vm')
+			#parse('/snippets/mpc_payment_credit_card.vm')
+		#end ##if-paymentPreference == Credit Card
+
+
+		#if($form.paymentPreference == 'eCheck')
+			#parse('/snippets/hr.vm')
+
+			<!-- Begin Electronic check -->
+			<div class="row">
+				<div class="columns small-16">
+					<h2>$i18n.write("checkout.review.electronicCheckHeader","ELECTRONIC CHECK PAYMENT")</h2>
+				</div>
+
+				<div class="clearfix"></div>
+
+				#if($form.showTaxIdOrDriversLicense)
+					<div class="columns small-16">
+						<p>$i18n.write("checkout.review.ssnFieldNote","In order to prevent fraud you must supply either your SSN/Corporate Tax ID <b>or</b> drivers license information.")*</p>
+					</div>
+
+					<div class="columns small-16 medium-8">
+						<label class="label-move">
+							<span>$i18n.write("checkout.review.ssnField","SSN/Corporate Tax ID")</span>
+							<input type="text"
+								name="echeckCustomerTaxId"
+								value="$i18n.escape($!form.echeckCustomerTaxId)"
+								maxlength="9"/>
+						</label>
+					</div>
+
+					<div class="clearfix"></div>
+
+					<div class="columns small-16 medium-8">
+						<label class="label-move">
+							<span>$i18n.write("checkout.review.ecehckDriversLicenseNumberField","Drivers License Number")</span>
+							<input type="text"
+							name="echeckDriversLicenseNumber"
+							value="$i18n.escape($!form.echeckDriversLicenseNumber)"
+							maxlength="50"/>
+						</label>
+					</div>
+
+					<div class="clearfix"></div>
+
+					<div class="columns small-16 medium-4">
+						<label class="label-move">
+							<span>$i18n.write("checkout.review.echeckStateField","State")</span>
+							<select name="echeckDriversLicenseState">
+								#foreach($state in $form.echeckDriversLicenseStates)
+									<option #if($state == $form.echeckDriversLicenseState)selected#{end}>$!state</option>
+								#end
+							</select>
+						</label>
+					</div>
+
+					<div class="columns small-16 medium-4 end">
+						<label class="label-move">
+							<span>$i18n.write("checkout.review.echeckDobField","Date of Birth (mm/dd/yyyy)")</span>
+							<input type="text"
+								name="echeckDriversLicenseDOB"
+								value="$i18n.escape($!form.echeckDriversLicenseDOB)"
+								maxlength="10">
+						</label>
+					</div>
+
+					<div class="clearfix"></div>
+				#end ##if-showDriversLicense
+
+				<div class="columns small-16 medium-8">
+					<label class="label-move">
+						<span>$i18n.write("checkout.review.echeckBankName","Bank Name")*</span>
+						<input type="text"
+							name="echeckBankName"
+							value="$i18n.escape($!form.echeckBankName)"
+							maxlength="64"/>
+						</span>
+					</label>
+
+					#if($form.showAccountOwnerType)
+						<div class="label-move">
+							<span>$i18n.write("checkout.review.echeckAccountType","Account Type")*</span>
+						</div>
+
+						<ul class="option-group">
+							<li>
+								<input type="radio" id="echeck-checking" name="echeckAccountType" value="checking" #if($form.echeckAccountType == 'checking')checked#{end}/>
+								<label for="echeck-checking">
+									<span>$i18n.write("checkout.review.echeckCheckingText","Checking")</span>
+								</label>
+							</li>
+
+							<li>
+								<input type="radio" id="echeck-savings" name="echeckAccountType" value="savings" #if($form.echeckAccountType == 'savings')checked#{end}/>
+								<label for="echeck-savings">
+									<span>$i18n.write("checkout.review.echeckSavingsText","Savings")</span>
+								</label>
+							</li>
+						</ul>
+
+						<div class="label-move">
+							<span>$i18n.write("checkout.review.echeckOwnerType","Owner Type")*</span>
+						</div>
+
+						<ul class="option-group">
+							<li>
+								<input type="radio" id="echeck-personal" name="echeckOwnerType" value="Personal" #if($form.echeckOwnerType == 'Personal')checked#{end} />
+								<label for="echeck-personal">
+									<span>$i18n.write("checkout.review.echeckPersonalText","Personal")</span>
+								</label>
+							</li>
+
+							<li>
+								<input type="radio" id="echeck-business" name="echeckOwnerType" value="Business" #if($form.echeckOwnerType == 'Business')checked#{end}/>
+								<label for="echeck-business">
+									<span>$i18n.write("checkout.review.echeckBusinessText","Business")</span>
+								</label>
+							</li>
+						</ul>
+
+
+						#if($form.collectECheckCheckNumber)
+							<label class="label-move">
+								<span>$i18n.write("checkout.review.echeckCheckNumber","Check Number")*</span>
+								<input type="text" name="checkNumber" value="$i18n.escape($!form.checkNumber)" maxlength="10"/>
+							</label>
+						#end ##if-collectECheckCheckNumer
+					#else ## if-showAccountOwnerType is false
+						<label class="label-move">
+							<span>$i18n.write("checkout.review.echeckCheckNumber","Check Number")*</span>
+							<input type="text" name="checkNumber" value="$i18n.escape($!form.checkNumber)" maxlength="10"/>
+						</label>
+					#end ##if-showAccountOwnerType
+				</div>
+
+				<div class="clearfix"></div>
+
+				<div class="columns small-16 medium-8">
+					<label class="label-move">
+						<span>
+							$i18n.write("checkout.review.routingNumber","Routing Number")*<br>
+							($i18n.write("checkout.review.echeckRoutingNumberStart","Is usually located between the")
+							<img src="/checkout/route_symbol_small.gif" width="10" height="12" border="0" align="texttop">
+							$i18n.write("checkout.review.echeckRoutingNumberEnd","symbols on your check").)
+						</span>
+						<input type="text"
+							name="echeckRoutingNumber"
+							value="$i18n.escape($!form.echeckRoutingNumber)"
+							maxlength="9"/>
+					</label>
+
+					<label class="label-move">
+						<span>
+							$i18n.write("checkout.review.echeckAccountNumberField","Account Number")*<br>
+							($i18n.write("checkout.review.echeckAccountNumberStart","Typically comes before the")
+							<img src="/checkout/account_symbol_small.gif" width="10" height="12" border="0" align="texttop">
+							$i18n.write("checkout.review.echeckAccountNumberEnd","symbol. Its exact location and number of digits varies from bank to bank."))
+						</span>
+						<input type="text"
+							name="echeckAccountNumber"
+							value="$i18n.escape($!form.echeckAccountNumber)"
+							maxlength="20"/>
+					</label>
+
+					<label class="label-move">
+						<span>
+							$i18n.write("checkout.review.echeckConfirmAccountNumberField","Confirm Account Number")*
+						</span>
+						<input type="text"
+							name="echeckConfirmAccountNumber"
+							value="$i18n.escape($!form.echeckConfirmAccountNumber)"
+							maxlength="20"/>
+					</label>
+				</div>
+			</div>
+			<!-- End electronic check -->
+		#end ##if-paymentPreference == eCheck
+
+
+		#if($form.paymentPreference == 'Purchase Order')
+			#parse('/snippets/hr.vm')
+			<!-- Begin Purchase Order -->
+			<div class="row">
+				<div class="columns small-16 medium-8">
+					<h2>$i18n.write("checkout.review.purchaseOrderHeader","PURCHASE ORDER")</h2>
+					<label class="label-move">
+						<span>$i18n.write("checkout.review.purchaseOrderNumberField","Purchase Order Number")*</span>
+						<input type="text"
+							name="purchaseOrderNumber"
+							value="$i18n.escape($!form.purchaseOrderNumber)"
+							maxlength="15"/>
+					</label>
+				</div>
+			</div>
+			<!-- End Purchase Order -->
+		#end ##if-paymentPreference == Purchase Order
+
+
+		#if($form.paymentPreference == 'PayPal' && !$form.payPalExpressCheckout)
+			#parse('/snippets/hr.vm')
+			<!-- Begin PayPal Order -->
+			<div class="row">
+				<div class="columns small-16">
+					<h2>$i18n.write("checkout.review.paypalTransactionHeader","PAYPAL TRANSACTION")</h2>
+					<p>$i18n.write("checkout.review.paypalInstructionText","You will be given instructions on completing your PayPal transaction (PayPal account or credit card) after your order has been finalized.  The next screen will contain detailed instructions along with a link to the appropriate section of PayPal's website.")</p>
+				</div>
+			</div>
+			<!-- End PayPal Order -->
+		#end ## if-paymentPreference == PayPal
+
+
+		#if($form.paymentPreference == 'SafetyPay')
+			#parse('/snippets/hr.vm')
+			<!-- Begin SafetyPay Order -->
+			<div class="row">
+				<div class="columns small-16">
+					<h2>SAFETYPAY TRANSACTION</h2>
+					<p>$i18n.write("checkout.review.safetyPayInstructionText","You will be given instructions on completing your SafetyPay transaction after your order has been finalized.  The next screen will contain detailed instructions along with a link to authorize the SafetyPay payment.")</p>
+				</div>
+			</div>
+			<!-- End SafetyPay Order -->
+		#end ##if-paymentPreference == SafetyPay
+
+
+		#if($form.paymentPreference == 'Quote Request')
+			#parse('/snippets/hr.vm')
+			<!-- Begin Quote Request -->
+			<div class="row">
+				<div class="columns small-16">
+					<h2>REQUEST QUOTATION</h2>
+					<p>$i18n.write("checkout.review.quoteRequestText","After your request for a quotation is submitted by clicking Finalize Order, one of our staff will review the request and send the finalized quote to you via email.")</p>
+				</div>
+			</div>
+			<!-- End Quote Request -->
+		#end ##if-paymentPreference == Quote Request
+
+
+		#if($form.paymentPreference == 'Check')
+			#parse('/snippets/hr.vm')
+			<!-- Begin Check Order -->
+			<div class="row">
+				<div class="columns small-16">
+					<h2>$i18n.write("checkout.review.checkPaymentHeader","CHECK PAYMENT")</h2>
+					<p>$i18n.write("checkout.review.checkPaymentText","The next page will contain information about submitting your check payment.")</p>
+				</div>
+			</div>
+			<!-- End Check Order -->
+		#end ##if-paymentPreference == Check
+
+
+		#if($form.paymentPreference == 'COD')
+			#parse('/snippets/hr.vm')
+			<!-- Begin Check Order -->
+			<div class="row">
+				<div class="columns small-16">
+					<h2>$i18n.write("checkout.review.codPaymentHeader","COD PAYMENT")</h2>
+				</div>
+			</div>
+			<!-- End Check Order -->
+		#end ##if-paymentPreference == COD
+
+
+		#if($form.paymentPreference == 'Money Order')
+			#parse('/snippets/hr.vm')
+			<!-- Begin Money Order -->
+			<div class="row">
+				<div class="columns small-16">
+					<h2>$i18n.write("checkout.review.moneyOrderPaymentHeader","MONEY ORDER PAYMENT")</h2>
+					<p>$i18n.write("checkout.review.moneyOrderText","The next page will contain information about submitting your money order payment.")</p>
+				</div>
+			</div>
+			<!-- End Check Order -->
+		#end ##if-paymentPreference == 'Money Order'
+
+
+		#if($form.paymentPreference == 'Wire Transfer')
+			#parse('/snippets/hr.vm')
+			<!-- Begin Wire Transfer Order -->
+			<div class="row">
+				<div class="columns small-16">
+					<h2>$i18n.write("checkout.review.wireTransferPaymentHeader","WIRE TRANSFER PAYMENT")</h2>
+					<p>$i18n.write("checkout.review.wireTransferText","The next page will contain information about submitting your wire transfer payment.")</p>
+				</div>
+			</div>
+			<!-- End Wire Transfer Order -->
+		#end ##if-paymentPreference == 'Wire Transfer'
+
+	<!-- Collect payment info -->
+	#end ##if-collect payment info
+
+	#if($form.showAcceptCheckoutTerms)
+		#parse('/snippets/hr.vm')
+		#parse('/snippets/mpc_checkout_terms.vm')
+	#end ## if-showAcceptCheckoutTerms
+
+	#parse('/snippets/button.mpc.submitOrder.vm')
+
+	#if($form.showAcceptReturnPolicy)
+		#parse('/snippets/hr.vm')
+		#parse('/snippets/mpc_return_policy.vm')
+	#end ##if-returnPolicy != ""
+</form>
+<p>&nbsp;</p>
+
+
+#parse('system://3.0/snippets/cart_exit_pop.vm')
+
+
+#parse('/snippets/bottom.vm')

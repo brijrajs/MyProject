@@ -1,0 +1,39 @@
+##
+## UltraCart - Mr Teas Template
+## http://www.ultracart.com/
+##
+## Copyright (c) 2015 BPS Info Solutions Inc.
+## License located here:
+## http://www.ultracart.com/storefront/license/
+##
+## Designed by Level 2 Design, LLC http://www.level2d.com/
+##
+
+## uc:contains-velocity="true"
+## uc:page-attribute-string="lightbox video embed URL"
+## uc:page-attribute-string="lightbox video title"
+## uc:page-attribute-string="lightbox video subtitle"
+
+
+#if( $group.getAttribute("lightbox video embed URL") )
+	<div id="homePopupVid" class="reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
+		#if( $group.getAttribute("lightbox video title") )
+			<h2 id="modalTitle">$group.getAttribute("lightbox video title")</h2>
+		#end
+		#if( $group.getAttribute("lightbox video subtitle") )
+			<p class="lead">$group.getAttribute("lightbox video subtitle")</p>
+		#end
+
+	  ## even though the height and width on the iframe are responsive to screen size, it's necessary to add them to the iframe element to avoid a 403 forbidden error from vimeo
+	  <iframe src='$group.getAttribute("lightbox video embed URL")' width="500" height="280" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+	  <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+	</div>
+
+	<script>
+		jQuery(document).ready(function(){
+			// Target your .container, .wrapper, .post, etc.
+			jQuery('#homePopupVid').foundation('reveal', 'open');
+			jQuery("#homePopupVid").fitVids();
+		});
+	</script>
+#end
